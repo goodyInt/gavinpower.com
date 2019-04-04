@@ -1,0 +1,44 @@
+$bgcolor: #ffbb00;
+$copyColour: #ff00ff;
+$largeFontSize: 104px;
+$largeFontFamily:Helvetica Neue;
+$specialFontFamily:z_aristaregular;
+$specialCopyColour: orange;
+$specialCopyColour2:#ffffff;
+$specialCopyColour3:#aaffaa;
+
+@font-face {
+  font-family: 'z_aristaregular';
+  src: url('../fonts/z_arista-webfont.woff2') format('woff2'),
+    url('../fonts/z_arista-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  background: $bgcolor;
+}
+
+h1 {
+  color: $copyColour;
+  text-align: left;
+  position: absolute;
+  font-size: $largeFontSize;
+  font-family: $largeFontFamily;
+  text-decoration-color: blue;
+}
+.specialCopy {
+  color: $specialCopyColour;
+}
+.specialCopy2 {
+  color: $specialCopyColour2;
+  font-family: $specialFontFamily;
+}
+.specialCopy3 {
+  color: $specialCopyColour3;
+}
+.buttonStyle{
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+}
