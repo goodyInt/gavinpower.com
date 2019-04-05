@@ -21,5 +21,16 @@
     "gulp-uglify": "^3.0.2",
     "vinyl-source-stream": "^2.0.0"
   },
+  "browser": {
+    "jquery": "./app/src/vendor/jquery/dist/jquery.js",
+    "three": "./app/src/vendor/threejs/build/three.js",
+    "tweenMax": "./app/src/vendor/gsap/src/uncompressed/TweenMax.js",
+    "tweenlite": "./app/src/vendor/gsap/src/uncompressed/TweenLite.js",
+    "tweenlite.easing": "./app/src/vendor/gsap/src/uncompressed/easing/EasePack.js",
+    "tweenlite.bezier": "./app/src/vendor/gsap/src/uncompressed/plugins/BezierPlugin.js",
+    "tweenlite.css": "./app/src/vendor/gsap/src/uncompressed/plugins/CSSPlugin.js ",
+    "tweenlite.jquery": "./app/src/vendor/gsap/src/uncompressed/jquery.gsap.js"
+   
+  },
   "dependencies": {}
 }
