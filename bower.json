@@ -1,0 +1,21 @@
+{
+  "name": "hireme",
+  "description": "resumesite",
+  "main": "y",
+  "authors": [
+    "goodyInt"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "hire",
+    "gavin"
+  ],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

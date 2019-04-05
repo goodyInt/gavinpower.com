@@ -1,5 +1,8 @@
 var newButton = require('./buttons/newButton.js');
-var $ = require('jquery');
+var jQuery = require('jquery');
+var gsap = require('gsap');
+
+
 
 
 // disable console
@@ -17,12 +20,17 @@ function disableConsole() {
 //disableConsole();
 
 
-var button2 = newButton("fuck");
+var button2 = newButton("fuck fuck fuck");
 var blankDiv = document.createElement("div");
 blankDiv.id = "blankDiv";
 blankDiv.className = "buttonStyle";
 document.body.appendChild(blankDiv);
-$('#blankDiv').append(button2);
+jQuery('#blankDiv').append(button2);
+
+
+
+
+
 
 
 
