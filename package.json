@@ -29,8 +29,9 @@
     "tweenlite.easing": "./app/src/vendor/gsap/src/uncompressed/easing/EasePack.js",
     "tweenlite.bezier": "./app/src/vendor/gsap/src/uncompressed/plugins/BezierPlugin.js",
     "tweenlite.css": "./app/src/vendor/gsap/src/uncompressed/plugins/CSSPlugin.js ",
-    "tweenlite.jquery": "./app/src/vendor/gsap/src/uncompressed/jquery.gsap.js"
-   
+    "tweenlite.jquery": "./app/src/vendor/gsap/src/uncompressed/jquery.gsap.js",
+    "howler": "./app/src/vendor/howler.js/dist/howler.js"
   },
+  
   "dependencies": {}
 }

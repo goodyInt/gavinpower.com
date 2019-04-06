@@ -54,6 +54,12 @@ gulp.task("moveFonts", function () {
   .pipe(gulp.dest('app/dist/fonts'))
 });
 
+// moveSounds
+gulp.task("moveSounds", function () {
+  return gulp.src('app/src/sounds/*')
+  .pipe(gulp.dest('app/dist/sounds'))
+});
+
 // uglifyBundle
 gulp.task("uglifyJs", function () {
   return gulp.src('app/dist/js/bundle.js')
@@ -75,7 +81,7 @@ gulp.task('preProJs', function(done) {
 gulp.task("buildDev", gulp.series('preProCss','copyHtml','postProCss','preProJs'));
 
 // build for production
-gulp.task("buildProd", gulp.series('preProJs','preProCss','copyHtml', 'postProCss', 'minImg','moveFonts','uglifyCss','uglifyJs'));
+gulp.task("buildProd", gulp.series('preProJs','preProCss','copyHtml', 'postProCss', 'minImg','moveFonts','moveSounds','uglifyCss','uglifyJs'));
 
 // watch and reload
 gulp.task("watch", function () {
@@ -97,6 +103,10 @@ gulp.task("reload", function (done) {
 
 // all aboard the big dev train!
 gulp.task("gogo", gulp.parallel('serve', 'watch'));
+
+// build for development and serve and watch
+gulp.task("go", gulp.series('buildDev','gogo'));
+
 
 /*
  --TOP LEVEL FUNCTIONS--

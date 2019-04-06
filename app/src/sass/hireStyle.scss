@@ -1,11 +1,7 @@
-$bgcolor: #ffbb00;
-$copyColour: #ff00ff;
-$largeFontSize: 104px;
-$largeFontFamily:Helvetica Neue;
-$specialFontFamily:z_aristaregular;
-$specialCopyColour: orange;
-$specialCopyColour2:#ffffff;
-$specialCopyColour3:#aaffaa;
+$bgcolor: #000000;
+$HelNu:Helvetica Neue;
+$arista:z_aristaregular;
+$copyColour: #ffffff;
 
 @font-face {
   font-family: 'z_aristaregular';
@@ -14,36 +10,50 @@ $specialCopyColour3:#aaffaa;
   font-weight: normal;
   font-style: normal;
 }
-
 body {
   background: $bgcolor;
 }
+h1,
+h2,
+h3 {
+  font-family: Helvetica, Verdana, Futura, 'Trebuchet MS', Arial, sans-serif;
+}
 
-h1 {
-  color: $copyColour;
-  text-align: left;
+h3 {
+  font-size: 31px;
+  font-weight: 100;
+  letter-spacing: 40px;
+}
+
+ .loaderProgress {
   position: absolute;
-  font-size: $largeFontSize;
-  font-family: $largeFontFamily;
-  text-decoration-color: blue;
+  bottom: 0;
+  left: 0;
+  width: 100px;
+  height: 10px;
+  background-color: #ff0000;
 }
-.specialCopy {
-  color: $specialCopyColour;
+.textCenter {
+  text-align: center;
 }
-.specialCopy2 {
-  color: $specialCopyColour2;
-  font-family: $specialFontFamily;
+.textWhite {
+  color: #fff;
 }
-.specialCopy3 {
-  color: $specialCopyColour3;
+.loaderTitle {
+  position: relative;
+  display: table-cell;
+  vertical-align: middle;
 }
-.buttonStyle{
- position: absolute;
-  right: 30px;
-  bottom: 20px;
+.loader {
+  position: fixed;
+  z-index: 11;
+  top: 0;
+  left: 0;
+  display: table;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  background-color: #0a0a0a;
 }
-#blankDiv {
-  position: absolute;
-   right: 30px;
-   top: 20px;
- }
+
+
