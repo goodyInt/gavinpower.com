@@ -8,6 +8,7 @@
  var browserify = require('browserify');
  var source = require('vinyl-source-stream')
  var browserSync = require('browser-sync').create();
+ var browserSyncReuseTab = require('browser-sync-reuse-tab')(browserSync)
  var autoprefixer = require('autoprefixer');
 
 // preprocess scss
@@ -92,7 +93,8 @@ gulp.task("watch", function () {
 
 // open a live browser
 gulp.task("serve", function () {
-   browserSync.init({server:'./app/dist/'})
+   browserSync.init(
+     {server:'./app/dist/', open:false},browserSyncReuseTab)
 });
 
 // reload live browser

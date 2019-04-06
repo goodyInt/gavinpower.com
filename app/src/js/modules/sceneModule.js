@@ -14,6 +14,7 @@ var Events = require('../classes/EventsClass');
 var MapObj = require('../objects/mapObject');
 
 var BackgroundParticles = require('../objects/backgroundParticlesObject');
+
 var BackgroundLines = require('../objects/BackgroundLinesObject');
 
 /**
@@ -80,13 +81,10 @@ var SCENE = (function () {
         if (currentIndex === totalSections) {
           if (!isLocked) {
             events.trigger('end');  
-          }
-          
+          } 
           return false;
         }
-
         currentIndex++;
-
         animateCamera(currentIndex);
       }
 
@@ -94,9 +92,7 @@ var SCENE = (function () {
         if (currentIndex === 0) {
           return false;
         }
-
         currentIndex--;
-
         animateCamera(currentIndex);
       }
 
@@ -106,9 +102,7 @@ var SCENE = (function () {
       
       function onScroll (event) {
         newDate = new Date();
-
         var elapsed = newDate.getTime() - oldDate.getTime();
-
         // handle scroll smoothing (mac trackpad for instance)
         if (elapsed > 50 && !isScrolling) {
           if (event.originalEvent.detail > 0 || event.originalEvent.wheelDelta < 0) {
@@ -117,9 +111,7 @@ var SCENE = (function () {
             prev();
           }
         }
-
         oldDate = new Date();
-
         return false;
       }
 
@@ -144,9 +136,7 @@ var SCENE = (function () {
         console.warn('set viewport first');
         return false;
       }
-
       resolution = parameters.quality;
-
       renderer = new THREE.WebGLRenderer({
         alpha: false,
         antialias: false
@@ -181,6 +171,7 @@ var SCENE = (function () {
     }
 
     function setupBackground () {
+      console.log('setupBackground');
       // add background particles and lines
       // rangeY based on the size and the number of sections
       var rangeY = [
@@ -280,9 +271,12 @@ var SCENE = (function () {
       setViewport: function ($el) {
         $viewport = $el;
 
+
         width = $viewport.width();
         height = $viewport.height();
-
+        console.log("$viewport: " + $viewport);
+        console.log("width: " + width);
+        console.log("height: " + height);
         setup();
       },
 
@@ -307,6 +301,7 @@ var SCENE = (function () {
        * @param {Array} [sections] Array of Sections
        */
       addSections: function (_sections) {
+        console.log("addSections");
         sections = _sections;
         totalSections = sections.length - 1;
 
@@ -354,13 +349,12 @@ var SCENE = (function () {
        * @return {Map}
        */
       getMap: function () {
-
+        console.log("getMap");
         var map = new MapObj();
 
         for (var i = 0, j = sections.length; i < j; i++) {
           map.addNode(i);
         }
-
         return map;
       },
 
@@ -387,7 +381,6 @@ var SCENE = (function () {
           };
 
           events.trigger('section:changeBegin', data);
-
           isStarted = true;
         }
 
@@ -454,16 +447,23 @@ var SCENE = (function () {
        * @method in
        */
       in: function () {
+        console.log('in');
+  
         TweenLite.to({ fov: 200, speed: 0 }, 2, {
           bezier: { type: 'soft', values: [{ speed: 20 }, { speed: 0 }]},
           fov: 60,
           ease: 'easeOutCubic',
           onUpdate: function () {
+            
             backgroundLines.updateZ(this.target.speed);
+            
             camera.fov = this.target.fov;
+            
             camera.updateProjectionMatrix();
+          
           }
         });
+      
       }
     };
   }

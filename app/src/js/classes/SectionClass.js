@@ -3,15 +3,15 @@
 var THREE = require('three');
 
 /**
- * Screen class
+ * Section class
  * 
- * @class Screen
+ * @class Section
  * @constructor
  * @param {String} [name]
  * @requires THREE
  */
-function Screen (name) {
-  console.log("new Screen: " + name);
+function Section (name) {
+  console.log("new Section: " + name);
   this.name = name;
   this.playing = false;
   var fn = function () {};
@@ -27,35 +27,35 @@ function Screen (name) {
  * @method add
  * @param {THREE.Object3D} [object]
  */
-Screen.prototype.add = function (object) {
+Section.prototype.add = function (object) {
   this.el.add(object);
 };
 /**
- * Screen's in animation
+ * Section's in animation
  *
  * @method in
  * @param {String} [way]
  */
-Screen.prototype.in = function (way) {
+Section.prototype.in = function (way) {
   this._in(way);
 };
 
 /**
- * Screen's out animation
+ * Section's out animation
  *
  * @method out
  * @param {String} [way]
  */
-Screen.prototype.out = function (way) {
+Section.prototype.out = function (way) {
   this._out(way);
 };
 
 /**
- * Start the Screen
+ * Start the Section
  *
  * @method start
  */
-Screen.prototype.start = function () {
+Section.prototype.start = function () {
   if (this.playing) {
     return false;
   }
@@ -63,19 +63,16 @@ Screen.prototype.start = function () {
 
   this.playing = true;
 };
-
 /**
- * Stop the Screen
+ * Stop the Section
  *
  * @method stop
  */
-Screen.prototype.stop = function () {
+Section.prototype.stop = function () {
   if (!this.playing) {
     return false;
   }
-
   this._stop();
-
   this.playing = false;
 };
 
@@ -85,7 +82,7 @@ Screen.prototype.stop = function () {
  * @method onIn
  * @param {Function} [callback]
  */
-Screen.prototype.onIn = function (callback) {
+Section.prototype.onIn = function (callback) {
   this._in = callback;
 };
 
@@ -95,7 +92,7 @@ Screen.prototype.onIn = function (callback) {
  * @method onOut
  * @param {Function} [callback]
  */
-Screen.prototype.onOut = function (callback) {
+Section.prototype.onOut = function (callback) {
   this._out = callback;
 };
 
@@ -105,7 +102,7 @@ Screen.prototype.onOut = function (callback) {
  * @method onStart
  * @param {Function} [callback]
  */
-Screen.prototype.onStart = function (callback) {
+Section.prototype.onStart = function (callback) {
   this._start = callback;
 };
 
@@ -115,8 +112,8 @@ Screen.prototype.onStart = function (callback) {
  * @method onStop
  * @param {Function} [callback]
  */
-Screen.prototype.onStop = function (callback) {
+Section.prototype.onStop = function (callback) {
   this._stop = callback;
 };
 
-module.exports = Screen;
+module.exports = Section;
