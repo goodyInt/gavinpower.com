@@ -14,10 +14,15 @@ var SPRITE3D = require('../libs/sprite3DLib');
 function AnimatedSprite() {
   var path;
   var sprites = {
-    none: './img/goodyIntLogo_512x512.png'
+   // none: './img/sprite-none_1024.png'
+   none: './img/sprite-none.png'
+
+
+ //none: './img/sprite-none-red.png'
+ //  none: './img/guy.png'
   };
   path = sprites.none;
-  var texture = new THREE.ImageUtils.loadTexture(path);
+  var texture = new THREE.TextureLoader().load(path);
   texture.flipY = true;
   var sprite = new SPRITE3D.Sprite(texture, {
     horizontal: 4,

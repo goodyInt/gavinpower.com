@@ -3,6 +3,7 @@
 var jQuery = require('jquery');
 
 var THREE = require('three');
+
 var TweenLite = require('tweenlite');
 
 var SPRITE3D = require('../libs/sprite3DLib');

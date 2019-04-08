@@ -31,10 +31,10 @@ var imagesLoader = new ImagesLoader([
   });
 
   // scene
-  var $heads = jQuery('.heads');
-  console.log("$heads: " + $heads);
-  var $viewport = $heads.find('.heads__viewport');
-  console.log( $heads);
+  var $app = jQuery('.app');
+  console.log("$app: " + $app);
+  var $viewport = $app.find('.appViewport');
+  console.log( $app);
   console.log( $viewport);
 
   SCENE.config({ quality: 1 });
@@ -43,10 +43,7 @@ var imagesLoader = new ImagesLoader([
     introSection
   ]);
 
-  
-
   SCENE.on('section:changeBegin', function () {
-   
     var way = this.way;
     var to = this.to.name;
     var from = this.from.name;
@@ -315,7 +312,7 @@ var imagesLoader = new ImagesLoader([
   // map
   var map = SCENE.getMap();
 
-  $heads.prepend(map.$el);
+  $app.prepend(map.$el);
 
   map.init();
 

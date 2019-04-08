@@ -22,7 +22,17 @@ var random = require('../utils/randomUtil');
 function Smoke (options) {
   var parameters = jQuery.extend(Smoke.defaultOptions, options);
 
-  var texture = new THREE.ImageUtils.loadTexture('./img/sprite-smoke.png');
+  //var texture = new THREE.ImageUtils.loadTexture('./img/sprite-smoke.png');
+  //var texture = new THREE.ImageUtils.loadTexture('./img/smk.png');
+ // var texture = new THREE.ImageUtils.loadTexture('./img/smkBW.png');
+ // var texture = new THREE.ImageUtils.loadTexture('./img/smkBW2.png');
+  var texture = new THREE.ImageUtils.loadTexture('./img/fireConvert.png');
+
+ 
+
+
+
+  
   texture.flipY = false;
 
   this.sprite = new SPRITE3D.Sprite(texture, {
@@ -37,7 +47,7 @@ function Smoke (options) {
     depthWrite: false,
     depthTest: true,
     transparent: true,
-    opacity: 0.2
+    opacity: .075
   });
 
   var backMaterial = baseMaterial.clone();

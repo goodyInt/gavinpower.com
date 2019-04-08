@@ -2,7 +2,6 @@
   
 var jQuery = require('jquery');
 var THREE = require('three');
-
 var random = require('../utils/randomUtil');
 
 /**
@@ -15,6 +14,7 @@ var random = require('../utils/randomUtil');
  * @param {Array} [options.rangeY=[-100, 100]] Y range for the random
  * @requires jQuery, THREE, random
  */
+
 function BackgroundLines (options) {
   var parameters = jQuery.extend(BackgroundLines.defaultOptions, options);
 
@@ -48,7 +48,7 @@ BackgroundLines.defaultOptions = {
  * @return {THREE.Line} 
  */
 BackgroundLines.prototype.getLine = function () {
-  var material = new THREE.LineBasicMaterial();
+  var material = new THREE.LineBasicMaterial({color:0xffff00, linewidth:1});
 
   var geometry = new THREE.Geometry();
   geometry.vertices.push(new THREE.Vector3(0, 0.2, 0));

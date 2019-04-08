@@ -12,13 +12,16 @@ var animatedSprite = new animatedSprite();
 introSection.add(animatedSprite.el);
 
 var smoke = new Smoke({  
-  frontColor: '#4c4c4c',
-  backColor: '#ffffff',
+  //frontColor: '#4c4c4c',
+  //backColor: '#ffffff',
+  frontColor: '#ff0000',
+  backColor: '#ff0000',
+  
   layers: 3,
   data: [
     { positionX : 10.7, positionY: 3.9, positionZ: 17.8, rotationZ: 2.7, scale: 3.9 },
-    { positionX : -2.8, positionY: 2.6, positionZ: -11, rotationZ: 0.7, scale: 7.7 },
-    { positionX : 13, positionY: 19.5, positionZ: -1.3, rotationZ: 2, scale: 2.7 }
+    { positionX : -2.8, positionY: 2.6, positionZ: -11, rotationZ: 0.7, scale: 6.7 },
+    { positionX : 13, positionY: 19.5, positionZ: -1.3, rotationZ: 2, scale: 4.7 } 
   ]
 });
 

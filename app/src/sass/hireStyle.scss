@@ -13,16 +13,6 @@ $copyColour: #ffffff;
 body {
   background: $bgcolor;
 }
-h1,
-h2,
-h3 {
-  font-family: Helvetica, Verdana, Futura, 'Trebuchet MS', Arial, sans-serif;
-}
-h3 {
-  font-size: 31px;
-  font-weight: 100;
-  letter-spacing: 40px;
-}
  .loaderProgress {
   position: absolute;
   bottom: 0;
@@ -41,6 +31,10 @@ h3 {
   position: relative;
   display: table-cell;
   vertical-align: middle;
+  font-family: Helvetica, Verdana, Futura, 'Trebuchet MS', Arial, sans-serif;
+  font-size: 31px;
+  font-weight: 100;
+  letter-spacing: 40px;
 }
 .loader {
   position: fixed;
@@ -54,7 +48,7 @@ h3 {
   background-color: #0a0a0a;
 }
 
-.heads {
+.app {
   position: absolute;
   z-index: 4;
 
@@ -65,7 +59,7 @@ h3 {
 }
 
 // viewport
-.heads__viewport {
+.appViewport {
   position: absolute;
   z-index: 2;
   top: 0;
@@ -75,12 +69,7 @@ h3 {
   height: 100%;
 }
 
-.heads__viewport canvas {
+.appViewport canvas {
   width: 100% !important;
   height: 100% !important;
-}
-
-// sections
-.heads__sections {
-  display: none;
 }
