@@ -1,7 +1,5 @@
 'use strict';
-
 var jQuery = require('jquery');
-
 /**
  * Navigation Map
  *
@@ -14,14 +12,12 @@ function Map () {
   this.$nodes = null;
   this.callback = function () {};
 }
-
 /**
  * Default node
  * 
  * @property $node
  */
-Map.prototype.$node = jQuery('<div class="map__node"></div>');
-
+Map.prototype.$node = jQuery('<div class="mapNode"></div>');
 /**
  * Add a new node
  *
@@ -31,7 +27,6 @@ Map.prototype.$node = jQuery('<div class="map__node"></div>');
 Map.prototype.addNode = function (index) {
   var $node = this.$node.clone();
   $node.attr('data-index', index);
-  
   this.$el.append($node);
 };
 
@@ -44,7 +39,7 @@ Map.prototype.init = function () {
   var _this = this;
 
   // event
-  this.$el.on('click', '.map__node', function () {
+  this.$el.on('click', '.mapNode', function () {
     var index = jQuery(this).data('index');
     _this.callback(index);
   });
@@ -53,7 +48,7 @@ Map.prototype.init = function () {
   this.$el.css('margin-top', - this.$el.height() / 2);
 
   // nodes
-  this.$nodes = this.$el.find('.map__node');
+  this.$nodes = this.$el.find('.mapNode');
 };
 
 /**
@@ -67,14 +62,14 @@ Map.prototype.onClick = function (callback) {
 };
   
 /**
- * Set active node (.is-active)
+ * Set active node (.isActive)
  *
  * @method setActive
  * @param {Number} [index]
  */
 Map.prototype.setActive = function (index) {
-  this.$nodes.removeClass('is-active');
-  jQuery(this.$nodes[index]).addClass('is-active');
+  this.$nodes.removeClass('isActive');
+  jQuery(this.$nodes[index]).addClass('isActive');
 };
 
 /**

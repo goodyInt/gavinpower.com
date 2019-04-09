@@ -14,9 +14,9 @@ var random = require('../utils/randomUtil');
  * @param {Array} [options.rangeY=[-100, 100]] Y range for the random
  * @requires jQuery, THREE, random
  */
-
+var parameters;
 function BackgroundLines (options) {
-  var parameters = jQuery.extend(BackgroundLines.defaultOptions, options);
+   parameters = jQuery.extend(BackgroundLines.defaultOptions, options);
 
   var group = new THREE.Object3D();
 
@@ -38,7 +38,9 @@ function BackgroundLines (options) {
 
 BackgroundLines.defaultOptions = {
   count: 200,
-  rangeY: [-100, 100]
+  rangeY: [-100, 100],
+  color1: '#ffffff'
+  
 };
 
 /**
@@ -48,7 +50,7 @@ BackgroundLines.defaultOptions = {
  * @return {THREE.Line} 
  */
 BackgroundLines.prototype.getLine = function () {
-  var material = new THREE.LineBasicMaterial({color:0xffff00, linewidth:1});
+  var material = new THREE.LineBasicMaterial({color:parameters.color1, linewidth:1});
 
   var geometry = new THREE.Geometry();
   geometry.vertices.push(new THREE.Vector3(0, 0.2, 0));
@@ -78,7 +80,7 @@ BackgroundLines.prototype.updateY = function (speed) {
  * @param {Number} [speed]
  */
 BackgroundLines.prototype.updateZ = function (speed) {
-  console.log("updateZ");
+  
   this.line.geometry.vertices[0].z = speed;
   this.line.geometry.verticesNeedUpdate = true;
   this.line.geometry.computeBoundingSphere();

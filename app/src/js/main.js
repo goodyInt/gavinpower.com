@@ -4,6 +4,8 @@ var Loader = require('./objects/loaderObject');
 var SCENE = require('./modules/sceneModule');
 var jQuery = require('jquery');
 var introSection = require('./sections/introSection');
+var secondSection = require('./sections/secondSection');
+var thirdSection = require('./sections/thirdSection');
 var loader = new Loader();
 var imagesLoader = new ImagesLoader([
     './img/goodyGav.JPG',
@@ -20,14 +22,12 @@ var imagesLoader = new ImagesLoader([
     console.log('complete');
     loader.out();
     TweenLite.delayedCall(0.8, SCENE.in);
-
     
     TweenLite.delayedCall(1.5, function () {
       map.in();
      // menu.in();
      console.log("delayedCall");
     });
-       
   });
 
   // scene
@@ -40,7 +40,10 @@ var imagesLoader = new ImagesLoader([
   SCENE.config({ quality: 1 });
   SCENE.setViewport($viewport);
   SCENE.addSections([
-    introSection
+    introSection,
+    secondSection,
+    thirdSection
+
   ]);
 
   SCENE.on('section:changeBegin', function () {
@@ -54,14 +57,29 @@ var imagesLoader = new ImagesLoader([
       introSection.start();
       introSection.smokeStart();
 
+      secondSection.in();
+      secondSection.start();
+      secondSection.smokeStart();
+
+      thirdSection.in();
+      thirdSection.start();
+      thirdSection.smokeStart();
      // beamsSection.out('up');
      // beamsSection.start();
     }
-    else if (to === 'beams') {
-      helloSection.smokeStart();
+    else if (to === 'second') {
 
-      beamsSection.in();
-      beamsSection.start();
+      secondSection.in();
+      secondSection.start();
+      secondSection.smokeStart();
+    
+    }
+    else if (to === 'third') {
+
+      thirdSection.in();
+      thirdSection.start();
+      thirdSection.smokeStart();
+    
     }
     else if (to === 'drop') {
       beamsSection.out('down');

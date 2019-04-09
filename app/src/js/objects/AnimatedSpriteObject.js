@@ -15,7 +15,9 @@ function AnimatedSprite() {
   var path;
   var sprites = {
    // none: './img/sprite-none_1024.png'
-   none: './img/sprite-none.png'
+   //none: './img/sprite-none.png'
+   none: './img/sprite-none-shrunk2.png'
+   
 
 
  //none: './img/sprite-none-red.png'

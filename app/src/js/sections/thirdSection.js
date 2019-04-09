@@ -5,15 +5,15 @@ var Section = require('../classes/SectionClass');
 var animatedSprite = require('../objects/AnimatedSpriteObject');
 var Smoke = require('../objects/SmokeObject');
 
-var introSection = new Section('intro');
+var thirdSection = new Section('third');
 
 var animatedSprite = new animatedSprite();
 
 var smoke = new Smoke({  
   //frontColor: '#4c4c4c',
   //backColor: '#ffffff',
-  frontColor: '#ff0000',
-  backColor: '#ff0000',
+  frontColor: '#0000ff',
+  backColor: '#0000ff',
   
   layers: 3,
   data: [
@@ -23,30 +23,30 @@ var smoke = new Smoke({
   ]
 });
 
-introSection.add(smoke.el);
-introSection.add(animatedSprite.el);
+thirdSection.add(smoke.el);
+thirdSection.add(animatedSprite.el);
 
 smoke.el.visible = false;
 
-introSection.onIn(function () {
+thirdSection.onIn(function () {
   animatedSprite.in();
 });
 
-introSection.onOut(function () {
+thirdSection.onOut(function () {
   animatedSprite.out();
 });
 
-introSection.onStart(function () {
+thirdSection.onStart(function () {
   animatedSprite.start();
 });
 
-introSection.onStop(function () {
+thirdSection.onStop(function () {
   animatedSprite.stop();
 });
 
 var smokePlaying = false;
 
-introSection.smokeStart = function () {
+thirdSection.smokeStart = function () {
   
   if (smokePlaying) {
     return false;
@@ -56,7 +56,7 @@ introSection.smokeStart = function () {
   smoke.el.visible = true;
 };
 
-introSection.smokeStop = function () {
+thirdSection.smokeStop = function () {
   if (!smokePlaying) {
     return false;
   }
@@ -68,8 +68,8 @@ introSection.smokeStop = function () {
   smoke.el.visible = false;
 };
 
-introSection.updateColors = function (color1, color2) {
+thirdSection.updateColors = function (color1, color2) {
   smoke.updateColors(color1, color2);
 };
 
-module.exports = introSection;
+module.exports = thirdSection;

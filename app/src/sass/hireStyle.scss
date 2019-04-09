@@ -2,6 +2,7 @@ $bgcolor: #000000;
 $HelNu:Helvetica Neue;
 $arista:z_aristaregular;
 $copyColour: #ffffff;
+$nodeSize: 20px;
 
 @font-face {
   font-family: 'z_aristaregular';
@@ -72,4 +73,82 @@ body {
 .appViewport canvas {
   width: 100% !important;
   height: 100% !important;
+}
+
+
+
+///////@at-root
+
+//@at-root
+@mixin transition ($value) {
+  -webkit-transition: $value;
+  -moz-transition: $value;
+  -ms-transition: $value;
+  -o-transition: $value;
+  transition: $value;
+}
+////
+
+//////@at-root
+@mixin border-radius ($radius: 5px) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+}
+
+///////
+
+.map {
+  position: fixed;
+  z-index: 999;
+  top: 50%;
+  right: 20px;
+  opacity: .5;
+  @include transition(opacity .3s ease-in-out);
+}
+
+.map:hover {
+  opacity: 1;
+}
+
+.mapNode {
+  position: relative;
+  right: -30px;
+
+  width: $nodeSize;
+  height: $nodeSize;
+  margin-bottom: $nodeSize;
+
+  cursor: pointer;
+
+  opacity: 0;
+  background-color: #ffffff;
+
+  @include border-radius(50%);
+  @include transition(background-color .3s ease-in-out);
+}
+
+.mapNodeBackground {
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+
+  @include border-radius(50%);
+  @include transition(border 1s ease-in-out);
+  @include transition(margin 1s ease-in-out);
+}
+
+.mapNode.isActive {
+  background-color: #fff;
+}
+
+.mapNode.isActive .mapNodeBackground {
+  margin-top: -3px;
+  margin-left: -3px;
+
+  border: 3px solid #fff;
 }

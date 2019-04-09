@@ -2,7 +2,6 @@
 
 var jQuery = require('jquery');
 var THREE = require('three');
-
 var SPRITE3D = require('../libs/sprite3DLib');
 var random = require('../utils/randomUtil');
 
@@ -26,13 +25,8 @@ function Smoke (options) {
   //var texture = new THREE.ImageUtils.loadTexture('./img/smk.png');
  // var texture = new THREE.ImageUtils.loadTexture('./img/smkBW.png');
  // var texture = new THREE.ImageUtils.loadTexture('./img/smkBW2.png');
-  var texture = new THREE.ImageUtils.loadTexture('./img/fireConvert.png');
+  var texture = new THREE.TextureLoader().load('./img/fireConvert.png');
 
- 
-
-
-
-  
   texture.flipY = false;
 
   this.sprite = new SPRITE3D.Sprite(texture, {
@@ -47,7 +41,7 @@ function Smoke (options) {
     depthWrite: false,
     depthTest: true,
     transparent: true,
-    opacity: .075
+    opacity: .2
   });
 
   var backMaterial = baseMaterial.clone();
@@ -56,10 +50,10 @@ function Smoke (options) {
   var frontMaterial = baseMaterial.clone();
   frontMaterial.color = new THREE.Color(parameters.frontColor);
 
-  var geometry = new THREE.PlaneGeometry(10, 10);
+  var geometry = new THREE.PlaneGeometry(25, 25);
 
   this.el = new THREE.Object3D();
-
+this.planeArray = [];
   for (var i = 0; i < parameters.layers; i++) {
     var positionX;
     var positionY;
@@ -82,11 +76,13 @@ function Smoke (options) {
     }
 
     var material = positionZ < 0 ? backMaterial : frontMaterial;
-
+    console.log("positionZ: " + positionZ);
     var plane = new THREE.Mesh(geometry, material);
     plane.position.set(positionX, positionY, positionZ);
     plane.rotation.z = rotationZ;
     plane.scale.set(scale, scale, 1);
+    this.planeArray.push(plane);
+    console.log("plane");
 
     this.el.add(plane);
   }
@@ -98,6 +94,17 @@ Smoke.prototype.start = function () {
 
 Smoke.prototype.stop = function () {
   this.sprite.stop();
+};
+
+Smoke.prototype.updateColors = function (color1,color2) {
+
+  for (var i = 0 ; i < this.planeArray.length; i++){
+    console.log("planeArray");
+    console.log(this.planeArray[i]);
+    console.log(this.planeArray[i].material);
+    this.planeArray[i].material.color = new THREE.Color( color1 );
+  }
+
 };
 
 Smoke.defaultOptions = {

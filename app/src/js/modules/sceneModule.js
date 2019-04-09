@@ -30,7 +30,8 @@ var SCENE = (function () {
 
   var instance;
 
-  function init () {
+  function init() {
+
     // params
     var parameters = {
       fogColor: '#0a0a0a',
@@ -51,9 +52,11 @@ var SCENE = (function () {
     var camera;
     var frameId;
     var cameraShakeY = 0;
+    var cameraShakeX = 0;
 
     // mouse
     var mouseX = 0;
+    var mouseY = 0;
 
     // general
     var isLocked = false; // used to prevent additional event when slide() called from outside
@@ -61,11 +64,18 @@ var SCENE = (function () {
     var isStarted = false;
 
     // camera
-    var cameraCache = { speed: 0 };
+    var cameraCache = {
+      speed: 0
+    };
     var isScrolling = false;
 
     // background lines
     var backgroundLines;
+    var theBackgroundParticles;
+    var backgroundLines2;
+    var theBackgroundParticles2;
+    var backgroundLines3;
+    var theBackgroundParticles3;
 
     // sections
     var sections = [];
@@ -73,23 +83,23 @@ var SCENE = (function () {
     var totalSections;
     var currentIndex = 0;
     var previousIndex = 0;
-    
+
     // events
     var events = new Events();
 
-    function navigation () {
-      function next () {
+    function navigation() {
+      function next() {
         if (currentIndex === totalSections) {
           if (!isLocked) {
-            events.trigger('end');  
-          } 
+            events.trigger('end');
+          }
           return false;
         }
         currentIndex++;
         animateCamera(currentIndex);
       }
 
-      function prev () {
+      function prev() {
         if (currentIndex === 0) {
           return false;
         }
@@ -100,26 +110,47 @@ var SCENE = (function () {
       // scroll
       var newDate;
       var oldDate = new Date();
-      
-      function onScroll (event) {
+      var colorUpdated = false;
+
+      function onScroll(event) {
+
+        var zSpeed = event.originalEvent.wheelDelta * .01;
+        theBackgroundParticles.el.position.z += zSpeed;
+        backgroundLines.el.position.z += zSpeed;
+        theBackgroundParticles2.el.position.z += zSpeed;
+        backgroundLines2.el.position.z += zSpeed;
+        theBackgroundParticles3.el.position.z += zSpeed;
+        backgroundLines3.el.position.z += zSpeed;
+
+        sections[0].el.position.z += zSpeed;
+        sections[1].el.position.z += zSpeed;
+        sections[2].el.position.z += zSpeed;
+
+        if (!colorUpdated) {
+          colorUpdated = true;
+         // theBackgroundParticles.updateColor('#6666ff', '#6666ff');
+         /// sections[currentIndex].updateColors('#6666ff', '#6666ff');
+        }
+
         newDate = new Date();
         var elapsed = newDate.getTime() - oldDate.getTime();
         // handle scroll smoothing (mac trackpad for instance)
         if (elapsed > 50 && !isScrolling) {
           if (event.originalEvent.detail > 0 || event.originalEvent.wheelDelta < 0) {
-            next();
+            //next();
           } else {
-            prev();
+            //prev();
           }
         }
+
         oldDate = new Date();
         return false;
       }
 
-      function onKeyDown (event) {
+      function onKeyDown(event) {
         if (!isScrolling && isActive) {
           var keyCode = event.keyCode;
-          
+
           if (keyCode === 40) {
             next();
           } else if (keyCode === 38) {
@@ -132,7 +163,7 @@ var SCENE = (function () {
       jQuery(document).on('keydown', onKeyDown);
     }
 
-    function setup () {
+    function setup() {
       if (!$viewport) {
         console.warn('set viewport first');
         return false;
@@ -151,15 +182,16 @@ var SCENE = (function () {
       scene = new THREE.Scene();
       scene.fog = new THREE.FogExp2(parameters.fogColor, 0.01);
 
-      light = new THREE.DirectionalLight('#ffffff', 0.5);
+      light = new THREE.DirectionalLight('#ffffff', .5);
       light.position.set(0.2, 1, 0.5);
       scene.add(light);
 
       camera = new THREE.PerspectiveCamera(20, width / height, 1, 4000);
       camera.position.set(0, 0, 40);
 
-      function onMouseMove (event) {
+      function onMouseMove(event) {
         mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+        mouseY = (event.clientY / window.innerHeight) * 2 - 1;
       }
 
       jQuery(window).on('resize', onResize);
@@ -171,7 +203,7 @@ var SCENE = (function () {
       return SCENE.getInstance();
     }
 
-    function setupBackground () {
+    function setupBackground() {
       console.log('setupBackground');
       // add background particles and lines
       // rangeY based on the size and the number of sections
@@ -179,32 +211,78 @@ var SCENE = (function () {
         parameters.sectionHeight,
         (-sections.length * parameters.sectionHeight) - parameters.sectionHeight
       ];
+      console.log('rangeY: ' + rangeY);
+      //
+      theBackgroundParticles = new BackgroundParticles({
+        rangeY: rangeY,
+        count: 1000,
+        color1: '#ff0000',
+        color2: '#ff6666'
+      });
+      scene.add(theBackgroundParticles.el);
 
-      var backgroundParticles = new BackgroundParticles({ rangeY: rangeY, count: 1000 });
-      scene.add(backgroundParticles.el);
-
-      backgroundLines = new BackgroundLines({ rangeY: rangeY, count: 200 });
+       //
+       backgroundLines = new BackgroundLines({
+        rangeY: rangeY,
+        count: 200
+      });
       scene.add(backgroundLines.el);
+      //
+      theBackgroundParticles2 = new BackgroundParticles({
+        rangeY: rangeY,
+        count: 1000,
+        color1: '#00ff00',
+        color2: '#66ff66'
+      });
+      scene.add(theBackgroundParticles2.el);
+      theBackgroundParticles2.el.position.z = -200;
+
+      backgroundLines2 = new BackgroundLines({
+        rangeY: rangeY,
+        count: 200
+      });
+      scene.add(backgroundLines2.el);
+      backgroundLines2.el.position.z = -200;
+
+      //
+      theBackgroundParticles3 = new BackgroundParticles({
+        rangeY: rangeY,
+        count: 1000,
+        color1: '#6666ff',
+        color2: '#9999ff'
+      });
+      scene.add(theBackgroundParticles3.el);
+      theBackgroundParticles3.el.position.z = -400;
+
+      backgroundLines3 = new BackgroundLines({
+        rangeY: rangeY,
+        count: 200
+      });
+      scene.add(backgroundLines3.el);
+      backgroundLines3.el.position.z = -400;
     }
 
-    function draw () {
+    function draw() {
       SPRITE3D.update();
       render();
       frameId = window.requestAnimationFrame(draw);
     }
 
-    function render () {
+    function render() {
       // camera noise
-      camera.position.y += Math.cos(cameraShakeY) / 50;
-      cameraShakeY += 0.02;
+      camera.position.y += Math.cos(cameraShakeY) / 10;
+      cameraShakeY += 0.005;
+      camera.position.x += Math.cos(cameraShakeX) / 10;
+      cameraShakeX += 0.006;
 
       // mouse camera move
-      camera.position.x += ((mouseX * 5) - camera.position.x) * 0.03;
+      camera.position.x += ((mouseX * 10) - camera.position.x) * 0.04;
+      camera.position.y += ((mouseY * 10) - camera.position.y) * 0.04;
 
       renderer.render(scene, camera);
     }
 
-    function onResize () {
+    function onResize() {
       width = $viewport.width();
       height = $viewport.height();
 
@@ -214,13 +292,13 @@ var SCENE = (function () {
       renderer.setSize(width * resolution, height * resolution);
     }
 
-    function animateCamera (index) {
+    function animateCamera(index) {
       // in case goTo is called
       // otherwise navigation set currentIndex
       currentIndex = index;
 
       var nextPosition = index * -parameters.sectionHeight;
-      
+
       // which way are we animating?
       var way = index < previousIndex ? -1 : 1;
 
@@ -237,7 +315,9 @@ var SCENE = (function () {
         way: way === -1 ? 'up' : 'down'
       };
 
-      TweenLite.to(camera.position, 1.5, { y: nextPosition, ease: window.Quart.easeInOut,
+      TweenLite.to(camera.position, 1.5, {
+        y: nextPosition,
+        ease: window.Quart.easeInOut,
         onStart: function () {
           isScrolling = true;
           SOUNDS.wind.play();
@@ -247,7 +327,6 @@ var SCENE = (function () {
           if (previousIndex === index) {
             return false;
           }
-
           isScrolling = false;
           events.trigger('section:changeComplete', data);
           previousIndex = index;
@@ -255,7 +334,14 @@ var SCENE = (function () {
       });
 
       TweenLite.to(cameraCache, 1.5, {
-        bezier: { type: 'soft', values: [{ speed: 10 }, { speed: 0 }] },
+        bezier: {
+          type: 'soft',
+          values: [{
+            speed: 10
+          }, {
+            speed: 0
+          }]
+        },
         onUpdate: function () {
           backgroundLines.updateY(this.target.speed);
         }
@@ -271,13 +357,9 @@ var SCENE = (function () {
        */
       setViewport: function ($el) {
         $viewport = $el;
-
-
         width = $viewport.width();
         height = $viewport.height();
-        console.log("$viewport: " + $viewport);
-        console.log("width: " + width);
-        console.log("height: " + height);
+
         setup();
       },
 
@@ -311,7 +393,8 @@ var SCENE = (function () {
 
           sectionsMap[i] = section.name;
 
-          section.el.position.y = i * -parameters.sectionHeight;
+          //section.el.position.z = i * -parameters.sectionHeight;
+          section.el.position.z = i * -200;
           scene.add(section.el);
         }
 
@@ -339,7 +422,6 @@ var SCENE = (function () {
         if (index === currentIndex) {
           return false;
         }
-
         animateCamera(index);
       },
 
@@ -354,6 +436,7 @@ var SCENE = (function () {
         var map = new MapObj();
 
         for (var i = 0, j = sections.length; i < j; i++) {
+          console.log("i: " + i);
           map.addNode(i);
         }
         return map;
@@ -449,22 +532,31 @@ var SCENE = (function () {
        */
       in: function () {
         console.log('in');
-  
-        TweenLite.to({ fov: 200, speed: 0 }, 2, {
-          bezier: { type: 'soft', values: [{ speed: 20 }, { speed: 0 }]},
+
+        TweenLite.to({
+          fov: 200,
+          speed: 0
+        }, 2, {
+          bezier: {
+            type: 'soft',
+            values: [{
+              speed: 20
+            }, {
+              speed: 0
+            }]
+          },
           fov: 60,
           ease: 'easeOutCubic',
           onUpdate: function () {
-            
+
             backgroundLines.updateZ(this.target.speed);
-            
+
             camera.fov = this.target.fov;
-            
+
             camera.updateProjectionMatrix();
-          
+
           }
         });
-      
       }
     };
   }
@@ -480,7 +572,6 @@ var SCENE = (function () {
       if (!instance) {
         instance = init();
       }
-
       return instance;
     }
   };
