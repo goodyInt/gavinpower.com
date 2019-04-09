@@ -8,8 +8,8 @@ var secondSection = require('./sections/secondSection');
 var thirdSection = require('./sections/thirdSection');
 var loader = new Loader();
 var imagesLoader = new ImagesLoader([
-    './img/goodyGav.JPG',
-    './img/goodyIntLogo_512x512.png'
+  './img/sprite-none-shrunk2.png',
+  './img/fireConvert.png'
   ]);
   // preload
   imagesLoader.start();

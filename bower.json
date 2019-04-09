@@ -10,7 +10,7 @@
     "hire",
     "gavin"
   ],
-  "homepage": "",
+
   "ignore": [
     "**/.*",
     "node_modules",
