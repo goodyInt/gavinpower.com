@@ -128,8 +128,8 @@ var SCENE = (function () {
 
         if (!colorUpdated) {
           colorUpdated = true;
-         // theBackgroundParticles.updateColor('#6666ff', '#6666ff');
-         /// sections[currentIndex].updateColors('#6666ff', '#6666ff');
+          // theBackgroundParticles.updateColor('#6666ff', '#6666ff');
+          /// sections[currentIndex].updateColors('#6666ff', '#6666ff');
         }
 
         newDate = new Date();
@@ -204,14 +204,14 @@ var SCENE = (function () {
     }
 
     function setupBackground() {
-      console.log('setupBackground');
+
       // add background particles and lines
       // rangeY based on the size and the number of sections
       var rangeY = [
         parameters.sectionHeight,
         (-sections.length * parameters.sectionHeight) - parameters.sectionHeight
       ];
-      console.log('rangeY: ' + rangeY);
+
       //
       theBackgroundParticles = new BackgroundParticles({
         rangeY: rangeY,
@@ -221,8 +221,8 @@ var SCENE = (function () {
       });
       scene.add(theBackgroundParticles.el);
 
-       //
-       backgroundLines = new BackgroundLines({
+      //
+      backgroundLines = new BackgroundLines({
         rangeY: rangeY,
         count: 200
       });
@@ -384,7 +384,7 @@ var SCENE = (function () {
        * @param {Array} [sections] Array of Sections
        */
       addSections: function (_sections) {
-        console.log("addSections");
+
         sections = _sections;
         totalSections = sections.length - 1;
 
@@ -432,11 +432,11 @@ var SCENE = (function () {
        * @return {Map}
        */
       getMap: function () {
-        console.log("getMap");
+
         var map = new MapObj();
 
         for (var i = 0, j = sections.length; i < j; i++) {
-          console.log("i: " + i);
+
           map.addNode(i);
         }
         return map;
@@ -531,7 +531,7 @@ var SCENE = (function () {
        * @method in
        */
       in: function () {
-        console.log('in');
+
 
         TweenLite.to({
           fov: 200,

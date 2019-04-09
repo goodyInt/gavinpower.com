@@ -58,7 +58,7 @@ function BackgroundParticles(options) {
       stripMesh.updateMatrix();
       stripsGeometry.merge(stripMesh.geometry, stripMesh.matrix);
     }
-     this.theStrips = new THREE.Mesh(stripsGeometry, stripMaterial);
+    this.theStrips = new THREE.Mesh(stripsGeometry, stripMaterial);
     group.add(this.theStrips);
   }
   this.el = group;
@@ -75,36 +75,7 @@ BackgroundParticles.defaultOptions = {
 };
 
 BackgroundParticles.prototype.updateColor = function (color1, color2) {
-  
-    console.log('');
-    console.log("BackgroundParticles updateColor color1: " + color1);
-    console.log("BackgroundParticles updateColor color2 " + color2);
-    console.log('');
-    console.log('this.el: ' + this.el);
-    console.log(this.el);
-    console.log('');
-    console.log('this.thePoints' + this.thePoints);
-    console.log(this.thePoints);
-    console.log('');
-    console.log('this.thePoints.material: ' + this.thePoints.material);
-    console.log(this.thePoints.material);
-    console.log('');
-    console.log('this.thePoints.material.isPointsMaterial: ' + this.thePoints.material.isPointsMaterial);
-    console.log('');
-    console.log('this.thePoints.material.color: ' + this.thePoints.material.color);
-    console.log(this.thePoints.material.color);
-
-    this.thePoints.material.color = new THREE.Color( color1 );//{r:.25, g:.25 , b: 1};
-    
-    //thePoints.material.color = color2;
-
-    console.log('');
-    console.log('this.thePoints.material.color: ' + this.thePoints.material.color);
-    console.log(this.thePoints.material.color);
-
-    console.log('');
-    console.log('this.theStrips.material.color: ' + this.theStrips.material.color);
-    console.log(this.theStrips.material.color);
-    this.theStrips.material.color = new THREE.Color( color2 );
+  this.thePoints.material.color = new THREE.Color(color1); //{r:.25, g:.25 , b: 1};
+  this.theStrips.material.color = new THREE.Color(color2);
 };
 module.exports = BackgroundParticles;

@@ -6,12 +6,11 @@ var Howler = require('howler');
  * @requires Howler
  */
 var SOUNDS = (function () {
-  console.log('Howler: ' + Howler);
-  console.log(Howler);
+ 
   var instance;
 
   function init () {
-console.log("SOUNDS init");
+
     var isMuted = false;
 
     return {
@@ -83,7 +82,7 @@ console.log("SOUNDS init");
      * @return {SOUNDS}
      */
     getInstance: function () {
-      console.log ('get instance');
+     
       if (!instance) {
         instance = init();
 

@@ -76,13 +76,13 @@ this.planeArray = [];
     }
 
     var material = positionZ < 0 ? backMaterial : frontMaterial;
-    console.log("positionZ: " + positionZ);
+
     var plane = new THREE.Mesh(geometry, material);
     plane.position.set(positionX, positionY, positionZ);
     plane.rotation.z = rotationZ;
     plane.scale.set(scale, scale, 1);
     this.planeArray.push(plane);
-    console.log("plane");
+
 
     this.el.add(plane);
   }
@@ -99,9 +99,7 @@ Smoke.prototype.stop = function () {
 Smoke.prototype.updateColors = function (color1,color2) {
 
   for (var i = 0 ; i < this.planeArray.length; i++){
-    console.log("planeArray");
-    console.log(this.planeArray[i]);
-    console.log(this.planeArray[i].material);
+    
     this.planeArray[i].material.color = new THREE.Color( color1 );
   }
 

@@ -11,7 +11,6 @@ var THREE = require('three');
  * @requires THREE
  */
 function Section (name) {
-  console.log("new Section: " + name);
   this.name = name;
   this.playing = false;
   var fn = function () {};
