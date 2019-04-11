@@ -7,13 +7,17 @@ var Smoke = require('../objects/SmokeObject');
 
 var introSection = new Section('intro');
 
-var animatedSprite = new animatedSprite();
+var introAnimatedText = new animatedSprite();
 
-var smoke = new Smoke({  
-  //frontColor: '#4c4c4c',
-  //backColor: '#ffffff',
-  frontColor: '#ff0000',
-  backColor: '#ff0000',
+var introSmoke = new Smoke({  
+ 
+  //frontColor: '#ff7704',
+  //backColor: '#ff7704',
+  frontColor: '#eb0013',
+  backColor: '#eb0013',
+
+  
+ //1) 0xeb0013,0xff7704,0xfff46a,0x47aff,0xffb577
   
   layers: 3,
   data: [
@@ -23,53 +27,49 @@ var smoke = new Smoke({
   ]
 });
 
-introSection.add(smoke.el);
-introSection.add(animatedSprite.el);
+introSection.add(introSmoke.el);
+introSection.add(introAnimatedText.el);
 
-smoke.el.visible = false;
+introSmoke.el.visible = false;
 
 introSection.onIn(function () {
-  animatedSprite.in();
+  introAnimatedText.in();
 });
 
 introSection.onOut(function () {
-  animatedSprite.out();
+  introAnimatedText.out();
 });
 
 introSection.onStart(function () {
-  animatedSprite.start();
+  introAnimatedText.start();
 });
 
 introSection.onStop(function () {
-  animatedSprite.stop();
+  introAnimatedText.stop();
 });
 
-var smokePlaying = false;
+var introSmokePlaying = false;
 
 introSection.smokeStart = function () {
-  
-  if (smokePlaying) {
+  if (introSmokePlaying) {
     return false;
   }
-  smokePlaying = true;
-  smoke.start();
-  smoke.el.visible = true;
+  introSmokePlaying = true;
+  introSmoke.start();
+  introSmoke.el.visible = true;
 };
 
 introSection.smokeStop = function () {
-  if (!smokePlaying) {
+  if (!introSmokePlaying) {
     return false;
   }
-
-  smokePlaying = false;
-
-  smoke.stop();
-
-  smoke.el.visible = false;
+  introSmokePlaying = false;
+  introSmoke.stop();
+  introSmoke.el.visible = false;
 };
 
 introSection.updateColors = function (color1, color2) {
-  smoke.updateColors(color1, color2);
+  introSmoke.updateColors(color1, color2);
 };
 
 module.exports = introSection;

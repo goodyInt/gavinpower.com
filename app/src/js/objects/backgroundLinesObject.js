@@ -68,6 +68,7 @@ BackgroundLines.prototype.getLine = function () {
  * @param {Number} [speed]
  */
 BackgroundLines.prototype.updateY = function (speed) {
+ 
   this.line.geometry.vertices[0].y = speed + 0.2;
   this.line.geometry.verticesNeedUpdate = true;
   this.line.geometry.computeBoundingSphere();

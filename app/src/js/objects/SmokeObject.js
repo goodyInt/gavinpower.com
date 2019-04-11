@@ -18,14 +18,12 @@ var random = require('../utils/randomUtil');
  * @requires jQuery, THREE, SPRITE3D, random
  */
 
-function Smoke (options) {
+function Smoke(options) {
   var parameters = jQuery.extend(Smoke.defaultOptions, options);
 
   //var texture = new THREE.ImageUtils.loadTexture('./img/sprite-smoke.png');
-  //var texture = new THREE.ImageUtils.loadTexture('./img/smk.png');
- // var texture = new THREE.ImageUtils.loadTexture('./img/smkBW.png');
- // var texture = new THREE.ImageUtils.loadTexture('./img/smkBW2.png');
   var texture = new THREE.TextureLoader().load('./img/fireConvert.png');
+  
 
   texture.flipY = false;
 
@@ -53,7 +51,7 @@ function Smoke (options) {
   var geometry = new THREE.PlaneGeometry(25, 25);
 
   this.el = new THREE.Object3D();
-this.planeArray = [];
+  this.planeArray = [];
   for (var i = 0; i < parameters.layers; i++) {
     var positionX;
     var positionY;
@@ -82,25 +80,25 @@ this.planeArray = [];
     plane.rotation.z = rotationZ;
     plane.scale.set(scale, scale, 1);
     this.planeArray.push(plane);
-
-
     this.el.add(plane);
   }
 }
 
 Smoke.prototype.start = function () {
+
   this.sprite.start();
 };
 
 Smoke.prototype.stop = function () {
+
   this.sprite.stop();
 };
 
-Smoke.prototype.updateColors = function (color1,color2) {
+Smoke.prototype.updateColors = function (color1, color2) {
 
-  for (var i = 0 ; i < this.planeArray.length; i++){
-    
-    this.planeArray[i].material.color = new THREE.Color( color1 );
+  for (var i = 0; i < this.planeArray.length; i++) {
+
+    this.planeArray[i].material.color = new THREE.Color(color1);
   }
 
 };

@@ -27,10 +27,11 @@ function BackgroundParticles(options) {
   this.starsGeometry = new THREE.Geometry();
   for (var i = 0; i < parameters.count; i++) {
     var particle = new THREE.Vector3(
-      random(-50, 50),
+      random(parameters.rangeX[0], parameters.rangeX[1]),
       random(parameters.rangeY[0], parameters.rangeY[1]),
-      random(-50, 100)
+      random(parameters.rangeZ[0], parameters.rangeZ[1])
     );
+    
     this.starsGeometry.vertices.push(particle);
   }
   var group = new THREE.Object3D();
@@ -43,6 +44,8 @@ function BackgroundParticles(options) {
     var stripMaterial = new THREE.MeshLambertMaterial({
       color: parameters.color2
     });
+
+   
     for (var i = 0; i < parameters.stripsCount; i++) {
       var stripMesh = new THREE.Mesh(stripGeometry, stripMaterial);
       stripMesh.position.set(
@@ -65,10 +68,12 @@ function BackgroundParticles(options) {
 }
 BackgroundParticles.defaultOptions = {
   count: 1000,
-  particleSize: 0.5,
+  particleSize: 0.25,
+  rangeX: [-100, 100],
   rangeY: [-100, 100],
+  rangeZ: [-100, 100],
   strips: true,
-  stripsCount: 20,
+  stripsCount: 10,
   color1: '#ffffff',
   color2: '#ffffff'
 

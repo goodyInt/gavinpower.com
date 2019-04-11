@@ -46,7 +46,9 @@ Section.prototype.in = function (way) {
  * @param {String} [way]
  */
 Section.prototype.out = function (way) {
+
   this._out(way);
+ 
 };
 
 /**
@@ -92,6 +94,7 @@ Section.prototype.onIn = function (callback) {
  * @param {Function} [callback]
  */
 Section.prototype.onOut = function (callback) {
+ 
   this._out = callback;
 };
 
@@ -103,6 +106,7 @@ Section.prototype.onOut = function (callback) {
  */
 Section.prototype.onStart = function (callback) {
   this._start = callback;
+ 
 };
 
 /**

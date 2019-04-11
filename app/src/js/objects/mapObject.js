@@ -27,6 +27,8 @@ Map.prototype.$node = jQuery('<div class="mapNode"></div>');
 Map.prototype.addNode = function (index) {
   var $node = this.$node.clone();
   $node.attr('data-index', index);
+
+ 
   this.$el.append($node);
 };
 
@@ -79,7 +81,7 @@ Map.prototype.setActive = function (index) {
  */
 Map.prototype.in = function () {
   this.$nodes.each(function (i) {
-    jQuery(this).delay(i * 50).animate({ right: 0, opacity: 1 }, 500);
+    jQuery(this).delay(i * 100).animate({ right: 0, opacity: .5 }, 500);
   });
 };
 

@@ -7,13 +7,16 @@ var Smoke = require('../objects/SmokeObject');
 
 var secondSection = new Section('second');
 
-var animatedSprite = new animatedSprite();
+var secondAnimatedText = new animatedSprite();
+secondAnimatedText.out();
 
-var smoke = new Smoke({  
-  //frontColor: '#4c4c4c',
-  //backColor: '#ffffff',
-  frontColor: '#00ff00',
-  backColor: '#00ff00',
+var secondSmoke = new Smoke({  
+
+  //frontColor: '#00ff00',
+ // backColor: '#00ff00',
+
+  frontColor: '#d1ff55',
+  backColor: '#d1ff55',
   
   layers: 3,
   data: [
@@ -23,53 +26,53 @@ var smoke = new Smoke({
   ]
 });
 
-secondSection.add(smoke.el);
-secondSection.add(animatedSprite.el);
+secondSection.add(secondSmoke.el);
+secondSection.add(secondAnimatedText.el);
 
-smoke.el.visible = false;
+secondSmoke.el.visible = false;
 
 secondSection.onIn(function () {
-  animatedSprite.in();
+  secondAnimatedText.in();
 });
 
 secondSection.onOut(function () {
-  animatedSprite.out();
+  secondAnimatedText.out();
 });
 
 secondSection.onStart(function () {
-  animatedSprite.start();
+  secondAnimatedText.start();
 });
 
 secondSection.onStop(function () {
-  animatedSprite.stop();
+  secondAnimatedText.stop();
 });
 
-var smokePlaying = false;
+var secondSmokePlaying = false;
 
 secondSection.smokeStart = function () {
   
-  if (smokePlaying) {
+  if (secondSmokePlaying) {
     return false;
   }
-  smokePlaying = true;
-  smoke.start();
-  smoke.el.visible = true;
+  secondSmokePlaying = true;
+  secondSmoke.start();
+  secondSmoke.el.visible = true;
 };
 
 secondSection.smokeStop = function () {
-  if (!smokePlaying) {
+  if (!secondSmokePlaying) {
     return false;
   }
 
-  smokePlaying = false;
+  secondSmokePlaying = false;
 
-  smoke.stop();
+  secondSmoke.stop();
 
-  smoke.el.visible = false;
+  secondSmoke.el.visible = false;
 };
 
 secondSection.updateColors = function (color1, color2) {
-  smoke.updateColors(color1, color2);
+  secondSmoke.updateColors(color1, color2);
 };
 
 module.exports = secondSection;
