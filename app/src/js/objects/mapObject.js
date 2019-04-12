@@ -81,7 +81,7 @@ Map.prototype.setActive = function (index) {
  */
 Map.prototype.in = function () {
   this.$nodes.each(function (i) {
-    jQuery(this).delay(i * 100).animate({ right: 0, opacity: .5 }, 500);
+    jQuery(this).delay(i * 100).animate({ right: 0, opacity: .25 }, 500);
   });
 };
 

@@ -41,33 +41,30 @@ imagesLoader.onComplete(function () {
 
 menu.onClick(function () {
   console.log('Menu onClick!');
-  /*
+  
   var $el = jQuery(this);
-  var name = $el.attr('data-button') || '';
-  if (name === 'sounds') {
-    SOUNDS.toggle();
-    $el.html(SOUNDS.isMuted() ? 'UNMUTE' : 'MUTE');
-  }
-  else if (name === 'help') {
-    help.in();
-  }
-  else if (name === 'quality') {
-    var text;
-    var quality;
+  var name = $el.attr('data-button');
+  switch (name){
+    case  ('sounds'): 
+    console.log('sounds');
+    break;
+    case  ('help'): 
+    console.log('help');
+    break;
+    case  ('resume'): 
+    console.log('resume');
+    break;
+    case  ('email'): 
+    console.log('email');
+    break;
+    case  ('close'): 
+    console.log('close');
+    menu.out();
+    break;  
+  };
+}); 
 
-    if (SCENE.getQuality() === 0.5) {
-      text = 'QUALITY 1';
-      quality = 1;
-    } else {
-      text = 'QUALITY 0.5';
-      quality = 0.5;
-    }
 
-    $el.html(text);
-    SCENE.quality(quality);
-  }
-  */
-});  
 
 // scene
 var $app = jQuery('.app');

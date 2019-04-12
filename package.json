@@ -33,5 +33,7 @@
     "tweenlite.jquery": "./app/src/vendor/gsap/src/uncompressed/jquery.gsap.js",
     "howler": "./app/src/vendor/howler.js/dist/howler.js"
   },
-  "dependencies": {}
+  "dependencies": {
+    "normalize-scss": "^7.0.1"
+  }
 }
