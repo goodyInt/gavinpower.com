@@ -1,9 +1,10 @@
 $bgcolor: #000000;
-$HelNu:Helvetica Neue;
 $arista:z_aristaregular;
 $copyColour: #ffffff;
 $nodeSize: 20px;
+$mapWidth: 262.5px;
 
+//fonts to load
 @font-face {
   font-family: 'z_aristaregular';
   src: url('../fonts/z_arista-webfont.woff2') format('woff2'),
@@ -11,10 +12,12 @@ $nodeSize: 20px;
   font-weight: normal;
   font-style: normal;
 }
+
 body {
   background: $bgcolor;
 }
- .loaderProgress {
+
+.loaderProgress {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -22,12 +25,15 @@ body {
   height: 10px;
   background-color: #ff0000;
 }
+
 .textCenter {
   text-align: center;
 }
+
 .textWhite {
   color: #fff;
 }
+
 .loaderTitle {
   position: relative;
   display: table-cell;
@@ -35,8 +41,9 @@ body {
   font-family: Helvetica, Verdana, Futura, 'Trebuchet MS', Arial, sans-serif;
   font-size: 31px;
   font-weight: 100;
-  letter-spacing: 40px;
+  letter-spacing: 30px;
 }
+
 .loader {
   position: fixed;
   z-index: 11;
@@ -52,10 +59,8 @@ body {
 .app {
   position: absolute;
   z-index: 4;
-
   width: 100%;
   height: 100%;
-
   will-change: transform;
 }
 
@@ -65,7 +70,6 @@ body {
   z-index: 2;
   top: 0;
   left: 0;
-
   width: 100%;
   height: 100%;
 }
@@ -74,8 +78,6 @@ body {
   width: 100% !important;
   height: 100% !important;
 }
-
-
 
 @mixin transition ($value) {
   -webkit-transition: $value;
@@ -94,19 +96,17 @@ body {
   background-clip: padding-box;
 }
 
-
-// SASS
-$map_width: 262.5px;
+// map
 
 .map {
   position: absolute;
-  width: $map_width;
+  width: $mapWidth;
   left: 50%;
-  margin-left: floor($map_width / 2) * -1;
+  margin-left: floor($mapWidth / 2) * -1;
   z-index: 999;
   bottom: 20px;
   opacity: 1;
- // @include transition(opacity .3s ease-in-out);
+  // @include transition(opacity .3s ease-in-out);
 }
 
 .map:hover {
@@ -119,7 +119,7 @@ $map_width: 262.5px;
 
 .mapNode {
   position: relative;
- float:left;
+  float: left;
   width: $nodeSize;
   height: $nodeSize;
   margin-left: $nodeSize*.5;
@@ -129,7 +129,78 @@ $map_width: 262.5px;
   @include border-radius(3px);
   @include transition(background-color .3s ease-in-out);
 }
+
 .mapNode.isActive {
   background-color: #ffffff;
   opacity: 1 !important;
+}
+
+// menu
+
+.appHolder {
+  position: absolute;
+  z-index: 4;
+  width: 100%;
+  height: 100%;
+  will-change: transform;
+  
+}
+
+.menu {
+  position: absolute;
+  z-index: 10;
+  top: 30px;
+  left: 30px;
+  height: 60px;
+  opacity: 0;
+  background-color: #0a0a0a;
+}
+
+.menuButton {
+  position: absolute;
+  top: 50%;
+  width: 25px;
+  height: 20px;
+  margin-top: -10px;
+  cursor: pointer;
+  opacity: .5;
+}
+
+.menuButtonLine {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #fff;
+}
+
+.menuButtonLineTop {
+  top: 0;
+}
+
+.menuButtonLineMiddle {
+  top: 50%;
+  margin-top: -1px;
+}
+
+.menuButtonLineBottom {
+  bottom: 0;
+}
+
+.menuItems {
+  display: none;
+  margin-left: 25px;
+}
+
+.menuItem {
+  line-height: 60px;
+  margin: 0 20px;
+  cursor: pointer;
+  text-decoration: none;
+  opacity: 0;
+  color: #fff;
+}
+
+.menuItems3D {
+  display: none;
 }

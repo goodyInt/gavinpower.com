@@ -18,14 +18,6 @@ var BackgroundParticles = require('../objects/backgroundParticlesObject');
 
 var BackgroundLines = require('../objects/BackgroundLinesObject');
 
-/**
- * 3D Scene
- *
- * @module SCENE
- * @event [section:changeBegin]
- * @event [section:changeComplete]
- * @requires jQuery, THREE, TweenLite, SPRITE3D, SOUNDS, Events, MapObj, BackgroundParticles, BackgroundLines
- */
 var SCENE = (function () {
 
   var instance;
@@ -61,11 +53,10 @@ var SCENE = (function () {
 
     // general
     var isLocked = false; // used to prevent additional event when slide() called from outside
-    var isActive;
+    var isActive  = false;
     var isStarted = false;
 
     // camera
-   
     var isScrolling = false;
 
     // background lines and particles
@@ -160,10 +151,7 @@ var SCENE = (function () {
       function onScroll(event) {
 
         var zSpeed = event.originalEvent.wheelDelta * .01;
-
-        
         theAtmosphereParticles.el.position.z += zSpeed;
-
         theBackgroundParticles.el.position.z += zSpeed;
         backgroundLines.el.position.z += zSpeed;
         theBackgroundParticles2.el.position.z += zSpeed;
@@ -186,14 +174,12 @@ var SCENE = (function () {
         sections[4].el.position.z += zSpeed;
         sections[5].el.position.z += zSpeed;
         sections[6].el.position.z += zSpeed;
-     
-       
+
         if (!colorUpdated) {
           colorUpdated = true;
-          // theBackgroundParticles.updateColor('#6666ff', '#6666ff');
-          /// sections[currentIndex].updateColors('#6666ff', '#6666ff');
+          //theBackgroundParticles.updateColor('#6666ff', '#6666ff');
+          //sections[currentIndex].updateColors('#6666ff', '#6666ff');
         }
-
         newDate = new Date();
         var elapsed = newDate.getTime() - oldDate.getTime();
         // handle scroll smoothing (mac trackpad for instance)
@@ -218,7 +204,6 @@ var SCENE = (function () {
           }
         }
       }
-
       $viewport.on('DOMMouseScroll mousewheel', onScroll);
       jQuery(document).on('keydown', onKeyDown);
     }
@@ -234,8 +219,6 @@ var SCENE = (function () {
         antialias: false
       });
 
-      // for transparent bg, also set alpha: true
-      // renderer.setClearColor(0x000000, 0);
       renderer.setClearColor('#0a0a0a', 1);
       renderer.setSize(width * resolution, height * resolution);
       $viewport.append(renderer.domElement);
@@ -267,7 +250,7 @@ var SCENE = (function () {
     function setupBackground() {
 
       // add background particles and lines
-      // rangeY based on the size and the number of sections
+
       var rangeX = [-100, 100];
       var rangeY = [-100, 100];
       var rangeZ = [0, -1400];
@@ -284,29 +267,28 @@ var SCENE = (function () {
         color2: '#ffffff'
       });
       scene.add(theAtmosphereParticles.el);
-
-       rangeX = [-50, 50];
-       rangeY = [parameters.sectionHeight, -parameters.sectionHeight];
-       rangeZ = [-100, 100];
-       numOfParticles = 600;
-       numOfLines = 100;
-
       //
+      rangeX = [-50, 50];
+      rangeY = [parameters.sectionHeight, -parameters.sectionHeight];
+      rangeZ = [-100, 100];
+      numOfParticles = 600;
+      numOfLines = 100;
+
       theBackgroundParticles = new BackgroundParticles({
         rangeX: rangeX,
         rangeY: rangeY,
         rangeZ: rangeZ,
         count: numOfParticles,
         strips: true,
-        //1) 0xeb0013,0xff7704,0xfff46a,0x47aff,0xffb577
         color1: '#eb0013',
         color2: '#ff7704'
+        // 0xeb0013,0xff7704,0xfff46a,0x47aff,0xffb577
       });
       scene.add(theBackgroundParticles.el);
       theBackgroundParticles.el.position.x = sectionLocations[0].x;
       theBackgroundParticles.el.position.y = sectionLocations[0].y;
       theBackgroundParticles.el.position.z = sectionLocations[0].z;
-      //
+
       backgroundLines = new BackgroundLines({
         rangeY: rangeY,
         count: numOfLines
@@ -324,12 +306,9 @@ var SCENE = (function () {
         strips: true,
         color1: '#e9b700',
         color2: '#b5f900'
-
       });
-
-      // 3) 0xe9b700,0xb5f900,0x7bff55,0x5400f9,0xd1ff55
+      // 0xe9b700,0xb5f900,0x7bff55,0x5400f9,0xd1ff55
       scene.add(theBackgroundParticles2.el);
-
       theBackgroundParticles2.el.position.x = sectionLocations[1].x;
       theBackgroundParticles2.el.position.y = sectionLocations[1].y;
       theBackgroundParticles2.el.position.z = sectionLocations[1].z;
@@ -342,7 +321,6 @@ var SCENE = (function () {
       backgroundLines2.el.position.x = sectionLocations[1].x;
       backgroundLines2.el.position.y = sectionLocations[1].y;
       backgroundLines2.el.position.z = sectionLocations[1].z;
-
       //
       theBackgroundParticles3 = new BackgroundParticles({
         rangeX: rangeX,
@@ -350,7 +328,6 @@ var SCENE = (function () {
         rangeZ: rangeZ,
         count: numOfParticles,
         strips: true,
-
         color1: '#78ff37',
         color2: '#00f358'
         //  4) 0xe4ff77,0x78ff37,0xf358,0xcb37ff,0xc6ffaa
@@ -371,7 +348,6 @@ var SCENE = (function () {
       backgroundLines3.el.position.x = sectionLocations[2].x;
       backgroundLines3.el.position.y = sectionLocations[2].y;
       backgroundLines3.el.position.z = sectionLocations[2].z;
-
       //
       theBackgroundParticles4 = new BackgroundParticles({
         rangeX: rangeX,
@@ -381,7 +357,7 @@ var SCENE = (function () {
         strips: true,
         color1: '#00d4ed',
         color2: '#1579ff'
-        // 7) 0xeb94,0xd4ed,0x1579ff,0xed0009,0x19e7ff
+        // 0xeb94,0xd4ed,0x1579ff,0xed0009,0x19e7ff
       });
       scene.add(theBackgroundParticles4.el);
       theBackgroundParticles4.el.position.x = sectionLocations[3].x;
@@ -407,9 +383,9 @@ var SCENE = (function () {
         strips: true,
         color1: '#a800e9',
         color2: '#f400c6'
-        //11) 0x3a00f5,0xa800e9,0xf400c6,0x52e900,0xb904ff
+        // 0x3a00f5,0xa800e9,0xf400c6,0x52e900,0xb904ff
       });
-     scene.add(theBackgroundParticles5.el);
+      scene.add(theBackgroundParticles5.el);
       theBackgroundParticles5.el.position.x = sectionLocations[4].x;
       theBackgroundParticles5.el.position.y = sectionLocations[4].y;
       theBackgroundParticles5.el.position.z = sectionLocations[4].z;
@@ -425,7 +401,6 @@ var SCENE = (function () {
       backgroundLines5.el.position.x = sectionLocations[4].x;
       backgroundLines5.el.position.y = sectionLocations[4].y;
       backgroundLines5.el.position.z = sectionLocations[4].z;
-
       //
       theBackgroundParticles6 = new BackgroundParticles({
         rangeX: rangeX,
@@ -435,9 +410,9 @@ var SCENE = (function () {
         strips: true,
         color1: '#ea006f',
         color2: '#ef0000'
-        //13) 0xfc00f1,0xea006f,0xef0000,0xea9d,0xff0c7f
+        // 0xfc00f1,0xea006f,0xef0000,0xea9d,0xff0c7f
       });
-       scene.add(theBackgroundParticles6.el);
+      scene.add(theBackgroundParticles6.el);
       theBackgroundParticles6.el.position.x = sectionLocations[5].x;
       theBackgroundParticles6.el.position.y = sectionLocations[5].y;
       theBackgroundParticles6.el.position.z = sectionLocations[5].z;
@@ -445,11 +420,10 @@ var SCENE = (function () {
         rangeY: rangeY,
         count: numOfLines
       });
-       scene.add(backgroundLines6.el);
+      scene.add(backgroundLines6.el);
       backgroundLines6.el.position.x = sectionLocations[5].x;
       backgroundLines6.el.position.y = sectionLocations[5].y;
       backgroundLines6.el.position.z = sectionLocations[5].z;
-
       //
       theBackgroundParticles7 = new BackgroundParticles({
         rangeX: rangeX,
@@ -459,9 +433,9 @@ var SCENE = (function () {
         strips: true,
         color1: '#ff1536',
         color2: '#ee5000'
-        //15) 0xff1536,0xee5000,0xebcc00,0x7eee,0xff691d
+        // 0xff1536,0xee5000,0xebcc00,0x7eee,0xff691d
       });
-     scene.add(theBackgroundParticles7.el);
+      scene.add(theBackgroundParticles7.el);
       theBackgroundParticles7.el.position.x = sectionLocations[6].x;
       theBackgroundParticles7.el.position.y = sectionLocations[6].y;
       theBackgroundParticles7.el.position.z = sectionLocations[6].z;
@@ -487,17 +461,10 @@ var SCENE = (function () {
       cameraShakeY += 0.005;
       camera.position.x += Math.cos(cameraShakeX) / 50;
       cameraShakeX += 0.006;
-
       // mouse camera move
-
-
-     //  camera.position.x += (((mouseX) * 20) - camera.position.x) * 0.05 ;//
+      // camera.position.x += (((mouseX) * 20) - camera.position.x) * 0.05 ;//
       // camera.position.y += ((mouseY * 5) - camera.position.y) * 0.05;
 
-
-      // console.log('sections[currentIndex].el.position.x: ' + sections[currentIndex].el.position.x);
-
-      //console.log(cameraMuse);
       camera.lookAt(cameraMuse);
       renderer.render(scene, camera);
     }
@@ -505,29 +472,18 @@ var SCENE = (function () {
     function onResize() {
       width = $viewport.width();
       height = $viewport.height();
-
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
-
       renderer.setSize(width * resolution, height * resolution);
     }
 
     function animateCamera(index) {
-
-      // in case goTo is called
-      // otherwise navigation set currentIndex
       currentIndex = index;
-
-      // var nextPosition = index * -parameters.sectionHeight;
       var nextPosition = {
         x: sections[currentIndex].el.position.x,
         y: sections[currentIndex].el.position.y,
         z: sections[currentIndex].el.position.z + 50
       }
-      // which way are we animating?
-      var way = index < previousIndex ? -1 : 1;
-
-      // event's data
       var data = {
         from: {
           name: sectionsMap[previousIndex],
@@ -537,34 +493,27 @@ var SCENE = (function () {
           name: sectionsMap[index],
           index: index
         },
-        way: way === -1 ? 'up' : 'down'
       };
-
       var tweenTime = 3.5;
-      //TweenMax.set([obj1, obj2, obj3], {x:100, y:50, opacity:0});
-      
+
       TweenLite.to(camera.position, tweenTime, {
         x: nextPosition.x,
         y: nextPosition.y,
         z: nextPosition.z,
         ease: window.Quart.easeInOut,
         onStart: function () {
-
           isScrolling = true;
           // SOUNDS.wind.play();
           events.trigger('section:changeBegin', data);
         },
         onComplete: function () {
-
           if (previousIndex === index) {
             return false;
           }
           isScrolling = false;
           events.trigger('section:changeComplete', data);
           previousIndex = index;
-
         }
-
       });
 
       TweenLite.to(cameraMuse, tweenTime, {
@@ -573,46 +522,19 @@ var SCENE = (function () {
         z: nextPosition.z - 50,
         ease: window.Quart.easeInOut
       });
-
-     
-
     }
 
     return {
-      /**
-       * Set the SCENE viewport
-       *
-       * @method setViewport
-       * @param {jQuery} [$el] $viewport DOM element
-       */
       setViewport: function ($el) {
         $viewport = $el;
         width = $viewport.width();
         height = $viewport.height();
-
         setup();
       },
 
-      /**
-       * Set config
-       *
-       * @method config
-       * @param {Object} [options]
-       * @param {String} [options.fogColor='#0a0a0a'] Fog color
-       * @param {Number} [options.quality=1] Quality
-       * @param {Number} [options.sectionHeight=50] Height of each section
-       * @param {Boolean} [screenshot=false] If set on true, press P to output imgData to the console
-       */
       config: function (options) {
         parameters = jQuery.extend(parameters, options);
       },
-
-      /**
-       * Add sections
-       *
-       * @method addSections
-       * @param {Array} [sections] Array of Sections
-       */
 
       addSections: function (_sections) {
         sections = _sections;
@@ -621,32 +543,24 @@ var SCENE = (function () {
         for (var i = 0, j = sections.length; i < j; i++) {
           var section = sections[i];
           sectionsMap[i] = section.name;
-          console.log(sectionLocations[i]);
           section.el.position.x = sectionLocations[i].x;
           section.el.position.y = sectionLocations[i].y;
           section.el.position.z = sectionLocations[i].z;
-
           scene.add(section.el);
         }
-
         setupBackground();
       },
-
       on: function () {
         events.on.apply(events, arguments);
       },
-
       goTo: function (index) {
         if (index === currentIndex) {
           return false;
         }
         animateCamera(index);
       },
-
       getMap: function () {
-
         var map = new MapObj();
-
         for (var i = 0, j = sections.length; i < j; i++) {
           map.addNode(i);
         }
@@ -655,7 +569,6 @@ var SCENE = (function () {
       start: function () {
         isActive = true;
         if (!isStarted) {
-          // first event
           var data = {
             from: {
               name: sectionsMap[previousIndex],
@@ -664,10 +577,8 @@ var SCENE = (function () {
             to: {
               name: sectionsMap[currentIndex],
               index: currentIndex
-            },
-            way: 'down'
+            }
           };
-
           events.trigger('section:changeBegin', data);
           isStarted = true;
         }
@@ -696,7 +607,6 @@ var SCENE = (function () {
       unlock: function () {
         isLocked = false;
       },
-
       in: function () {
         TweenLite.to({
           fov: 190,
@@ -711,22 +621,17 @@ var SCENE = (function () {
             }]
           },
           fov: 60,
-          
+
           ease: 'easeOutCubic',
           onUpdate: function () {
-          //  backgroundLines.updateZ(this.target.speed);
             camera.fov = this.target.fov;
             camera.updateProjectionMatrix();
-          },
-          onComplete: function () {
-
           }
         });
       }
     };
   }
   return {
-
     getInstance: function () {
       if (!instance) {
         instance = init();

@@ -1,5 +1,6 @@
 var ImagesLoader = require('./classes/LoaderClass');
-var Loader = require('./objects/loaderObject');
+var Loader = require('./objects/LoaderObject');
+var Menu = require('./objects/MenuObject');
 
 var SCENE = require('./modules/sceneModule');
 var jQuery = require('jquery');
@@ -10,12 +11,14 @@ var fourthSection = require('./sections/fourthSection');
 var fifthSection = require('./sections/fifthSection');
 var sixthSection = require('./sections/sixthSection');
 var seventhSection = require('./sections/seventhSection');
+
+var menu = new Menu();
 var loader = new Loader();
+
 var imagesLoader = new ImagesLoader([
   './img/sprite-none-shrunk2.png',
   './img/glitchSpriteBW.png',
   './img/fireConvert.png'
-
 ]);
 // preload
 imagesLoader.start();
@@ -31,10 +34,40 @@ imagesLoader.onComplete(function () {
 
   TweenLite.delayedCall(1.5, function () {
     map.in();
-    // menu.in();
+     menu.in();
 
   });
 });
+
+menu.onClick(function () {
+  console.log('Menu onClick!');
+  /*
+  var $el = jQuery(this);
+  var name = $el.attr('data-button') || '';
+  if (name === 'sounds') {
+    SOUNDS.toggle();
+    $el.html(SOUNDS.isMuted() ? 'UNMUTE' : 'MUTE');
+  }
+  else if (name === 'help') {
+    help.in();
+  }
+  else if (name === 'quality') {
+    var text;
+    var quality;
+
+    if (SCENE.getQuality() === 0.5) {
+      text = 'QUALITY 1';
+      quality = 1;
+    } else {
+      text = 'QUALITY 0.5';
+      quality = 0.5;
+    }
+
+    $el.html(text);
+    SCENE.quality(quality);
+  }
+  */
+});  
 
 // scene
 var $app = jQuery('.app');
@@ -135,9 +168,6 @@ SCENE.on('section:changeBegin', function () {
 SCENE.on('section:changeComplete', function () {
   var to = this.to.name;
   var from = this.from.name;
- 
-  // out complete
-  // stop
 
   switch (from) {
     case 'intro':
@@ -176,7 +206,6 @@ SCENE.on('section:changeComplete', function () {
 // map
 var map = SCENE.getMap();
 $app.prepend(map.$el);
-
 map.init();
 
 map.onClick(function (index) {
