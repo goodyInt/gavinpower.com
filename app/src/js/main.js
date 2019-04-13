@@ -18,23 +18,65 @@ var loader = new Loader();
 var imagesLoader = new ImagesLoader([
   './img/sprite-none-shrunk2.png',
   './img/glitchSpriteBW.png',
-  './img/fireConvert.png'
+  './img/fireConvert.png',
+  './img/heightMap/heightMap-start.jpg',
+  './img/heightMap/heightMap-H.jpg',
+  './img/heightMap/heightMap-HE.jpg',
+  './img/heightMap/heightMap-HEL.jpg',
+  './img/heightMap/heightMap-HELL.jpg',
+  './img/heightMap/heightMap-hello.jpg',
+  './img/heightMap/heightMap-helloFriend.jpg',
+  './img/heightMap/heightMap-restart.jpg',
+  './img/heightMap/heightMap-I.jpg',
+  './img/heightMap/heightMap-AM.jpg',
+  './img/heightMap/heightMap-A.jpg', 
+  './img/heightMap/heightMap-developer.jpg',
+  './img/heightMap/heightMap-break.jpg' ,
+  './img/heightMap/heightMap-Gav.jpg'
 ]);
+
+
+/*
+
+{ name: 'start', url: './img/heightMap/heightMap-start.jpg' },
+    { name: 'H', url: './img/heightMap/heightMap-H.jpg' },
+    { name: 'HE', url: './img/heightMap/heightMap-HE.jpg' },
+    { name: 'HEL', url: './img/heightMap/heightMap-HEL.jpg' },
+    { name: 'HELL', url: './img/heightMap/heightMap-HELL.jpg' },
+    { name: 'Hello', url: './img/heightMap/heightMap-hello.jpg' },
+    { name: 'P&G', url:  agencyURL},
+    { name: 'restart', url: './img/heightMap/heightMap-restart.jpg' },
+    { name: 'I', url: './img/heightMap/heightMap-I.jpg' },
+    { name: 'AM', url: './img/heightMap/heightMap-AM.jpg' },
+    { name: 'A', url: './img/heightMap/heightMap-A.jpg' },
+    
+    { name: 'Developer', url: './img/heightMap/heightMap-developer.jpg' },
+    { name: 'break', url: './img/heightMap/heightMap-break.jpg' },
+    { name: 'Gav', url: './img/heightMap/heightMap-Gav.jpg' }
+
+
+*/
 // preload
 imagesLoader.start();
 
 imagesLoader.onProgress(function (percent) {
-
+console.log('magesLoader.onProgress: '+ percent ) ;
   loader.update(percent);
 });
 imagesLoader.onComplete(function () {
-
+  console.log('magesLoader.onComplete: ' ) ;
   loader.out();
   TweenLite.delayedCall(0.8, SCENE.in);
 
   TweenLite.delayedCall(1.5, function () {
     map.in();
      menu.in();
+     console.log('introSection: ' + introSection) ;
+     introSection.show();
+    introSection.in();
+    introSection.start();
+
+   
 
   });
 });
@@ -86,6 +128,7 @@ SCENE.addSections([
 ]);
 
 SCENE.on('section:changeBegin', function () {
+  console.log('changeBegin');
   var way = this.way;
   var to = this.to.name;
   var from = this.from.name;
@@ -96,6 +139,9 @@ SCENE.on('section:changeBegin', function () {
       introSection.in();
       introSection.start();
       introSection.smokeStart();
+
+ 
+      
 
       break;
     case 'second':
@@ -132,6 +178,7 @@ SCENE.on('section:changeBegin', function () {
       break;
   }
   switch (from) {
+    
     case 'intro':
       if (to !== 'intro') {
         introSection.out(way);
@@ -163,6 +210,8 @@ SCENE.on('section:changeBegin', function () {
 
 
 SCENE.on('section:changeComplete', function () {
+  console.log('changeComplete');
+
   var to = this.to.name;
   var from = this.from.name;
 
@@ -210,6 +259,8 @@ map.onClick(function (index) {
 });
 
 SCENE.on('section:changeBegin', function () {
+  console.log('section:changeBegin');
+
   map.setActive(this.to.index);
 });
 

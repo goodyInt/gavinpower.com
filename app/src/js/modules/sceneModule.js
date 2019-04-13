@@ -254,7 +254,7 @@ var SCENE = (function () {
       var rangeX = [-100, 100];
       var rangeY = [-100, 100];
       var rangeZ = [0, -1400];
-      var numOfParticles = 500;
+      var numOfParticles = 750;
       var numOfLines = 150;
 
       theAtmosphereParticles = new BackgroundParticles({

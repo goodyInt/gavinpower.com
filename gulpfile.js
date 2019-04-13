@@ -44,7 +44,7 @@ gulp.task('postProCss', function () {
 
 // optimizeImages
 gulp.task("minImg", function () {
-  return gulp.src('app/src/img/*')
+  return gulp.src('app/src/img/**/*')
   .pipe(imagemin())
   .pipe(gulp.dest('app/dist/img'))
 });
