@@ -60,47 +60,34 @@ var imagesLoader = new ImagesLoader([
 imagesLoader.start();
 
 imagesLoader.onProgress(function (percent) {
-console.log('magesLoader.onProgress: '+ percent ) ;
   loader.update(percent);
 });
 imagesLoader.onComplete(function () {
-  console.log('magesLoader.onComplete: ' ) ;
   loader.out();
   TweenLite.delayedCall(0.8, SCENE.in);
 
   TweenLite.delayedCall(1.5, function () {
     map.in();
      menu.in();
-     console.log('introSection: ' + introSection) ;
      introSection.show();
     introSection.in();
     introSection.start();
-
-   
-
   });
 });
 
 menu.onClick(function () {
-  console.log('Menu onClick!');
-  
   var $el = jQuery(this);
   var name = $el.attr('data-button');
   switch (name){
     case  ('sounds'): 
-    console.log('sounds');
     break;
     case  ('help'): 
-    console.log('help');
     break;
     case  ('resume'): 
-    console.log('resume');
     break;
     case  ('email'): 
-    console.log('email');
     break;
     case  ('close'): 
-    console.log('close');
     menu.out();
     break;  
   };
@@ -138,7 +125,7 @@ SCENE.on('section:changeBegin', function () {
     case 'intro':
       introSection.in();
       introSection.start();
-      introSection.smokeStart();
+      //introSection.smokeStart();
 
  
       
@@ -218,7 +205,7 @@ SCENE.on('section:changeComplete', function () {
   switch (from) {
     case 'intro':
       introSection.stop();
-      introSection.smokeStop();
+   //   introSection.smokeStop();
       break;
     case 'second':
       secondSection.stop();

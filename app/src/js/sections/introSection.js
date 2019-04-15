@@ -2,7 +2,7 @@
 
 var Section = require('../classes/SectionClass');
 
-var Smoke = require('../objects/SmokeObject');
+//var Smoke = require('../objects/SmokeObject');
 
 var HeightMap = require('../objects/HeightMapObject');
 
@@ -21,7 +21,6 @@ var sprites = {
   tbwa: './img/heightMap/heightMap-helloTBWA.jpg',
   churchandstate: './img/heightMap/heightMap-helloC+S.jpg'
 };
-console.log('HASH.hash: ' + HASH.hash);
 if (sprites[HASH.hash]) {
   agencyURL = sprites[HASH.hash];
 } 
@@ -56,7 +55,7 @@ heightMap.el.rotation.x = 0.1;
 introSection.add(heightMap.el);
 
 var text = new TextPanel(
-  'Hire me',
+  'Hi',
   {
     align: 'right',
     style: '',
@@ -64,7 +63,7 @@ var text = new TextPanel(
     lineSpacing: 40,
   }
 );
-text.el.position.set(-10, 0, 8);
+text.el.position.set(-10, 0, 30);
 
 heightMap.el.visible = false;
 
@@ -77,7 +76,6 @@ introSection.onOut(function (way) {
 });
 
 introSection.onStart(function () {
-  console.log('introSection.onStart');
   if (!heightMap.ready) {
     return false;
   }
@@ -93,11 +91,9 @@ introSection.onStop(function () {
 });
 
 introSection.show = function () {
-  console.log('show');
   heightMap.el.visible = true;
 };
 introSection.start = function () {
-  console.log('start');
   heightMap.start();
 };
 
@@ -106,7 +102,7 @@ introSection.hide = function () {
 };
 
 ////////////////////////
-
+/*
 var introSmoke = new Smoke({  
   frontColor: '#eb0013',
   backColor: '#eb0013',
@@ -119,7 +115,8 @@ var introSmoke = new Smoke({
 });
 
 introSection.add(introSmoke.el);
-introSection.add(text.el);
+
+
 
 introSmoke.el.visible = false;
 
@@ -144,7 +141,9 @@ introSection.smokeStop = function () {
 };
 
 introSection.updateColors = function (color1, color2) {
-  introSmoke.updateColors(color1, color2);
+  //introSmoke.updateColors(color1, color2);
 };
+*/
+//introSection.add(text.el);
 
 module.exports = introSection;

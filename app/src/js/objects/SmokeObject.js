@@ -23,9 +23,6 @@ function Smoke(options) {
 
   //var texture = new THREE.ImageUtils.loadTexture('./img/sprite-smoke.png');
   var texture = new THREE.TextureLoader().load('./img/fireConvert.png');
-  
-console.log('options: ' + options);
-console.log(options);
   texture.flipY = false;
 
   this.sprite = new SPRITE3D.Sprite(texture, {
@@ -59,7 +56,6 @@ console.log(options);
     var positionZ;
     var rotationZ;
     var scale;
-    console.log('parameters.data[i].positionZ:' + parameters.data[i].positionZ  );
     if (parameters.data[i]) {
       positionX = parameters.data[i].positionX || random(-20, 20);
       positionY = parameters.data[i].positionY || random(-20, 20);
@@ -77,7 +73,6 @@ console.log(options);
     var material = positionZ < 0 ? backMaterial : frontMaterial;
 
     var plane = new THREE.Mesh(geometry, material);
-    console.log('positionZ: ' + positionZ);
     plane.position.set(positionX, positionY, positionZ);
     plane.rotation.z = rotationZ;
     plane.scale.set(scale, scale, 1);
