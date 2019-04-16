@@ -4,7 +4,7 @@ var jQuery = require('jquery');
 
 var THREE = require('three');
 
-var TweenLite = require('tweenlite');
+var tweenMax = require('tweenMax');
 
 var SPRITE3D = require('../libs/sprite3DLib');
 
@@ -496,7 +496,7 @@ var SCENE = (function () {
       };
       var tweenTime = 3.5;
 
-      TweenLite.to(camera.position, tweenTime, {
+      tweenMax.to(camera.position, tweenTime, {
         x: nextPosition.x,
         y: nextPosition.y,
         z: nextPosition.z,
@@ -516,7 +516,7 @@ var SCENE = (function () {
         }
       });
 
-      TweenLite.to(cameraMuse, tweenTime, {
+      tweenMax.to(cameraMuse, tweenTime, {
         x: nextPosition.x,
         y: nextPosition.y,
         z: nextPosition.z - 50,
@@ -608,7 +608,7 @@ var SCENE = (function () {
         isLocked = false;
       },
       in: function () {
-        TweenLite.to({
+        tweenMax.to({
           fov: 190,
           speed: 0
         }, 2, {delay:.35,

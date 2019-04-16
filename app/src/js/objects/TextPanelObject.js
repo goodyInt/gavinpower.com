@@ -2,7 +2,7 @@
 
 var jQuery = require('jquery');
 var THREE = require('three');
-var TweenLite = require('tweenlite');
+var tweenMax = require('tweenMax');
   
 /**
  * Display a 2D text in 3D space
@@ -17,7 +17,7 @@ var TweenLite = require('tweenlite');
  * @param {String} [options.align='center'] Center, left or right
  * @param {Number} [options.lineSpacing=20] Height lines
  * @param {String} [options.color='rgba(200, 200, 200, 1)'] Text color
- * @requires jQuery, THREE, TweenLite
+ * @requires jQuery, THREE, tweenMax
  */
 function TextPanel (text, options) {
   var parameters = jQuery.extend(TextPanel.defaultOptions, options);
@@ -115,7 +115,7 @@ function TextPanel (text, options) {
   }  
 
   this.in = function () {
-    TweenLite.to(cache, 1.5, { y: 0, opacity: 1,
+    tweenMax.to(cache, 1.5, { y: 0, opacity: 1,
       onStart: function () { group.visible = true; },
       onUpdate: update
     });
@@ -123,7 +123,7 @@ function TextPanel (text, options) {
 
   this.out = function (way) {
     var y = way === 'up' ? -20 : 20;
-    TweenLite.to(cache, 1, { y: y, opacity: 0,
+    tweenMax.to(cache, 1, { y: y, opacity: 0,
       onUpdate: update,
       onComplete: function () { group.visible = false; }
     });

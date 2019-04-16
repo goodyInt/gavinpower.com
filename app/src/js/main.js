@@ -1,6 +1,7 @@
 var ImagesLoader = require('./classes/LoaderClass');
 var Loader = require('./objects/LoaderObject');
 var Menu = require('./objects/MenuObject');
+var tweenMax = require('tweenMax');
 
 var SCENE = require('./modules/sceneModule');
 var jQuery = require('jquery');
@@ -64,9 +65,9 @@ imagesLoader.onProgress(function (percent) {
 });
 imagesLoader.onComplete(function () {
   loader.out();
-  TweenLite.delayedCall(0.8, SCENE.in);
+  tweenMax.delayedCall(0.8, SCENE.in);
 
-  TweenLite.delayedCall(1.5, function () {
+  tweenMax.delayedCall(1.5, function () {
     map.in();
      menu.in();
      introSection.show();

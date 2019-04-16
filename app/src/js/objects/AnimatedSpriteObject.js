@@ -1,7 +1,7 @@
 'use strict';
 
 var THREE = require('three');
-var TweenLite = require('tweenlite');
+var tweenMax = require('tweenMax');
 var SPRITE3D = require('../libs/sprite3DLib');
 
 /**
@@ -9,7 +9,7 @@ var SPRITE3D = require('../libs/sprite3DLib');
  *
  * @class AnimatedSprite
  * @constructor
- * @requires THREE, TweenLite, SPRITE3D
+ * @requires THREE, tweenMax, SPRITE3D
  */
 function AnimatedSprite() {
   var path;
@@ -50,7 +50,8 @@ function AnimatedSprite() {
     y: 20,
     opacity: 0
   };
-  var inTween = TweenLite.to(cache, 1, {
+  
+  var inTween = tweenMax.to(cache, 1, {
     y: 0,
     opacity: 1,
     paused: true,

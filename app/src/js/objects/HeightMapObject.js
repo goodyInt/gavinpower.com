@@ -2,7 +2,10 @@
 
 var jQuery = require('jquery');
 var THREE = require('three');
-var TweenLite = require('tweenlite');
+var tweenMax = require('tweenMax');
+//var someThing = require('tweenMax.easing') 
+//var easePack = require('easePack');
+
 var Events = require('../classes/EventsClass');
 var random = require('../utils/randomUtil');
 var map = require('../utils/mapUtil');
@@ -82,14 +85,14 @@ function HeightMap(options) {
   var thisRotation = this.el.rotation;
   var rotateHorTween;
   var rotateLeft = function () {
-    rotateHorTween = TweenLite.to(thisRotation, 20, {
+    rotateHorTween = tweenMax.to(thisRotation, 20, {
       ease: Power2.easeInOut,
       y: .25,
       onComplete: rotateRight
     });
   }
   var rotateRight = function () {
-    rotateHorTween = TweenLite.to(thisRotation, 20, {
+    rotateHorTween = tweenMax.to(thisRotation, 20, {
       ease: Power2.easeInOut,
       y: -.25,
       onComplete: rotateLeft
@@ -97,14 +100,14 @@ function HeightMap(options) {
   }
   var rotateVertTween;
   var rotateUp = function () {
-    rotateVertTween = TweenLite.to(thisRotation, 15, {
+    rotateVertTween = tweenMax.to(thisRotation, 15, {
       ease: Power2.easeInOut,
       x: .25,
       onComplete: rotateDown
     });
   }
   var rotateDown = function () {
-    rotateVertTween = TweenLite.to(thisRotation, 15, {
+    rotateVertTween = tweenMax.to(thisRotation, 15, {
       ease: Power2.easeInOut,
       x: -.15,
       onComplete: rotateUp
@@ -179,17 +182,18 @@ HeightMap.prototype.getLines = function () {
 var tweenCounter = -1;
 var tweenPauseTime = 0;
 HeightMap.prototype.getIdleTween = function () {
-
+console.log('getIdleTween tweenPauseTime: ' + tweenPauseTime);
   var _this = this;
 
-  return TweenLite.to({}, tweenPauseTime, {
+  return tweenMax.to({}, tweenPauseTime, {
     paused: false,
     onComplete: function () {
+      console.log('');
+      console.log('tweenMax onComplete tweenCounter: ' + tweenCounter);
       _this.current++;
       if (_this.current === _this.total) {
         _this.current = 0;
       }
-      console.log('');
       switch (tweenCounter) {
         case -1:
           tweenPauseTime = .35;
@@ -208,7 +212,7 @@ HeightMap.prototype.getIdleTween = function () {
           console.log('Hell hold: ' + tweenPauseTime);
           break;
         case 3:
-          tweenPauseTime = .85;
+          tweenPauseTime = .35;
           console.log('Hello hold: ' + tweenPauseTime);
           break;
         case 4:
@@ -232,7 +236,7 @@ HeightMap.prototype.getIdleTween = function () {
           console.log('A hold: ' + tweenPauseTime);
           break;
         case 9:
-          tweenPauseTime = 6;
+          tweenPauseTime = 7;
           console.log('DEVELOPER hold: ' + tweenPauseTime);
           break;
         case 10:
@@ -255,9 +259,10 @@ HeightMap.prototype.getIdleTween = function () {
       }
       _this.applyMap();
       tweenCounter++;
-      this.duration(tweenPauseTime);
-      this.restart();
+      _this.getIdleTween();
+      
     }
+   
   });
 };
 
@@ -313,6 +318,7 @@ HeightMap.prototype.loadMaps = function () {
   }
 };
 HeightMap.prototype.applyMap = function () {
+  console.log('applyMap');
   var previousName = typeof this.previous === 'undefined' ? 'default' :
     this.parameters.maps[this.previous].name;
   var currentName = this.parameters.maps[this.current].name;
@@ -320,13 +326,29 @@ HeightMap.prototype.applyMap = function () {
   var currentData = this.data[currentName];
   var thisTweenTime = 2;
   var _this = this;
-  var thisEase = "Power1.easeOut";
+  var thisEase = Power1.easeOut;
+
 
   var updateFun = function () {
     for (var i = 0, j = _this.totalVerts; i < j; i++) {
       var vertex = _this.geometry.vertices[i];
       var offset = currentData[i] + ((previousData[i] - currentData[i]) * this.target.factor);
       vertex.z = offset;
+    }
+    _this.geometry.verticesNeedUpdate = true;
+
+    if (_this.lines) {
+      for (var k = 0, l = _this.lines.children.length; k < l; k++) {
+        _this.lines.children[k].geometry.verticesNeedUpdate = true;
+      }
+    }
+    _this.setColors();
+  };
+  var updateStretchy = function () {
+    for (var i = 0, j = _this.totalVerts; i < j; i++) {
+      var vertex = _this.geometry.vertices[i];
+      var offset = currentData[i] + ((previousData[i] - currentData[i]) * this.target.factor);
+      vertex.x = offset;
     }
     _this.geometry.verticesNeedUpdate = true;
 
@@ -366,41 +388,31 @@ HeightMap.prototype.applyMap = function () {
     if (lastZ > -1 && lastZ < 1) {
       clearInterval(_this.introAnimationInterval);
       _this.el.add(_this.lines);
-      _this.loops = 0;
-      _this.tweenSpeed = .05;
-      _this.stretchAnimationInterval = setInterval(stretchIt, 25);
-    }
-  };
+      currentData = [];
+    previousData=[];
+        for (var i = 0, j = _this.totalVerts; i < j; i++) {
+         previousData.push(_this.geometry.vertices[i].x)
+          currentData.push(_this.originalVertices[i].x)
+        }
+      tweenMax.to({
+        factor: 1
+      }, 3, {
+        factor: 0,
+        ease: Elastic.easeOut,
+        onUpdate: updateStretchy,
+        onComplete: function() {
 
-  var stretchIt = function () {
-    _this.tweenSpeed *= 1.005;
-
-    for (var i = 0, j = _this.totalVerts; i < j; i++) {
-      var vertex = _this.geometry.vertices[i];
-      var offsetX = vertex.x + ((_this.originalVertices[i].x - vertex.x) * _this.tweenSpeed);
-      vertex.x = offsetX;
-    }
-    _this.geometry.verticesNeedUpdate = true;
-
-    if (_this.lines) {
-      for (var k = 0, l = _this.lines.children.length; k < l; k++) {
-        _this.lines.children[k].geometry.verticesNeedUpdate = true;
-      }
-    }
-    _this.setColors();
-
-    var lastX = _this.geometry.vertices[_this.lastVert].x;
-    var lastXDiff = (_this.originalVertices[_this.lastVert].x - lastX) * 100;
-
-    if (lastXDiff < 1 || _this.loops > 100) {
-
-      clearInterval(_this.stretchAnimationInterval);
-      _this.firstRun = false;
+          _this.firstRun = false;
       _this.getIdleTween();
+        }
+      });
     }
   };
+
+  
+      
   if (!this.firstRun) {
-    thisEase = 'Power1.easeOut';
+    thisEase = Power1.easeOut;
     switch (tweenCounter) {
       case -1:
         thisTweenTime = .35;
@@ -423,8 +435,9 @@ HeightMap.prototype.applyMap = function () {
         console.log('Hello tweenTime: ' + thisTweenTime);
         break;
       case 4:
-        thisEase = 'Elastic.easeOut.config(1.1, 0.4)';
-        thisTweenTime = 2.25;
+      thisEase = Elastic.easeOut;
+      //thisEase = Power4.easeOut;
+        thisTweenTime = 3.25;
         console.log('Friend tweenTime: ' + thisTweenTime);
         break;
       case 5:
@@ -445,7 +458,7 @@ HeightMap.prototype.applyMap = function () {
         break;
       case 9:
         thisTweenTime = 4.5;
-        thisEase = 'window.Elastic.easeOut';
+        thisEase = Elastic.easeOut;
         console.log('DEVELOPER tweenTime: ' + thisTweenTime);
         break;
       case 10:
@@ -453,8 +466,8 @@ HeightMap.prototype.applyMap = function () {
         console.log('blank10 tweenTime: ' + thisTweenTime);
         break;
       case 11:
-        thisEase = 'Power1.easeOut';
-        thisTweenTime = 3.5;
+      thisEase = Power1.easeOut;
+        thisTweenTime = 1.5;
         console.log('face tweenTime: ' + thisTweenTime);
         break;
       case 12:
@@ -466,8 +479,9 @@ HeightMap.prototype.applyMap = function () {
         console.log('default tweenTime: ' + thisTweenTime);
         break;
     }
-    console.log('ease: '+ thisEase);
-    TweenLite.to({
+    console.log('thisEase: '+ thisEase);
+    console.log(thisEase);
+    tweenMax.to({
       factor: 1
     }, thisTweenTime, {
       factor: 0,
