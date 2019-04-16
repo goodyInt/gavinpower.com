@@ -45,11 +45,11 @@ var heightMap = new HeightMap({
     
     { name: 'Developer', url: './img/heightMap/heightMap-developer.jpg' },
     { name: 'break', url: './img/heightMap/heightMap-break.jpg' },
-    { name: 'Gav', url: './img/heightMap/heightMap-Gav.jpg' }
+    { name: 'Gav', url: './img/heightMap/heightMap-GavMimeDark.jpg' }
   ]
 });
 
-heightMap.el.position.z = -40;
+heightMap.el.position.z = -30;
 heightMap.el.rotation.y = 0.1;
 heightMap.el.rotation.x = 0.1;
 introSection.add(heightMap.el);

@@ -21,7 +21,7 @@ function Loader () {
  * @method out
  */
 Loader.prototype.out = function () {
-  this.$progress.stop().animate({ width: '100%' }, 500, function () {
+  this.$progress.stop().delay(1000).animate({ width: '100%' }, 500, function () {
     this.$el.animate({ opacity: 0 }, 500, function () {
       this.$el.css('display', 'none');
     }.bind(this));

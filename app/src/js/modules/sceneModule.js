@@ -329,7 +329,7 @@ var SCENE = (function () {
         count: numOfParticles,
         strips: true,
         color1: '#78ff37',
-        color2: '#00f358'
+        color2: '#00f358' 
         //  4) 0xe4ff77,0x78ff37,0xf358,0xcb37ff,0xc6ffaa
       });
 
@@ -611,7 +611,7 @@ var SCENE = (function () {
         TweenLite.to({
           fov: 190,
           speed: 0
-        }, 2, {
+        }, 2, {delay:.35,
           bezier: {
             type: 'soft',
             values: [{
