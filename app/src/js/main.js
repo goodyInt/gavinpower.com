@@ -125,11 +125,6 @@ SCENE.on('section:changeBegin', function () {
     case 'intro':
       introSection.in();
       introSection.start();
-      //introSection.smokeStart();
-
- 
-      
-
       break;
     case 'second':
       secondSection.in();
@@ -246,8 +241,6 @@ map.onClick(function (index) {
 });
 
 SCENE.on('section:changeBegin', function () {
-  console.log('section:changeBegin');
-
   map.setActive(this.to.index);
 });
 

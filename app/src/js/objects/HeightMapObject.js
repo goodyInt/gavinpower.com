@@ -67,15 +67,11 @@ function HeightMap(options) {
   this.stop = this.start;
 
   this.on('ready', function () {
-    console.log('ready');
     this.ready = true;
-
     this.start = function () {
-
       rotateLeft();
       rotateUp();
     };
-
     this.stop = function () {
       //idleTween.pause();
       rotateHorTween.pause();
@@ -183,7 +179,7 @@ HeightMap.prototype.getLines = function () {
 var tweenCounter = -1;
 var tweenPauseTime = 0;
 HeightMap.prototype.getIdleTween = function () {
-  console.log('getIdleTween');
+
   var _this = this;
 
   return TweenLite.to({}, tweenPauseTime, {
@@ -193,68 +189,68 @@ HeightMap.prototype.getIdleTween = function () {
       if (_this.current === _this.total) {
         _this.current = 0;
       }
-      console.log('tweenCounter: ' + tweenCounter);
+      console.log('');
       switch (tweenCounter) {
         case -1:
           tweenPauseTime = .35;
-          console.log('H wait: ' + tweenPauseTime);
+          console.log('H hold: ' + tweenPauseTime);
           break;
         case 0:
           tweenPauseTime = .35;
-          console.log('He wait: ' + tweenPauseTime);
+          console.log('He hold: ' + tweenPauseTime);
           break;
         case 1:
           tweenPauseTime = .35;
-          console.log('Hel wait: ' + tweenPauseTime);
+          console.log('Hel hold: ' + tweenPauseTime);
           break;
         case 2:
           tweenPauseTime = .35;
-          console.log('Hell wait: ' + tweenPauseTime);
+          console.log('Hell hold: ' + tweenPauseTime);
           break;
         case 3:
           tweenPauseTime = .85;
-          console.log('Hello wait: ' + tweenPauseTime);
+          console.log('Hello hold: ' + tweenPauseTime);
           break;
         case 4:
           tweenPauseTime = 5;
-          console.log('Friend wait: ' + tweenPauseTime);
+          console.log('Friend hold: ' + tweenPauseTime);
           break;
         case 5:
           tweenPauseTime = .5;
-          console.log('blank5 wait: ' + tweenPauseTime);
+          console.log('blank5 hold: ' + tweenPauseTime);
           break;
         case 6:
           tweenPauseTime = 1.35;
-          console.log('I wait: ' + tweenPauseTime);
+          console.log('I hold: ' + tweenPauseTime);
           break;
         case 7:
           tweenPauseTime = 1;
-          console.log('AM wait: ' + tweenPauseTime);
+          console.log('AM hold: ' + tweenPauseTime);
           break;
         case 8:
           tweenPauseTime = 2;
-          console.log('A wait: ' + tweenPauseTime);
+          console.log('A hold: ' + tweenPauseTime);
           break;
         case 9:
           tweenPauseTime = 6;
-          console.log('DEVELOPER wait: ' + tweenPauseTime);
+          console.log('DEVELOPER hold: ' + tweenPauseTime);
           break;
         case 10:
           tweenPauseTime = .5;
-          console.log('Blank wait: ' + tweenPauseTime);
+          console.log('Blank hold: ' + tweenPauseTime);
           break;
         case 11:
           tweenPauseTime = 4;
-          console.log('face wait: ' + tweenPauseTime);
+          console.log('face hold: ' + tweenPauseTime);
           break;
         case 12:
           tweenCounter = -2;
           tweenPauseTime = 1;
-          console.log('default 12 wait: ' + tweenPauseTime);
+          console.log('default 12 hold: ' + tweenPauseTime);
           break;
         default:
           tweenPauseTime = 1;
-          console.log('default wait: ' + tweenPauseTime);
+          console.log('default hold: ' + tweenPauseTime);
           break;
       }
       _this.applyMap();
@@ -266,6 +262,7 @@ HeightMap.prototype.getIdleTween = function () {
 };
 
 HeightMap.prototype.loadMaps = function () {
+  console.log('loadMaps');
   var totalData = (this.parameters.divisionsX + 1) * (this.parameters.divisionsY + 1);
   this.data = {
     default: new Float32Array(totalData)
@@ -316,7 +313,6 @@ HeightMap.prototype.loadMaps = function () {
   }
 };
 HeightMap.prototype.applyMap = function () {
-  console.log('applyMap this.firstRun: ' + this.firstRun);
   var previousName = typeof this.previous === 'undefined' ? 'default' :
     this.parameters.maps[this.previous].name;
   var currentName = this.parameters.maps[this.current].name;
@@ -340,7 +336,7 @@ HeightMap.prototype.applyMap = function () {
       }
     }
     _this.setColors();
-  }
+  };
 
   var updateFirstInt = function () {
     _this.loops += 25;
@@ -357,7 +353,6 @@ HeightMap.prototype.applyMap = function () {
         vertex.z = offsetZ;
       }
     }
-
     _this.geometry.verticesNeedUpdate = true;
 
     if (_this.lines) {
@@ -368,17 +363,15 @@ HeightMap.prototype.applyMap = function () {
     _this.setColors();
 
     var lastZ = _this.geometry.vertices[_this.lastVert].z * 100;
-
     if (lastZ > -1 && lastZ < 1) {
-
       clearInterval(_this.introAnimationInterval);
       _this.el.add(_this.lines);
       _this.loops = 0;
       _this.tweenSpeed = .05;
       _this.stretchAnimationInterval = setInterval(stretchIt, 25);
     }
-  }
- 
+  };
+
   var stretchIt = function () {
     _this.tweenSpeed *= 1.005;
 
@@ -398,83 +391,82 @@ HeightMap.prototype.applyMap = function () {
 
     var lastX = _this.geometry.vertices[_this.lastVert].x;
     var lastXDiff = (_this.originalVertices[_this.lastVert].x - lastX) * 100;
-  
+
     if (lastXDiff < 1 || _this.loops > 100) {
 
       clearInterval(_this.stretchAnimationInterval);
       _this.firstRun = false;
-   _this.getIdleTween();
+      _this.getIdleTween();
     }
-  }
- 
-  thisEase = 'Power1.easeOut';
-  switch (tweenCounter) {
-    case -1:
-      console.log('H');
-      thisTweenTime = .35;
-      break;
-    case 0:
-      console.log('He');
-      thisTweenTime = .3;
-      break;
-    case 1:
-      console.log('Hel');
-      thisTweenTime = .25;
-      break;
-    case 2:
-      console.log('Hell');
-      thisTweenTime = .2;
-      break;
-    case 3:
-      console.log('Hello');
-      thisTweenTime = .15;
-      break;
-    case 4:
-      console.log('Friend');
-      //
-      thisEase = 'Elastic.easeOut.config(1.1, 0.4)';
-      thisTweenTime = 2.25;
-      break;
-    case 5:
-      console.log('Blank5');
-      thisTweenTime = .5;
-      break;
-    case 6:
-      console.log('I');
-      thisTweenTime = 1;
-      break;
-    case 7:
-      console.log('AM');
-      thisTweenTime = 1;
-      break;
-    case 8:
-      console.log('A');
-      thisTweenTime = 1;
-      break;
-    case 9:
-      console.log('DEVELOPER');
-      thisTweenTime = 4.5;
-      thisEase = 'window.Elastic.easeOut';
-      break;
-    case 10:
-      console.log('blank10');
-      thisTweenTime = .5;
-      break;
-    case 11:
-      console.log('face');
-      thisEase = 'Power1.easeOut';
-      thisTweenTime = 3.5;
-      break;
-    case 12:
-      console.log('blank12');
-      thisTweenTime = 4;
-      break;
-    default:
-      console.log('default');
-      thisTweenTime = 1;
-      break;
-  }
+  };
   if (!this.firstRun) {
+    thisEase = 'Power1.easeOut';
+    switch (tweenCounter) {
+      case -1:
+        thisTweenTime = .35;
+        console.log('H tweenTime: ' + thisTweenTime);
+        break;
+      case 0:
+        thisTweenTime = .3;
+        console.log('He tweenTime: ' + thisTweenTime);
+        break;
+      case 1:
+        thisTweenTime = .25;
+        console.log('Hel tweenTime: ' + thisTweenTime);
+        break;
+      case 2:
+        thisTweenTime = .2;
+        console.log('Hell tweenTime: ' + thisTweenTime);
+        break;
+      case 3:
+        thisTweenTime = .15;
+        console.log('Hello tweenTime: ' + thisTweenTime);
+        break;
+      case 4:
+        thisEase = 'Elastic.easeOut.config(1.1, 0.4)';
+        thisTweenTime = 2.25;
+        console.log('Friend tweenTime: ' + thisTweenTime);
+        break;
+      case 5:
+        console.log('Blank5 tweenTime: ' + thisTweenTime);
+        thisTweenTime = .5;
+        break;
+      case 6:
+        thisTweenTime = 1;
+        console.log('I tweenTime: ' + thisTweenTime);
+        break;
+      case 7:
+        thisTweenTime = 1;
+        console.log('AM tweenTime: ' + thisTweenTime);
+        break;
+      case 8:
+        thisTweenTime = 1;
+        console.log('A tweenTime: ' + thisTweenTime);
+        break;
+      case 9:
+        thisTweenTime = 4.5;
+        thisEase = 'window.Elastic.easeOut';
+        console.log('DEVELOPER tweenTime: ' + thisTweenTime);
+        break;
+      case 10:
+        thisTweenTime = .5;
+        console.log('blank10 tweenTime: ' + thisTweenTime);
+        break;
+      case 11:
+        thisEase = 'Power1.easeOut';
+        thisTweenTime = 3.5;
+        console.log('face tweenTime: ' + thisTweenTime);
+        break;
+      case 12:
+        thisTweenTime = 4;
+        console.log('blank12 tweenTime: ' + thisTweenTime);
+        break;
+      default:
+        thisTweenTime = 1;
+        console.log('default tweenTime: ' + thisTweenTime);
+        break;
+    }
+    console.log('ease: '+ thisEase);
     TweenLite.to({
       factor: 1
     }, thisTweenTime, {
@@ -488,9 +480,10 @@ HeightMap.prototype.applyMap = function () {
     this.tweenSpeed = .01;
     this.introAnimationInterval;
     var startIntro = function () {
-
       _this.introAnimationInterval = setInterval(updateFirstInt, 25);
     }
+
+    console.log('starting animation in 3.5 secs:')
     setTimeout(startIntro, 3500)
   }
 };
