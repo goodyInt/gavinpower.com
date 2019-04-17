@@ -453,6 +453,7 @@ var SCENE = (function () {
       SPRITE3D.update();
       render();
       frameId = window.requestAnimationFrame(draw);
+      stats.update();
     }
 
     function render() {

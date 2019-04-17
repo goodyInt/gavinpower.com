@@ -18,6 +18,7 @@
 
  
   <div class="appHolder">
+    <div id="container" class="stats"></div>
     <div class="menu">
       <div class="menuButton">
     <div class="menuButtonLine menuButtonLineTop"></div>
@@ -38,6 +39,7 @@
       <div class="appViewport"></div>
     </div>
   </div>
+  <script src="js/libs/stats.min.js"></script>
 
   <script type="text/javascript">
     // disable console
@@ -51,6 +53,11 @@
         console[methods[i]] = function () {};
     }
     */
+   //For deployment - comment out or remove stats here and in Scene Module. You can remove the extra div too, if you like
+    var stats;
+    stats = new Stats();
+    var container = document.getElementById( 'container' );
+			container.appendChild(stats.dom );
   </script>
   <script type="text/javascript" src="js/bundle.js"></script>
 

@@ -61,6 +61,12 @@ gulp.task("moveSounds", function () {
   .pipe(gulp.dest('app/dist/sounds'))
 });
 
+// moveStats
+gulp.task("moveStats", function () {
+  return gulp.src('app/src/js/libs/stats.min.js')
+  .pipe(gulp.dest('app/dist/js/libs/'))
+});
+
 // uglifyBundle
 gulp.task("uglifyJs", function () {
   return gulp.src('app/dist/js/bundle.js')
@@ -79,7 +85,7 @@ gulp.task('preProJs', function(done) {
   })
 
 // build for development
-gulp.task("buildDev", gulp.series('preProCss','copyHtml','postProCss','preProJs'));
+gulp.task("buildDev", gulp.series('preProCss','copyHtml','moveStats','postProCss','preProJs'));
 
 // build for production
 gulp.task("buildProd", gulp.series('preProJs','preProCss','copyHtml', 'postProCss', 'minImg','moveFonts','moveSounds','uglifyCss','uglifyJs'));
