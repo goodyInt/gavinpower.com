@@ -1,27 +1,12 @@
 'use strict';
-
 var THREE = require('three');
 var tweenMax = require('tweenMax');
 var SPRITE3D = require('../libs/sprite3DLib');
 
-/**
- * AnimatedSprite
- *
- * @class AnimatedSprite
- * @constructor
- * @requires THREE, tweenMax, SPRITE3D
- */
 function AnimatedSprite() {
   var path;
   var sprites = {
-   // none: './img/sprite-none_1024.png'
-   //none: './img/sprite-none.png'
-   none: './img/sprite-none-shrunk2.png'
-
-   //none: './img/glitchSpriteBW.png'
-
- //none: './img/sprite-none-red.png'
- //  none: './img/guy.png'
+    none: './img/sprite-none-shrunk2.png'
   };
   path = sprites.none;
   var texture = new THREE.TextureLoader().load(path);
@@ -50,7 +35,7 @@ function AnimatedSprite() {
     y: 20,
     opacity: 0
   };
-  
+
   var inTween = tweenMax.to(cache, 1, {
     y: 0,
     opacity: 1,
@@ -71,4 +56,4 @@ function AnimatedSprite() {
     sprite.stop();
   };
 }
-module.exports = AnimatedSprite;
+module.exports = AnimatedSprite; 

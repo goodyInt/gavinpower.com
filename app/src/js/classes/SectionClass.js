@@ -36,6 +36,7 @@ Section.prototype.add = function (object) {
  * @param {String} [way]
  */
 Section.prototype.in = function (way) {
+  console.log('SectionClass In');
   this._in(way);
 };
 
@@ -57,12 +58,15 @@ Section.prototype.out = function (way) {
  * @method start
  */
 Section.prototype.start = function () {
+  console.log('');
+  console.log('SectionClass.start this.playing: ' + this.playing);
   if (this.playing) {
     return false;
   }
-  this._start();
-
+  console.log('SectionClass.start: ' + this._start);
+  this._start(); 
   this.playing = true;
+ 
 };
 /**
  * Stop the Section
@@ -70,9 +74,11 @@ Section.prototype.start = function () {
  * @method stop
  */
 Section.prototype.stop = function () {
+  console.log('SectionClass.start stop: ' + this.playing);
   if (!this.playing) {
     return false;
   }
+  console.log('SectionClass.start: ' + this._stop);
   this._stop();
   this.playing = false;
 };
@@ -84,6 +90,7 @@ Section.prototype.stop = function () {
  * @param {Function} [callback]
  */
 Section.prototype.onIn = function (callback) {
+ // console.log('Section.prototype.onIn callback: ' + callback)
   this._in = callback;
 };
 
@@ -105,8 +112,8 @@ Section.prototype.onOut = function (callback) {
  * @param {Function} [callback]
  */
 Section.prototype.onStart = function (callback) {
+  //console.log('section class onStart callback: ' + callback);
   this._start = callback;
- 
 };
 
 /**

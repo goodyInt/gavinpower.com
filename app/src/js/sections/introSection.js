@@ -42,7 +42,6 @@ var heightMap = new HeightMap({
     { name: 'I', url: './img/heightMap/heightMap-I.jpg' },
     { name: 'AM', url: './img/heightMap/heightMap-AM.jpg' },
     { name: 'A', url: './img/heightMap/heightMap-A.jpg' },
-    
     { name: 'Developer', url: './img/heightMap/heightMap-developer.jpg' },
     { name: 'break', url: './img/heightMap/heightMap-break.jpg' },
     { name: 'Gav', url: './img/heightMap/heightMap-GavMimeDark.jpg' }
@@ -50,7 +49,7 @@ var heightMap = new HeightMap({
 });
 
 heightMap.el.position.z = -30;
-heightMap.el.rotation.y = 0.1;
+heightMap.el.rotation.y = 0.35;
 heightMap.el.rotation.x = 0.1;
 introSection.add(heightMap.el);
 
@@ -63,41 +62,51 @@ var text = new TextPanel(
     lineSpacing: 40,
   }
 );
-text.el.position.set(-10, 0, 30);
+text.el.position.set(-30, 0, 10);
+text.el.rotation.y = .75;
 
 heightMap.el.visible = false;
 
 introSection.onIn(function () {
+  console.log('introSection onIn');
   text.in();
 });
 
 introSection.onOut(function (way) {
+  console.log('introSection onOut');
   text.out(way);
+  heightMap.stop();
+  console.log('');
 });
 
 introSection.onStart(function () {
+  console.log('introSection onStart');
   if (!heightMap.ready) {
     return false;
   }
   heightMap.start();
+
 });
 
 introSection.onStop(function () {
+  console.log('introSection onStop')
   if (!heightMap.ready) {
     return false;
   }
-
   heightMap.stop();
 });
 
 introSection.show = function () {
+  console.log('introSection show');
   heightMap.el.visible = true;
 };
 introSection.start = function () {
+  console.log('introSection start heightMap: ' + heightMap);
   heightMap.start();
 };
 
 introSection.hide = function () {
+  console.log('introSection hide');
   heightMap.el.visible = false;
 };
 
@@ -144,6 +153,6 @@ introSection.updateColors = function (color1, color2) {
   //introSmoke.updateColors(color1, color2);
 };
 */
-//introSection.add(text.el);
+introSection.add(text.el);
 
 module.exports = introSection;

@@ -2,7 +2,6 @@ var ImagesLoader = require('./classes/LoaderClass');
 var Loader = require('./objects/LoaderObject');
 var Menu = require('./objects/MenuObject');
 var tweenMax = require('tweenMax');
-
 var SCENE = require('./modules/sceneModule');
 var jQuery = require('jquery');
 var introSection = require('./sections/introSection');
@@ -12,7 +11,6 @@ var fourthSection = require('./sections/fourthSection');
 var fifthSection = require('./sections/fifthSection');
 var sixthSection = require('./sections/sixthSection');
 var seventhSection = require('./sections/seventhSection');
-
 var menu = new Menu();
 var loader = new Loader();
 
@@ -30,47 +28,24 @@ var imagesLoader = new ImagesLoader([
   './img/heightMap/heightMap-restart.jpg',
   './img/heightMap/heightMap-I.jpg',
   './img/heightMap/heightMap-AM.jpg',
-  './img/heightMap/heightMap-A.jpg', 
+  './img/heightMap/heightMap-A.jpg',
   './img/heightMap/heightMap-developer.jpg',
-  './img/heightMap/heightMap-break.jpg' ,
+  './img/heightMap/heightMap-break.jpg',
   './img/heightMap/heightMap-Gav.jpg'
 ]);
 
-
-/*
-
-{ name: 'start', url: './img/heightMap/heightMap-start.jpg' },
-    { name: 'H', url: './img/heightMap/heightMap-H.jpg' },
-    { name: 'HE', url: './img/heightMap/heightMap-HE.jpg' },
-    { name: 'HEL', url: './img/heightMap/heightMap-HEL.jpg' },
-    { name: 'HELL', url: './img/heightMap/heightMap-HELL.jpg' },
-    { name: 'Hello', url: './img/heightMap/heightMap-hello.jpg' },
-    { name: 'P&G', url:  agencyURL},
-    { name: 'restart', url: './img/heightMap/heightMap-restart.jpg' },
-    { name: 'I', url: './img/heightMap/heightMap-I.jpg' },
-    { name: 'AM', url: './img/heightMap/heightMap-AM.jpg' },
-    { name: 'A', url: './img/heightMap/heightMap-A.jpg' },
-    
-    { name: 'Developer', url: './img/heightMap/heightMap-developer.jpg' },
-    { name: 'break', url: './img/heightMap/heightMap-break.jpg' },
-    { name: 'Gav', url: './img/heightMap/heightMap-Gav.jpg' }
-
-
-*/
 // preload
 imagesLoader.start();
-
 imagesLoader.onProgress(function (percent) {
   loader.update(percent);
 });
 imagesLoader.onComplete(function () {
   loader.out();
   tweenMax.delayedCall(0.8, SCENE.in);
-
   tweenMax.delayedCall(1.5, function () {
     map.in();
-     menu.in();
-     introSection.show();
+    menu.in();
+    introSection.show();
     introSection.in();
     introSection.start();
   });
@@ -79,23 +54,20 @@ imagesLoader.onComplete(function () {
 menu.onClick(function () {
   var $el = jQuery(this);
   var name = $el.attr('data-button');
-  switch (name){
-    case  ('sounds'): 
-    break;
-    case  ('help'): 
-    break;
-    case  ('resume'): 
-    break;
-    case  ('email'): 
-    break;
-    case  ('close'): 
-    menu.out();
-    break;  
+  switch (name) {
+    case ('sounds'):
+      break;
+    case ('help'):
+      break;
+    case ('resume'):
+      break;
+    case ('email'):
+      break;
+    case ('close'):
+      menu.out();
+      break;
   };
-}); 
-
-
-
+});
 // scene
 var $app = jQuery('.app');
 
@@ -116,12 +88,13 @@ SCENE.addSections([
 ]);
 
 SCENE.on('section:changeBegin', function () {
-  console.log('changeBegin');
+  
   var way = this.way;
   var to = this.to.name;
   var from = this.from.name;
-
-  ;
+  console.log('');
+  console.log('changeBegin to: ' + to);
+  console.log('changeBegin from: ' + from);
   switch (to) {
     case 'intro':
       introSection.in();
@@ -161,7 +134,6 @@ SCENE.on('section:changeBegin', function () {
       break;
   }
   switch (from) {
-    
     case 'intro':
       if (to !== 'intro') {
         introSection.out(way);
@@ -185,23 +157,21 @@ SCENE.on('section:changeBegin', function () {
     case 'seventh':
       seventhSection.out(way);
       break;
-
     default:
       break;
   }
 });
 
-
 SCENE.on('section:changeComplete', function () {
-  console.log('changeComplete');
 
   var to = this.to.name;
   var from = this.from.name;
-
+  console.log('');
+  console.log('changeComplete to: ' + to);
+  console.log('changeComplete from: ' + from);
   switch (from) {
     case 'intro':
       introSection.stop();
-   //   introSection.smokeStop();
       break;
     case 'second':
       secondSection.stop();
