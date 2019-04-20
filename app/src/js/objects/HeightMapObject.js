@@ -8,7 +8,7 @@ var random = require('../utils/randomUtil');
 var map = require('../utils/mapUtil');
 
 function HeightMap(options) {
-  console.log('HeightMap');
+
   this.parameters = jQuery.extend(HeightMap.defaultOptions, options);
   this.events = new Events();
   this.fromColor = new THREE.Color(this.parameters.fromColor);
@@ -28,7 +28,9 @@ function HeightMap(options) {
   this.totalVerts = this.geometry.vertices.length;
   this.lastVert = this.totalVerts - 1;
   this.theIdleTween;
-  
+  this.introAnimationInterval;
+  this.whenCompleteFunction;
+
   if (this.firstRun) {
     for (var i = 0; i < this.totalVerts; i++) {
       this.originalVerticesSquare.push(new THREE.Vector3(this.geometry.vertices[i].x, this.geometry.vertices[i].y, this.geometry.vertices[i].z));;
@@ -53,9 +55,9 @@ function HeightMap(options) {
   if (this.firstRun) {
     for (var i = 0; i < this.totalVerts; i++) {
       this.originalVertices.push(new THREE.Vector3(this.geometry.vertices[i].x, this.geometry.vertices[i].y, this.geometry.vertices[i].z));
-      this.geometry.vertices[i].x = Math.random() * 300 - 150;
-      this.geometry.vertices[i].y = Math.random() * 300 - 150;
-      this.geometry.vertices[i].z = Math.random() * 300 - 150;
+      this.geometry.vertices[i].x = Math.random() * 600 - 300;
+      this.geometry.vertices[i].y = Math.random() * 600 - 300;
+      this.geometry.vertices[i].z = Math.random() * 600 - 300;
     }
   };
 
@@ -64,23 +66,17 @@ function HeightMap(options) {
   this.el = group;
 
   this.start = function () {
-    console.log('heightmap start');
-
   };
 
   this.stop = function () {};
 
   this.on('ready', function () {
-    console.log('heightmap ready');
+
     this.ready = true;
     this.start = function () {
-      console.log('heightmap ready start');
-      console.log('rotateHorTween'  + rotateHorTween);
-      console.log('this.theIdleTween: '  +  this.theIdleTween);
-    
-      
+      //console.log('heightmap start start start rotateHorTween: ' + rotateHorTween)
       if (!rotateHorTween) {
-        rotateLeft();
+        rotateRight();
         rotateUp();
       } else {
         this.theIdleTween.resume();
@@ -89,18 +85,17 @@ function HeightMap(options) {
       }
     };
     this.stop = function () {
-      console.log('heightmap ready stop');
       this.theIdleTween.pause();
-      console.log('rotateHorTween pause');
       rotateHorTween.pause();
       rotateVertTween.pause();
     };
   }.bind(this));
 
   var thisRotation = this.el.rotation;
-  
+
   var rotateHorTween;
   var rotateLeft = function () {
+    ////console.log('rotateLeft');
     rotateHorTween = tweenMax.to(thisRotation, 20, {
       ease: Power2.easeInOut,
       y: .25,
@@ -108,7 +103,7 @@ function HeightMap(options) {
     });
   }
   var rotateRight = function () {
-
+    //console.log('rotateRight');
     rotateHorTween = tweenMax.to(thisRotation, 20, {
       ease: Power2.easeInOut,
       y: -.25,
@@ -197,8 +192,11 @@ HeightMap.prototype.getLines = function () {
 };
 
 var tweenCounter = -1;
-var tweenPauseTime = 0;
+var tweenPauseTime = 1;
 HeightMap.prototype.getIdleTween = function () {
+  //console.log('');
+  //console.log('getIdleTween tweenCounter:' + tweenCounter);
+  //console.log('getIdleTween tweenPauseTime:' + tweenPauseTime);
   var _this = this;
   return tweenMax.to({}, tweenPauseTime, {
     paused: false,
@@ -210,64 +208,64 @@ HeightMap.prototype.getIdleTween = function () {
       switch (tweenCounter) {
         case -1:
           tweenPauseTime = .35;
-          //     console.log('H hold: ' + tweenPauseTime);
+               //console.log('H hold: ' + tweenPauseTime);
           break;
         case 0:
           tweenPauseTime = .35;
-          //   console.log('He hold: ' + tweenPauseTime);
+             //console.log('He hold: ' + tweenPauseTime);
           break;
         case 1:
           tweenPauseTime = .35;
-          //  console.log('Hel hold: ' + tweenPauseTime);
+            //console.log('Hel hold: ' + tweenPauseTime);
           break;
         case 2:
           tweenPauseTime = .35;
-          //   console.log('Hell hold: ' + tweenPauseTime);
+             //console.log('Hell hold: ' + tweenPauseTime);
           break;
         case 3:
           tweenPauseTime = .35;
-          //  console.log('Hello hold: ' + tweenPauseTime);
+            //console.log('Hello hold: ' + tweenPauseTime);
           break;
         case 4:
           tweenPauseTime = 4;
-          // console.log('Friend hold: ' + tweenPauseTime);
+           //console.log('Friend hold: ' + tweenPauseTime);
           break;
         case 5:
           tweenPauseTime = .5;
-          // console.log('blank5 hold: ' + tweenPauseTime);
+           //console.log('blank5 hold: ' + tweenPauseTime);
           break;
         case 6:
           tweenPauseTime = .65;
-          // console.log('I hold: ' + tweenPauseTime);
+           //console.log('I hold: ' + tweenPauseTime);
           break;
         case 7:
           tweenPauseTime = .65;
-          //  console.log('AM hold: ' + tweenPauseTime);
+            //console.log('AM hold: ' + tweenPauseTime);
           break;
         case 8:
-          tweenPauseTime = 3;
-          //  console.log('A hold: ' + tweenPauseTime);
+          tweenPauseTime = 2;
+            //console.log('A hold: ' + tweenPauseTime);
           break;
         case 9:
           tweenPauseTime = 6;
-          //  console.log('DEVELOPER hold: ' + tweenPauseTime);
+            //console.log('DEVELOPER hold: ' + tweenPauseTime);
           break;
         case 10:
           tweenPauseTime = .5;
-          //   console.log('Blank hold: ' + tweenPauseTime);
+             //console.log('Blank hold: ' + tweenPauseTime);
           break;
         case 11:
           tweenPauseTime = 4;
-          //  console.log('face hold: ' + tweenPauseTime);
+            //console.log('face hold: ' + tweenPauseTime);
           break;
         case 12:
           tweenCounter = -2;
           tweenPauseTime = 1;
-          //  console.log('default 12 hold: ' + tweenPauseTime);
+            //console.log('default 12 hold: ' + tweenPauseTime);
           break;
         default:
           tweenPauseTime = 1;
-          //   console.log('default hold: ' + tweenPauseTime);
+             //console.log('default hold: ' + tweenPauseTime);
           break;
       }
       _this.applyMap();
@@ -309,11 +307,13 @@ HeightMap.prototype.loadMaps = function () {
   var _this = this;
 
   function loadMap(map, index) {
+    //console.log('loadMap: ' + index);
     loader.load(map.url, function (image) {
       addMap(map.name, image);
       loaded++;
       if (loaded === 1) {
-        _this.current = index;
+        _this.current = 0;
+        //console.log('loadMap');
         _this.applyMap();
       }
       if (loaded === total) {
@@ -327,15 +327,18 @@ HeightMap.prototype.loadMaps = function () {
   }
 };
 HeightMap.prototype.applyMap = function () {
-  // console.log('applyMap');
   var previousName = typeof this.previous === 'undefined' ? 'default' :
-    this.parameters.maps[this.previous].name;
+  this.parameters.maps[this.previous].name;
   var currentName = this.parameters.maps[this.current].name;
   var previousData = this.data[previousName];
   var currentData = this.data[currentName];
   var thisTweenTime = 2;
   var _this = this;
   var thisEase = Power1.easeOut;
+  //console.log('applyMap currentName : ' + currentName);
+  //console.log('applyMap this.current : ' + this.current);
+  
+  //console.log('tweenCounter: ' + tweenCounter);
   var updateFun = function () {
     for (var i = 0, j = _this.totalVerts; i < j; i++) {
       var vertex = _this.geometry.vertices[i];
@@ -368,6 +371,7 @@ HeightMap.prototype.applyMap = function () {
   };
 
   var updateFirstInt = function () {
+    //console.log('updateFirstInt');
     _this.loops += 25;
     _this.tweenSpeed *= 1.02;
     for (var i = 0, j = _this.totalVerts; i < j; i++) {
@@ -415,81 +419,86 @@ HeightMap.prototype.applyMap = function () {
         ease: Elastic.easeInOut,
         onUpdate: updateStretchy,
         onComplete: function () {
+          //console.log('this is the end of stretchy: time for maps and menu');
+          _this.start();
           _this.firstRun = false;
           _this.theIdleTween = _this.getIdleTween();
+      
+          _this.whenCompleteFunction();
         }
       });
     }
   };
+  this.applyMap.updateFirstInt = updateFirstInt;
   if (!this.firstRun) {
     thisEase = Power1.easeOut;
     switch (tweenCounter) {
       case -1:
-        thisTweenTime = .35;
-        //    console.log('H tweenTime: ' + thisTweenTime);
+        thisTweenTime = .3;
+           //console.log('H tweenTime: ' + thisTweenTime);
         break;
       case 0:
         thisTweenTime = .3;
-        //    console.log('He tweenTime: ' + thisTweenTime);
+            //console.log('He tweenTime: ' + thisTweenTime);
         break;
       case 1:
-        thisTweenTime = .25;
-        //    console.log('Hel tweenTime: ' + thisTweenTime);
+        thisTweenTime = .3;
+            //console.log('Hel tweenTime: ' + thisTweenTime);
         break;
       case 2:
-        thisTweenTime = .2;
-        //    console.log('Hell tweenTime: ' + thisTweenTime);
+        thisTweenTime = .3;
+            //console.log('Hell tweenTime: ' + thisTweenTime);
         break;
       case 3:
-        thisTweenTime = .15;
-        // console.log('Hello tweenTime: ' + thisTweenTime);
+        thisTweenTime = .3;
+         //console.log('Hello tweenTime: ' + thisTweenTime);
         break;
       case 4:
         thisEase = Elastic.easeOut;
         thisTweenTime = 3.25;
-        //   console.log('Friend tweenTime: ' + thisTweenTime);
+           //console.log('Friend tweenTime: ' + thisTweenTime);
         break;
       case 5:
-        //  console.log('Blank5 tweenTime: ' + thisTweenTime);
+          //console.log('Blank5 tweenTime: ' + thisTweenTime);
         thisTweenTime = .5;
         break;
       case 6:
         thisTweenTime = .65;
         thisEase = Power1.easeIn;
-        //   console.log('I tweenTime: ' + thisTweenTime);
+           //console.log('I tweenTime: ' + thisTweenTime);
         break;
       case 7:
         thisEase = Power1.easeIn;
         thisTweenTime = .65;
-        //   console.log('AM tweenTime: ' + thisTweenTime);
+           //console.log('AM tweenTime: ' + thisTweenTime);
         break;
       case 8:
         thisEase = Power1.easeIn;
         thisTweenTime = .65;
-        //  console.log('A tweenTime: ' + thisTweenTime);
+          //console.log('A tweenTime: ' + thisTweenTime);
         break;
       case 9:
         thisTweenTime = 2.65;
         thisEase = Power1.easeOut;
-        //   console.log('DEVELOPER tweenTime: ' + thisTweenTime);
+        //console.log('DEVELOPER tweenTime: ' + thisTweenTime);
         break;
       case 10:
         thisEase = Power1.easeOut;
         thisTweenTime = .5;
-        // console.log('blank10 tweenTime: ' + thisTweenTime);
+         //console.log('blank10 tweenTime: ' + thisTweenTime);
         break;
       case 11:
         thisEase = Power1.easeOut;
         thisTweenTime = 1.5;
-        //     console.log('face tweenTime: ' + thisTweenTime);
+             //console.log('face tweenTime: ' + thisTweenTime);
         break;
       case 12:
         thisTweenTime = 4;
-        //   console.log('blank12 tweenTime: ' + thisTweenTime);
+           //console.log('blank12 tweenTime: ' + thisTweenTime);
         break;
       default:
         thisTweenTime = 1;
-        //   console.log('default tweenTime: ' + thisTweenTime);
+           //console.log('default tweenTime: ' + thisTweenTime);
         break;
     }
     //  console.log('thisEase: '+ thisEase);
@@ -502,16 +511,24 @@ HeightMap.prototype.applyMap = function () {
     });
     this.previous = this.current;
   } else {
-    this.loops = 0;
-    this.tweenSpeed = .01;
-    this.introAnimationInterval;
-    var startIntro = function () {
-      _this.introAnimationInterval = setInterval(updateFirstInt, 25);
-    }
-    // console.log('starting animation in 3.5 secs:')
-    setTimeout(startIntro, 3500)
+    //console.log('HERE is where it was was');
+    //this.startItUp();
   }
 };
+HeightMap.prototype.startItUp = function (whenCompleteFunction) {
+  //console.log('starting animation in 1 secs:')
+  this.whenCompleteFunction = whenCompleteFunction;
+  var _this = this;
+  this.loops = 0;
+  this.tweenSpeed = .01;
+
+  var startIntro = function () {
+    //console.log('startIntro.startItUp');
+    _this.introAnimationInterval = setInterval(_this.applyMap.updateFirstInt, 25);
+  }
+  setTimeout(startIntro, 1000)
+
+}
 
 HeightMap.prototype.setColors = function () {
   if (this.lines) {

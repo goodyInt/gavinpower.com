@@ -2,8 +2,6 @@
 
 var Section = require('../classes/SectionClass');
 
-//var Smoke = require('../objects/SmokeObject');
-
 var HeightMap = require('../objects/HeightMapObject');
 
 var introSection = new Section('intro');
@@ -31,30 +29,31 @@ var heightMap = new HeightMap({
   plane: false,
   points: true,
   maps: [
-    { name: 'start', url: './img/heightMap/heightMap-start.jpg' },
+    { name: 'blackScreen', url: './img/heightMap/heightMap-black.jpg' },
     { name: 'H', url: './img/heightMap/heightMap-H.jpg' },
     { name: 'HE', url: './img/heightMap/heightMap-HE.jpg' },
     { name: 'HEL', url: './img/heightMap/heightMap-HEL.jpg' },
     { name: 'HELL', url: './img/heightMap/heightMap-HELL.jpg' },
     { name: 'Hello', url: './img/heightMap/heightMap-hello.jpg' },
-    { name: 'P&G', url:  agencyURL},
-    { name: 'restart', url: './img/heightMap/heightMap-restart.jpg' },
+    { name: 'agency', url:  agencyURL},
+    { name: 'whiteScreen', url: './img/heightMap/heightMap-white.jpg' },
     { name: 'I', url: './img/heightMap/heightMap-I.jpg' },
     { name: 'AM', url: './img/heightMap/heightMap-AM.jpg' },
     { name: 'A', url: './img/heightMap/heightMap-A.jpg' },
     { name: 'Developer', url: './img/heightMap/heightMap-developer.jpg' },
-    { name: 'break', url: './img/heightMap/heightMap-break.jpg' },
+    { name: 'blackScreen2', url: './img/heightMap/heightMap-black.jpg' },
     { name: 'Gav', url: './img/heightMap/heightMap-GavMimeDark.jpg' }
   ]
 });
 
 heightMap.el.position.z = -30;
-heightMap.el.rotation.y = 0.35;
+heightMap.el.rotation.y = 0.25;
 heightMap.el.rotation.x = 0.1;
+heightMap.el.visible = false;
 introSection.add(heightMap.el);
 
 var text = new TextPanel(
-  'Hi',
+  'with a degree... -->',
   {
     align: 'right',
     style: '',
@@ -65,31 +64,27 @@ var text = new TextPanel(
 text.el.position.set(-30, 0, 10);
 text.el.rotation.y = .75;
 
-heightMap.el.visible = false;
-
 introSection.onIn(function () {
-  console.log('introSection onIn');
+  console.log('introSection.onIn()');
   text.in();
 });
 
 introSection.onOut(function (way) {
-  console.log('introSection onOut');
+  console.log('introSection.onOut()');
   text.out(way);
   heightMap.stop();
-  console.log('');
 });
 
 introSection.onStart(function () {
-  console.log('introSection onStart');
+  console.log('introSection.onStart');
   if (!heightMap.ready) {
     return false;
   }
   heightMap.start();
-
 });
 
 introSection.onStop(function () {
-  console.log('introSection onStop')
+  console.log('introSection.onStop()')
   if (!heightMap.ready) {
     return false;
   }
@@ -97,62 +92,19 @@ introSection.onStop(function () {
 });
 
 introSection.show = function () {
-  console.log('introSection show');
+  console.log('introSection.show()');
   heightMap.el.visible = true;
 };
-introSection.start = function () {
-  console.log('introSection start heightMap: ' + heightMap);
-  heightMap.start();
+
+introSection.startUpFirstTime = function (mainFunction) {
+  console.log('introSection.startUpFirstTime()');
+  heightMap.startItUp(mainFunction);
 };
 
 introSection.hide = function () {
-  console.log('introSection hide');
+  console.log('introSection.hide()');
   heightMap.el.visible = false;
 };
 
-////////////////////////
-/*
-var introSmoke = new Smoke({  
-  frontColor: '#eb0013',
-  backColor: '#eb0013',
-  layers: 3,
-  data: [
-    { positionX : 10.7, positionY: 3.9, positionZ: -47.8, rotationZ: 2.7, scale: 3.9 },
-    { positionX : -2.8, positionY: 2.6, positionZ: -44, rotationZ: 0.7, scale: 6.7 },
-    { positionX : 13, positionY: 19.5, positionZ: -44.3, rotationZ: 2, scale: 4.7 } 
-  ]
-});
-
-introSection.add(introSmoke.el);
-
-
-
-introSmoke.el.visible = false;
-
-var introSmokePlaying = false;
-
-introSection.smokeStart = function () {
-  if (introSmokePlaying) {
-    return false;
-  }
-  introSmokePlaying = true;
-  introSmoke.start();
-  introSmoke.el.visible = true;
-};
-
-introSection.smokeStop = function () {
-  if (!introSmokePlaying) {
-    return false;
-  }
-  introSmokePlaying = false;
-  introSmoke.stop();
-  introSmoke.el.visible = false;
-};
-
-introSection.updateColors = function (color1, color2) {
-  //introSmoke.updateColors(color1, color2);
-};
-*/
 introSection.add(text.el);
-
 module.exports = introSection;

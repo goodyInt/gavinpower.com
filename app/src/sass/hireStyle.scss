@@ -159,8 +159,8 @@ body {
 .menu {
   position: absolute;
   z-index: 100;
-  top: 30px;
-  left: 30px;
+  top: 0px;
+  left: -30px;
   height: 60px;
   opacity: 0;
   background-color: #0a0a0a;
@@ -178,11 +178,8 @@ body {
   height: 30px;
   margin-top: -10px;
   opacity: .5;
-  background-color: #0a0a0a;
- 
+  background-color: #0a0a0a; 
 }
-
-
 
 .menuButtonLine {
   position: absolute;

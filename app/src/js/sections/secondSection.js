@@ -1,6 +1,7 @@
 'use strict';
 
 var Section = require('../classes/SectionClass');
+var CreativeWriting = require('../objects/CreativeWritingObject');
 
 var animatedSprite = require('../objects/AnimatedSpriteObject');
 var Smoke = require('../objects/SmokeObject');
@@ -10,10 +11,10 @@ var secondSection = new Section('second');
 var secondAnimatedText = new animatedSprite();
 secondAnimatedText.out();
 
-var secondSmoke = new Smoke({  
+var creativeWriting = new CreativeWriting();
+creativeWriting.addWriting();
 
-  //frontColor: '#00ff00',
- // backColor: '#00ff00',
+var secondSmoke = new Smoke({  
 
   frontColor: '#d1ff55',
   backColor: '#d1ff55',
@@ -26,31 +27,34 @@ var secondSmoke = new Smoke({
   ]
 });
 
-secondSection.add(secondSmoke.el);
-secondSection.add(secondAnimatedText.el);
+//secondSection.add(secondSmoke.el);
+//secondSection.add(secondAnimatedText.el);
 
 secondSmoke.el.visible = false;
 
 secondSection.onIn(function () {
-  secondAnimatedText.in();
+  console.log('secondSection.onIn');
+  //secondAnimatedText.in();
 });
 
 secondSection.onOut(function () {
-  secondAnimatedText.out();
+  console.log('secondSection.onOut');
+  //secondAnimatedText.out();
 });
 
 secondSection.onStart(function () {
-  secondAnimatedText.start();
+  console.log('secondSection.onStart');
+  //secondAnimatedText.start();
 });
 
 secondSection.onStop(function () {
-  secondAnimatedText.stop();
+  console.log('secondSection.onStop');
+  //secondAnimatedText.stop();
 });
 
 var secondSmokePlaying = false;
 
 secondSection.smokeStart = function () {
-  
   if (secondSmokePlaying) {
     return false;
   }

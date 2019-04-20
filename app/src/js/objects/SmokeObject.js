@@ -21,7 +21,6 @@ var random = require('../utils/randomUtil');
 function Smoke(options) {
   var parameters = jQuery.extend(Smoke.defaultOptions, options);
 
-  //var texture = new THREE.ImageUtils.loadTexture('./img/sprite-smoke.png');
   var texture = new THREE.TextureLoader().load('./img/fireConvert.png');
   texture.flipY = false;
 

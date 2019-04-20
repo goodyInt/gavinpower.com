@@ -53,7 +53,7 @@ var SCENE = (function () {
 
     // general
     var isLocked = false; // used to prevent additional event when slide() called from outside
-    var isActive  = false;
+    var isActive = false;
     var isStarted = false;
 
     // camera
@@ -254,6 +254,9 @@ var SCENE = (function () {
       var rangeX = [-100, 100];
       var rangeY = [-100, 100];
       var rangeZ = [0, -1400];
+      var stripsRangeX = [-50, 50];
+      var stripsRangeY = [-80, 80];
+      var stripsRangeZ = [-50, 0];
       var numOfParticles = 750;
       var numOfLines = 150;
 
@@ -261,6 +264,9 @@ var SCENE = (function () {
         rangeX: rangeX,
         rangeY: rangeY,
         rangeZ: rangeZ,
+        stripsRangeX: stripsRangeX,
+        stripsRangeY: stripsRangeY,
+        stripsRangeZ: stripsRangeZ,
         count: numOfParticles,
         strips: false,
         color1: '#ffffff',
@@ -271,13 +277,19 @@ var SCENE = (function () {
       rangeX = [-50, 50];
       rangeY = [parameters.sectionHeight, -parameters.sectionHeight];
       rangeZ = [-100, 100];
-      numOfParticles = 600;
+      numOfParticles = 400;
       numOfLines = 100;
+      stripsRangeX = [-50, 50];
+      stripsRangeY = [-80, 80];
+      stripsRangeZ = [-80, -45];
 
       theBackgroundParticles = new BackgroundParticles({
         rangeX: rangeX,
         rangeY: rangeY,
         rangeZ: rangeZ,
+        stripsRangeX: stripsRangeX,
+        stripsRangeY: stripsRangeY,
+        stripsRangeZ: stripsRangeZ,
         count: numOfParticles,
         strips: true,
         color1: '#eb0013',
@@ -298,14 +310,28 @@ var SCENE = (function () {
       backgroundLines.el.position.y = sectionLocations[0].y;
       backgroundLines.el.position.z = sectionLocations[0].z;
       //
+      rangeX = [-50, 50];
+      rangeY = [parameters.sectionHeight, -parameters.sectionHeight];
+      rangeZ = [-100, 100];
+      numOfParticles = 600;
+      numOfLines = 100;
+      stripsRangeX = [-50, 50];
+      stripsRangeY =  [-80, 80];
+      stripsRangeZ = [-50, 0];
+
       theBackgroundParticles2 = new BackgroundParticles({
         rangeX: rangeX,
         rangeY: rangeY,
         rangeZ: rangeZ,
+        stripsRangeX: stripsRangeX,
+        stripsRangeY: stripsRangeY,
+        stripsRangeZ: stripsRangeZ,
         count: numOfParticles,
         strips: true,
-        color1: '#e9b700',
-        color2: '#b5f900'
+        // color1: '#e9b700',
+        //color2: '#b5f900'
+        color1: '#ffffff',
+        color2: '#ffffff'
       });
       // 0xe9b700,0xb5f900,0x7bff55,0x5400f9,0xd1ff55
       scene.add(theBackgroundParticles2.el);
@@ -326,10 +352,13 @@ var SCENE = (function () {
         rangeX: rangeX,
         rangeY: rangeY,
         rangeZ: rangeZ,
+        stripsRangeX: stripsRangeX,
+        stripsRangeY: stripsRangeY,
+        stripsRangeZ: stripsRangeZ,
         count: numOfParticles,
         strips: true,
         color1: '#78ff37',
-        color2: '#00f358' 
+        color2: '#00f358'
         //  4) 0xe4ff77,0x78ff37,0xf358,0xcb37ff,0xc6ffaa
       });
 
@@ -353,6 +382,9 @@ var SCENE = (function () {
         rangeX: rangeX,
         rangeY: rangeY,
         rangeZ: rangeZ,
+        stripsRangeX: stripsRangeX,
+        stripsRangeY: stripsRangeY,
+        stripsRangeZ: stripsRangeZ,
         count: numOfParticles,
         strips: true,
         color1: '#00d4ed',
@@ -379,6 +411,9 @@ var SCENE = (function () {
         rangeX: rangeX,
         rangeY: rangeY,
         rangeZ: rangeZ,
+        stripsRangeX: stripsRangeX,
+        stripsRangeY: stripsRangeY,
+        stripsRangeZ: stripsRangeZ,
         count: numOfParticles,
         strips: true,
         color1: '#a800e9',
@@ -406,6 +441,9 @@ var SCENE = (function () {
         rangeX: rangeX,
         rangeY: rangeY,
         rangeZ: rangeZ,
+        stripsRangeX: stripsRangeX,
+        stripsRangeY: stripsRangeY,
+        stripsRangeZ: stripsRangeZ,
         count: numOfParticles,
         strips: true,
         color1: '#ea006f',
@@ -429,6 +467,9 @@ var SCENE = (function () {
         rangeX: rangeX,
         rangeY: rangeY,
         rangeZ: rangeZ,
+        stripsRangeX: stripsRangeX,
+        stripsRangeY: stripsRangeY,
+        stripsRangeZ: stripsRangeZ,
         count: numOfParticles,
         strips: true,
         color1: '#ff1536',
@@ -612,7 +653,8 @@ var SCENE = (function () {
         tweenMax.to({
           fov: 190,
           speed: 0
-        }, 2, {delay:.35,
+        }, 2, {
+          delay: .35,
           bezier: {
             type: 'soft',
             values: [{

@@ -52,6 +52,7 @@ function Menu() {
     in: function () {
       $el.animate({
         top: 0,
+        left: 30,
         opacity: 1
       }, 500);
     },

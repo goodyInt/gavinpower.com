@@ -49,9 +49,12 @@ function BackgroundParticles(options) {
     for (var i = 0; i < parameters.stripsCount; i++) {
       var stripMesh = new THREE.Mesh(stripGeometry, stripMaterial);
       stripMesh.position.set(
-        random(-50, 50),
-        random(parameters.rangeY[0], parameters.rangeY[1]),
-        random(-50, 0)
+
+        
+        random(parameters.stripsRangeX[0], parameters.stripsRangeX[1]),
+        random(parameters.stripsRangeY[0], parameters.stripsRangeY[1]),
+        random(parameters.stripsRangeZ[0], parameters.stripsRangeZ[1])
+       
       );
       stripMesh.scale.set(
         random(0.5, 1),
@@ -72,8 +75,11 @@ BackgroundParticles.defaultOptions = {
   rangeX: [-100, 100],
   rangeY: [-100, 100],
   rangeZ: [-100, 100],
+  stripsRangeX: [-50, 50],
+  stripsRangeY: [-80, 80],
+  stripsRangeZ: [-50, 0],
   strips: true,
-  stripsCount: 10,
+  stripsCount: 15,
   color1: '#ffffff',
   color2: '#ffffff'
 

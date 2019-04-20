@@ -15,23 +15,7 @@ var menu = new Menu();
 var loader = new Loader();
 
 var imagesLoader = new ImagesLoader([
-  './img/sprite-none-shrunk2.png',
-  './img/glitchSpriteBW.png',
-  './img/fireConvert.png',
-  './img/heightMap/heightMap-start.jpg',
-  './img/heightMap/heightMap-H.jpg',
-  './img/heightMap/heightMap-HE.jpg',
-  './img/heightMap/heightMap-HEL.jpg',
-  './img/heightMap/heightMap-HELL.jpg',
-  './img/heightMap/heightMap-hello.jpg',
-  './img/heightMap/heightMap-helloFriend.jpg',
-  './img/heightMap/heightMap-restart.jpg',
-  './img/heightMap/heightMap-I.jpg',
-  './img/heightMap/heightMap-AM.jpg',
-  './img/heightMap/heightMap-A.jpg',
-  './img/heightMap/heightMap-developer.jpg',
-  './img/heightMap/heightMap-break.jpg',
-  './img/heightMap/heightMap-Gav.jpg'
+  './img/heightMap/heightMap-white.jpg'
 ]);
 
 // preload
@@ -43,13 +27,19 @@ imagesLoader.onComplete(function () {
   loader.out();
   tweenMax.delayedCall(0.8, SCENE.in);
   tweenMax.delayedCall(1.5, function () {
-    map.in();
-    menu.in();
     introSection.show();
-    introSection.in();
-    introSection.start();
+    introSection.startUpFirstTime(function () {
+      map.$el.show();
+      map.in();
+      menu.in();
+      console.log('all set in main - bring in the map')
+    });
+
   });
 });
+
+
+
 
 menu.onClick(function () {
   var $el = jQuery(this);
@@ -88,7 +78,7 @@ SCENE.addSections([
 ]);
 
 SCENE.on('section:changeBegin', function () {
-  
+
   var way = this.way;
   var to = this.to.name;
   var from = this.from.name;
@@ -97,8 +87,10 @@ SCENE.on('section:changeBegin', function () {
   console.log('changeBegin from: ' + from);
   switch (to) {
     case 'intro':
-      introSection.in();
-      introSection.start();
+      if (from !== 'intro') {
+        introSection.in();
+        introSection.start();
+      }
       break;
     case 'second':
       secondSection.in();
@@ -206,6 +198,8 @@ SCENE.on('section:changeComplete', function () {
 var map = SCENE.getMap();
 $app.prepend(map.$el);
 map.init();
+map.visible = false;
+map.$el.hide();
 
 map.onClick(function (index) {
   SCENE.goTo(index);
