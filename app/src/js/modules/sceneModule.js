@@ -147,12 +147,9 @@ var SCENE = (function () {
       function onScroll(event) {
 
         var dist = camera.position.z - sections[currentIndex].el.position.z;
-        console.log('dist:' + dist);
-        console.log('event.originalEvent.wheelDelta: ' + event.originalEvent.wheelDelta);
-        if (event.originalEvent.wheelDelta > 0) {
+        var zSpeed = event.originalEvent.wheelDelta * .01;
+        if (zSpeed > 0) {
           if (dist > 0) {
-            var zSpeed = event.originalEvent.wheelDelta * .01;
-
             theAtmosphereParticles.el.position.z += zSpeed;
             theBackgroundParticles.el.position.z += zSpeed;
             backgroundLines.el.position.z += zSpeed;
@@ -175,15 +172,9 @@ var SCENE = (function () {
             sections[4].el.position.z += zSpeed;
             sections[5].el.position.z += zSpeed;
             sections[6].el.position.z += zSpeed;
-            //    console.log('camera.position.z: ' + camera.position.z)
-            // console.log('sections[currentIndex].el.position.z: ' + sections[currentIndex].el.position.z);
-            //  console.log('theBackgroundParticles.el.position.z: ' + theBackgroundParticles.el.position.z ); 
-            //  console.log(camera.position.z - sections[currentIndex].el.position.z);
           }
-        }else{
+        } else {
           if (dist < 120) {
-            var zSpeed = event.originalEvent.wheelDelta * .01;
-
             theAtmosphereParticles.el.position.z += zSpeed;
             theBackgroundParticles.el.position.z += zSpeed;
             backgroundLines.el.position.z += zSpeed;
@@ -206,12 +197,7 @@ var SCENE = (function () {
             sections[4].el.position.z += zSpeed;
             sections[5].el.position.z += zSpeed;
             sections[6].el.position.z += zSpeed;
-            //    console.log('camera.position.z: ' + camera.position.z)
-            // console.log('sections[currentIndex].el.position.z: ' + sections[currentIndex].el.position.z);
-            //  console.log('theBackgroundParticles.el.position.z: ' + theBackgroundParticles.el.position.z ); 
-            //  console.log(camera.position.z - sections[currentIndex].el.position.z);
           }
-
         }
         return false;
       }
