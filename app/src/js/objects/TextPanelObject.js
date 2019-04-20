@@ -117,6 +117,7 @@ function TextPanel (text, options) {
   this.in = function () {
     tweenMax.to(cache, 1.5, { y: 0, opacity: 1,
       onStart: function () { group.visible = true; },
+      ease:  Power1.easeOut,
       onUpdate: update
     });
   };

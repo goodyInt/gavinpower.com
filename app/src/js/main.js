@@ -23,23 +23,29 @@ imagesLoader.start();
 imagesLoader.onProgress(function (percent) {
   loader.update(percent);
 });
+
 imagesLoader.onComplete(function () {
+ 
   loader.out();
   tweenMax.delayedCall(0.8, SCENE.in);
   tweenMax.delayedCall(1.5, function () {
+    //console.log(introSection);
     introSection.show();
+    var thisIntroSection = introSection;
     introSection.startUpFirstTime(function () {
+     // console.log(thisIntroSection);
       map.$el.show();
       map.in();
       menu.in();
+     
       console.log('all set in main - bring in the map')
+     // thisIntroSection.textIn();
+      //console.log(theIntroSection);
+     
     });
 
   });
 });
-
-
-
 
 menu.onClick(function () {
   var $el = jQuery(this);

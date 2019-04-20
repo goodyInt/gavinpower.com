@@ -85,7 +85,7 @@ var SCENE = (function () {
         z: 0
       },
       {
-        x: 100,
+        x: 200,
         y: 50,
         z: -200
       },
@@ -144,53 +144,75 @@ var SCENE = (function () {
       }
 
       // scroll
-      var newDate;
-      var oldDate = new Date();
-      var colorUpdated = false;
-
       function onScroll(event) {
 
-        var zSpeed = event.originalEvent.wheelDelta * .01;
-        theAtmosphereParticles.el.position.z += zSpeed;
-        theBackgroundParticles.el.position.z += zSpeed;
-        backgroundLines.el.position.z += zSpeed;
-        theBackgroundParticles2.el.position.z += zSpeed;
-        backgroundLines2.el.position.z += zSpeed;
-        theBackgroundParticles3.el.position.z += zSpeed;
-        backgroundLines3.el.position.z += zSpeed;
-        theBackgroundParticles4.el.position.z += zSpeed;
-        backgroundLines4.el.position.z += zSpeed;
-        theBackgroundParticles5.el.position.z += zSpeed;
-        backgroundLines5.el.position.z += zSpeed;
-        theBackgroundParticles6.el.position.z += zSpeed;
-        backgroundLines6.el.position.z += zSpeed;
-        theBackgroundParticles7.el.position.z += zSpeed;
-        backgroundLines7.el.position.z += zSpeed;
+        var dist = camera.position.z - sections[currentIndex].el.position.z;
+        console.log('dist:' + dist);
+        console.log('event.originalEvent.wheelDelta: ' + event.originalEvent.wheelDelta);
+        if (event.originalEvent.wheelDelta > 0) {
+          if (dist > 0) {
+            var zSpeed = event.originalEvent.wheelDelta * .01;
 
-        sections[0].el.position.z += zSpeed;
-        sections[1].el.position.z += zSpeed;
-        sections[2].el.position.z += zSpeed;
-        sections[3].el.position.z += zSpeed;
-        sections[4].el.position.z += zSpeed;
-        sections[5].el.position.z += zSpeed;
-        sections[6].el.position.z += zSpeed;
-
-        if (!colorUpdated) {
-          colorUpdated = true;
-          //theBackgroundParticles.updateColor('#6666ff', '#6666ff');
-          //sections[currentIndex].updateColors('#6666ff', '#6666ff');
-        }
-        newDate = new Date();
-        var elapsed = newDate.getTime() - oldDate.getTime();
-        // handle scroll smoothing (mac trackpad for instance)
-        if (elapsed > 50 && !isScrolling) {
-          if (event.originalEvent.detail > 0 || event.originalEvent.wheelDelta < 0) {
-            //next();
-          } else {
-            //prev();
+            theAtmosphereParticles.el.position.z += zSpeed;
+            theBackgroundParticles.el.position.z += zSpeed;
+            backgroundLines.el.position.z += zSpeed;
+            theBackgroundParticles2.el.position.z += zSpeed;
+            backgroundLines2.el.position.z += zSpeed;
+            theBackgroundParticles3.el.position.z += zSpeed;
+            backgroundLines3.el.position.z += zSpeed;
+            theBackgroundParticles4.el.position.z += zSpeed;
+            backgroundLines4.el.position.z += zSpeed;
+            theBackgroundParticles5.el.position.z += zSpeed;
+            backgroundLines5.el.position.z += zSpeed;
+            theBackgroundParticles6.el.position.z += zSpeed;
+            backgroundLines6.el.position.z += zSpeed;
+            theBackgroundParticles7.el.position.z += zSpeed;
+            backgroundLines7.el.position.z += zSpeed;
+            sections[0].el.position.z += zSpeed;
+            sections[1].el.position.z += zSpeed;
+            sections[2].el.position.z += zSpeed;
+            sections[3].el.position.z += zSpeed;
+            sections[4].el.position.z += zSpeed;
+            sections[5].el.position.z += zSpeed;
+            sections[6].el.position.z += zSpeed;
+            //    console.log('camera.position.z: ' + camera.position.z)
+            // console.log('sections[currentIndex].el.position.z: ' + sections[currentIndex].el.position.z);
+            //  console.log('theBackgroundParticles.el.position.z: ' + theBackgroundParticles.el.position.z ); 
+            //  console.log(camera.position.z - sections[currentIndex].el.position.z);
           }
+        }else{
+          if (dist < 120) {
+            var zSpeed = event.originalEvent.wheelDelta * .01;
+
+            theAtmosphereParticles.el.position.z += zSpeed;
+            theBackgroundParticles.el.position.z += zSpeed;
+            backgroundLines.el.position.z += zSpeed;
+            theBackgroundParticles2.el.position.z += zSpeed;
+            backgroundLines2.el.position.z += zSpeed;
+            theBackgroundParticles3.el.position.z += zSpeed;
+            backgroundLines3.el.position.z += zSpeed;
+            theBackgroundParticles4.el.position.z += zSpeed;
+            backgroundLines4.el.position.z += zSpeed;
+            theBackgroundParticles5.el.position.z += zSpeed;
+            backgroundLines5.el.position.z += zSpeed;
+            theBackgroundParticles6.el.position.z += zSpeed;
+            backgroundLines6.el.position.z += zSpeed;
+            theBackgroundParticles7.el.position.z += zSpeed;
+            backgroundLines7.el.position.z += zSpeed;
+            sections[0].el.position.z += zSpeed;
+            sections[1].el.position.z += zSpeed;
+            sections[2].el.position.z += zSpeed;
+            sections[3].el.position.z += zSpeed;
+            sections[4].el.position.z += zSpeed;
+            sections[5].el.position.z += zSpeed;
+            sections[6].el.position.z += zSpeed;
+            //    console.log('camera.position.z: ' + camera.position.z)
+            // console.log('sections[currentIndex].el.position.z: ' + sections[currentIndex].el.position.z);
+            //  console.log('theBackgroundParticles.el.position.z: ' + theBackgroundParticles.el.position.z ); 
+            //  console.log(camera.position.z - sections[currentIndex].el.position.z);
+          }
+
         }
-        oldDate = new Date();
         return false;
       }
 
@@ -231,7 +253,7 @@ var SCENE = (function () {
       scene.add(light);
 
       camera = new THREE.PerspectiveCamera(190, width / height, 1, 4000);
-      camera.position.set(0, 0, 50);
+      camera.position.set(0, 0, 60);
 
       function onMouseMove(event) {
         mouseX = ((event.clientX / window.innerWidth) * 2 - 1);
@@ -316,7 +338,7 @@ var SCENE = (function () {
       numOfParticles = 600;
       numOfLines = 100;
       stripsRangeX = [-50, 50];
-      stripsRangeY =  [-80, 80];
+      stripsRangeY = [-80, 80];
       stripsRangeZ = [-50, 0];
 
       theBackgroundParticles2 = new BackgroundParticles({
@@ -561,7 +583,7 @@ var SCENE = (function () {
       tweenMax.to(cameraMuse, tweenTime, {
         x: nextPosition.x,
         y: nextPosition.y,
-        z: nextPosition.z - 50,
+        z: nextPosition.z - 60,
         ease: window.Quart.easeInOut
       });
     }

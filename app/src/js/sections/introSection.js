@@ -19,6 +19,7 @@ var sprites = {
   tbwa: './img/heightMap/heightMap-helloTBWA.jpg',
   churchandstate: './img/heightMap/heightMap-helloC+S.jpg'
 };
+
 if (sprites[HASH.hash]) {
   agencyURL = sprites[HASH.hash];
 } 
@@ -46,32 +47,37 @@ var heightMap = new HeightMap({
   ]
 });
 
-heightMap.el.position.z = -30;
+heightMap.el.position.z = -20;
 heightMap.el.rotation.y = 0.25;
-heightMap.el.rotation.x = 0.1;
+heightMap.el.rotation.x = 0.1;1
 heightMap.el.visible = false;
+
+
 introSection.add(heightMap.el);
 
 var text = new TextPanel(
-  'with a degree... -->',
+  'with a degree in... >>>',
   {
     align: 'right',
     style: '',
-    size: 50,
+    size: 65,
     lineSpacing: 40,
   }
 );
-text.el.position.set(-30, 0, 10);
-text.el.rotation.y = .75;
+text.el.position.set(20, 0, 0);
+text.el.rotation.y = .35;
+introSection.add(text.el);
 
 introSection.onIn(function () {
   console.log('introSection.onIn()');
-  text.in();
+ // text.in();
 });
+
+
 
 introSection.onOut(function (way) {
   console.log('introSection.onOut()');
-  text.out(way);
+ // text.out(way);
   heightMap.stop();
 });
 
@@ -96,9 +102,16 @@ introSection.show = function () {
   heightMap.el.visible = true;
 };
 
+introSection.textIn = function () {
+   text.in();
+};
+
+heightMap.setOnCompleteFunction(introSection.textIn);
+
 introSection.startUpFirstTime = function (mainFunction) {
   console.log('introSection.startUpFirstTime()');
   heightMap.startItUp(mainFunction);
+
 };
 
 introSection.hide = function () {
@@ -106,5 +119,6 @@ introSection.hide = function () {
   heightMap.el.visible = false;
 };
 
-introSection.add(text.el);
+
+
 module.exports = introSection;

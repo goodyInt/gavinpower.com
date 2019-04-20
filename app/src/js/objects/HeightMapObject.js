@@ -30,6 +30,9 @@ function HeightMap(options) {
   this.theIdleTween;
   this.introAnimationInterval;
   this.whenCompleteFunction;
+  this.completeAnimationFunction;
+
+
 
   if (this.firstRun) {
     for (var i = 0; i < this.totalVerts; i++) {
@@ -49,7 +52,7 @@ function HeightMap(options) {
 
   if (this.parameters.horizontal || this.parameters.vertical) {
     this.lines = this.getLines();
-    //  group.add(this.lines);
+   
   }
 
   if (this.firstRun) {
@@ -133,7 +136,7 @@ HeightMap.defaultOptions = {
   points: false,
   divisionsX: 66,
   divisionsY: 66,
-  fromColor: '#4c4c4c',
+  fromColor: '#2a2a2a',
   toColor: '#ffffff',
   maps: []
 };
@@ -251,16 +254,16 @@ HeightMap.prototype.getIdleTween = function () {
             //console.log('DEVELOPER hold: ' + tweenPauseTime);
           break;
         case 10:
-          tweenPauseTime = .5;
+          tweenPauseTime = 4.5;
              //console.log('Blank hold: ' + tweenPauseTime);
           break;
         case 11:
-          tweenPauseTime = 4;
+          tweenPauseTime = 10;
             //console.log('face hold: ' + tweenPauseTime);
           break;
         case 12:
           tweenCounter = -2;
-          tweenPauseTime = 1;
+          tweenPauseTime = 3;
             //console.log('default 12 hold: ' + tweenPauseTime);
           break;
         default:
@@ -423,7 +426,6 @@ HeightMap.prototype.applyMap = function () {
           _this.start();
           _this.firstRun = false;
           _this.theIdleTween = _this.getIdleTween();
-      
           _this.whenCompleteFunction();
         }
       });
@@ -484,12 +486,14 @@ HeightMap.prototype.applyMap = function () {
         break;
       case 10:
         thisEase = Power1.easeOut;
-        thisTweenTime = .5;
+        thisTweenTime = 1.5;
+        _this.completeAnimationFunction();
          //console.log('blank10 tweenTime: ' + thisTweenTime);
         break;
       case 11:
         thisEase = Power1.easeOut;
-        thisTweenTime = 1.5;
+        thisTweenTime = 5.5;
+      
              //console.log('face tweenTime: ' + thisTweenTime);
         break;
       case 12:
@@ -506,6 +510,7 @@ HeightMap.prototype.applyMap = function () {
       factor: 1
     }, thisTweenTime, {
       factor: 0,
+    
       ease: thisEase,
       onUpdate: updateFun
     });
@@ -528,6 +533,13 @@ HeightMap.prototype.startItUp = function (whenCompleteFunction) {
   }
   setTimeout(startIntro, 1000)
 
+}
+
+
+HeightMap.prototype.setOnCompleteFunction = function (theCompleteAnimationFunction) {
+  
+  this.completeAnimationFunction = theCompleteAnimationFunction;
+ 
 }
 
 HeightMap.prototype.setColors = function () {
