@@ -596,7 +596,9 @@ var SCENE = (function () {
           section.el.position.x = sectionLocations[i].x;
           section.el.position.y = sectionLocations[i].y;
           section.el.position.z = sectionLocations[i].z;
+          section.setPositions();
           scene.add(section.el);
+
         }
         setupBackground();
       },

@@ -72,4 +72,13 @@ sixthSection.updateColors = function (color1, color2) {
   sixthSmoke.updateColors(color1, color2);
 };
 
+sixthSection.setPositions = function () {
+  var thisPos= {x: sixthSection.el.position.x, y: sixthSection.el.position.y,z: sixthSection.el.position.z}
+  console.log('');
+  console.log('sixthSection.setPositions()');
+  console.log('x: ' + thisPos.x);
+  console.log('y: ' + thisPos.y);
+  console.log('z: ' + thisPos.z);
+};
+
 module.exports = sixthSection;

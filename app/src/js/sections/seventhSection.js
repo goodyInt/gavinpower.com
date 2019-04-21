@@ -9,6 +9,7 @@ var seventhSection = new Section('seventh');
 
 var seventhAnimatedText = new animatedSprite();
 
+
 var seventhSmoke = new Smoke({  
  
   frontColor: '#ff691d',
@@ -71,5 +72,17 @@ seventhSection.smokeStop = function () {
 seventhSection.updateColors = function (color1, color2) {
   seventhSmoke.updateColors(color1, color2);
 };
+
+seventhSection.setPositions = function () {
+  var thisPos= {x: seventhSection.el.position.x, y: seventhSection.el.position.y,z: seventhSection.el.position.z}
+  console.log('');
+  console.log('seventhSection.setPositions()');
+  console.log('x: ' + thisPos.x);
+  console.log('y: ' + thisPos.y);
+  console.log('z: ' + thisPos.z);
+  
+};
+
+
 
 module.exports = seventhSection;

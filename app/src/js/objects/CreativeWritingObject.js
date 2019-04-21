@@ -1,101 +1,134 @@
 'use strict';
-
 var THREE = require('three');
+var tweenMax = require('tweenMax');
 
-var outlineMaterial = require('../materials/customLinesMaterial');
+var linesMaterial = require('../materials/customLinesMaterial');
 
-function CreativeWriting () {
+function CreativeWriting() {
+  this.object = {};
+  
   console.log('CreativeWriting');
+  console.log('linesMaterial: ' + linesMaterial);
   this.el = new THREE.Object3D();
-  this.groups = {};
-  this.baseMaterial = new THREE.MeshLambertMaterial({ color: '#33ff33' });
+  this.thisRotation = this.el.rotation;
+  this.rotateHorTween;
+  this.rotateVertTween;
+  console.log(this.thisRotation);
+  var loader = new THREE.FontLoader();
+  var _this = this;
+  loader.load('fonts/[z] Arista_Regular.json', function (font) {
+    init(font);
+    //animate();
+  });
+
+  function init(font) {
+    var shaderMaterial = new THREE.ShaderMaterial({
+      uniforms: linesMaterial.uniforms,
+      vertexShader: linesMaterial.vertexShader,
+      fragmentShader: linesMaterial.fragmentShader,
+      blending: THREE.AdditiveBlending,
+      depthTest: false,
+      transparent: true
+    });
+
+    var geometry = new THREE.TextBufferGeometry('creative', {
+      font: font,
+      size: 25,
+      height: 5,
+      curveSegments: 5,
+      bevelThickness: 1,
+      bevelSize: .35,
+      bevelEnabled: true,
+      bevelSegments: 9
+    });
+
+    //geometry.center();
+    var count = geometry.attributes.position.count;
+    var displacement = new THREE.Float32BufferAttribute(count * 3, 3);
+    geometry.addAttribute('displacement', displacement);
+    var customColor = new THREE.Float32BufferAttribute(count * 3, 3);
+    geometry.addAttribute('customColor', customColor);
+    var color = new THREE.Color(0xffffff);
+    for (var i = 0, l = customColor.count; i < l; i++) {
+      color.setHSL(i / l, 0.5, 0.5);
+      color.toArray(customColor.array, i * customColor.itemSize);
+    }
+    _this.object = new THREE.Line(geometry, shaderMaterial);
+    _this.el.add(_this.object);
+    _this.object.visible = false;
+    console.log('_this.el.position.z:' + _this.el.position.z);
+  }
+  console.log(this.el);
+
+  var rotateLeft = function () {
+    ////console.log('rotateLeft');
+    _this.rotateHorTween = tweenMax.to(_this.thisRotation, 20, {
+      ease: Power2.easeInOut,
+      y: .25,
+      onComplete: rotateRight
+    });
+  }
+  var rotateRight = function () {
+    //console.log('rotateRight');
+    _this.rotateHorTween = tweenMax.to(_this.thisRotation, 20, {
+      ease: Power2.easeInOut,
+      y: -.25,
+      onComplete: rotateLeft
+    });
+  }
+
+  var rotateUp = function () {
+    _this.rotateVertTween = tweenMax.to(_this.thisRotation, 15, {
+      ease: Power2.easeInOut,
+      x: .25,
+      onComplete: rotateDown
+    });
+  }
+  var rotateDown = function () {
+    _this.rotateVertTween = tweenMax.to(_this.thisRotation, 15, {
+      ease: Power2.easeInOut,
+      x: -.15,
+      onComplete: rotateUp
+    });
+  }
+
+CreativeWriting.prototype.start = function () {
+  console.log(this);
+  console.log(this.rotateHorTween);
+  if (!this.rotateHorTween) {
+    rotateRight();
+    rotateUp();
+  } else {
+
+    this.rotateHorTween.resume();
+    this.rotateVertTween.resume();
+  }
+};
 
 }
 
+ 
+
+CreativeWriting.prototype.stop = function () {
+  console.log(this);
+  this.rotateHorTween.pause();
+  this.rotateVertTween.pause();
+};
+CreativeWriting.prototype.show = function () {
+  console.log('object');
+  console.log(this);
+
+  console.log(this.object)
+  // console.log(object);
+
+  this.object.visible = true;
+};
+CreativeWriting.prototype.hide = function () {
+  this.object.visible = false;
+};
+
 CreativeWriting.prototype.addWriting = function () {
   console.log('add the writing...');
-};
-
-CreativeWriting.prototype.addGroup = function (data) {
-  if (!this.groups[data.name]) {
-    this.groups[data.name] = new THREE.Object3D();
-  }
-
-  if (!data.outline) {
-    data.outline = {};
-  }
-
-  var groupName = data.name;
-
-  for (var objName in data.objs) {
-    if (data.objs.hasOwnProperty(objName)) {
-      var url = data.objs[objName];
-
-      if (!data.outline[objName]) {
-        data.outline[objName] = {};
-      }
-
-      var isSolid = data.outline[objName].solid ? true : false;
-      var offset = data.outline[objName].offset
-        ? data.outline[objName].offset
-        : 0.15;
-
-      this.loadObj(groupName, url, offset, isSolid);
-    }
-  }
-};
-
-CreativeWriting.prototype.loadObj = function (groupName, url, offset, isSolid) {
-  var _this = this;
-
-  this.loader.load(url, function (geometry) {
-    _this.processObj({
-      geometry: geometry,
-      group: groupName,
-      offset: offset,
-      solid: isSolid
-    });
-  });
-};
-
-CreativeWriting.prototype.processObj = function (data) {
-  var groupName = data.group;
-  var geometry = data.geometry;
-
-  var mesh = new THREE.Mesh(geometry, this.baseMaterial);
-
-  this.groups[groupName].add(mesh);
-
-  var outlineGeometry = geometry.clone();
-  
-  var localOutlineMaterial = outlineMaterial.clone();
-  localOutlineMaterial.uniforms = THREE.UniformsUtils.clone(outlineMaterial.uniforms);
-  localOutlineMaterial.attributes = THREE.UniformsUtils.clone(outlineMaterial.attributes);
-
-  var outlineMesh = new THREE.Mesh(outlineGeometry, localOutlineMaterial);
-  outlineGeometry.computeBoundingBox();
-
-  var height = outlineGeometry.boundingBox.max.y - outlineGeometry.boundingBox.min.y;
-
-  for (var i = 0, j = outlineGeometry.vertices.length; i < j; i++) {
-    var color;
-
-    if (data.solid) {
-      color = new THREE.Vector4(.7, 0.7, 1.0, 1.0);
-    } else {
-      var vertex = outlineGeometry.vertices[i];
-      var percent = Math.floor(vertex.y * 100 / height) -1;
-      color = new THREE.Vector4(1.0, 0.1, 0.1, percent / 100);
-    }
-
-    localOutlineMaterial.attributes.customColor.value[i] = color;
-  }
-
-  this.groups[groupName].add(outlineMesh);
-};
-
-CreativeWriting.prototype.showGroup = function (name) {
-  this.el.add(this.groups[name]);
 };
 
 module.exports = CreativeWriting;

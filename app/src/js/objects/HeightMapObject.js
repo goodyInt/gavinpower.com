@@ -32,8 +32,6 @@ function HeightMap(options) {
   this.whenCompleteFunction;
   this.completeAnimationFunction;
 
-
-
   if (this.firstRun) {
     for (var i = 0; i < this.totalVerts; i++) {
       this.originalVerticesSquare.push(new THREE.Vector3(this.geometry.vertices[i].x, this.geometry.vertices[i].y, this.geometry.vertices[i].z));;
@@ -74,7 +72,7 @@ function HeightMap(options) {
   this.stop = function () {};
 
   this.on('ready', function () {
-
+    
     this.ready = true;
     this.start = function () {
       //console.log('heightmap start start start rotateHorTween: ' + rotateHorTween)
@@ -534,7 +532,6 @@ HeightMap.prototype.startItUp = function (whenCompleteFunction) {
   setTimeout(startIntro, 1000)
 
 }
-
 
 HeightMap.prototype.setOnCompleteFunction = function (theCompleteAnimationFunction) {
   

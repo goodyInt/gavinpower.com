@@ -22,42 +22,82 @@ var sprites = {
 
 if (sprites[HASH.hash]) {
   agencyURL = sprites[HASH.hash];
-} 
+}
 
 var heightMap = new HeightMap({
   horizontal: true,
   vertical: true,
   plane: false,
   points: true,
-  maps: [
-    { name: 'blackScreen', url: './img/heightMap/heightMap-black.jpg' },
-    { name: 'H', url: './img/heightMap/heightMap-H.jpg' },
-    { name: 'HE', url: './img/heightMap/heightMap-HE.jpg' },
-    { name: 'HEL', url: './img/heightMap/heightMap-HEL.jpg' },
-    { name: 'HELL', url: './img/heightMap/heightMap-HELL.jpg' },
-    { name: 'Hello', url: './img/heightMap/heightMap-hello.jpg' },
-    { name: 'agency', url:  agencyURL},
-    { name: 'whiteScreen', url: './img/heightMap/heightMap-white.jpg' },
-    { name: 'I', url: './img/heightMap/heightMap-I.jpg' },
-    { name: 'AM', url: './img/heightMap/heightMap-AM.jpg' },
-    { name: 'A', url: './img/heightMap/heightMap-A.jpg' },
-    { name: 'Developer', url: './img/heightMap/heightMap-developer.jpg' },
-    { name: 'blackScreen2', url: './img/heightMap/heightMap-black.jpg' },
-    { name: 'Gav', url: './img/heightMap/heightMap-GavMimeDark.jpg' }
+  maps: [{
+      name: 'blackScreen',
+      url: './img/heightMap/heightMap-black.jpg'
+    },
+    {
+      name: 'H',
+      url: './img/heightMap/heightMap-H.jpg'
+    },
+    {
+      name: 'HE',
+      url: './img/heightMap/heightMap-HE.jpg'
+    },
+    {
+      name: 'HEL',
+      url: './img/heightMap/heightMap-HEL.jpg'
+    },
+    {
+      name: 'HELL',
+      url: './img/heightMap/heightMap-HELL.jpg'
+    },
+    {
+      name: 'Hello',
+      url: './img/heightMap/heightMap-hello.jpg'
+    },
+    {
+      name: 'agency',
+      url: agencyURL
+    },
+    {
+      name: 'whiteScreen',
+      url: './img/heightMap/heightMap-white.jpg'
+    },
+    {
+      name: 'I',
+      url: './img/heightMap/heightMap-I.jpg'
+    },
+    {
+      name: 'AM',
+      url: './img/heightMap/heightMap-AM.jpg'
+    },
+    {
+      name: 'A',
+      url: './img/heightMap/heightMap-A.jpg'
+    },
+    {
+      name: 'Developer',
+      url: './img/heightMap/heightMap-developer.jpg'
+    },
+    {
+      name: 'blackScreen2',
+      url: './img/heightMap/heightMap-black.jpg'
+    },
+    {
+      name: 'Gav',
+      url: './img/heightMap/heightMap-GavMimeDark.jpg'
+    }
   ]
 });
 
 heightMap.el.position.z = -20;
 heightMap.el.rotation.y = 0.25;
-heightMap.el.rotation.x = 0.1;1
+heightMap.el.rotation.x = 0.1;
 heightMap.el.visible = false;
 
 
 introSection.add(heightMap.el);
 
 var text = new TextPanel(
-  'with a degree in... >>>',
-  {
+  'with a degree in... >>>', {
     align: 'right',
     style: '',
     size: 65,
@@ -70,14 +110,14 @@ introSection.add(text.el);
 
 introSection.onIn(function () {
   console.log('introSection.onIn()');
- // text.in();
+  // text.in();
 });
 
 
 
 introSection.onOut(function (way) {
   console.log('introSection.onOut()');
- // text.out(way);
+  // text.out(way);
   heightMap.stop();
 });
 
@@ -103,7 +143,7 @@ introSection.show = function () {
 };
 
 introSection.textIn = function () {
-   text.in();
+  text.in();
 };
 
 heightMap.setOnCompleteFunction(introSection.textIn);
@@ -118,6 +158,15 @@ introSection.hide = function () {
   console.log('introSection.hide()');
   heightMap.el.visible = false;
 };
+introSection.setPositions = function () {
+  var thisPos= {x: introSection.el.position.x, y: introSection.el.position.y,z: introSection.el.position.z}
+  console.log('');
+  console.log('introSection.setPositions()');
+  console.log('x: ' + thisPos.x);
+  console.log('y: ' + thisPos.y);
+  console.log('z: ' + thisPos.z);
+};
+
 
 
 

@@ -101,7 +101,7 @@ SCENE.on('section:changeBegin', function () {
     case 'second':
       secondSection.in();
       secondSection.start();
-      secondSection.smokeStart();
+     // secondSection.smokeStart();
       break;
     case 'third':
       thirdSection.in();
@@ -173,7 +173,7 @@ SCENE.on('section:changeComplete', function () {
       break;
     case 'second':
       secondSection.stop();
-      secondSection.smokeStop();
+     // secondSection.smokeStop();
       break;
     case 'third':
       thirdSection.stop();
