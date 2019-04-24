@@ -75,11 +75,11 @@ thirdSection.updateColors = function (color1, color2) {
 };
 thirdSection.setPositions = function () {
   var thisPos= {x: thirdSection.el.position.x, y: thirdSection.el.position.y,z: thirdSection.el.position.z}
-  console.log('');
-  console.log('thirdSection.setPositions()');
-  console.log('x: ' + thisPos.x);
-  console.log('y: ' + thisPos.y);
-  console.log('z: ' + thisPos.z);
+  //console.log('');
+  //console.log('thirdSection.setPositions()');
+  //console.log('x: ' + thisPos.x);
+  //console.log('y: ' + thisPos.y);
+  //console.log('z: ' + thisPos.z);
 };
 
 

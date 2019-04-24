@@ -74,11 +74,11 @@ fourthSection.updateColors = function (color1, color2) {
 
 fourthSection.setPositions = function () {
   var thisPos= {x: fourthSection.el.position.x, y: fourthSection.el.position.y,z: fourthSection.el.position.z}
-  console.log('');
-  console.log('fourthSection.setPositions()');
-  console.log('x: ' + thisPos.x);
-  console.log('y: ' + thisPos.y);
-  console.log('z: ' + thisPos.z);
+  //console.log('');
+  //console.log('fourthSection.setPositions()');
+  //console.log('x: ' + thisPos.x);
+  //console.log('y: ' + thisPos.y);
+  //console.log('z: ' + thisPos.z);
 };
 
 

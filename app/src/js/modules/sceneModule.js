@@ -26,7 +26,7 @@ var SCENE = (function () {
 
     // params
     var parameters = {
-      fogColor: '#0a0a0a',
+      fogColor: '#000000',
       quality: 1,
       sectionHeight: 30
     };
@@ -62,20 +62,20 @@ var SCENE = (function () {
     // background lines and particles
     var theAtmosphereParticles;
 
-    var backgroundLines;
-    var theBackgroundParticles;
-    var backgroundLines2;
-    var theBackgroundParticles2;
-    var backgroundLines3;
-    var theBackgroundParticles3;
-    var backgroundLines4;
-    var theBackgroundParticles4;
-    var backgroundLines5;
-    var theBackgroundParticles5;
-    var backgroundLines6;
-    var theBackgroundParticles6;
-    var backgroundLines7;
-    var theBackgroundParticles7;
+    var sectionLines;
+    var theSectionParticles;
+    var sectionLines2;
+    var theSectionParticles2;
+    var sectionLines3;
+    var theSectionParticles3;
+    var sectionLines4;
+    var theSectionParticles4;
+    var sectionLines5;
+    var theSectionParticles5;
+    var sectionLines6;
+    var theSectionParticles6;
+    var sectionLines7;
+    var theSectionParticles7;
 
     // sections
     var sections = [];
@@ -151,20 +151,20 @@ var SCENE = (function () {
         if (zSpeed > 0) {
           if (dist > 0) {
             theAtmosphereParticles.el.position.z += zSpeed;
-            theBackgroundParticles.el.position.z += zSpeed;
-            backgroundLines.el.position.z += zSpeed;
-            theBackgroundParticles2.el.position.z += zSpeed;
-            backgroundLines2.el.position.z += zSpeed;
-            theBackgroundParticles3.el.position.z += zSpeed;
-            backgroundLines3.el.position.z += zSpeed;
-            theBackgroundParticles4.el.position.z += zSpeed;
-            backgroundLines4.el.position.z += zSpeed;
-            theBackgroundParticles5.el.position.z += zSpeed;
-            backgroundLines5.el.position.z += zSpeed;
-            theBackgroundParticles6.el.position.z += zSpeed;
-            backgroundLines6.el.position.z += zSpeed;
-            theBackgroundParticles7.el.position.z += zSpeed;
-            backgroundLines7.el.position.z += zSpeed;
+            theSectionParticles.el.position.z += zSpeed;
+            sectionLines.el.position.z += zSpeed;
+            theSectionParticles2.el.position.z += zSpeed;
+            sectionLines2.el.position.z += zSpeed;
+            theSectionParticles3.el.position.z += zSpeed;
+            sectionLines3.el.position.z += zSpeed;
+            theSectionParticles4.el.position.z += zSpeed;
+            sectionLines4.el.position.z += zSpeed;
+            theSectionParticles5.el.position.z += zSpeed;
+            sectionLines5.el.position.z += zSpeed;
+            theSectionParticles6.el.position.z += zSpeed;
+            sectionLines6.el.position.z += zSpeed;
+            theSectionParticles7.el.position.z += zSpeed;
+            sectionLines7.el.position.z += zSpeed;
             sections[0].el.position.z += zSpeed;
             sections[1].el.position.z += zSpeed;
             sections[2].el.position.z += zSpeed;
@@ -174,22 +174,22 @@ var SCENE = (function () {
             sections[6].el.position.z += zSpeed;
           }
         } else {
-          if (dist < 120) {
+          if (dist < 125) {
             theAtmosphereParticles.el.position.z += zSpeed;
-            theBackgroundParticles.el.position.z += zSpeed;
-            backgroundLines.el.position.z += zSpeed;
-            theBackgroundParticles2.el.position.z += zSpeed;
-            backgroundLines2.el.position.z += zSpeed;
-            theBackgroundParticles3.el.position.z += zSpeed;
-            backgroundLines3.el.position.z += zSpeed;
-            theBackgroundParticles4.el.position.z += zSpeed;
-            backgroundLines4.el.position.z += zSpeed;
-            theBackgroundParticles5.el.position.z += zSpeed;
-            backgroundLines5.el.position.z += zSpeed;
-            theBackgroundParticles6.el.position.z += zSpeed;
-            backgroundLines6.el.position.z += zSpeed;
-            theBackgroundParticles7.el.position.z += zSpeed;
-            backgroundLines7.el.position.z += zSpeed;
+            theSectionParticles.el.position.z += zSpeed;
+            sectionLines.el.position.z += zSpeed;
+            theSectionParticles2.el.position.z += zSpeed;
+            sectionLines2.el.position.z += zSpeed;
+            theSectionParticles3.el.position.z += zSpeed;
+            sectionLines3.el.position.z += zSpeed;
+            theSectionParticles4.el.position.z += zSpeed;
+            sectionLines4.el.position.z += zSpeed;
+            theSectionParticles5.el.position.z += zSpeed;
+            sectionLines5.el.position.z += zSpeed;
+            theSectionParticles6.el.position.z += zSpeed;
+            sectionLines6.el.position.z += zSpeed;
+            theSectionParticles7.el.position.z += zSpeed;
+            sectionLines7.el.position.z += zSpeed;
             sections[0].el.position.z += zSpeed;
             sections[1].el.position.z += zSpeed;
             sections[2].el.position.z += zSpeed;
@@ -233,6 +233,11 @@ var SCENE = (function () {
 
       scene = new THREE.Scene();
       scene.fog = new THREE.FogExp2(parameters.fogColor, 0.01);
+      const color = parameters.fogColor;  // white
+      const near = 1;
+      const far = 200;
+     // scene.fog = new THREE.Fog(color, near, far);
+
 
       light = new THREE.DirectionalLight('#ffffff', .5);
       light.position.set(0.2, 1, 0.5);
@@ -291,7 +296,7 @@ var SCENE = (function () {
       stripsRangeY = [-80, 80];
       stripsRangeZ = [-80, -45];
 
-      theBackgroundParticles = new BackgroundParticles({
+      theSectionParticles = new BackgroundParticles({
         rangeX: rangeX,
         rangeY: rangeY,
         rangeZ: rangeZ,
@@ -304,19 +309,19 @@ var SCENE = (function () {
         color2: '#ff7704'
         // 0xeb0013,0xff7704,0xfff46a,0x47aff,0xffb577
       });
-      scene.add(theBackgroundParticles.el);
-      theBackgroundParticles.el.position.x = sectionLocations[0].x;
-      theBackgroundParticles.el.position.y = sectionLocations[0].y;
-      theBackgroundParticles.el.position.z = sectionLocations[0].z;
+      scene.add(theSectionParticles.el);
+      theSectionParticles.el.position.x = sectionLocations[0].x;
+      theSectionParticles.el.position.y = sectionLocations[0].y;
+      theSectionParticles.el.position.z = sectionLocations[0].z;
 
-      backgroundLines = new BackgroundLines({
+      sectionLines = new BackgroundLines({
         rangeY: rangeY,
         count: numOfLines
       });
-      scene.add(backgroundLines.el);
-      backgroundLines.el.position.x = sectionLocations[0].x;
-      backgroundLines.el.position.y = sectionLocations[0].y;
-      backgroundLines.el.position.z = sectionLocations[0].z;
+      scene.add(sectionLines.el);
+      sectionLines.el.position.x = sectionLocations[0].x;
+      sectionLines.el.position.y = sectionLocations[0].y;
+      sectionLines.el.position.z = sectionLocations[0].z;
       //
       rangeX = [-50, 50];
       rangeY = [parameters.sectionHeight, -parameters.sectionHeight];
@@ -327,7 +332,7 @@ var SCENE = (function () {
       stripsRangeY = [-80, 80];
       stripsRangeZ = [-50, 0];
 
-      theBackgroundParticles2 = new BackgroundParticles({
+      theSectionParticles2 = new BackgroundParticles({
         rangeX: rangeX,
         rangeY: rangeY,
         rangeZ: rangeZ,
@@ -342,21 +347,21 @@ var SCENE = (function () {
         color2: '#ffffff'
       });
       // 0xe9b700,0xb5f900,0x7bff55,0x5400f9,0xd1ff55
-      scene.add(theBackgroundParticles2.el);
-      theBackgroundParticles2.el.position.x = sectionLocations[1].x;
-      theBackgroundParticles2.el.position.y = sectionLocations[1].y;
-      theBackgroundParticles2.el.position.z = sectionLocations[1].z;
+      scene.add(theSectionParticles2.el);
+      theSectionParticles2.el.position.x = sectionLocations[1].x;
+      theSectionParticles2.el.position.y = sectionLocations[1].y;
+      theSectionParticles2.el.position.z = sectionLocations[1].z;
 
-      backgroundLines2 = new BackgroundLines({
+      sectionLines2 = new BackgroundLines({
         rangeY: rangeY,
         count: numOfLines
       });
-      scene.add(backgroundLines2.el);
-      backgroundLines2.el.position.x = sectionLocations[1].x;
-      backgroundLines2.el.position.y = sectionLocations[1].y;
-      backgroundLines2.el.position.z = sectionLocations[1].z;
+      scene.add(sectionLines2.el);
+      sectionLines2.el.position.x = sectionLocations[1].x;
+      sectionLines2.el.position.y = sectionLocations[1].y;
+      sectionLines2.el.position.z = sectionLocations[1].z;
       //
-      theBackgroundParticles3 = new BackgroundParticles({
+      theSectionParticles3 = new BackgroundParticles({
         rangeX: rangeX,
         rangeY: rangeY,
         rangeZ: rangeZ,
@@ -370,23 +375,23 @@ var SCENE = (function () {
         //  4) 0xe4ff77,0x78ff37,0xf358,0xcb37ff,0xc6ffaa
       });
 
-      scene.add(theBackgroundParticles3.el);
-      theBackgroundParticles3.el.position.x = sectionLocations[2].x;
-      theBackgroundParticles3.el.position.y = sectionLocations[2].y;
-      theBackgroundParticles3.el.position.z = sectionLocations[2].z;
+      scene.add(theSectionParticles3.el);
+      theSectionParticles3.el.position.x = sectionLocations[2].x;
+      theSectionParticles3.el.position.y = sectionLocations[2].y;
+      theSectionParticles3.el.position.z = sectionLocations[2].z;
 
-      backgroundLines3 = new BackgroundLines({
+      sectionLines3 = new BackgroundLines({
         rangeX: rangeX,
         rangeY: rangeY,
         rangeZ: rangeZ,
         count: numOfLines
       });
-      scene.add(backgroundLines3.el);
-      backgroundLines3.el.position.x = sectionLocations[2].x;
-      backgroundLines3.el.position.y = sectionLocations[2].y;
-      backgroundLines3.el.position.z = sectionLocations[2].z;
+      scene.add(sectionLines3.el);
+      sectionLines3.el.position.x = sectionLocations[2].x;
+      sectionLines3.el.position.y = sectionLocations[2].y;
+      sectionLines3.el.position.z = sectionLocations[2].z;
       //
-      theBackgroundParticles4 = new BackgroundParticles({
+      theSectionParticles4 = new BackgroundParticles({
         rangeX: rangeX,
         rangeY: rangeY,
         rangeZ: rangeZ,
@@ -399,23 +404,23 @@ var SCENE = (function () {
         color2: '#1579ff'
         // 0xeb94,0xd4ed,0x1579ff,0xed0009,0x19e7ff
       });
-      scene.add(theBackgroundParticles4.el);
-      theBackgroundParticles4.el.position.x = sectionLocations[3].x;
-      theBackgroundParticles4.el.position.y = sectionLocations[3].y;
-      theBackgroundParticles4.el.position.z = sectionLocations[3].z;
+      scene.add(theSectionParticles4.el);
+      theSectionParticles4.el.position.x = sectionLocations[3].x;
+      theSectionParticles4.el.position.y = sectionLocations[3].y;
+      theSectionParticles4.el.position.z = sectionLocations[3].z;
 
-      backgroundLines4 = new BackgroundLines({
+      sectionLines4 = new BackgroundLines({
         rangeX: rangeX,
         rangeY: rangeY,
         rangeZ: rangeZ,
         count: numOfLines
       });
-      scene.add(backgroundLines4.el);
-      backgroundLines4.el.position.x = sectionLocations[3].x;
-      backgroundLines4.el.position.y = sectionLocations[3].y;
-      backgroundLines4.el.position.z = sectionLocations[3].z;
+      scene.add(sectionLines4.el);
+      sectionLines4.el.position.x = sectionLocations[3].x;
+      sectionLines4.el.position.y = sectionLocations[3].y;
+      sectionLines4.el.position.z = sectionLocations[3].z;
       //
-      theBackgroundParticles5 = new BackgroundParticles({
+      theSectionParticles5 = new BackgroundParticles({
         rangeX: rangeX,
         rangeY: rangeY,
         rangeZ: rangeZ,
@@ -428,24 +433,24 @@ var SCENE = (function () {
         color2: '#f400c6'
         // 0x3a00f5,0xa800e9,0xf400c6,0x52e900,0xb904ff
       });
-      scene.add(theBackgroundParticles5.el);
-      theBackgroundParticles5.el.position.x = sectionLocations[4].x;
-      theBackgroundParticles5.el.position.y = sectionLocations[4].y;
-      theBackgroundParticles5.el.position.z = sectionLocations[4].z;
+      scene.add(theSectionParticles5.el);
+      theSectionParticles5.el.position.x = sectionLocations[4].x;
+      theSectionParticles5.el.position.y = sectionLocations[4].y;
+      theSectionParticles5.el.position.z = sectionLocations[4].z;
 
-      backgroundLines5 = new BackgroundLines({
+      sectionLines5 = new BackgroundLines({
         rangeX: rangeX,
         rangeY: rangeY,
         rangeZ: rangeZ,
         count: numOfLines
       });
-      scene.add(backgroundLines5.el);
+      scene.add(sectionLines5.el);
 
-      backgroundLines5.el.position.x = sectionLocations[4].x;
-      backgroundLines5.el.position.y = sectionLocations[4].y;
-      backgroundLines5.el.position.z = sectionLocations[4].z;
+      sectionLines5.el.position.x = sectionLocations[4].x;
+      sectionLines5.el.position.y = sectionLocations[4].y;
+      sectionLines5.el.position.z = sectionLocations[4].z;
       //
-      theBackgroundParticles6 = new BackgroundParticles({
+      theSectionParticles6 = new BackgroundParticles({
         rangeX: rangeX,
         rangeY: rangeY,
         rangeZ: rangeZ,
@@ -458,20 +463,20 @@ var SCENE = (function () {
         color2: '#ef0000'
         // 0xfc00f1,0xea006f,0xef0000,0xea9d,0xff0c7f
       });
-      scene.add(theBackgroundParticles6.el);
-      theBackgroundParticles6.el.position.x = sectionLocations[5].x;
-      theBackgroundParticles6.el.position.y = sectionLocations[5].y;
-      theBackgroundParticles6.el.position.z = sectionLocations[5].z;
-      backgroundLines6 = new BackgroundLines({
+      scene.add(theSectionParticles6.el);
+      theSectionParticles6.el.position.x = sectionLocations[5].x;
+      theSectionParticles6.el.position.y = sectionLocations[5].y;
+      theSectionParticles6.el.position.z = sectionLocations[5].z;
+      sectionLines6 = new BackgroundLines({
         rangeY: rangeY,
         count: numOfLines
       });
-      scene.add(backgroundLines6.el);
-      backgroundLines6.el.position.x = sectionLocations[5].x;
-      backgroundLines6.el.position.y = sectionLocations[5].y;
-      backgroundLines6.el.position.z = sectionLocations[5].z;
+      scene.add(sectionLines6.el);
+      sectionLines6.el.position.x = sectionLocations[5].x;
+      sectionLines6.el.position.y = sectionLocations[5].y;
+      sectionLines6.el.position.z = sectionLocations[5].z;
       //
-      theBackgroundParticles7 = new BackgroundParticles({
+      theSectionParticles7 = new BackgroundParticles({
         rangeX: rangeX,
         rangeY: rangeY,
         rangeZ: rangeZ,
@@ -484,18 +489,18 @@ var SCENE = (function () {
         color2: '#ee5000'
         // 0xff1536,0xee5000,0xebcc00,0x7eee,0xff691d
       });
-      scene.add(theBackgroundParticles7.el);
-      theBackgroundParticles7.el.position.x = sectionLocations[6].x;
-      theBackgroundParticles7.el.position.y = sectionLocations[6].y;
-      theBackgroundParticles7.el.position.z = sectionLocations[6].z;
-      backgroundLines7 = new BackgroundLines({
+      scene.add(theSectionParticles7.el);
+      theSectionParticles7.el.position.x = sectionLocations[6].x;
+      theSectionParticles7.el.position.y = sectionLocations[6].y;
+      theSectionParticles7.el.position.z = sectionLocations[6].z;
+      sectionLines7 = new BackgroundLines({
         rangeY: rangeY,
         count: numOfLines
       });
-      scene.add(backgroundLines7.el);
-      backgroundLines7.el.position.x = sectionLocations[6].x;
-      backgroundLines7.el.position.y = sectionLocations[6].y;
-      backgroundLines7.el.position.z = sectionLocations[6].z;
+      scene.add(sectionLines7.el);
+      sectionLines7.el.position.x = sectionLocations[6].x;
+      sectionLines7.el.position.y = sectionLocations[6].y;
+      sectionLines7.el.position.z = sectionLocations[6].z;
     }
 
     function draw() {

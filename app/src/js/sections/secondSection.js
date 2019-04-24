@@ -8,13 +8,14 @@ var CreativeWriting = require('../objects/CreativeWritingObject');
 
 var secondSection = new Section('second');
 
+
 var creativeWriting = new CreativeWriting();
-creativeWriting.addWriting();
+//creativeWriting.addWriting();
 
 //creativeWriting.el.rotation.y = -20 * (Math.PI/180);
 secondSection.add(creativeWriting.el);
 
-console.log('secondSection.el.position.z: ' +secondSection.el.position.z);
+//console.log('secondSection.el.position.z: ' +secondSection.el.position.z);
 
 /*
 var secondSmoke = new Smoke({  
@@ -93,15 +94,15 @@ secondSection.updateColors = function (color1, color2) {
 
 secondSection.setPositions = function () {
   var thisPos= {x: secondSection.el.position.x, y: secondSection.el.position.y,z: secondSection.el.position.z}
-  console.log('');
-  console.log('secondSection.setPositions()');
-  console.log('x: ' + thisPos.x);
-  console.log('y: ' + thisPos.y);
-  console.log('z: ' + thisPos.z);
+  //console.log('');
+  //console.log('secondSection.setPositions()');
+  //console.log('x: ' + thisPos.x);
+  //console.log('y: ' + thisPos.y);
+  //console.log('z: ' + thisPos.z);
   
 
   //creativeWriting.el.position.set(thisPos.x-100, thisPos.y, thisPos.z-50);
-  creativeWriting.el.position.x  = -50;
+  creativeWriting.el.position.x  = 0;
   creativeWriting.el.position.y  = 0;
   creativeWriting.el.position.z  = -20;
   
