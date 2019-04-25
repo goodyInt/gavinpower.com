@@ -1,19 +1,16 @@
 'use strict';
 var THREE = require('three');
 var tweenMax = require('tweenMax');
-
 var linesMaterial = require('../materials/customLinesMaterial');
 
 function CreativeWriting() {
   this.creativeObject = {};
-
   console.log('CreativeWriting.5');
-  //  console.log('linesMaterial: ' + linesMaterial);
   this.el = new THREE.Object3D();
   this.thisRotation = this.el.rotation;
   this.rotateHorTween;
   this.rotateVertTween;
-  // console.log(this.thisRotation);
+
   var loader = new THREE.FontLoader();
   var _this = this;
   loader.load('fonts/[z] Arista_Regular.json', function (font) {
@@ -35,7 +32,7 @@ function CreativeWriting() {
 
     var geometry = new THREE.TextBufferGeometry('creative', {
       font: font,
-      size: 40,
+      size: 20,
       height: 5,
       curveSegments: 5,
       bevelThickness: 1,
@@ -61,10 +58,8 @@ function CreativeWriting() {
     _this.creativeObject.visible = false;
 
   }
-  //console.log(this.el);
 
   var rotateLeft = function () {
-    ////console.log('rotateLeft');
     _this.rotateHorTween = tweenMax.to(_this.thisRotation, 20, {
       ease: Power2.easeInOut,
       y: .25,
@@ -72,7 +67,6 @@ function CreativeWriting() {
     });
   }
   var rotateRight = function () {
-    //console.log('rotateRight');
     _this.rotateHorTween = tweenMax.to(_this.thisRotation, 20, {
       ease: Power2.easeInOut,
       y: -.25,
@@ -96,13 +90,11 @@ function CreativeWriting() {
   }
 
   CreativeWriting.prototype.start = function () {
-    //console.log(this);
-    //console.log(this.rotateHorTween);
+   
     if (!this.rotateHorTween) {
       rotateRight();
       rotateUp();
     } else {
-
       this.rotateHorTween.resume();
       this.rotateVertTween.resume();
     }
@@ -110,17 +102,10 @@ function CreativeWriting() {
 }
 
 CreativeWriting.prototype.stop = function () {
-  // console.log(this);
   this.rotateHorTween.pause();
   this.rotateVertTween.pause();
 };
 CreativeWriting.prototype.show = function () {
-  // console.log('creativeObject');
-  //console.log(this);
-
-  console.log(this.creativeObject)
-  // console.log(creativeObject);
-
   this.creativeObject.visible = true;
 };
 CreativeWriting.prototype.hide = function () {

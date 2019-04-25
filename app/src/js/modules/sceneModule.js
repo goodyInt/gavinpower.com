@@ -48,8 +48,11 @@ var SCENE = (function () {
     var cameraMuse = new THREE.Vector3(0, 0, 0);
 
     // mouse
+    var mouse = new THREE.Vector2();
     var mouseX = 0;
     var mouseY = 0;
+    var raycaster = new THREE.Raycaster();
+
 
     // general
     var isLocked = false; // used to prevent additional event when slide() called from outside
@@ -115,6 +118,35 @@ var SCENE = (function () {
         z: -1200
       }
     ];
+    var sectionZoomOffset = [{
+        min: 0,
+        max: 25,
+      },
+      {
+        min: 10,
+        max: 75,
+      },
+      {
+        min: 0,
+        max: 0,
+      },
+      {
+        min: 0,
+        max: 0,
+      },
+      {
+        min: 0,
+        max: 0,
+      },
+      {
+        min: 0,
+        max: 0,
+      },
+      {
+        min: 0,
+        max: 0,
+      }
+    ];
     var sectionsMap = {}; // map name with index
     var totalSections;
     var currentIndex = 0;
@@ -149,7 +181,7 @@ var SCENE = (function () {
         var dist = camera.position.z - sections[currentIndex].el.position.z;
         var zSpeed = event.originalEvent.wheelDelta * .01;
         if (zSpeed > 0) {
-          if (dist > 0) {
+          if (dist > 0 - sectionZoomOffset[currentIndex].min) {
             theAtmosphereParticles.el.position.z += zSpeed;
             theSectionParticles.el.position.z += zSpeed;
             sectionLines.el.position.z += zSpeed;
@@ -174,7 +206,7 @@ var SCENE = (function () {
             sections[6].el.position.z += zSpeed;
           }
         } else {
-          if (dist < 125) {
+          if (dist < 50 + sectionZoomOffset[currentIndex].max) {
             theAtmosphereParticles.el.position.z += zSpeed;
             theSectionParticles.el.position.z += zSpeed;
             sectionLines.el.position.z += zSpeed;
@@ -214,7 +246,93 @@ var SCENE = (function () {
       }
       $viewport.on('DOMMouseScroll mousewheel', onScroll);
       jQuery(document).on('keydown', onKeyDown);
+
+      // interactivity
+
+      document.addEventListener('mousedown', onDocumentMouseDown, false);
+      document.addEventListener('touchstart', onDocumentTouchStart, false);
     }
+
+    function onDocumentMouseDown(event) {
+
+
+
+      event.preventDefault();
+
+      mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2 - 1;
+      mouse.y = -(event.clientY / renderer.domElement.clientHeight) * 2 + 1;
+      //console.log('[onDocumentMouseDown] mouse.x: ' + mouse.x + ', mouse.y: ' + mouse.y);
+
+      raycaster.setFromCamera(mouse, camera);
+
+      var intersects = raycaster.intersectObjects(scene.children, true);
+    //  console.log('sections[0].getTheText(): ' + sections[0].getTheText());
+     // console.log(sections[0].getTheText());
+      var intersectIntroText = raycaster.intersectObject(sections[0].getTheText().el, true);
+      console.log('intersectIntroText.length: ' + intersectIntroText.length);
+      console.log(intersectIntroText);
+     if(intersectIntroText.length>0){
+      sections[0].getTheText().over();
+     }else{
+      sections[0].getTheText().overOut();
+
+     }
+      
+
+     // console.log("scene.children.length: " + scene.children.length);
+     // console.log('intersects.length: ' + intersects.length);
+     // console.log('raycaster.far: ' + raycaster.far);
+
+     // console.log('raycaster.near: ' + raycaster.near);
+     // console.log('raycaster.ray: ' + raycaster.ray);
+      
+
+
+
+      //  console.log("scene.children: " + scene.children);
+      // for (var i = 0 ; i < scene.children.length; i++){
+      //  console.log('scene.children['+i+']: ' + scene.children[i]);
+      //   console.log(scene.children[i]);
+
+      // }
+
+      /*
+            if ( intersects.length > 0 ) {
+
+              new TWEEN.Tween( intersects[ 0 ].object.position ).to( {
+                x: Math.random() * 800 - 400,
+                y: Math.random() * 800 - 400,
+                z: Math.random() * 800 - 400 }, 2000 )
+              .easing( TWEEN.Easing.Elastic.Out).start();
+
+              new TWEEN.Tween( intersects[ 0 ].object.rotation ).to( {
+                x: Math.random() * 2 * Math.PI,
+                y: Math.random() * 2 * Math.PI,
+                z: Math.random() * 2 * Math.PI }, 2000 )
+              .easing( TWEEN.Easing.Elastic.Out).start();
+
+            }
+
+            /*
+            // Parse all the faces
+            for ( var i in intersects ) {
+
+              intersects[ i ].face.material[ 0 ].color.setHex( Math.random() * 0xffffff | 0x80000000 );
+
+            }
+            */
+    }
+
+    function onDocumentTouchStart(event) {
+
+      event.preventDefault();
+
+      event.clientX = event.touches[0].clientX;
+      event.clientY = event.touches[0].clientY;
+      onDocumentMouseDown(event);
+
+    }
+
 
     function setup() {
       if (!$viewport) {
@@ -233,10 +351,10 @@ var SCENE = (function () {
 
       scene = new THREE.Scene();
       scene.fog = new THREE.FogExp2(parameters.fogColor, 0.01);
-      const color = parameters.fogColor;  // white
+      const color = parameters.fogColor; // white
       const near = 1;
       const far = 200;
-     // scene.fog = new THREE.Fog(color, near, far);
+      // scene.fog = new THREE.Fog(color, near, far);
 
 
       light = new THREE.DirectionalLight('#ffffff', .5);

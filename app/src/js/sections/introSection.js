@@ -96,16 +96,21 @@ introSection.add(heightMap.el);
 
 var text = new TextPanel(
   'with a degree in... >>>', {
-    align: 'right',
+    align: 'left',
     style: '',
     size: 65,
-    lineSpacing: 40,
+    lineSpacing: 0
   }
 );
 text.el.position.set(20, 0, 0);
 text.el.rotation.y = .35;
 introSection.add(text.el);
 
+
+introSection.getTheText = function () {
+  console.log('introSection.getTheText');
+  return text;
+}; 
 introSection.onIn(function () {
   console.log('introSection.onIn()');
   // text.in();
