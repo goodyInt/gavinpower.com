@@ -49,7 +49,7 @@ secondSection.onStop(function () {
 secondSection.setPositions = function () {
   creativeWriting.el.position.x  = 0;
   creativeWriting.el.position.y  = 10;
-  creativeWriting.el.position.z  = -20;
+  creativeWriting.el.position.z  = 0;
 };
 
 module.exports = secondSection;

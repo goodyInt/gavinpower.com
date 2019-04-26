@@ -169,6 +169,7 @@ SCENE.on('section:changeComplete', function () {
   console.log('changeComplete from: ' + from);
   switch (from) {
     case 'intro':
+    console.log('calling intro.stop() changeComplete');
       introSection.stop();
       break;
     case 'second':

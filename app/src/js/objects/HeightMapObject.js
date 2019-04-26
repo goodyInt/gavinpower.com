@@ -530,7 +530,6 @@ HeightMap.prototype.startItUp = function (whenCompleteFunction) {
     _this.introAnimationInterval = setInterval(_this.applyMap.updateFirstInt, 25);
   }
   setTimeout(startIntro, 1000)
-
 }
 
 HeightMap.prototype.setOnCompleteFunction = function (theCompleteAnimationFunction) {

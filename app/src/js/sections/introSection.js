@@ -106,10 +106,37 @@ text.el.position.set(20, 0, 0);
 text.el.rotation.y = .35;
 introSection.add(text.el);
 
+introSection.textIsIn = false;
+introSection.textIsOver = false;
+introSection.textIsDown = false;
 
 introSection.getTheText = function () {
-  console.log('introSection.getTheText');
   return text;
+}; 
+introSection.theTextOver = function () {
+  console.log('introSection.theTextOver');
+  text.over();
+  introSection.textIsOver = true;
+  
+}; 
+introSection.theTextIsDown = function () {
+  console.log('introSection.theTextIsDown');
+  text.down('#ff0000');
+  introSection.textIsDown = true;
+}; 
+introSection.theTextIsUp = function () {
+  console.log('introSection.theTextIsUp');
+  text.overOut();
+  introSection.textIsDown = false;
+}; 
+
+
+
+introSection.theTextIsOut = function () {
+  console.log('introSection.theTextIsOut');
+  text.overOut();
+  introSection.textIsOver = false;
+  
 }; 
 introSection.onIn(function () {
   console.log('introSection.onIn()');
@@ -119,7 +146,7 @@ introSection.onIn(function () {
 introSection.onOut(function (way) {
   console.log('introSection.onOut()');
   // text.out(way);
-  heightMap.stop();
+ 
 });
 
 introSection.onStart(function () {
@@ -131,11 +158,16 @@ introSection.onStart(function () {
 });
 
 introSection.onStop(function () {
-  console.log('introSection.onStop()')
+  console.log('introSection.onStop() heightMap.ready: ' + heightMap.ready);
+  
   if (!heightMap.ready) {
     return false;
   }
   heightMap.stop();
+  text.overOut();
+  introSection.textIsOver = false;
+  introSection.textIsDown = false;
+  
 });
 
 introSection.show = function () {
@@ -144,14 +176,19 @@ introSection.show = function () {
 };
 
 introSection.textIn = function () {
+  console.log('introSection.textIn');
   text.in();
+  introSection.textIsIn = true;
+  
 };
+
 
 heightMap.setOnCompleteFunction(introSection.textIn);
 
 introSection.startUpFirstTime = function (mainFunction) {
   console.log('introSection.startUpFirstTime()');
   heightMap.startItUp(mainFunction);
+  this.playing = true;
 };
 
 introSection.hide = function () {

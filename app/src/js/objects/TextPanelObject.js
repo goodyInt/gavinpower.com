@@ -129,7 +129,7 @@ function TextPanel(text, options) {
   }
   this.overOut = function () {
     console.log('TextPanel.overOut');
-    context.fillStyle = '#bbbbbb';
+    context.fillStyle = '#aaaaaa';
     context.clearRect(
       0,
       0,
@@ -139,6 +139,20 @@ function TextPanel(text, options) {
     context.fillText(word, left, 0);
     texture.needsUpdate = true;
   }
+  this.down = function (fillColour) {
+    console.log('TextPanel.down');
+    context.fillStyle = fillColour;
+    context.clearRect(
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
+    context.fillText(word, left, 0);
+    texture.needsUpdate = true;
+  }
+
+  
 }
 
 TextPanel.defaultOptions = {
@@ -147,7 +161,7 @@ TextPanel.defaultOptions = {
   style: 'Bold',
   align: 'center',
   lineSpacing: 20,
-  color: '#bbbbbb'
+  color: '#aaaaaa'
 };
 
 module.exports = TextPanel;

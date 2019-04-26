@@ -19,7 +19,6 @@ var customLines = new THREE.ShaderMaterial({
     fogColor: {
       value: 0x00ff00
     }
-    
   },
 
   vertexShader: [
@@ -35,15 +34,6 @@ var customLines = new THREE.ShaderMaterial({
 
   ].join('\n'),
   fragmentShader: [
-    /*
-		'uniform vec3 color;',
-    'uniform float opacity;',
-    'varying vec3 vColor;',
-    'void main() {',
-     'gl_FragColor = vec4( vColor * color, opacity );',
-    '}',
-*/
-
 
     'uniform vec3 color;',
     'uniform float opacity;',
@@ -55,9 +45,6 @@ var customLines = new THREE.ShaderMaterial({
 
       'gl_FragColor = vec4( vColor * color, opacity );',
 
-      //vec3 newFogColor = fogColor * fogDensity;
-
-
       'float depth = gl_FragCoord.z / gl_FragCoord.w;',
 
       'const float LOG2 = 1.442695;',
@@ -66,8 +53,6 @@ var customLines = new THREE.ShaderMaterial({
 
       'gl_FragColor = mix( gl_FragColor, vec4( fogColor, gl_FragColor.w ), fogFactor );',
 
-
-      
    '}',
 
   ].join('\n')
