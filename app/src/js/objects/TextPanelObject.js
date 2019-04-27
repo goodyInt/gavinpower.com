@@ -91,6 +91,61 @@ function TextPanel(text, options) {
     mesh.material.opacity = cache.opacity;
   }
 
+  this.updateCopyOrig = function (newCopy) {
+    // console.log('this.updateCopy');
+    console.log(newCopy);
+    var editedCopy = '';
+
+    for (var i = 0; i < newCopy.length; i++) {
+      var newLetter = newCopy[i];
+      if (newLetter == '^') {
+        newLetter = '\n';
+      }
+      editedCopy += newLetter;
+    }
+
+    context.fillStyle = '#ffffff';
+    context.clearRect(
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
+    context.fillText(editedCopy, left, 0);
+    texture.needsUpdate = true;
+  }
+
+  
+  this.updateCopy = function (text) {
+    console.log('updateCopy text: ' + text);
+    text = text || '';
+  var words = text.split('\n');
+  var wordsCount = words.length;
+  for (var i = 0; i < wordsCount; i++) {
+    words[i] = words[i].replace(/^\s+|\s+$/g, '');
+  }
+  context.clearRect(
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+  for (var k = 0; k < wordsCount; k++) {
+    var word = words[k];
+    var left;
+    if (parameters.align === 'left') {
+      left = 0;
+    } else if (parameters.align === 'center') {
+      left = canvas.width / 2;
+    } else {
+      left = canvas.width;
+    }
+    console.log('updateCopy word: ' + word);
+    context.fillText(word, left, lineHeight * k);
+  }
+  texture.needsUpdate = true;
+}
+
   this.in = function () {
     tweenMax.to(cache, 1.5, {
       y: 0,
@@ -124,10 +179,7 @@ function TextPanel(text, options) {
       canvas.width,
       canvas.height
     );
-
-
     context.fillText(word, left, 0);
-
     texture.needsUpdate = true;
   }
   this.overOut = function () {

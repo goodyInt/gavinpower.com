@@ -636,8 +636,17 @@ var SCENE = (function () {
       stats.update();
     }
 
+    var renderCount = 0;
+
     function render() {
       // camera noise
+      renderCount++;
+      if(renderCount == 120){
+        //console.log('cameraShakeY: ' + cameraShakeY);
+        //console.log('camera.position.y: ' + camera.position.y);
+        renderCount = 0;
+
+      }
       camera.position.y += Math.cos(cameraShakeY) / 50;
       cameraShakeY += 0.005;
       camera.position.x += Math.cos(cameraShakeX) / 50;
@@ -660,6 +669,8 @@ var SCENE = (function () {
 
     function animateCamera(index) {
       currentIndex = index;
+      cameraShakeY=0;
+      cameraShakeX=0;
       var nextPosition = {
         x: sections[currentIndex].el.position.x,
         y: sections[currentIndex].el.position.y,

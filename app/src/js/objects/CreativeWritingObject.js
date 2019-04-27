@@ -12,7 +12,6 @@ function CreativeWriting() {
   this.rotateVertTween;
   this.frontPosArray = [];
 
-
   var loader = new THREE.FontLoader();
   var _this = this;
   loader.load('fonts/[z] Arista_Regular.json', function (font) {
@@ -30,7 +29,6 @@ function CreativeWriting() {
       transparent: true,
       fog: true
     });
-
 
     var geometry = new THREE.TextBufferGeometry('creative', {
       font: font,
@@ -57,7 +55,6 @@ function CreativeWriting() {
       color.setHSL(i / l, 0.5, 0.5);
       color.toArray(customColor.array, i * customColor.itemSize);
     }
-
     _this.creativeObject = new THREE.Line(geometry, shaderMaterial);
     _this.el.add(_this.creativeObject);
     _this.creativeObject.visible = false;
@@ -89,14 +86,14 @@ function CreativeWriting() {
   this.rotateUp = function () {
     _this.rotateVertTween = tweenMax.to(_this.thisRotation, 15, {
       ease: Power2.easeInOut,
-      x: .25,
+      x: -.25,
       onComplete: _this.rotateDown
     });
   }
   this.rotateDown = function () {
     _this.rotateVertTween = tweenMax.to(_this.thisRotation, 15, {
       ease: Power2.easeInOut,
-      x: -.25,
+      x: .25,
       onComplete: _this.rotateUp
     });
   }
@@ -123,10 +120,7 @@ function CreativeWriting() {
     }
     attributes.displacement.needsUpdate = true;
   }
-
-
 }
-
 
 CreativeWriting.prototype.start = function () {
   console.log('CreativeWriting.prototype.start');
@@ -142,19 +136,16 @@ CreativeWriting.prototype.start = function () {
       console.log('this.animateTextIn onComplete: time to party');
     }
   });
-  this.el.rotation.y = this.el.rotation.x = 0 * (Math.PI/180);
+  this.el.rotation.y = this.el.rotation.x = 0 * (Math.PI / 180);
 
-
-
-  
-  if (!this.rotateHorTween) {
+  //if (!this.rotateHorTween) {
     this.rotateRight();
     this.rotateUp();
-  } else {
-    this.rotateHorTween.resume();
-    this.rotateVertTween.resume();
-  }
-  
+ // } else {
+   // this.rotateHorTween.resume();
+    //this.rotateVertTween.resume();
+ // }
+
 };
 CreativeWriting.prototype.onOut = function () {
   console.log('CreativeWriting.prototype.onOut');
@@ -167,26 +158,27 @@ CreativeWriting.prototype.onOut = function () {
     onUpdate: this.animateTextOut,
     onComplete: function () {
       console.log('this.animateTextOut onComplete');
+    
     }
   });
- 
-  
+
+
   this.rotateHorTween.pause();
   this.rotateVertTween.pause();
-/*
-  tweenMax.to(this.thisRotation, 1, {
-    delay: .5,
-    ease: Power1.easeOut,
-    y: 0,
-    x:0
-  });
-  */
-  
+  /*
+    tweenMax.to(this.thisRotation, 1, {
+      delay: .5,
+      ease: Power1.easeOut,
+      y: 0,
+      x:0
+    });
+    */
+
 };
 
 CreativeWriting.prototype.stop = function () {
   console.log('CreativeWriting.prototype.stop');
-  
+
 };
 CreativeWriting.prototype.show = function () {
   console.log('CreativeWriting.prototype.show');
