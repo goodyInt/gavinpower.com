@@ -11,7 +11,7 @@ function CreativeWriting() {
   this.rotateHorTween;
   this.rotateVertTween;
   this.frontPosArray = [];
-  this.textInterval;
+
 
   var loader = new THREE.FontLoader();
   var _this = this;
@@ -35,8 +35,7 @@ function CreativeWriting() {
     var geometry = new THREE.TextBufferGeometry('creative', {
       font: font,
       size: 20,
-      height: 10,
-      //119688
+      height: 1,
       curveSegments: 5,
       bevelThickness: .1,
       bevelSize: .35,
@@ -63,25 +62,13 @@ function CreativeWriting() {
     _this.el.add(_this.creativeObject);
     _this.creativeObject.visible = false;
 
-    var time = Date.now();
-    console.log("time:" + time);
-
     var gArray = geometry.attributes.position;
-    // console.log(gArray);
 
     for (var i = 0; i < gArray.array.length; i += 3) {
-
-      if (gArray.array[i + 2] < 0) {
+      if (gArray.array[i + 2] >= 0) {
         _this.frontPosArray.push(i + 2);
-
       }
     }
-    var time1 = Date.now();
-    console.log("time1:" + time1);
-    var totalTime = time1 - time;
-    console.log("totalTime:" + totalTime);
-    console.log(_this.frontPosArray);
-
   }
 
   this.rotateLeft = function () {
@@ -113,61 +100,105 @@ function CreativeWriting() {
       onComplete: _this.rotateUp
     });
   }
-  var counter = 0;
-  this.animateText = function () {
-    counter++;
-    //console.log('animateText _this.creativeObject.geometry.parameters: ' + _this.creativeObject.geometry.parameters);
-    // console.log(_this.creativeObject.geometry.parameters.options.height);
-    // _this.creativeObject.geometry.parameters.options.height--;
-    //  _this.creativeObject.geometry.attributes.position.needsUpdate = true;
-    console.log('counter: ' + counter);
+
+  var startZ = 0;
+  var finishZ = 30;
+  var offsetZ = 0;
+  this.animateTextIn = function () {
     var attributes = _this.creativeObject.geometry.attributes;
     var array = attributes.displacement.array;
-    if (counter == 1) {
-      for (var i = 0; i < _this.frontPosArray.length; i++) {
-        array[_this.frontPosArray[i]] -= 1;
-      }
-
+    offsetZ = finishZ + ((startZ - finishZ) * this.target.factor);
+    for (var i = 0; i < _this.frontPosArray.length; i++) {
+      array[_this.frontPosArray[i]] = offsetZ;
     }
-    if (counter > 100) {
-      if (counter == 170) {
-        clearInterval(_this.textInterval);
-        // console.log('_this.frontPosArray: ' + _this.frontPosArray);
-      }
-      for (var i = 0; i < _this.frontPosArray.length; i++) {
-        array[_this.frontPosArray[i]] *= 1.05;
-      }
-    }
-    // console.log('this.animateText');
     attributes.displacement.needsUpdate = true;
   }
+  this.animateTextOut = function () {
+    var attributes = _this.creativeObject.geometry.attributes;
+    var array = attributes.displacement.array;
+    offsetZ = startZ + ((finishZ - startZ) * this.target.factor);
+    console.log(offsetZ);
+    for (var i = 0; i < _this.frontPosArray.length; i++) {
+      array[_this.frontPosArray[i]] = offsetZ;
+    }
+    attributes.displacement.needsUpdate = true;
+  }
+
+
 }
 
-  CreativeWriting.prototype.start = function () {
 
-    this.textInterval = setInterval(this.animateText, 40);
-    if (!this.rotateHorTween) {
-      this.rotateRight();
-      this.rotateUp();
-    } else {
-      this.rotateHorTween.resume();
-      this.rotateVertTween.resume();
+CreativeWriting.prototype.start = function () {
+  console.log('CreativeWriting.prototype.start');
+
+  tweenMax.to({
+    factor: 1
+  }, 1.5, {
+    delay: 1,
+    factor: 0,
+    ease: Power1.easeIn,
+    onUpdate: this.animateTextIn,
+    onComplete: function () {
+      console.log('this.animateTextIn onComplete: time to party');
     }
-  };
+  });
+  this.el.rotation.y = this.el.rotation.x = 0 * (Math.PI/180);
 
-  CreativeWriting.prototype.stop = function () {
-    this.rotateHorTween.pause();
-    this.rotateVertTween.pause();
-  };
-  CreativeWriting.prototype.show = function () {
-    this.creativeObject.visible = true;
-  };
-  CreativeWriting.prototype.hide = function () {
-    this.creativeObject.visible = false;
-  };
 
-  CreativeWriting.prototype.addWriting = function () {
-    // console.log('add the writing...');
-  };
 
-  module.exports = CreativeWriting;
+  
+  if (!this.rotateHorTween) {
+    this.rotateRight();
+    this.rotateUp();
+  } else {
+    this.rotateHorTween.resume();
+    this.rotateVertTween.resume();
+  }
+  
+};
+CreativeWriting.prototype.onOut = function () {
+  console.log('CreativeWriting.prototype.onOut');
+  tweenMax.to({
+    factor: 1
+  }, 1, {
+    delay: .5,
+    factor: 0,
+    ease: Power1.easeOut,
+    onUpdate: this.animateTextOut,
+    onComplete: function () {
+      console.log('this.animateTextOut onComplete');
+    }
+  });
+ 
+  
+  this.rotateHorTween.pause();
+  this.rotateVertTween.pause();
+/*
+  tweenMax.to(this.thisRotation, 1, {
+    delay: .5,
+    ease: Power1.easeOut,
+    y: 0,
+    x:0
+  });
+  */
+  
+};
+
+CreativeWriting.prototype.stop = function () {
+  console.log('CreativeWriting.prototype.stop');
+  
+};
+CreativeWriting.prototype.show = function () {
+  console.log('CreativeWriting.prototype.show');
+  this.creativeObject.visible = true;
+};
+CreativeWriting.prototype.hide = function () {
+  console.log('CreativeWriting.prototype.hide');
+  this.creativeObject.visible = false;
+};
+
+CreativeWriting.prototype.addWriting = function () {
+  // console.log('add the writing...');
+};
+
+module.exports = CreativeWriting;

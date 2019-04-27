@@ -121,7 +121,7 @@ var SCENE = (function () {
         max: 25,
       },
       {
-        min: 10,
+        min: 0,
         max: 75,
       },
       {
@@ -258,7 +258,7 @@ var SCENE = (function () {
 
       function onDocumentMouseDown(event) {
         mouseDown = true;
-        console.log('onDocumentMouseDown');
+        //console.log('onDocumentMouseDown');
         event.preventDefault();
         mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2 - 1;
         mouse.y = -(event.clientY / renderer.domElement.clientHeight) * 2 + 1;
@@ -271,7 +271,7 @@ var SCENE = (function () {
 
       function onDocumentMouseUp(event) {
         mouseDown = false;
-        console.log('onDocumentMouseUp');
+        //console.log('onDocumentMouseUp');
         event.preventDefault();
         mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2 - 1;
         mouse.y = -(event.clientY / renderer.domElement.clientHeight) * 2 + 1;
@@ -293,7 +293,7 @@ var SCENE = (function () {
 
     function setup() {
       if (!$viewport) {
-        console.warn('set viewport first');
+        //console.warn('set viewport first');
         return false;
       }
       resolution = parameters.quality;
@@ -322,17 +322,17 @@ var SCENE = (function () {
           case 0:
        //   console.log('sections[0].textIsIn: ' + sections[0].textIsIn);
             if (sections[0].textIsIn) {
-              console.log('');
+              //console.log('');
               mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2 - 1;
               mouse.y = -(event.clientY / renderer.domElement.clientHeight) * 2 + 1;
               raycaster.setFromCamera(mouse, camera);
               var intersectIntroText = raycaster.intersectObject(sections[0].getTheText().el, true);
-              console.log('intersectIntroText.length: ' + intersectIntroText.length);
+              //console.log('intersectIntroText.length: ' + intersectIntroText.length);
               if (intersectIntroText.length > 0) {
-                console.log('sections[0].textIsDown: ' + sections[0].textIsDown);
+                //console.log('sections[0].textIsDown: ' + sections[0].textIsDown);
                 jQuery('html,body').css('cursor', 'pointer');
                 if (!sections[0].textIsDown) {
-                  console.log('mouseDown: ' + mouseDown);
+                  //console.log('mouseDown: ' + mouseDown);
                   if (!mouseDown) {
                     sections[0].theTextOver();
                   }else{
@@ -341,9 +341,9 @@ var SCENE = (function () {
                 }
               } else {
                 jQuery('html,body').css('cursor', 'default');
-                console.log('sections[0].textIsOver: ' + sections[0].textIsOver);
+                //console.log('sections[0].textIsOver: ' + sections[0].textIsOver);
                 if (sections[0].textIsOver) {
-                  console.log('sections[0].textIsDown: ' + sections[0].textIsDown);
+                  //console.log('sections[0].textIsDown: ' + sections[0].textIsDown);
                   if (!sections[0].textIsDown) {
                     sections[0].theTextIsOut();
                   }
@@ -637,8 +637,6 @@ var SCENE = (function () {
     }
 
     function render() {
-
-
       // camera noise
       camera.position.y += Math.cos(cameraShakeY) / 50;
       cameraShakeY += 0.005;
@@ -650,8 +648,6 @@ var SCENE = (function () {
 
       camera.lookAt(cameraPointAt);
       renderer.render(scene, camera);
-
-
     }
 
     function onResize() {

@@ -11,7 +11,7 @@ var creativeWriting = new CreativeWriting();
 secondSection.add(creativeWriting.el);
 
 var text = new TextPanel(
-  'Writing', {
+  'Writing.', {
     align: 'center',
     font: 'Times New Roman, Times, serif',
     style: '',
@@ -32,6 +32,7 @@ secondSection.onIn(function () {
 
 secondSection.onOut(function () {
   console.log('secondSection.onOut');
+  creativeWriting.onOut();
 });
 
 secondSection.onStart(function () {
@@ -49,7 +50,7 @@ secondSection.onStop(function () {
 secondSection.setPositions = function () {
   creativeWriting.el.position.x  = 0;
   creativeWriting.el.position.y  = 10;
-  creativeWriting.el.position.z  = 0;
+  creativeWriting.el.position.z  = -20;
 };
 
 module.exports = secondSection;

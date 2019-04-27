@@ -114,18 +114,18 @@ introSection.getTheText = function () {
   return text;
 }; 
 introSection.theTextOver = function () {
-  console.log('introSection.theTextOver');
+  //console.log('introSection.theTextOver');
   text.over();
   introSection.textIsOver = true;
   
 }; 
 introSection.theTextIsDown = function () {
-  console.log('introSection.theTextIsDown');
+  //console.log('introSection.theTextIsDown');
   text.down('#ff0000');
   introSection.textIsDown = true;
 }; 
 introSection.theTextIsUp = function () {
-  console.log('introSection.theTextIsUp');
+  //console.log('introSection.theTextIsUp');
   text.overOut();
   introSection.textIsDown = false;
 }; 
@@ -133,24 +133,24 @@ introSection.theTextIsUp = function () {
 
 
 introSection.theTextIsOut = function () {
-  console.log('introSection.theTextIsOut');
+  //console.log('introSection.theTextIsOut');
   text.overOut();
   introSection.textIsOver = false;
   
 }; 
 introSection.onIn(function () {
-  console.log('introSection.onIn()');
+  //console.log('introSection.onIn()');
   // text.in();
 });
 
 introSection.onOut(function (way) {
-  console.log('introSection.onOut()');
+  //console.log('introSection.onOut()');
   // text.out(way);
  
 });
 
 introSection.onStart(function () {
-  console.log('introSection.onStart');
+  //console.log('introSection.onStart');
   if (!heightMap.ready) {
     return false;
   }
@@ -158,7 +158,7 @@ introSection.onStart(function () {
 });
 
 introSection.onStop(function () {
-  console.log('introSection.onStop() heightMap.ready: ' + heightMap.ready);
+  //console.log('introSection.onStop() heightMap.ready: ' + heightMap.ready);
   
   if (!heightMap.ready) {
     return false;
@@ -171,12 +171,12 @@ introSection.onStop(function () {
 });
 
 introSection.show = function () {
-  console.log('introSection.show()');
+  //console.log('introSection.show()');
   heightMap.el.visible = true;
 };
 
 introSection.textIn = function () {
-  console.log('introSection.textIn');
+  //console.log('introSection.textIn');
   text.in();
   introSection.textIsIn = true;
   
@@ -186,13 +186,13 @@ introSection.textIn = function () {
 heightMap.setOnCompleteFunction(introSection.textIn);
 
 introSection.startUpFirstTime = function (mainFunction) {
-  console.log('introSection.startUpFirstTime()');
+  //console.log('introSection.startUpFirstTime()');
   heightMap.startItUp(mainFunction);
   this.playing = true;
 };
 
 introSection.hide = function () {
-  console.log('introSection.hide()');
+  //console.log('introSection.hide()');
   heightMap.el.visible = false;
 };
 introSection.setPositions = function () {

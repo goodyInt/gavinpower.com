@@ -38,6 +38,7 @@ function TextPanel(text, options) {
 
   canvas.width = width + 20;
   canvas.height = height + 20;
+  console.log('canvas.width: ' + canvas.width);
 
   context.font = font;
   context.fillStyle = parameters.color;
@@ -55,7 +56,7 @@ function TextPanel(text, options) {
     } else {
       left = canvas.width;
     }
-    console.log('k: ' + k);
+    //console.log('k: ' + k);
     context.fillText(word, left, lineHeight * k);
   }
 
@@ -115,7 +116,7 @@ function TextPanel(text, options) {
   };
 
   this.over = function () {
-    console.log('TextPanel.over white');
+    //console.log('TextPanel.over white');
     context.fillStyle = '#ffffff';
     context.clearRect(
       0,
@@ -124,11 +125,13 @@ function TextPanel(text, options) {
       canvas.height
     );
 
+
     context.fillText(word, left, 0);
+
     texture.needsUpdate = true;
   }
   this.overOut = function () {
-    console.log('TextPanel.overOut');
+    //console.log('TextPanel.overOut');
     context.fillStyle = '#aaaaaa';
     context.clearRect(
       0,
@@ -140,7 +143,7 @@ function TextPanel(text, options) {
     texture.needsUpdate = true;
   }
   this.down = function (fillColour) {
-    console.log('TextPanel.down');
+    //console.log('TextPanel.down');
     context.fillStyle = fillColour;
     context.clearRect(
       0,
@@ -151,8 +154,6 @@ function TextPanel(text, options) {
     context.fillText(word, left, 0);
     texture.needsUpdate = true;
   }
-
-  
 }
 
 TextPanel.defaultOptions = {
