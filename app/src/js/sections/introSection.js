@@ -94,7 +94,7 @@ heightMap.el.rotation.x = 0.1;
 heightMap.el.visible = false;
 introSection.add(heightMap.el);
 
-var text = new TextPanel(
+var degreeText = new TextPanel(
   'with a degree in... >>>', {
     align: 'left',
     style: '',
@@ -102,39 +102,37 @@ var text = new TextPanel(
     lineSpacing: 0
   }
 );
-text.el.position.set(20, 0, 0);
-text.el.rotation.y = .35;
-introSection.add(text.el);
+degreeText.el.position.set(20, 0, 0);
+degreeText.el.rotation.y = .35;
+introSection.add(degreeText.el);
 
 introSection.textIsIn = false;
 introSection.textIsOver = false;
 introSection.textIsDown = false;
 
 introSection.getTheText = function () {
-  return text;
+  return degreeText;
 }; 
 introSection.theTextOver = function () {
   //console.log('introSection.theTextOver');
-  text.over();
+  degreeText.over();
   introSection.textIsOver = true;
   
 }; 
 introSection.theTextIsDown = function () {
   //console.log('introSection.theTextIsDown');
-  text.down('#ff0000');
+  degreeText.down('#ff0000');
   introSection.textIsDown = true;
 }; 
 introSection.theTextIsUp = function () {
   //console.log('introSection.theTextIsUp');
-  text.overOut();
+  degreeText.overOut();
   introSection.textIsDown = false;
 }; 
 
-
-
 introSection.theTextIsOut = function () {
   //console.log('introSection.theTextIsOut');
-  text.overOut();
+  degreeText.overOut();
   introSection.textIsOver = false;
   
 }; 
@@ -164,7 +162,7 @@ introSection.onStop(function () {
     return false;
   }
   heightMap.stop();
-  text.overOut();
+  degreeText.overOut();
   introSection.textIsOver = false;
   introSection.textIsDown = false;
   
@@ -177,7 +175,7 @@ introSection.show = function () {
 
 introSection.textIn = function () {
   //console.log('introSection.textIn');
-  text.in();
+  degreeText.in();
   introSection.textIsIn = true;
   
 };

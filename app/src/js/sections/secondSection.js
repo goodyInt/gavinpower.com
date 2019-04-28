@@ -7,14 +7,25 @@ var TextPanel = require('../objects/TextPanelObject');
 var secondSection = new Section('second');
 
 var creativeWriting = new CreativeWriting();
-//creativeWriting.addWriting();
 secondSection.add(creativeWriting.el);
 
-var secondSectionString = 'Writing.\nAnd I have a passion\n...<<<<\n';
-var text = new TextPanel(
+var secondSectionString = 'Writing.';//\nAnd I have a passion\n...<<<<\n';
+var writingText = new TextPanel(
   secondSectionString, {
     align: 'center',
     font: 'Times New Roman, Times, serif',
+    style: '',
+    size: 95,
+    lineSpacing: 40,
+    color: 'rgba(255, 255, 255, 1)'
+  }
+);
+
+var passionTextString = '<<< and a passion for...';
+var passionText = new TextPanel(
+  passionTextString, {
+    align: 'center',
+   
     style: '',
     size: 85,
     lineSpacing: 40,
@@ -28,7 +39,7 @@ var _this = this;
 this.typeTheCopy = function () {
   stringToType+=secondSectionString[secondSectionStringCounter];
   console.log(secondSectionString[secondSectionStringCounter]);
-  text.updateCopy(stringToType);
+  writingText.updateCopy(stringToType);
   secondSectionStringCounter++;
   //console.log('secondSectionString.length' + secondSectionString.length);
   if(secondSectionStringCounter == secondSectionString.length ){
@@ -38,18 +49,19 @@ this.typeTheCopy = function () {
 
 this.startTheTyping = function () {
   clearInterval(_this.startTheTypeingInterval);
-  _this.typeTheCopyInterval = setInterval(_this.typeTheCopy, 250);
+  _this.typeTheCopyInterval = setInterval(_this.typeTheCopy, 350);
 }
 
-text.el.position.set(0, -15, 0);
-text.el.rotation.y = .35;
-secondSection.add(text.el);
+
+secondSection.add(writingText.el);
+secondSection.add(passionText.el);
 
 
 secondSection.onIn(function () {
   console.log('secondSection.onIn');
   console.log('secondSection.el.position.z: ' + secondSection.el.position.z);
-  text.in();
+  writingText.in();
+  passionText.in();
 });
 
 secondSection.onOut(function () {
@@ -61,10 +73,10 @@ secondSection.onStart(function () {
   console.log('secondSection.onStart');
    secondSectionStringCounter = 0;
  stringToType = '';
-  text.updateCopy('');
+  writingText.updateCopy('');
   creativeWriting.show();
   creativeWriting.start();
-  _this.startTheTypeingInterval = setInterval(_this.startTheTyping, 3000);
+  _this.startTheTypeingInterval = setInterval(_this.startTheTyping, 4500);
   
   
 });
@@ -79,6 +91,18 @@ secondSection.setPositions = function () {
   creativeWriting.el.position.x = 0;
   creativeWriting.el.position.y = 10;
   creativeWriting.el.position.z = -20;
+  
+
+  writingText.el.position.x = 0;
+  writingText.el.position.y = -10;
+  writingText.el.position.z = 0;
+  writingText.el.rotation.y = 20 * (Math.PI / 180);
+
+  passionText.el.position.x = -20;
+  passionText.el.position.y = -20;
+  passionText.el.position.z = -10;
+  passionText.el.rotation.y = -30 * (Math.PI / 180);
+
 };
 
 module.exports = secondSection;

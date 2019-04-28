@@ -232,7 +232,7 @@ HeightMap.prototype.getIdleTween = function () {
            //console.log('Friend hold: ' + tweenPauseTime);
           break;
         case 5:
-          tweenPauseTime = .5;
+          tweenPauseTime = .35;
            //console.log('blank5 hold: ' + tweenPauseTime);
           break;
         case 6:
@@ -244,11 +244,11 @@ HeightMap.prototype.getIdleTween = function () {
             //console.log('AM hold: ' + tweenPauseTime);
           break;
         case 8:
-          tweenPauseTime = 2;
+          tweenPauseTime = 1.65;
             //console.log('A hold: ' + tweenPauseTime);
           break;
         case 9:
-          tweenPauseTime = 6;
+          tweenPauseTime = 4;
             //console.log('DEVELOPER hold: ' + tweenPauseTime);
           break;
         case 10:
@@ -460,11 +460,11 @@ HeightMap.prototype.applyMap = function () {
         break;
       case 5:
           //console.log('Blank5 tweenTime: ' + thisTweenTime);
-        thisTweenTime = .5;
+        thisTweenTime = .3;
         break;
       case 6:
         thisTweenTime = .65;
-        thisEase = Power1.easeIn;
+        thisEase = Power1.easeOut;
            //console.log('I tweenTime: ' + thisTweenTime);
         break;
       case 7:
@@ -484,14 +484,13 @@ HeightMap.prototype.applyMap = function () {
         break;
       case 10:
         thisEase = Power1.easeOut;
-        thisTweenTime = 1.5;
+        thisTweenTime = 1;
         _this.completeAnimationFunction();
          //console.log('blank10 tweenTime: ' + thisTweenTime);
         break;
       case 11:
         thisEase = Power1.easeOut;
         thisTweenTime = 5.5;
-      
              //console.log('face tweenTime: ' + thisTweenTime);
         break;
       case 12:

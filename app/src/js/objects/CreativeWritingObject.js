@@ -82,6 +82,13 @@ function CreativeWriting() {
       onComplete: _this.rotateLeft
     });
   }
+  this.rotateRightStart = function () {
+    _this.rotateHorTween = tweenMax.to(_this.thisRotation, 10, {
+      ease: Power2.easeInOut,
+      y: -.35,
+      onComplete: _this.rotateLeft
+    });
+  }
 
   this.rotateUp = function () {
     _this.rotateVertTween = tweenMax.to(_this.thisRotation, 15, {
@@ -90,6 +97,15 @@ function CreativeWriting() {
       onComplete: _this.rotateDown
     });
   }
+  this.rotateUpStart = function () {
+    _this.rotateVertTween = tweenMax.to(_this.thisRotation, 10, {
+      ease: Power2.easeInOut,
+      x: -.25,
+      onComplete: _this.rotateDown
+    });
+  }
+
+  
   this.rotateDown = function () {
     _this.rotateVertTween = tweenMax.to(_this.thisRotation, 15, {
       ease: Power2.easeInOut,
@@ -139,8 +155,8 @@ CreativeWriting.prototype.start = function () {
   this.el.rotation.y = this.el.rotation.x = 0 * (Math.PI / 180);
 
   //if (!this.rotateHorTween) {
-    this.rotateRight();
-    this.rotateUp();
+    this.rotateRightStart();
+    this.rotateUpStart();
  // } else {
    // this.rotateHorTween.resume();
     //this.rotateVertTween.resume();
@@ -187,10 +203,6 @@ CreativeWriting.prototype.show = function () {
 CreativeWriting.prototype.hide = function () {
   console.log('CreativeWriting.prototype.hide');
   this.creativeObject.visible = false;
-};
-
-CreativeWriting.prototype.addWriting = function () {
-  // console.log('add the writing...');
 };
 
 module.exports = CreativeWriting;

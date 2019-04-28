@@ -121,7 +121,7 @@ var SCENE = (function () {
         max: 25,
       },
       {
-        min: 0,
+        min: -5,
         max: 75,
       },
       {
@@ -179,8 +179,10 @@ var SCENE = (function () {
       function onScroll(event) {
         var dist = camera.position.z - sections[currentIndex].el.position.z;
         var zSpeed = event.originalEvent.wheelDelta * .01;
+        console.log('zSpeed: ' + zSpeed);
+        console.log('camera.position.y: ' + camera.position.y);
         if (zSpeed > 0) {
-          if (dist > 0 - sectionZoomOffset[currentIndex].min) {
+         if (dist > 0 - sectionZoomOffset[currentIndex].min) {
             theAtmosphereParticles.el.position.z += zSpeed;
             theSectionParticles0.el.position.z += zSpeed;
             sectionLines0.el.position.z += zSpeed;
@@ -206,6 +208,7 @@ var SCENE = (function () {
           }
         } else {
           if (dist < 50 + sectionZoomOffset[currentIndex].max) {
+           
             theAtmosphereParticles.el.position.z += zSpeed;
             theSectionParticles0.el.position.z += zSpeed;
             sectionLines0.el.position.z += zSpeed;
@@ -247,7 +250,7 @@ var SCENE = (function () {
 
       //key control
       jQuery(document).on('keydown', onKeyDown);
-      
+
       // mousewhell
       $viewport.on('DOMMouseScroll mousewheel', onScroll);
 
@@ -278,7 +281,7 @@ var SCENE = (function () {
         raycaster.setFromCamera(mouse, camera);
         var intersectIntroText = raycaster.intersectObject(sections[0].getTheText().el, true);
         if (intersectIntroText.length > 0) {
-        
+
           next();
         }
       }
@@ -320,7 +323,7 @@ var SCENE = (function () {
 
         switch (currentIndex) {
           case 0:
-       //   console.log('sections[0].textIsIn: ' + sections[0].textIsIn);
+            //   console.log('sections[0].textIsIn: ' + sections[0].textIsIn);
             if (sections[0].textIsIn) {
               //console.log('');
               mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2 - 1;
@@ -335,7 +338,7 @@ var SCENE = (function () {
                   //console.log('mouseDown: ' + mouseDown);
                   if (!mouseDown) {
                     sections[0].theTextOver();
-                  }else{
+                  } else {
                     sections[0].theTextIsDown();
                   }
                 }
@@ -486,7 +489,7 @@ var SCENE = (function () {
       stripsRangeY = [-80, 80];
       stripsRangeZ = [-50, 0];
       //
-    
+
       theSectionParticles2 = new BackgroundParticles({
         rangeX: rangeX,
         rangeY: rangeY,
@@ -641,7 +644,7 @@ var SCENE = (function () {
     function render() {
       // camera noise
       renderCount++;
-      if(renderCount == 120){
+      if (renderCount == 120) {
         //console.log('cameraShakeY: ' + cameraShakeY);
         //console.log('camera.position.y: ' + camera.position.y);
         renderCount = 0;
@@ -669,8 +672,8 @@ var SCENE = (function () {
 
     function animateCamera(index) {
       currentIndex = index;
-      cameraShakeY=0;
-      cameraShakeX=0;
+      cameraShakeY = 0;
+      cameraShakeX = 0;
       var nextPosition = {
         x: sections[currentIndex].el.position.x,
         y: sections[currentIndex].el.position.y,

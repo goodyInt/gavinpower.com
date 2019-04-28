@@ -114,7 +114,6 @@ function TextPanel(text, options) {
     context.fillText(editedCopy, left, 0);
     texture.needsUpdate = true;
   }
-
   
   this.updateCopy = function (text) {
     console.log('updateCopy text: ' + text);
@@ -147,7 +146,7 @@ function TextPanel(text, options) {
 }
 
   this.in = function () {
-    tweenMax.to(cache, 1.5, {
+    tweenMax.to(cache, 2.35, {
       y: 0,
       opacity: 1,
       onStart: function () {
