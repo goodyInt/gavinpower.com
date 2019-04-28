@@ -182,7 +182,7 @@ var SCENE = (function () {
         console.log('zSpeed: ' + zSpeed);
         console.log('camera.position.y: ' + camera.position.y);
         if (zSpeed > 0) {
-         if (dist > 0 - sectionZoomOffset[currentIndex].min) {
+          if (dist > 0 - sectionZoomOffset[currentIndex].min) {
             theAtmosphereParticles.el.position.z += zSpeed;
             theSectionParticles0.el.position.z += zSpeed;
             sectionLines0.el.position.z += zSpeed;
@@ -208,7 +208,7 @@ var SCENE = (function () {
           }
         } else {
           if (dist < 50 + sectionZoomOffset[currentIndex].max) {
-           
+
             theAtmosphereParticles.el.position.z += zSpeed;
             theSectionParticles0.el.position.z += zSpeed;
             sectionLines0.el.position.z += zSpeed;
@@ -247,7 +247,6 @@ var SCENE = (function () {
           }
         }
       }
-
       //key control
       jQuery(document).on('keydown', onKeyDown);
 
@@ -266,11 +265,28 @@ var SCENE = (function () {
         mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2 - 1;
         mouse.y = -(event.clientY / renderer.domElement.clientHeight) * 2 + 1;
         raycaster.setFromCamera(mouse, camera);
-        var intersectIntroText = raycaster.intersectObject(sections[0].getTheText().el, true);
-        if (intersectIntroText.length > 0) {
-          sections[0].theTextIsDown();
+        switch (currentIndex) {
+          case 0:
+            var intersectIntroText = raycaster.intersectObject(sections[0].getTheText().el, true);
+            if (intersectIntroText.length > 0) {
+              sections[0].theTextIsDown();
+            }
+            break;
+          case 1:
+            break;
+          case 2:
+            break;
+          case 3:
+            break;
+          case 4:
+            break;
+          case 5:
+            break;
+          case 6:
+            break;
         }
       }
+
 
       function onDocumentMouseUp(event) {
         mouseDown = false;
@@ -279,10 +295,26 @@ var SCENE = (function () {
         mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2 - 1;
         mouse.y = -(event.clientY / renderer.domElement.clientHeight) * 2 + 1;
         raycaster.setFromCamera(mouse, camera);
-        var intersectIntroText = raycaster.intersectObject(sections[0].getTheText().el, true);
-        if (intersectIntroText.length > 0) {
 
-          next();
+        switch (currentIndex) {
+          case 0:
+            var intersectIntroText = raycaster.intersectObject(sections[0].getTheText().el, true);
+            if (intersectIntroText.length > 0) {
+              next();
+            }
+            break;
+          case 1:
+            break;
+          case 2:
+            break;
+          case 3:
+            break;
+          case 4:
+            break;
+          case 5:
+            break;
+          case 6:
+            break;
         }
       }
 
@@ -323,19 +355,14 @@ var SCENE = (function () {
 
         switch (currentIndex) {
           case 0:
-            //   console.log('sections[0].textIsIn: ' + sections[0].textIsIn);
             if (sections[0].textIsIn) {
-              //console.log('');
               mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2 - 1;
               mouse.y = -(event.clientY / renderer.domElement.clientHeight) * 2 + 1;
               raycaster.setFromCamera(mouse, camera);
               var intersectIntroText = raycaster.intersectObject(sections[0].getTheText().el, true);
-              //console.log('intersectIntroText.length: ' + intersectIntroText.length);
               if (intersectIntroText.length > 0) {
-                //console.log('sections[0].textIsDown: ' + sections[0].textIsDown);
                 jQuery('html,body').css('cursor', 'pointer');
                 if (!sections[0].textIsDown) {
-                  //console.log('mouseDown: ' + mouseDown);
                   if (!mouseDown) {
                     sections[0].theTextOver();
                   } else {
@@ -344,9 +371,7 @@ var SCENE = (function () {
                 }
               } else {
                 jQuery('html,body').css('cursor', 'default');
-                //console.log('sections[0].textIsOver: ' + sections[0].textIsOver);
                 if (sections[0].textIsOver) {
-                  //console.log('sections[0].textIsDown: ' + sections[0].textIsDown);
                   if (!sections[0].textIsDown) {
                     sections[0].theTextIsOut();
                   }
