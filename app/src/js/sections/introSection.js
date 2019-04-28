@@ -94,7 +94,7 @@ heightMap.el.rotation.x = 0.1;
 heightMap.el.visible = false;
 introSection.add(heightMap.el);
 
-var degreeText = new TextPanel(
+var nextBtn = new TextPanel(
   'with a degree in... >>>', {
     align: 'left',
     style: '',
@@ -102,38 +102,38 @@ var degreeText = new TextPanel(
     lineSpacing: 0
   }
 );
-degreeText.el.position.set(20, 0, 0);
-degreeText.el.rotation.y = .35;
-introSection.add(degreeText.el);
+nextBtn.el.position.set(20, 0, 0);
+nextBtn.el.rotation.y = .35;
+introSection.add(nextBtn.el);
 
-introSection.textIsIn = false;
-introSection.textIsOver = false;
-introSection.textIsDown = false;
+introSection.nextBtnIsIn = false;
+introSection.nextBtnIsOver = false;
+introSection.nextBtnIsDown = false;
 
-introSection.getTheText = function () {
-  return degreeText;
+introSection.getTheNextBtn = function () {
+  return nextBtn;
 }; 
-introSection.theTextOver = function () {
-  //console.log('introSection.theTextOver');
-  degreeText.over();
-  introSection.textIsOver = true;
+introSection.theNextBtnIsOver = function () {
+  //console.log('introSection.theNextBtnIsOver');
+  nextBtn.over();
+  introSection.nextBtnIsOver = true;
   
 }; 
-introSection.theTextIsDown = function () {
-  //console.log('introSection.theTextIsDown');
-  degreeText.down('#ff0000');
-  introSection.textIsDown = true;
+introSection.theNextBtnIsDown = function () {
+  //console.log('introSection.theNextBtnIsDown');
+  nextBtn.down('#ff0000');
+  introSection.nextBtnIsDown = true;
 }; 
-introSection.theTextIsUp = function () {
-  //console.log('introSection.theTextIsUp');
-  degreeText.overOut();
-  introSection.textIsDown = false;
+introSection.theNextBtnIsUp = function () {
+  //console.log('introSection.theNextBtnIsUp');
+  nextBtn.overOut();
+  introSection.nextBtnIsDown = false;
 }; 
 
-introSection.theTextIsOut = function () {
-  //console.log('introSection.theTextIsOut');
-  degreeText.overOut();
-  introSection.textIsOver = false;
+introSection.theNextBtnIsOut = function () {
+  //console.log('introSection.theNextBtnIsOut');
+  nextBtn.overOut();
+  introSection.nextBtnIsOver = false;
   
 }; 
 introSection.onIn(function () {
@@ -162,9 +162,9 @@ introSection.onStop(function () {
     return false;
   }
   heightMap.stop();
-  degreeText.overOut();
-  introSection.textIsOver = false;
-  introSection.textIsDown = false;
+  nextBtn.overOut();
+  introSection.nextBtnIsOver = false;
+  introSection.nextBtnIsDown = false;
   
 });
 
@@ -175,8 +175,8 @@ introSection.show = function () {
 
 introSection.textIn = function () {
   //console.log('introSection.textIn');
-  degreeText.in();
-  introSection.textIsIn = true;
+  nextBtn.in();
+  introSection.nextBtnIsIn = true;
   
 };
 

@@ -260,16 +260,15 @@ var SCENE = (function () {
 
       function onDocumentMouseDown(event) {
         mouseDown = true;
-        //console.log('onDocumentMouseDown');
         event.preventDefault();
         mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2 - 1;
         mouse.y = -(event.clientY / renderer.domElement.clientHeight) * 2 + 1;
         raycaster.setFromCamera(mouse, camera);
         switch (currentIndex) {
           case 0:
-            var intersectIntroText = raycaster.intersectObject(sections[0].getTheText().el, true);
-            if (intersectIntroText.length > 0) {
-              sections[0].theTextIsDown();
+            var introSectionNextBtn = raycaster.intersectObject(sections[0].getTheNextBtn().el, true);
+            if (introSectionNextBtn.length > 0) {
+              sections[0].theNextBtnIsDown();
             }
             break;
           case 1:
@@ -298,8 +297,8 @@ var SCENE = (function () {
 
         switch (currentIndex) {
           case 0:
-            var intersectIntroText = raycaster.intersectObject(sections[0].getTheText().el, true);
-            if (intersectIntroText.length > 0) {
+            var introSectionNextBtn = raycaster.intersectObject(sections[0].getTheNextBtn().el, true);
+            if (introSectionNextBtn.length > 0) {
               next();
             }
             break;
@@ -352,32 +351,31 @@ var SCENE = (function () {
       camera.position.set(0, 0, 60);
 
       function onMouseMove(event) {
-
+        mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2 - 1;
+        mouse.y = -(event.clientY / renderer.domElement.clientHeight) * 2 + 1;
+        raycaster.setFromCamera(mouse, camera);
         switch (currentIndex) {
           case 0:
-            if (sections[0].textIsIn) {
-              mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2 - 1;
-              mouse.y = -(event.clientY / renderer.domElement.clientHeight) * 2 + 1;
-              raycaster.setFromCamera(mouse, camera);
-              var intersectIntroText = raycaster.intersectObject(sections[0].getTheText().el, true);
-              if (intersectIntroText.length > 0) {
+            if (sections[0].nextBtnIsIn) {   
+              var introSectionNextBtn = raycaster.intersectObject(sections[0].getTheNextBtn().el, true);
+              if (introSectionNextBtn.length > 0) {
                 jQuery('html,body').css('cursor', 'pointer');
-                if (!sections[0].textIsDown) {
+                if (!sections[0].nextBtnIsDown) {
                   if (!mouseDown) {
-                    sections[0].theTextOver();
+                    sections[0].theNextBtnIsOver();
                   } else {
-                    sections[0].theTextIsDown();
+                    sections[0].theNextBtnIsDown();
                   }
                 }
               } else {
                 jQuery('html,body').css('cursor', 'default');
-                if (sections[0].textIsOver) {
-                  if (!sections[0].textIsDown) {
-                    sections[0].theTextIsOut();
+                if (sections[0].nextBtnIsOver) {
+                  if (!sections[0].nextBtnIsDown) {
+                    sections[0].theNextBtnIsOut();
                   }
                 }
-                if (sections[0].textIsDown) {
-                  sections[0].theTextIsUp();
+                if (sections[0].nextBtnIsDown) {
+                  sections[0].theNextBtnIsUp();
                 }
               }
             }
