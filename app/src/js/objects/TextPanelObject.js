@@ -183,7 +183,7 @@ function TextPanel(text, options) {
   }
   this.overOut = function () {
     //console.log('TextPanel.overOut');
-    context.fillStyle = '#aaaaaa';
+    context.fillStyle = '#999999';
     context.clearRect(
       0,
       0,
@@ -213,7 +213,7 @@ TextPanel.defaultOptions = {
   style: 'Bold',
   align: 'center',
   lineSpacing: 20,
-  color: '#aaaaaa'
+  color: '#999999'
 };
 
 module.exports = TextPanel;

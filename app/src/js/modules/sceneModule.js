@@ -272,6 +272,11 @@ var SCENE = (function () {
             }
             break;
           case 1:
+          console.log('onDocumentMouseDown section 1');
+          var introSectionNextBtn = raycaster.intersectObject(sections[1].getTheNextBtn().el, true);
+            if (introSectionNextBtn.length > 0) {
+              sections[1].theNextBtnIsDown();
+            }
             break;
           case 2:
             break;
@@ -303,6 +308,11 @@ var SCENE = (function () {
             }
             break;
           case 1:
+          console.log('onDocumentMouseUp section 1');
+          var introSectionNextBtn = raycaster.intersectObject(sections[1].getTheNextBtn().el, true);
+          if (introSectionNextBtn.length > 0) {
+            next();
+          }
             break;
           case 2:
             break;
@@ -381,6 +391,31 @@ var SCENE = (function () {
             }
             break;
           case 1:
+          console.log('onMouseMove section 1');
+          
+          if (sections[1].nextBtnIsIn) {   
+            var introSectionNextBtn = raycaster.intersectObject(sections[1].getTheNextBtn().el, true);
+            if (introSectionNextBtn.length > 0) {
+              jQuery('html,body').css('cursor', 'pointer');
+              if (!sections[1].nextBtnIsDown) {
+                if (!mouseDown) {
+                  sections[1].theNextBtnIsOver();
+                } else {
+                  sections[1].theNextBtnIsDown();
+                }
+              }
+            } else {
+              jQuery('html,body').css('cursor', 'default');
+              if (sections[1].nextBtnIsOver) {
+                if (!sections[1].nextBtnIsDown) {
+                  sections[1].theNextBtnIsOut();
+                }
+              }
+              if (sections[1].nextBtnIsDown) {
+                sections[1].theNextBtnIsUp();
+              }
+            }
+          }
             break;
           case 2:
             break;

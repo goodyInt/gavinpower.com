@@ -106,36 +106,6 @@ nextBtn.el.position.set(20, 0, 0);
 nextBtn.el.rotation.y = .35;
 introSection.add(nextBtn.el);
 
-introSection.nextBtnIsIn = false;
-introSection.nextBtnIsOver = false;
-introSection.nextBtnIsDown = false;
-
-introSection.getTheNextBtn = function () {
-  return nextBtn;
-}; 
-introSection.theNextBtnIsOver = function () {
-  //console.log('introSection.theNextBtnIsOver');
-  nextBtn.over();
-  introSection.nextBtnIsOver = true;
-  
-}; 
-introSection.theNextBtnIsDown = function () {
-  //console.log('introSection.theNextBtnIsDown');
-  nextBtn.down('#ff0000');
-  introSection.nextBtnIsDown = true;
-}; 
-introSection.theNextBtnIsUp = function () {
-  //console.log('introSection.theNextBtnIsUp');
-  nextBtn.overOut();
-  introSection.nextBtnIsDown = false;
-}; 
-
-introSection.theNextBtnIsOut = function () {
-  //console.log('introSection.theNextBtnIsOut');
-  nextBtn.overOut();
-  introSection.nextBtnIsOver = false;
-  
-}; 
 introSection.onIn(function () {
   //console.log('introSection.onIn()');
   // text.in();
@@ -144,7 +114,6 @@ introSection.onIn(function () {
 introSection.onOut(function (way) {
   //console.log('introSection.onOut()');
   // text.out(way);
- 
 });
 
 introSection.onStart(function () {
@@ -157,7 +126,6 @@ introSection.onStart(function () {
 
 introSection.onStop(function () {
   //console.log('introSection.onStop() heightMap.ready: ' + heightMap.ready);
-  
   if (!heightMap.ready) {
     return false;
   }
@@ -165,7 +133,6 @@ introSection.onStop(function () {
   nextBtn.overOut();
   introSection.nextBtnIsOver = false;
   introSection.nextBtnIsDown = false;
-  
 });
 
 introSection.show = function () {
@@ -177,9 +144,7 @@ introSection.textIn = function () {
   //console.log('introSection.textIn');
   nextBtn.in();
   introSection.nextBtnIsIn = true;
-  
 };
-
 
 heightMap.setOnCompleteFunction(introSection.textIn);
 
@@ -193,8 +158,46 @@ introSection.hide = function () {
   //console.log('introSection.hide()');
   heightMap.el.visible = false;
 };
+
+////
+introSection.nextBtnIsIn = false;
+introSection.nextBtnIsOver = false;
+introSection.nextBtnIsDown = false;
+
+introSection.getTheNextBtn = function () {
+  return nextBtn;
+};
+introSection.theNextBtnIsOver = function () {
+  //console.log('introSection.theNextBtnIsOver');
+  nextBtn.over();
+  introSection.nextBtnIsOver = true;
+
+};
+introSection.theNextBtnIsDown = function () {
+  //console.log('introSection.theNextBtnIsDown');
+  nextBtn.down('#ff0000');
+  introSection.nextBtnIsDown = true;
+};
+introSection.theNextBtnIsUp = function () {
+  //console.log('introSection.theNextBtnIsUp');
+  nextBtn.overOut();
+  introSection.nextBtnIsDown = false;
+};
+
+introSection.theNextBtnIsOut = function () {
+  //console.log('introSection.theNextBtnIsOut');
+  nextBtn.overOut();
+  introSection.nextBtnIsOver = false;
+};
+
+/////
+
 introSection.setPositions = function () {
-  var thisPos= {x: introSection.el.position.x, y: introSection.el.position.y,z: introSection.el.position.z}
+  var thisPos = {
+    x: introSection.el.position.x,
+    y: introSection.el.position.y,
+    z: introSection.el.position.z
+  }
   //console.log('');
   //console.log('introSection.setPositions()');
   //console.log('x: ' + thisPos.x);
