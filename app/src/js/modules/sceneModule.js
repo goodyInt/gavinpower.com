@@ -118,11 +118,11 @@ var SCENE = (function () {
     ];
     var sectionZoomOffset = [{
         min: 0,
-        max: 25,
+        max: 45,
       },
       {
         min: -5,
-        max: 75,
+        max: 80,
       },
       {
         min: 0,
@@ -353,8 +353,7 @@ var SCENE = (function () {
       scene = new THREE.Scene();
       scene.fog = new THREE.FogExp2(parameters.fogColor, 0.01);
 
-      light = new THREE.DirectionalLight('#ffffff', .5);
-      light.position.set(0.2, 1, 0.5);
+      light = new THREE.AmbientLight('#ffffff');
       scene.add(light);
 
       camera = new THREE.PerspectiveCamera(190, width / height, 1, 4000);
