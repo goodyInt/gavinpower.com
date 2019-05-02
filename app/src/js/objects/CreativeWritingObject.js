@@ -115,7 +115,7 @@ function CreativeWriting() {
   }
 
   var startZ = 0;
-  var finishZ = 30;
+  var finishZ = 35;
   var offsetZ = 0;
   this.animateTextIn = function () {
     var attributes = _this.creativeObject.geometry.attributes;

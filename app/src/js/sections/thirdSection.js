@@ -1,86 +1,123 @@
 'use strict';
 
 var Section = require('../classes/SectionClass');
-
-var animatedSprite = require('../objects/AnimatedSpriteObject');
-var Smoke = require('../objects/SmokeObject');
-
+var Campfire = require('../objects/CampfireObject');
+var TextPanel = require('../objects/TextPanelObject');
+var Fire = require('../objects/FireObject');
 var thirdSection = new Section('third');
 
-var thirdAnimatedText = new animatedSprite();
 
-var thirdSmoke = new Smoke({  
- 
- // frontColor: '#0000ff',
- // backColor: '#0000ff',
-  frontColor: '#c6ffaa',
-  backColor: '#c6ffaa',
-  
-  layers: 3,
+var fourthSmoke = new Fire({  
+  frontColor: '#ff5000',
+  backColor: '#ff0000',
+  layers: 4,
   data: [
-    { positionX : 10.7, positionY: 3.9, positionZ: 17.8, rotationZ: 2.7, scale: 3.9 },
-    { positionX : -2.8, positionY: 2.6, positionZ: -11, rotationZ: 0.7, scale: 6.7 },
-    { positionX : 13, positionY: 19.5, positionZ: -1.3, rotationZ: 2, scale: 4.7 } 
+    { positionX : -2, positionY: -18, positionZ: .2, rotationZ: (-5 * Math.PI / 180), scale: 1 },
+    { positionX : -1, positionY: -18, positionZ: .1, rotationZ: (-5 * Math.PI / 180), scale: .9 },
+    { positionX : 1, positionY: -18, positionZ: -.1, rotationZ: (-5 * Math.PI / 180), scale: .8 },
+    { positionX : 2, positionY: -18, positionZ: -.2, rotationZ: (-5 * Math.PI / 180), scale: .75 }
+   // { positionX : 10, positionY: -5, positionZ: -15, rotationZ: 0, scale: 1 },
+   // { positionX : 10, positionY: -5, positionZ: -15, rotationZ: 0, scale: 1 } 
   ]
 });
+thirdSection.add(fourthSmoke.el);
+fourthSmoke.el.position.z = -3;
 
-thirdSection.add(thirdSmoke.el);
-thirdSection.add(thirdAnimatedText.el);
-thirdAnimatedText.out();
+fourthSmoke.start();
+fourthSmoke.el.visible = true;
 
-thirdSmoke.el.visible = false;
+var ourCampfire = new Campfire();
+thirdSection.add(ourCampfire.el);
+
+var passionTextString = '<<< I like code. I like details. I love...';
+var nextBtn = new TextPanel(
+  passionTextString, {
+    align: 'center',
+    style: '',
+    size: 85,
+    lineSpacing: 40,
+    color: '#999999' 
+  }
+);
+
+var _this = this;
+this.bringInTheBtn = function () {
+  clearInterval(_this.bringInTheNextBtnInterval);
+  nextBtn.in();
+  thirdSection.nextBtnIsIn = true;
+}
+
+thirdSection.add(nextBtn.el);
 
 thirdSection.onIn(function () {
-  thirdAnimatedText.in();
+  console.log('thirdSection.onIn');
+  console.log('thirdSection.el.position.z: ' + thirdSection.el.position.z);
+
 });
 
 thirdSection.onOut(function () {
-  thirdAnimatedText.out();
+  console.log('thirdSection.onOut');
+  ourCampfire.onOut();
 });
 
 thirdSection.onStart(function () {
-  thirdAnimatedText.start();
+  console.log('thirdSection.onStart');
+  ourCampfire.show();
+  ourCampfire.start();
+  _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 4500);
 });
 
 thirdSection.onStop(function () {
-  thirdAnimatedText.stop();
+  console.log('thirdSection.onStop');
+  ourCampfire.stop();
+  ourCampfire.hide();
+  nextBtn.overOut();
+  nextBtn.out('up'); 
 });
 
-var thirdSmokePlaying = false;
+////
+thirdSection.nextBtnIsIn = false;
+thirdSection.nextBtnIsOver = false;
+thirdSection.nextBtnIsDown = false;
 
-thirdSection.smokeStart = function () {
-  
-  if (thirdSmokePlaying) {
-    return false;
-  }
-  thirdSmokePlaying = true;
-  thirdSmoke.start();
-  thirdSmoke.el.visible = true;
+thirdSection.getTheNextBtn = function () {
+  console.log('thirdSection.getTheNextBtn');
+  return nextBtn;
+};
+thirdSection.theNextBtnIsOver = function () {
+  console.log('thirdSection.theNextBtnIsOver');
+  nextBtn.over();
+  thirdSection.nextBtnIsOver = true;
+
+};
+thirdSection.theNextBtnIsDown = function () {
+  console.log('thirdSection.theNextBtnIsDown');
+  nextBtn.down('#0000ff');
+  thirdSection.nextBtnIsDown = true;
+};
+thirdSection.theNextBtnIsUp = function () {
+  console.log('thirdSection.theNextBtnIsUp');
+  nextBtn.overOut();
+  thirdSection.nextBtnIsDown = false;
 };
 
-thirdSection.smokeStop = function () {
-  if (!thirdSmokePlaying) {
-    return false;
-  }
-
-  thirdSmokePlaying = false;
-
-  thirdSmoke.stop();
-
-  thirdSmoke.el.visible = false;
+thirdSection.theNextBtnIsOut = function () {
+  console.log('thirdSection.theNextBtnIsOut');
+  nextBtn.overOut();
+  thirdSection.nextBtnIsOver = false;
 };
 
-thirdSection.updateColors = function (color1, color2) {
-  thirdSmoke.updateColors(color1, color2);
-};
 thirdSection.setPositions = function () {
-  var thisPos= {x: thirdSection.el.position.x, y: thirdSection.el.position.y,z: thirdSection.el.position.z}
-  //console.log('');
-  //console.log('thirdSection.setPositions()');
-  //console.log('x: ' + thisPos.x);
-  //console.log('y: ' + thisPos.y);
-  //console.log('z: ' + thisPos.z);
-};
+  ourCampfire.el.position.x = 0;
+  ourCampfire.el.position.y = 10;
+  ourCampfire.el.position.z = -20;
 
+  nextBtn.el.position.x = 20;
+  nextBtn.el.position.y = 20;
+  nextBtn.el.position.z = -30;
+  nextBtn.el.rotation.y = -40 * (Math.PI / 180);
+  nextBtn.el.rotation.z = -20 * (Math.PI / 180);
+
+};
 
 module.exports = thirdSection;

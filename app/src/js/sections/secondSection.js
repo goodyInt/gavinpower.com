@@ -21,7 +21,7 @@ var writingText = new TextPanel(
   }
 );
 
-var passionTextString = '<<< and a passion for...';
+var passionTextString = '<<< And a passion for...';
 var nextBtn = new TextPanel(
   passionTextString, {
     align: 'center',
