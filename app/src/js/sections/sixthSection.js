@@ -30,6 +30,7 @@ sixthSmoke.el.visible = false;
 
 sixthSection.onIn(function () {
   sixthAnimatedText.in();
+  sixthSection.smokeStart();
 });
 
 sixthSection.onOut(function () {
@@ -42,6 +43,7 @@ sixthSection.onStart(function () {
 
 sixthSection.onStop(function () {
   sixthAnimatedText.stop();
+  sixthSection.smokeStop();
 });
 
 var sixthSmokePlaying = false;

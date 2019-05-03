@@ -91,6 +91,7 @@ SCENE.on('section:changeBegin', function () {
   console.log('');
   console.log('changeBegin to: ' + to);
   console.log('changeBegin from: ' + from);
+  SCENE.setUpNextScene(to);
   switch (to) {
     case 'intro':
       if (from !== 'intro') {
@@ -101,32 +102,32 @@ SCENE.on('section:changeBegin', function () {
     case 'second':
       secondSection.in();
       secondSection.start();
-     // secondSection.smokeStart();
+    
       break;
     case 'third':
+     
       thirdSection.in();
       thirdSection.start();
-      //thirdSection.smokeStart();
       break;
     case 'fourth':
       fourthSection.in();
       fourthSection.start();
-      fourthSection.smokeStart();
+    
       break;
     case 'fifth':
       fifthSection.in();
       fifthSection.start();
-      fifthSection.smokeStart();
+  
       break;
     case 'sixth':
       sixthSection.in();
       sixthSection.start();
-      sixthSection.smokeStart();
+
       break;
     case 'seventh':
       seventhSection.in();
       seventhSection.start();
-      seventhSection.smokeStart();
+    
       break;
     default:
       break;
@@ -142,6 +143,7 @@ SCENE.on('section:changeBegin', function () {
       break;
     case 'third':
       thirdSection.out(way);
+    
       break;
     case 'fourth':
       fourthSection.out(way);
@@ -167,6 +169,7 @@ SCENE.on('section:changeComplete', function () {
   console.log('');
   console.log('changeComplete to: ' + to);
   console.log('changeComplete from: ' + from);
+  SCENE.cleanUpLastScene(from);
   switch (from) {
     case 'intro':
     console.log('calling intro.stop() changeComplete');
@@ -174,27 +177,27 @@ SCENE.on('section:changeComplete', function () {
       break;
     case 'second':
       secondSection.stop();
-     // secondSection.smokeStop();
+  
       break;
     case 'third':
       thirdSection.stop();
-     // thirdSection.smokeStop();
+  
       break;
     case 'fourth':
       fourthSection.stop();
-      fourthSection.smokeStop();
+   
       break;
     case 'fifth':
       fifthSection.stop();
-      fifthSection.smokeStop();
+     
       break;
     case 'sixth':
       sixthSection.stop();
-      sixthSection.smokeStop();
+     
       break;
     case 'seventh':
       seventhSection.stop();
-      seventhSection.smokeStop();
+    
       break;
     default:
       break;

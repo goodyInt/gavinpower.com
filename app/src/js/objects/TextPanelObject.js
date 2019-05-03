@@ -38,7 +38,7 @@ function TextPanel(text, options) {
 
   canvas.width = width + 20;
   canvas.height = height + 20;
-  console.log('canvas.width: ' + canvas.width);
+  //console.log('canvas.width: ' + canvas.width);
 
   context.font = font;
   context.fillStyle = parameters.color;
@@ -90,33 +90,9 @@ function TextPanel(text, options) {
     mesh.position.y = cache.y;
     mesh.material.opacity = cache.opacity;
   }
-
-  this.updateCopyOrig = function (newCopy) {
-    // console.log('this.updateCopy');
-    console.log(newCopy);
-    var editedCopy = '';
-
-    for (var i = 0; i < newCopy.length; i++) {
-      var newLetter = newCopy[i];
-      if (newLetter == '^') {
-        newLetter = '\n';
-      }
-      editedCopy += newLetter;
-    }
-
-    context.fillStyle = '#ffffff';
-    context.clearRect(
-      0,
-      0,
-      canvas.width,
-      canvas.height
-    );
-    context.fillText(editedCopy, left, 0);
-    texture.needsUpdate = true;
-  }
   
   this.updateCopy = function (text) {
-    console.log('updateCopy text: ' + text);
+   // console.log('updateCopy text: ' + text);
     text = text || '';
   var words = text.split('\n');
   var wordsCount = words.length;
@@ -139,7 +115,7 @@ function TextPanel(text, options) {
     } else {
       left = canvas.width;
     }
-    console.log('updateCopy word: ' + word);
+   // console.log('updateCopy word: ' + word);
     context.fillText(word, left, lineHeight * k);
   }
   texture.needsUpdate = true;

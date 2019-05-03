@@ -30,6 +30,7 @@ fifthSmoke.el.visible = false;
 
 fifthSection.onIn(function () {
   fifthAnimatedText.in();
+  fifthSection.smokeStart();
 });
 
 fifthSection.onOut(function () {
@@ -42,6 +43,7 @@ fifthSection.onStart(function () {
 
 fifthSection.onStop(function () {
   fifthAnimatedText.stop();
+  fifthSection.smokeStop();
 });
 
 var fifthSmokePlaying = false;

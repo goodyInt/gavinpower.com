@@ -130,7 +130,7 @@ function CreativeWriting() {
     var attributes = _this.creativeObject.geometry.attributes;
     var array = attributes.displacement.array;
     offsetZ = startZ + ((finishZ - startZ) * this.target.factor);
-    console.log(offsetZ);
+   // console.log(offsetZ);
     for (var i = 0; i < _this.frontPosArray.length; i++) {
       array[_this.frontPosArray[i]] = offsetZ;
     }

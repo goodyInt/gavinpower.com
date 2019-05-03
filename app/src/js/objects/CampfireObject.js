@@ -49,7 +49,6 @@ function Campfire() {
       bevelEnabled: true
     });
     designSignGeo.computeBoundingBox();
-    
 
     var centerOffset = -0.5 * (designSignGeo.boundingBox.max.x - designSignGeo.boundingBox.min.x);
     var designSignMaterial = new THREE.MeshPhongMaterial({
@@ -76,13 +75,11 @@ function Campfire() {
       shininess: 10
     });
    
-
   let logEndMaterial = new THREE.MeshPhongMaterial({ 
     color: 0x000000, 
     shininess: 0
   });
 
-  
     let geometry = new THREE.BoxGeometry(2.5,2.5,10);
   
     THREE.Mesh.call(this,geometry, logMaterial);
@@ -104,8 +101,6 @@ function Campfire() {
   Log.prototype = Object.assign(THREE.Mesh.prototype, {
     constructor: Log
   });
-  
- 
 
   for(var i = 0 ; i < 3; i++){ 
     var log = new Log();
@@ -118,7 +113,6 @@ function Campfire() {
     log.rotation.y = HALFPI / 2;
     _this.el.add(log);
   };
-  
 }
 
 Campfire.prototype.start = function () {

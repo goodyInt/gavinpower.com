@@ -7,7 +7,7 @@ var Fire = require('../objects/FireObject');
 var thirdSection = new Section('third');
 
 
-var fourthSmoke = new Fire({  
+var fourthFire = new Fire({  
   frontColor: '#ff5000',
   backColor: '#ff0000',
   layers: 4,
@@ -20,18 +20,16 @@ var fourthSmoke = new Fire({
    // { positionX : 10, positionY: -5, positionZ: -15, rotationZ: 0, scale: 1 } 
   ]
 });
-thirdSection.add(fourthSmoke.el);
-fourthSmoke.el.position.z = -3;
-
-fourthSmoke.start();
-fourthSmoke.el.visible = true;
+thirdSection.add(fourthFire.el);
+fourthFire.el.position.z = -3;
+fourthFire.el.visible = false;
 
 var ourCampfire = new Campfire();
 thirdSection.add(ourCampfire.el);
 
-var passionTextString = '<<< I like code. I like details. I love...';
+var nectBtnTextString = '<<< I like code. I like details. I love...';
 var nextBtn = new TextPanel(
-  passionTextString, {
+  nectBtnTextString, {
     align: 'center',
     style: '',
     size: 85,
@@ -52,6 +50,8 @@ thirdSection.add(nextBtn.el);
 thirdSection.onIn(function () {
   console.log('thirdSection.onIn');
   console.log('thirdSection.el.position.z: ' + thirdSection.el.position.z);
+  fourthFire.start();
+  fourthFire.el.visible = true;
 
 });
 
@@ -69,8 +69,10 @@ thirdSection.onStart(function () {
 
 thirdSection.onStop(function () {
   console.log('thirdSection.onStop');
-  ourCampfire.stop();
-  ourCampfire.hide();
+ // ourCampfire.stop();
+ // ourCampfire.hide();
+  fourthFire.stop();
+fourthFire.el.visible = false;
   nextBtn.overOut();
   nextBtn.out('up'); 
 });
@@ -81,7 +83,7 @@ thirdSection.nextBtnIsOver = false;
 thirdSection.nextBtnIsDown = false;
 
 thirdSection.getTheNextBtn = function () {
-  console.log('thirdSection.getTheNextBtn');
+  //console.log('thirdSection.getTheNextBtn');
   return nextBtn;
 };
 thirdSection.theNextBtnIsOver = function () {

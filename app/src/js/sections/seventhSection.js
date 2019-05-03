@@ -31,6 +31,7 @@ seventhSmoke.el.visible = false;
 
 seventhSection.onIn(function () {
   seventhAnimatedText.in();
+  seventhSection.smokeStart();
 });
 
 seventhSection.onOut(function () {
@@ -43,6 +44,7 @@ seventhSection.onStart(function () {
 
 seventhSection.onStop(function () {
   seventhAnimatedText.stop();
+  seventhSection.smokeStop();
 });
 
 var seventhSmokePlaying = false;

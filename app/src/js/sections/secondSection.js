@@ -37,7 +37,7 @@ var stringToType = '';
 var _this = this;
 this.typeTheCopy = function () {
   stringToType += secondSectionString[secondSectionStringCounter];
-  console.log(secondSectionString[secondSectionStringCounter]);
+ // console.log(secondSectionString[secondSectionStringCounter]);
   writingText.updateCopy(stringToType);
   secondSectionStringCounter++;
   //console.log('secondSectionString.length' + secondSectionString.length);
@@ -95,28 +95,28 @@ secondSection.nextBtnIsOver = false;
 secondSection.nextBtnIsDown = false;
 
 secondSection.getTheNextBtn = function () {
-  console.log('secondSection.getTheNextBtn');
+  //console.log('secondSection.getTheNextBtn');
   return nextBtn;
 };
 secondSection.theNextBtnIsOver = function () {
-  console.log('secondSection.theNextBtnIsOver');
+  //console.log('secondSection.theNextBtnIsOver');
   nextBtn.over();
   secondSection.nextBtnIsOver = true;
 
 };
 secondSection.theNextBtnIsDown = function () {
-  console.log('secondSection.theNextBtnIsDown');
+  //console.log('secondSection.theNextBtnIsDown');
   nextBtn.down('#00ff00');
   secondSection.nextBtnIsDown = true;
 };
 secondSection.theNextBtnIsUp = function () {
-  console.log('secondSection.theNextBtnIsUp');
+  //console.log('secondSection.theNextBtnIsUp');
   nextBtn.overOut();
   secondSection.nextBtnIsDown = false;
 };
 
 secondSection.theNextBtnIsOut = function () {
-  console.log('secondSection.theNextBtnIsOut');
+  //console.log('secondSection.theNextBtnIsOut');
   nextBtn.overOut();
   secondSection.nextBtnIsOver = false;
 };

@@ -40,17 +40,22 @@ var SCENE = (function () {
     var resolution;
     var renderer;
     var scene;
+
+    //lights
     var light;
     var moonLight;
     var fireLight;
     var fireLight2;
-    var helperShadowCamera;
+    var animateTheFire;
+
+    //camera
     var camera;
-    var frameId;
     var cameraShakeY = 0;
     var cameraShakeX = 0;
     var cameraPointAt = new THREE.Vector3(0, 0, 0);
+    var cameraShake = true;
 
+    var frameId;
     // mouse
     var mouse = new THREE.Vector2();
     var mouseDown = false;
@@ -155,6 +160,8 @@ var SCENE = (function () {
     var totalSections;
     var currentIndex = 0;
     var previousIndex = 0;
+
+
 
     // events
     var events = new Events();
@@ -301,7 +308,7 @@ var SCENE = (function () {
             }
             break;
           case 2:
-          console.log('onDocumentMouseDown section 2');
+            console.log('onDocumentMouseDown section 2');
             var sectionNextBtn = raycaster.intersectObject(sections[2].getTheNextBtn().el, true);
             if (sectionNextBtn.length > 0) {
               sections[2].theNextBtnIsDown();
@@ -342,11 +349,11 @@ var SCENE = (function () {
             }
             break;
           case 2:
-          console.log('onDocumentMouseUp section 1');
-          var sectionNextBtn = raycaster.intersectObject(sections[2].getTheNextBtn().el, true);
-          if (sectionNextBtn.length > 0) {
-            next();
-          }
+            console.log('onDocumentMouseUp section 1');
+            var sectionNextBtn = raycaster.intersectObject(sections[2].getTheNextBtn().el, true);
+            if (sectionNextBtn.length > 0) {
+              next();
+            }
             break;
           case 3:
             break;
@@ -369,7 +376,7 @@ var SCENE = (function () {
 
     function setup() {
       if (!$viewport) {
-        //console.warn('set viewport first');
+        console.warn('set viewport first');
         return false;
       }
       resolution = parameters.quality;
@@ -395,71 +402,29 @@ var SCENE = (function () {
       moonLight.position.set(0, 300, -850);
       moonLight.target.position.set(0, 0, 0);
       moonLight.castShadow = true;
-      scene.add(moonLight);
 
-      var fireLightX = 50;
-      var fireLightY = -62;
-      var fireLightZ = -412;
+
       fireLight = new THREE.PointLight(0xff0000, .05, 100);
-      //  fireLight.castShadow = true;
-      fireLight.position.set(fireLightX, fireLightY, fireLightZ);
-      scene.add(fireLight);
-     // var pointsLightHelper = new THREE.PointLightHelper(fireLight);
-    // scene.add(pointsLightHelper);
+      fireLight.position.set(50, -62, -412);
+      // var pointsLightHelper = new THREE.PointLightHelper(fireLight);
+      // scene.add(pointsLightHelper);
 
-      var fireLight2X = 50;
-      var fireLight2Y = -62;
-      var fireLight2Z = -408;
-     
+
+
       fireLight2 = new THREE.PointLight(0xffa500, .05, 100);
-      ///   fireLight2.castShadow = true;
-      fireLight2.position.set(fireLight2X, fireLight2Y, fireLight2Z);
-      scene.add(fireLight2);
-
-    // var pointsLightHelper2 = new THREE.PointLightHelper(fireLight2);
+      fireLight2.position.set(50, -62, -408);
+      // var pointsLightHelper2 = new THREE.PointLightHelper(fireLight2);
       //scene.add(pointsLightHelper2);
 
       var moonShadowCamera = new THREE.PerspectiveCamera(70, 1, 100, 3000)
       moonLight.shadow = new THREE.LightShadow(moonShadowCamera);
       moonLight.shadow.bias = 0.0001;
-      // moonLight.shadow.radius = 50;
-
-      helperShadowCamera = new THREE.CameraHelper(moonLight.shadow.camera);
+      // var helperShadowCamera = new THREE.CameraHelper(moonLight.shadow.camera);
       //scene.add(helperShadowCamera);
 
       camera = new THREE.PerspectiveCamera(190, width / height, 1, 4000);
       camera.position.set(0, 0, 60);
 
-
-      var firelightYCounter = 0;
-      var firelightXCounter = 0;
-      var firelightZCounter = 0;
-      var firelight2YCounter = 0;
-      var firelight2XCounter = 0;
-      var firelight2ZCounter = 0;
-
-      function animateFire() {
-        firelightYCounter += .35;
-        firelightXCounter += .5;
-        firelightZCounter += .45;
-        firelight2YCounter += .3;
-        firelight2XCounter += .6;
-        firelight2ZCounter += .5;
-
-        fireLightY += Math.sin(firelightYCounter) * .5;
-        fireLightX += Math.sin(firelightXCounter) * 2.5;
-        fireLightZ += Math.sin(firelightZCounter) * 2;
-        fireLight2Y += Math.sin(firelight2YCounter) * .5;
-        fireLight2X += Math.sin(firelight2XCounter) * 2.5;
-        fireLight2Z += Math.sin(firelight2ZCounter) * 2;
-        fireLight.intensity =Math.random() *.25+.1;
-        fireLight2.intensity =Math.random() *.25+.1;
-        fireLight.position.set(fireLightX - 5, fireLightY, fireLightZ);
-        fireLight2.position.set(fireLight2X - 5, fireLight2Y, fireLight2Z);
-        //   console.log('fireLightZ: ' + fireLightZ)
-      }
-
-      var animateTheFire = setInterval(animateFire, 100);
 
       function onMouseMove(event) {
         mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2 - 1;
@@ -492,7 +457,7 @@ var SCENE = (function () {
             }
             break;
           case 1:
-            console.log('onMouseMove section 1');
+            //console.log('onMouseMove section 1');
 
             if (sections[1].nextBtnIsIn) {
               var sectionNextBtn = raycaster.intersectObject(sections[1].getTheNextBtn().el, true);
@@ -519,7 +484,7 @@ var SCENE = (function () {
             }
             break;
           case 2:
-              console.log('sections[2].nextBtnIsIn: ' + sections[2].nextBtnIsIn);
+            //console.log('sections[2].nextBtnIsIn: ' + sections[2].nextBtnIsIn);
             if (sections[2].nextBtnIsIn) {
               var sectionNextBtn = raycaster.intersectObject(sections[2].getTheNextBtn().el, true);
               if (sectionNextBtn.length > 0) {
@@ -830,6 +795,60 @@ var SCENE = (function () {
       sectionLines6.el.position.z = sectionLocations[6].z;
     }
 
+    var fireLightX = 50;
+    var fireLightY = -62;
+    var fireLightZ = -412;
+    var fireLight2X = 50;
+    var fireLight2Y = -62;
+    var fireLight2Z = -408;
+    var firelightYCounter = 0;
+    var firelightXCounter = 0;
+    var firelightZCounter = 0;
+    var firelight2YCounter = 0;
+    var firelight2XCounter = 0;
+    var firelight2ZCounter = 0;
+
+    function animateFire() {
+
+      firelightYCounter += .35;
+      firelightXCounter += .5;
+      firelightZCounter += .45;
+      firelight2YCounter += .3;
+      firelight2XCounter += .6;
+      firelight2ZCounter += .5;
+
+      fireLightY += Math.sin(firelightYCounter) * .5;
+      fireLightX += Math.sin(firelightXCounter) * 2.5;
+      fireLightZ += Math.sin(firelightZCounter) * 2;
+      fireLight2Y += Math.sin(firelight2YCounter) * .5;
+      fireLight2X += Math.sin(firelight2XCounter) * 2.5;
+      fireLight2Z += Math.sin(firelight2ZCounter) * 2;
+      fireLight.intensity = Math.random() * .25 + .1;
+      fireLight2.intensity = Math.random() * .25 + .1;
+      fireLight.position.set(fireLightX - 5, fireLightY, fireLightZ);
+      fireLight2.position.set(fireLight2X - 5, fireLight2Y, fireLight2Z);
+      //   console.log('fireLightZ: ' + fireLightZ)
+    }
+
+    function prepCampfireScene() {
+
+      console.log('prepCampfireScene');
+      scene.add(moonLight);
+      scene.add(fireLight);
+      scene.add(fireLight2);
+      animateTheFire = setInterval(animateFire, 100);
+
+    }
+
+    function cleanUpCampfireScene() {
+
+      console.log('cleanUpCampfireScene');
+      scene.remove(moonLight);
+      scene.remove(fireLight);
+      scene.remove(fireLight2);
+      clearInterval(animateTheFire);
+    }
+
     function draw() {
       SPRITE3D.update();
       render();
@@ -837,25 +856,15 @@ var SCENE = (function () {
       stats.update();
     }
 
-    var renderCount = 0;
-
     function render() {
       // camera noise
-      renderCount++;
-      if (renderCount == 120) {
-        //console.log('cameraShakeY: ' + cameraShakeY);
-        //console.log('camera.position.y: ' + camera.position.y);
-        renderCount = 0;
 
+      if (cameraShake) {
+        cameraShakeY += 0.005;
+        cameraShakeX += 0.006;
+        camera.position.y += Math.cos(cameraShakeY) / 50;
+        camera.position.x += Math.cos(cameraShakeX) / 50;
       }
-      //   camera.position.y += Math.cos(cameraShakeY) / 50;
-      cameraShakeY += 0.005;
-      //   camera.position.x += Math.cos(cameraShakeX) / 50;
-      cameraShakeX += 0.006;
-      // mouse camera move
-      // camera.position.x += (((mouse.x) * 20) - camera.position.x) * 0.05 ;//
-      // camera.position.y += ((mouse.y * 5) - camera.position.y) * 0.05;
-
       //  camera.lookAt(cameraPointAt);
       renderer.render(scene, camera);
     }
@@ -872,6 +881,8 @@ var SCENE = (function () {
       currentIndex = index;
       cameraShakeY = 0;
       cameraShakeX = 0;
+
+
       var nextPosition = {
         x: sections[currentIndex].el.position.x,
         y: sections[currentIndex].el.position.y,
@@ -898,6 +909,8 @@ var SCENE = (function () {
           isScrolling = true;
           // SOUNDS.wind.play();
           events.trigger('section:changeBegin', data);
+
+
         },
         onComplete: function () {
           if (previousIndex === index) {
@@ -944,6 +957,96 @@ var SCENE = (function () {
 
         }
         setupBackground();
+      },
+      setUpNextScene: function (to) {
+
+        console.log('setUpNextScene to: ' + to);
+
+        switch (to) {
+          case 'intro':
+
+            // setupBackground();
+            cameraShake = true;
+
+            break;
+          case 'second':
+            //setupBackground();
+            cameraShake = true;
+
+            break;
+          case 'third':
+
+            prepCampfireScene();
+            cameraShake = false;
+
+            break;
+          case 'fourth':
+            //setupBackground();
+            cameraShake = true;
+
+            break;
+          case 'fifth':
+            // setupBackground();
+            cameraShake = true;
+
+            break;
+          case 'sixth':
+            // setupBackground();
+            cameraShake = true;
+
+            break;
+          case 'seventh':
+            // setupBackground();
+            cameraShake = true;
+
+            break;
+          default:
+            break;
+        }
+
+
+      },
+      cleanUpLastScene: function (from) {
+
+        console.log('cleanUpLastScene from: ' + from);
+
+        switch (from) {
+          case 'intro':
+
+            // cleanUpCampfireScene();
+
+            break;
+          case 'second':
+            //cleanUpCampfireScene();
+
+            break;
+          case 'third':
+
+            cleanUpCampfireScene();
+
+
+            break;
+          case 'fourth':
+            //cleanUpCampfireScene();
+
+            break;
+          case 'fifth':
+            // cleanUpCampfireScene();
+
+            break;
+          case 'sixth':
+            // cleanUpCampfireScene();
+
+            break;
+          case 'seventh':
+            // cleanUpCampfireScene();
+
+            break;
+          default:
+            break;
+        }
+
+
       },
       on: function () {
         events.on.apply(events, arguments);
