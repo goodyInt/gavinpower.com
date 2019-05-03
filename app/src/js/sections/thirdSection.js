@@ -92,7 +92,7 @@ var firelightZCounter = 0;
 
 
 function animateFire() {
-console.log('animateFire: ' + fireLightY);
+//console.log('animateFire: ' + fireLightY);
   firelightYCounter += .65;
   firelightXCounter += .5;
   firelightZCounter += .45;
