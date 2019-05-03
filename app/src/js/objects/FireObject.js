@@ -21,7 +21,7 @@ var random = require('../utils/randomUtil');
 function Fire(options) {
   var parameters = jQuery.extend(Fire.defaultOptions, options);
 
-  var texture = new THREE.TextureLoader().load('./img/fireConvert.png');
+  var texture = new THREE.TextureLoader().load('./img/fireConvertInnerLRG.png');
   texture.flipY = false;
 
   this.sprite = new SPRITE3D.Sprite(texture, {
@@ -39,12 +39,15 @@ function Fire(options) {
     opacity: .5
   });
 
-  var backMaterial = baseMaterial.clone();
-  backMaterial.color = new THREE.Color(parameters.backColor);
-
-  var frontMaterial = baseMaterial.clone();
-  frontMaterial.color = new THREE.Color(parameters.frontColor);
-
+  var material1 = baseMaterial.clone();
+  material1.color = new THREE.Color(parameters.color1);
+  var material2 = baseMaterial.clone();
+  material2.color = new THREE.Color(parameters.color2);
+  var material3 = baseMaterial.clone();
+  material3.color = new THREE.Color(parameters.color3);
+  var material4 = baseMaterial.clone();
+  material4.color = new THREE.Color(parameters.color4);
+  var matArray = [material1, material2, material3, material4];
   var geometry = new THREE.PlaneGeometry(25, 25);
 
   this.el = new THREE.Object3D();
@@ -70,9 +73,7 @@ function Fire(options) {
       scale = random(1, 10);
     }
 
-    var material = positionZ < 0 ? backMaterial : frontMaterial;
-    console.log('FireObject positionZ: ' + positionZ);
-    var plane = new THREE.Mesh(geometry, material);
+    var plane = new THREE.Mesh(geometry, matArray[i]);
     plane.position.set(positionX, positionY, positionZ);
     plane.rotation.z = rotationZ;
     plane.scale.set(scale, scale, 1);
@@ -83,7 +84,7 @@ function Fire(options) {
 
 Fire.prototype.start = function () {
 
-  this.sprite.start();
+  this.sprite.start(10);
 };
 
 Fire.prototype.stop = function () {
