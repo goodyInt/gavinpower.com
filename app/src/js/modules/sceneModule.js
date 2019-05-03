@@ -134,9 +134,7 @@ var SCENE = (function () {
         max: 90,
       },
       {
-        // min:  -5,
-        min: 500,
-
+        min: -5,
         max: 90,
       },
       {
@@ -160,8 +158,6 @@ var SCENE = (function () {
     var totalSections;
     var currentIndex = 0;
     var previousIndex = 0;
-
-
 
     // events
     var events = new Events();
@@ -203,66 +199,42 @@ var SCENE = (function () {
         console.log('zSpeed: ' + zSpeed);
         console.log('camera.position.y: ' + camera.position.y);
         if (zSpeed > 0) {
-          //  if (dist > 0 - sectionZoomOffset[currentIndex].min) {
-          theAtmosphereParticles.el.position.z += zSpeed;
-          theSectionParticles0.el.position.z += zSpeed;
-          sectionLines0.el.position.z += zSpeed;
-          theSectionParticles1.el.position.z += zSpeed;
-          sectionLines1.el.position.z += zSpeed;
-          theSectionParticles2.el.position.z += zSpeed;
-          sectionLines2.el.position.z += zSpeed;
-          theSectionParticles3.el.position.z += zSpeed;
-          sectionLines3.el.position.z += zSpeed;
-          theSectionParticles4.el.position.z += zSpeed;
-          sectionLines4.el.position.z += zSpeed;
-          theSectionParticles5.el.position.z += zSpeed;
-          sectionLines5.el.position.z += zSpeed;
-          theSectionParticles6.el.position.z += zSpeed;
-          sectionLines6.el.position.z += zSpeed;
-          sections[0].el.position.z += zSpeed;
-          sections[1].el.position.z += zSpeed;
-          sections[2].el.position.z += zSpeed;
-          sections[3].el.position.z += zSpeed;
-          sections[4].el.position.z += zSpeed;
-          sections[5].el.position.z += zSpeed;
-          sections[6].el.position.z += zSpeed;
-
-          //
-
-          moonLight.position.z += zSpeed;
-          moonLight.target.position.z += zSpeed;
-
-          //   }
+          if (dist > 0 - sectionZoomOffset[currentIndex].min) {
+            scrollZ(zSpeed);
+          }
         } else {
-          // if (dist < 50 + sectionZoomOffset[currentIndex].max) {
-
-          theAtmosphereParticles.el.position.z += zSpeed;
-          theSectionParticles0.el.position.z += zSpeed;
-          sectionLines0.el.position.z += zSpeed;
-          theSectionParticles1.el.position.z += zSpeed;
-          sectionLines1.el.position.z += zSpeed;
-          theSectionParticles2.el.position.z += zSpeed;
-          sectionLines2.el.position.z += zSpeed;
-          theSectionParticles3.el.position.z += zSpeed;
-          sectionLines3.el.position.z += zSpeed;
-          theSectionParticles4.el.position.z += zSpeed;
-          sectionLines4.el.position.z += zSpeed;
-          theSectionParticles5.el.position.z += zSpeed;
-          sectionLines5.el.position.z += zSpeed;
-          theSectionParticles6.el.position.z += zSpeed;
-          sectionLines6.el.position.z += zSpeed;
-          sections[0].el.position.z += zSpeed;
-          sections[1].el.position.z += zSpeed;
-          sections[2].el.position.z += zSpeed;
-          sections[3].el.position.z += zSpeed;
-          sections[4].el.position.z += zSpeed;
-          sections[5].el.position.z += zSpeed;
-          sections[6].el.position.z += zSpeed;
-          moonLight.position.z += zSpeed;
-          moonLight.target.position.z += zSpeed;
-          //   }
+          if (dist < 50 + sectionZoomOffset[currentIndex].max) {
+            scrollZ(zSpeed);
+          }
         }
         return false;
+      }
+      function scrollZ(zSpeed){
+        theAtmosphereParticles.el.position.z += zSpeed;
+        theSectionParticles0.el.position.z += zSpeed;
+        sectionLines0.el.position.z += zSpeed;
+        theSectionParticles1.el.position.z += zSpeed;
+        sectionLines1.el.position.z += zSpeed;
+        theSectionParticles2.el.position.z += zSpeed;
+        sectionLines2.el.position.z += zSpeed;
+        theSectionParticles3.el.position.z += zSpeed;
+        sectionLines3.el.position.z += zSpeed;
+        theSectionParticles4.el.position.z += zSpeed;
+        sectionLines4.el.position.z += zSpeed;
+        theSectionParticles5.el.position.z += zSpeed;
+        sectionLines5.el.position.z += zSpeed;
+        theSectionParticles6.el.position.z += zSpeed;
+        sectionLines6.el.position.z += zSpeed;
+        sections[0].el.position.z += zSpeed;
+        sections[1].el.position.z += zSpeed;
+        sections[2].el.position.z += zSpeed;
+        sections[3].el.position.z += zSpeed;
+        sections[4].el.position.z += zSpeed;
+        sections[5].el.position.z += zSpeed;
+        sections[6].el.position.z += zSpeed;
+        moonLight.position.z += zSpeed;
+        fireLight.position.z += zSpeed;
+        fireLight2.position.z += zSpeed;
       }
 
       function onKeyDown(event) {
@@ -280,7 +252,8 @@ var SCENE = (function () {
       jQuery(document).on('keydown', onKeyDown);
 
       // mousewhell
-      $viewport.on('DOMMouseScroll mousewheel', onScrollCamera);
+      $viewport.on('DOMMouseScroll mousewheel', onScroll);
+      // $viewport.on('DOMMouseScroll mousewheel', onScrollCamera);
 
       // interactivity
       document.addEventListener('mouseup', onDocumentMouseUp, false);
@@ -407,8 +380,7 @@ var SCENE = (function () {
       fireLight = new THREE.PointLight(0xff0000, .05, 100);
       fireLight.position.set(50, -62, -412);
       // var pointsLightHelper = new THREE.PointLightHelper(fireLight);
-      // scene.add(pointsLightHelper);
-
+      // scene.add(pointsLightHelper)
 
 
       fireLight2 = new THREE.PointLight(0xffa500, .05, 100);
