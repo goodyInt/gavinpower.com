@@ -43,7 +43,7 @@ this.typeTheCopy = function () {
   //console.log('secondSectionString.length' + secondSectionString.length);
   if (secondSectionStringCounter == secondSectionString.length) {
     clearInterval(_this.typeTheCopyInterval);
-    _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 4500);
+    _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 500);
   }
 }
 this.bringInTheBtn = function () {
@@ -78,7 +78,7 @@ secondSection.onStart(function () {
   writingText.updateCopy('');
   creativeWriting.show();
   creativeWriting.start();
-  _this.startTheTypeingInterval = setInterval(_this.startTheTyping, 4500);
+  _this.startTheTypeingInterval = setInterval(_this.startTheTyping, 2500);
 });
 
 secondSection.onStop(function () {

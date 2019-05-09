@@ -33,6 +33,7 @@ var heightMap = new HeightMap({
       name: 'blackScreen',
       url: './img/heightMap/heightMap-black.jpg'
     },
+    /*
     {
       name: 'H',
       url: './img/heightMap/heightMap-H.jpg'
@@ -49,6 +50,7 @@ var heightMap = new HeightMap({
       name: 'HELL',
       url: './img/heightMap/heightMap-HELL.jpg'
     },
+    */
     {
       name: 'Hello',
       url: './img/heightMap/heightMap-hello.jpg'

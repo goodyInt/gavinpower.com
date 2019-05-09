@@ -173,7 +173,7 @@ function CampScene() {
 
   tree0.scale.set(4, 4, 4 );
   
-  tree0.position.x = -45;
+  tree0.position.x = -35;
   tree0.position.y = -26;
   tree0.position.z = 20;
   tree0.rotation.y = 0.7;

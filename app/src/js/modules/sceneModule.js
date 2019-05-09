@@ -375,7 +375,7 @@ var SCENE = (function () {
       light.position.set(0.2, 1, 0.5);
       scene.add(light);
 
-      moonLight = new THREE.SpotLight(0x777777, 2.65, 0, Math.PI / 2);
+      moonLight = new THREE.SpotLight(0x888888, 3.65, 0, Math.PI / 2);
       moonLight.position.set(0, 600, -1850);
       moonLight.castShadow = true;
 

@@ -207,59 +207,44 @@ HeightMap.prototype.getIdleTween = function () {
         _this.current = 0;
       }
       switch (tweenCounter) {
+      
         case -1:
-          tweenPauseTime = .35;
-               //console.log('H hold: ' + tweenPauseTime);
-          break;
-        case 0:
-          tweenPauseTime = .35;
-             //console.log('He hold: ' + tweenPauseTime);
-          break;
-        case 1:
-          tweenPauseTime = .35;
-            //console.log('Hel hold: ' + tweenPauseTime);
-          break;
-        case 2:
-          tweenPauseTime = .35;
-             //console.log('Hell hold: ' + tweenPauseTime);
-          break;
-        case 3:
-          tweenPauseTime = .35;
+          tweenPauseTime = 4.35;
             //console.log('Hello hold: ' + tweenPauseTime);
           break;
-        case 4:
+        case 0:
           tweenPauseTime = 4;
            //console.log('Friend hold: ' + tweenPauseTime);
           break;
-        case 5:
+        case 1:
           tweenPauseTime = .35;
            //console.log('blank5 hold: ' + tweenPauseTime);
           break;
-        case 6:
+        case 2:
           tweenPauseTime = .65;
            //console.log('I hold: ' + tweenPauseTime);
           break;
-        case 7:
+        case 3:
           tweenPauseTime = .65;
             //console.log('AM hold: ' + tweenPauseTime);
           break;
-        case 8:
+        case 4:
           tweenPauseTime = 1.65;
             //console.log('A hold: ' + tweenPauseTime);
           break;
-        case 9:
+        case 5:
           tweenPauseTime = 4;
             //console.log('DEVELOPER hold: ' + tweenPauseTime);
           break;
-        case 10:
+        case 6:
           tweenPauseTime = 4.5;
              //console.log('Blank hold: ' + tweenPauseTime);
           break;
-        case 11:
+        case 7:
           tweenPauseTime = 10;
             //console.log('face hold: ' + tweenPauseTime);
           break;
-        case 12:
+        case 8:
           tweenCounter = -2;
           tweenPauseTime = 3;
             //console.log('default 12 hold: ' + tweenPauseTime);
@@ -433,67 +418,52 @@ HeightMap.prototype.applyMap = function () {
   if (!this.firstRun) {
     thisEase = Power1.easeOut;
     switch (tweenCounter) {
+     
       case -1:
-        thisTweenTime = .3;
-           //console.log('H tweenTime: ' + thisTweenTime);
-        break;
-      case 0:
-        thisTweenTime = .3;
-            //console.log('He tweenTime: ' + thisTweenTime);
-        break;
-      case 1:
-        thisTweenTime = .3;
-            //console.log('Hel tweenTime: ' + thisTweenTime);
-        break;
-      case 2:
-        thisTweenTime = .3;
-            //console.log('Hell tweenTime: ' + thisTweenTime);
-        break;
-      case 3:
-        thisTweenTime = .3;
+        thisTweenTime = 3.3;
          //console.log('Hello tweenTime: ' + thisTweenTime);
         break;
-      case 4:
+      case 0:
         thisEase = Elastic.easeOut;
         thisTweenTime = 3.25;
            //console.log('Friend tweenTime: ' + thisTweenTime);
         break;
-      case 5:
+      case 1:
           //console.log('Blank5 tweenTime: ' + thisTweenTime);
         thisTweenTime = .3;
         break;
-      case 6:
+      case 2:
         thisTweenTime = .65;
         thisEase = Power1.easeOut;
            //console.log('I tweenTime: ' + thisTweenTime);
         break;
-      case 7:
+      case 3:
         thisEase = Power1.easeIn;
         thisTweenTime = .65;
            //console.log('AM tweenTime: ' + thisTweenTime);
         break;
-      case 8:
+      case 4:
         thisEase = Power1.easeIn;
         thisTweenTime = .65;
           //console.log('A tweenTime: ' + thisTweenTime);
         break;
-      case 9:
+      case 5:
         thisTweenTime = 2.65;
         thisEase = Power1.easeOut;
         //console.log('DEVELOPER tweenTime: ' + thisTweenTime);
         break;
-      case 10:
+      case 6:
         thisEase = Power1.easeOut;
         thisTweenTime = 1;
         _this.completeAnimationFunction();
          //console.log('blank10 tweenTime: ' + thisTweenTime);
         break;
-      case 11:
+      case 7:
         thisEase = Power1.easeOut;
         thisTweenTime = 5.5;
              //console.log('face tweenTime: ' + thisTweenTime);
         break;
-      case 12:
+      case 8:
         thisTweenTime = 4;
            //console.log('blank12 tweenTime: ' + thisTweenTime);
         break;

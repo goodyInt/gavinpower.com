@@ -168,7 +168,7 @@ CreativeWriting.prototype.onOut = function () {
   tweenMax.to({
     factor: 1
   }, 1, {
-    delay: .5,
+    delay: 0,
     factor: 0,
     ease: Power1.easeOut,
     onUpdate: this.animateTextOut,
