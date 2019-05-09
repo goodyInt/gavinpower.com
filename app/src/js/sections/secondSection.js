@@ -13,7 +13,7 @@ var secondSectionString = 'Writing.'; //\nAnd I have a passion\n...<<<<\n';
 var writingText = new TextPanel(
   secondSectionString, {
     align: 'center',
-    font: 'Times New Roman, Times, serif',
+   // font: 'Times New Roman, Times, serif',
     style: '',
     size: 95,
     lineSpacing: 40,

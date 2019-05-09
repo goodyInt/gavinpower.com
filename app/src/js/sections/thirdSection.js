@@ -1,13 +1,13 @@
 'use strict';
 
 var Section = require('../classes/SectionClass');
-var Campfire = require('../objects/CampfireObject');
+var CampScene = require('../objects/CampSceneObject');
 var TextPanel = require('../objects/TextPanelObject');
 var Fire = require('../objects/FireObject');
 var thirdSection = new Section('third');
 
 
-var fourthFire = new Fire({
+var thridCampFire = new Fire({
   color1: '#ff5000',
   color2: '#ff0000',
   color3: '#ff0000',
@@ -44,18 +44,19 @@ var fourthFire = new Fire({
     }
   ]
 });
-thirdSection.add(fourthFire.el);
 
-var fireLightX = -0;
-var fireLightY = -20;
-var fireLightZ = -7;
-fourthFire.el.position.x = fireLightX;
-fourthFire.el.position.y = fireLightY;
-fourthFire.el.position.z = fireLightZ;
-fourthFire.el.visible = false;
+thirdSection.add(thridCampFire.el);
 
-var ourCampfire = new Campfire();
-thirdSection.add(ourCampfire.el);
+var fireX = -1;
+var fireY = -20;
+var fireZ = 13;
+thridCampFire.el.position.x = fireX;
+thridCampFire.el.position.y = fireY;
+thridCampFire.el.position.z = fireZ;
+thridCampFire.el.visible = false;
+
+var ourCampScene = new CampScene();
+thirdSection.add(ourCampScene.el);
 
 var nectBtnTextString = '<<< I like code. I like details. I love...';
 var nextBtn = new TextPanel(
@@ -78,66 +79,59 @@ this.bringInTheBtn = function () {
 thirdSection.add(nextBtn.el);
 
 thirdSection.onIn(function () {
- 
-
   prepFire();
- 
-
 });
 
-
-var firelightYCounter = 0;
-var firelightXCounter = 0;
-var firelightZCounter = 0;
-
+var fireYCounter = 0;
+var fireXCounter = 0;
+var fireZCounter = 0;
 
 function animateFire() {
-//console.log('animateFire: ' + fireLightY);
-  firelightYCounter += .65;
-  firelightXCounter += .5;
-  firelightZCounter += .45;
+  fireYCounter += .65;
+  fireXCounter += .15;
+  fireZCounter += .35;
 
-  fireLightY += Math.sin(firelightYCounter) * .25;
-  fireLightX += Math.sin(firelightXCounter) * 2.5;
-  fireLightZ += Math.sin(firelightZCounter) * 2;
+  fireY += Math.sin(fireYCounter) * .35;
+  fireX += Math.sin(fireXCounter) * .1;
+  fireZ += Math.sin(fireZCounter) * .25;
 
- // fourthFire.el.position.x = fireLightX;
-  fourthFire.el.position.y = fireLightY;
- // fourthFire.el.position.z = fireLightZ;
+ // console.log(fireX,fireY,fireZ);
+  thridCampFire.el.position.x = fireX;
+  thridCampFire.el.position.y = fireY;
+  thridCampFire.el.position.z = fireZ;
 }
 
 var animateTheFire;
 
 function prepFire() {
   console.log('prepFire');
-  fourthFire.start();
-  fourthFire.el.visible = true;
+  thridCampFire.start();
+  thridCampFire.el.visible = true;
   animateTheFire = setInterval(animateFire, 100);
 }
 
 function extinguishFire() {
-
   console.log('extinguishFire');
-  fourthFire.stop();
-  fourthFire.el.visible = false;
+  thridCampFire.stop();
+  thridCampFire.el.visible = false;
   clearInterval(animateTheFire);
 }
 
 thirdSection.onOut(function () {
   console.log('thirdSection.onOut');
-  ourCampfire.onOut();
+  ourCampScene.onOut();
 });
 
 thirdSection.onStart(function () {
   console.log('thirdSection.onStart');
-  ourCampfire.start();
+  ourCampScene.start();
   _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 4500);
 });
 
 thirdSection.onStop(function () {
   console.log('thirdSection.onStop');
   extinguishFire();
-  ourCampfire.stop();
+  ourCampScene.stop();
   clearInterval(_this.bringInTheNextBtnInterval);
   nextBtn.overOut();
   nextBtn.out('up');
@@ -176,9 +170,9 @@ thirdSection.theNextBtnIsOut = function () {
 };
 
 thirdSection.setPositions = function () {
-  ourCampfire.el.position.x = 0;
-  ourCampfire.el.position.y = 10;
-  ourCampfire.el.position.z = -20;
+  ourCampScene.el.position.x = 0;
+  ourCampScene.el.position.y = 10;
+  ourCampScene.el.position.z = 0;
 
   nextBtn.el.position.x = 20;
   nextBtn.el.position.y = 20;

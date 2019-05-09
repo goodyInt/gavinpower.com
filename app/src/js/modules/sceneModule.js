@@ -135,7 +135,7 @@ var SCENE = (function () {
       },
       {
         min: -5,
-        max: 30,
+        max: 50,
       },
       {
         min: 0,
@@ -364,26 +364,36 @@ var SCENE = (function () {
       renderer.shadowMap.enabled = true;
       renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-      renderer.setClearColor('#0a0a0a', 1);
+      renderer.setClearColor('#000000', 1);
       renderer.setSize(width * resolution, height * resolution);
       $viewport.append(renderer.domElement);
 
       scene = new THREE.Scene();
       scene.fog = new THREE.FogExp2(parameters.fogColor, 0.01);
 
-      light = new THREE.AmbientLight('#ffffff');
+      light = new THREE.DirectionalLight('#ffffff', 0.5);
+      light.position.set(0.2, 1, 0.5);
       scene.add(light);
 
-      moonLight = new THREE.SpotLight(0x777777, 1.65, 0, Math.PI / 2);
-      moonLight.position.set(0, 300, -850);
+      moonLight = new THREE.SpotLight(0x777777, 2.65, 0, Math.PI / 2);
+      moonLight.position.set(0, 600, -1850);
       moonLight.castShadow = true;
 
-      fireLight = new THREE.PointLight(0xff0000, .05, 100);
+      fireLight = new THREE.PointLight(0xff0000, .025, 100);
       fireLight.position.set(50, -62, -412);
+      //fireLight.castShadow = true; 
 
-      fireLight2 = new THREE.PointLight(0xffa500, .05, 100);
+      fireLight2 = new THREE.PointLight(0xffa500, .025, 100);
       fireLight2.position.set(50, -62, -408);
+     // fireLight2.castShadow = true; 
 
+   //   var sphereSize = 1;
+    //  var fireLightHelper = new THREE.PointLightHelper( fireLight, sphereSize );
+     // scene.add( fireLightHelper );
+
+     // var fireLight2Helper = new THREE.PointLightHelper( fireLight2, sphereSize );
+     // scene.add( fireLight2Helper );
+      
       var moonShadowCamera = new THREE.PerspectiveCamera(70, 1, 100, 3000)
       moonLight.shadow = new THREE.LightShadow(moonShadowCamera);
       moonLight.shadow.bias = 0.0001;
@@ -555,8 +565,8 @@ var SCENE = (function () {
       rangeX = [-50, 50];
       rangeY = [parameters.sectionHeight, -parameters.sectionHeight];
       rangeZ = [-100, 100];
-      numOfParticles = 300;
-      numOfLines = 50;
+      numOfParticles = 100;
+      numOfLines = 10;
       stripsRangeX = [-50, 50];
       stripsRangeY = [-80, 80];
       stripsRangeZ = [-50, 0];
@@ -748,11 +758,11 @@ var SCENE = (function () {
     // SECTION 3 CAMPFIRE
 
     var fireLightX = 50;
-    var fireLightY = -62;
-    var fireLightZ = -412;
+    var fireLightY = -69;
+    var fireLightZ = -410;
     var fireLight2X = 50;
-    var fireLight2Y = -62;
-    var fireLight2Z = -408;
+    var fireLight2Y = -69;
+    var fireLight2Z = -410;
     var firelightYCounter = 0;
     var firelightXCounter = 0;
     var firelightZCounter = 0;
@@ -770,10 +780,10 @@ var SCENE = (function () {
       firelight2ZCounter += .5;
 
       fireLightY += Math.sin(firelightYCounter) * .5;
-      fireLightX += Math.sin(firelightXCounter) * 2.5;
+      fireLightX += Math.sin(firelightXCounter) * 1.5;
       fireLightZ += Math.sin(firelightZCounter) * 2;
       fireLight2Y += Math.sin(firelight2YCounter) * .5;
-      fireLight2X += Math.sin(firelight2XCounter) * 2.5;
+      fireLight2X += Math.sin(firelight2XCounter) * 1.5;
       fireLight2Z += Math.sin(firelight2ZCounter) * 2;
       fireLight.intensity = Math.random() * .25 + .1;
       fireLight2.intensity = Math.random() * .25 + .1;
