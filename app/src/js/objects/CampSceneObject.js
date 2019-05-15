@@ -31,7 +31,7 @@ function CampScene() {
 
     });
 
-    var platform = new THREE.Mesh(new THREE.BoxBufferGeometry(200, 2, 100), platformMaterial);
+    var platform = new THREE.Mesh(new THREE.BoxBufferGeometry(200, 2, 60), platformMaterial);
     platform.position.y = -27;
     platform.position.z = 5;
     platform.castShadow = false;
@@ -42,7 +42,7 @@ function CampScene() {
       color: '#000000'
     });
 
-    var platformBottom = new THREE.Mesh(new THREE.BoxBufferGeometry(200, 1, 100), firePlaceBotMat);
+    var platformBottom = new THREE.Mesh(new THREE.BoxBufferGeometry(200, 1, 60), firePlaceBotMat);
     platformBottom.position.y = -29;
     platformBottom.position.z = 5;
     platformBottom.castShadow = false;
@@ -53,7 +53,7 @@ function CampScene() {
       color: '#111111'
     });
 
-    var firePlacePath = new THREE.Mesh(new THREE.BoxBufferGeometry(16, 1, 45), firePlaceMat);
+    var firePlacePath = new THREE.Mesh(new THREE.BoxBufferGeometry(16, 1, 60), firePlaceMat);
     firePlacePath.position.y = -26;
     firePlacePath.position.z = 33;
     firePlacePath.castShadow = false;
@@ -112,7 +112,7 @@ function CampScene() {
     designSign.position.y = -25;
     designSign.position.z = -25;
 
-    _this.el.visible = false;
+    //_this.el.visible = false;
 
   });
 
@@ -161,7 +161,6 @@ function CampScene() {
     _this.el.add(log);
   };
 
-
   //addTrees
   var mtlLoader = new MTLLoader();
   var materials = mtlLoader.parse(getTreeMatAsString());
@@ -170,7 +169,6 @@ function CampScene() {
   objLoader.setMaterials(materials);
   var tree0 = objLoader.parse(getTreeGeoAsString());
   
-
   tree0.scale.set(4, 4, 4 );
   
   tree0.position.x = -35;
@@ -189,7 +187,7 @@ function CampScene() {
 
 CampScene.prototype.start = function () {
   console.log('CampScene.prototype.start');
-  this.el.visible = true;
+  //this.el.visible = true;
 
 };
 CampScene.prototype.onOut = function () {
@@ -198,8 +196,7 @@ CampScene.prototype.onOut = function () {
 
 CampScene.prototype.stop = function () {
   console.log('CampScene.prototype.stop');
-  this.el.visible = false;
-
+ // this.el.visible = false;
 };
 
 

@@ -40,12 +40,23 @@ var SCENE = (function () {
     var resolution;
     var renderer;
     var scene;
+    var theEffectComposer;
+
+
 
     //lights
     var light;
+    var ambientLight;
     var moonLight;
+    var storyMoonLight;
     var fireLight;
     var fireLight2;
+    var storyLight;
+    var storyLight2;
+
+    var storyLightSpotlightTarget = new THREE.Object3D();
+    var storyLightSpotlightTarget2 = new THREE.Object3D();
+
     var animateTheFire;
 
     //camera
@@ -100,13 +111,13 @@ var SCENE = (function () {
         z: -200
       },
       {
-        x: 50,
+        x: -150,
         y: -50,
         z: -400
       },
       {
-        x: 0,
-        y: 50,
+        x: 150,
+        y: 200,
         z: -600
       },
       {
@@ -138,8 +149,8 @@ var SCENE = (function () {
         max: 50,
       },
       {
-        min: 0,
-        max: 0,
+        min: 400,
+        max: 400,
       },
       {
         min: 0,
@@ -238,6 +249,12 @@ var SCENE = (function () {
         moonLight.position.z += zSpeed;
         fireLightZ += zSpeed;
         fireLight2Z += zSpeed;
+        storyLight.position.z += zSpeed;
+        storyLight2.position.z += zSpeed;
+        storyLightSpotlightTarget.position.z += zSpeed;
+        storyLightSpotlightTarget2.position.z += zSpeed;
+
+
       }
 
       function onKeyDown(event) {
@@ -251,10 +268,8 @@ var SCENE = (function () {
           }
         }
       }
-      //key control
       jQuery(document).on('keydown', onKeyDown);
 
-      // mousewhell
       $viewport.on('DOMMouseScroll mousewheel', onScroll);
       // $viewport.on('DOMMouseScroll mousewheel', onScrollCamera);
 
@@ -304,7 +319,6 @@ var SCENE = (function () {
 
       function onDocumentMouseUp(event) {
         mouseDown = false;
-        //console.log('onDocumentMouseUp');
         event.preventDefault();
         mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2 - 1;
         mouse.y = -(event.clientY / renderer.domElement.clientHeight) * 2 + 1;
@@ -371,32 +385,72 @@ var SCENE = (function () {
       scene = new THREE.Scene();
       scene.fog = new THREE.FogExp2(parameters.fogColor, 0.01);
 
+      ambientLight = new THREE.AmbientLight(0x404040); // 
+      scene.add(ambientLight);
+
       light = new THREE.DirectionalLight('#ffffff', 0.5);
       light.position.set(0.2, 1, 0.5);
       scene.add(light);
 
-      moonLight = new THREE.SpotLight(0x888888, 3.65, 0, Math.PI / 2);
-      moonLight.position.set(0, 600, -1850);
+      moonLight = new THREE.SpotLight(0x888888, 1.65, 0, Math.PI / 2);
+      moonLight.position.set(0, 800, -1850);
       moonLight.castShadow = true;
 
-      fireLight = new THREE.PointLight(0xff0000, .025, 100);
-      fireLight.position.set(50, -62, -412);
-      //fireLight.castShadow = true; 
-
-      fireLight2 = new THREE.PointLight(0xffa500, .025, 100);
-      fireLight2.position.set(50, -62, -408);
-     // fireLight2.castShadow = true; 
-
-   //   var sphereSize = 1;
-    //  var fireLightHelper = new THREE.PointLightHelper( fireLight, sphereSize );
-     // scene.add( fireLightHelper );
-
-     // var fireLight2Helper = new THREE.PointLightHelper( fireLight2, sphereSize );
-     // scene.add( fireLight2Helper );
-      
       var moonShadowCamera = new THREE.PerspectiveCamera(70, 1, 100, 3000)
       moonLight.shadow = new THREE.LightShadow(moonShadowCamera);
       moonLight.shadow.bias = 0.0001;
+
+      storyMoonLight = new THREE.SpotLight(0x888888, 3.65, 0, Math.PI / 2);
+      storyMoonLight.position.set(0, 800, -2250);
+      storyMoonLight.castShadow = true;
+
+      fireLight = new THREE.PointLight(0xff0000, .025, 100);
+      fireLight.position.set(sectionLocations[2].x, sectionLocations[2].y - 12, sectionLocations[2].z - 12);
+
+      fireLight2 = new THREE.PointLight(0xffa500, .025, 100);
+      fireLight2.position.set(sectionLocations[2].x, sectionLocations[2].y - 12, sectionLocations[2].x - 8);
+
+      //  var fireLightHelper = new THREE.PointLightHelper( fireLight, 1 );
+      // scene.add( fireLightHelper );
+
+      // var fireLight2Helper = new THREE.PointLightHelper( fireLight2, 1 );
+      // scene.add( fireLight2Helper );
+
+      var storyLightIntensity = 2.6;
+      var lightDistance = 400;
+
+      storyLight = new THREE.SpotLight(0x00ffff, storyLightIntensity, lightDistance);
+      storyLight.penumbra = .5;
+      storyLight.position.set(sectionLocations[3].x - 100, sectionLocations[3].y + 120, sectionLocations[3].z - 120);
+      storyLightSpotlightTarget.position.x = sectionLocations[3].x - 65;
+      storyLightSpotlightTarget.position.y = sectionLocations[3].y;
+      storyLightSpotlightTarget.position.z = sectionLocations[3].z - 120;
+      storyLight.target = storyLightSpotlightTarget;
+
+      // var storyLightHelper = new THREE.SpotLightHelper( storyLight );
+      // scene.add(storyLightHelper);
+
+      storyLight2 = new THREE.SpotLight(0x00ffff, storyLightIntensity, lightDistance);
+      storyLight2.penumbra = .5;
+      storyLight2.position.set(sectionLocations[3].x + 100, sectionLocations[3].y + 120, sectionLocations[3].z - 120);
+      storyLightSpotlightTarget2.position.x = sectionLocations[3].x + 65;
+      storyLightSpotlightTarget2.position.y = sectionLocations[3].y;
+      storyLightSpotlightTarget2.position.z = sectionLocations[3].z - 120;
+      storyLight2.target = storyLightSpotlightTarget2;
+
+      // var storyLight2Helper = new THREE.SpotLightHelper( storyLight2 );
+      // scene.add(storyLight2Helper);
+
+      scene.add(moonLight);
+
+      // - dumb hack.  these, for some reason, need to be added later so that story scene renders in the correct order
+      // scene.add(fireLight);
+      // scene.add(fireLight2)
+
+      scene.add(storyLight);
+      scene.add(storyLightSpotlightTarget);
+      scene.add(storyLight2);
+      scene.add(storyLightSpotlightTarget2);
 
       camera = new THREE.PerspectiveCamera(190, width / height, 1, 4000);
       camera.position.set(0, 0, 60);
@@ -491,7 +545,6 @@ var SCENE = (function () {
             break;
         }
       }
-
       jQuery(window).on('resize', onResize);
       $viewport.on('mousemove', onMouseMove);
 
@@ -543,10 +596,8 @@ var SCENE = (function () {
         stripsRangeZ: stripsRangeZ,
         count: numOfParticles,
         strips: true,
-        // color1: '#D30012',
         color1: '#eb0013',
         color2: '#8D000C'
-        // 0xeb0013,0xff7704,0xfff46a,0x47aff,0xffb577
       });
       scene.add(theSectionParticles0.el);
       theSectionParticles0.el.position.x = sectionLocations[0].x;
@@ -640,8 +691,8 @@ var SCENE = (function () {
       rangeX = [-50, 50];
       rangeY = [parameters.sectionHeight, -parameters.sectionHeight];
       rangeZ = [-100, 100];
-      numOfParticles = 400;
-      numOfLines = 100;
+      numOfParticles = 40;
+      numOfLines = 10;
       stripsRangeX = [-50, 50];
       stripsRangeY = [-80, 80];
       stripsRangeZ = [-80, -45];
@@ -655,8 +706,8 @@ var SCENE = (function () {
         stripsRangeZ: stripsRangeZ,
         count: numOfParticles,
         strips: true,
-        color1: '#00d4ed',
-        color2: '#1579ff'
+        color1: '#00ffff',
+        color2: '#00ffff'
       });
       scene.add(theSectionParticles3.el);
       theSectionParticles3.el.position.x = sectionLocations[3].x;
@@ -674,6 +725,15 @@ var SCENE = (function () {
       sectionLines3.el.position.y = sectionLocations[3].y;
       sectionLines3.el.position.z = sectionLocations[3].z;
       //
+      rangeX = [-50, 50];
+      rangeY = [parameters.sectionHeight, -parameters.sectionHeight];
+      rangeZ = [-100, 100];
+      numOfParticles = 4;
+      numOfLines = 1;
+      stripsRangeX = [-50, 50];
+      stripsRangeY = [-80, 80];
+      stripsRangeZ = [-80, -45];
+
       theSectionParticles4 = new BackgroundParticles({
         rangeX: rangeX,
         rangeY: rangeY,
@@ -754,15 +814,13 @@ var SCENE = (function () {
       sectionLines6.el.position.z = sectionLocations[6].z;
     }
 
-
     // SECTION 3 CAMPFIRE
-
-    var fireLightX = 50;
-    var fireLightY = -69;
-    var fireLightZ = -410;
-    var fireLight2X = 50;
-    var fireLight2Y = -69;
-    var fireLight2Z = -410;
+    var fireLightX = sectionLocations[2].x;
+    var fireLightY = sectionLocations[2].y - 19;
+    var fireLightZ = sectionLocations[2].z - 10;
+    var fireLight2X = sectionLocations[2].x;
+    var fireLight2Y = sectionLocations[2].y - 19;
+    var fireLight2Z = sectionLocations[2].z - 10;
     var firelightYCounter = 0;
     var firelightXCounter = 0;
     var firelightZCounter = 0;
@@ -792,21 +850,28 @@ var SCENE = (function () {
     }
 
     function prepCampfireScene() {
-      console.log('prepCampfireScene');
-      scene.add(moonLight);
+      //    console.log('prepCampfireScene');
+      //dumb hack  - not sure why, but adding these lights here fixes a rendering bug in story scene where the render order is mixed up
       scene.add(fireLight);
-      scene.add(fireLight2);
+      scene.add(fireLight2)
       animateTheFire = setInterval(animateFire, 100);
     }
 
     function cleanUpCampfireScene() {
-      console.log('cleanUpCampfireScene');
-      scene.remove(moonLight);
-      scene.remove(fireLight);
-      scene.remove(fireLight2);
+      //  console.log('cleanUpCampfireScene currentIndex: ' + currentIndex);
       clearInterval(animateTheFire);
     }
-    
+
+    function prepStoryScerne() {
+      // console.log('prepStoryScerne');
+      //dumb hack  - not sure why, but adding these lights here fixes a rendering bug in story scene where the render order is mixed up
+      scene.add(fireLight);
+      scene.add(fireLight2)
+    }
+
+    function cleanStoryScerne() {
+      console.log('cleanStoryScerne');
+    }
 
     function draw() {
       SPRITE3D.update();
@@ -817,7 +882,6 @@ var SCENE = (function () {
 
     function render() {
       // camera noise
-
       if (cameraShake) {
         cameraShakeY += 0.005;
         cameraShakeX += 0.006;
@@ -840,7 +904,6 @@ var SCENE = (function () {
       currentIndex = index;
       cameraShakeY = 0;
       cameraShakeX = 0;
-
 
       var nextPosition = {
         x: sections[currentIndex].el.position.x,
@@ -868,8 +931,6 @@ var SCENE = (function () {
           isScrolling = true;
           // SOUNDS.wind.play();
           events.trigger('section:changeBegin', data);
-
-
         },
         onComplete: function () {
           if (previousIndex === index) {
@@ -913,7 +974,6 @@ var SCENE = (function () {
           section.el.position.z = sectionLocations[i].z;
           section.setPositions();
           scene.add(section.el);
-
         }
         setupBackground();
       },
@@ -923,89 +983,55 @@ var SCENE = (function () {
 
         switch (to) {
           case 'intro':
-
-            // setupBackground();
             cameraShake = true;
-
             break;
           case 'second':
-            //setupBackground();
             cameraShake = true;
-
             break;
           case 'third':
-
             prepCampfireScene();
             cameraShake = false;
-
             break;
           case 'fourth':
-            //setupBackground();
-            cameraShake = true;
-
+            cameraShake = false;
+            prepStoryScerne();
             break;
           case 'fifth':
-            // setupBackground();
             cameraShake = true;
-
             break;
           case 'sixth':
-            // setupBackground();
             cameraShake = true;
-
             break;
           case 'seventh':
-            // setupBackground();
             cameraShake = true;
-
             break;
           default:
             break;
         }
-
-
       },
       cleanUpLastScene: function (from) {
 
         console.log('cleanUpLastScene from: ' + from);
-
         switch (from) {
           case 'intro':
-
-            // cleanUpCampfireScene();
-
             break;
           case 'second':
-            //cleanUpCampfireScene();
-
             break;
           case 'third':
-
             cleanUpCampfireScene();
-
-
             break;
           case 'fourth':
-            //cleanUpCampfireScene();
-
+            cleanStoryScerne();
             break;
           case 'fifth':
-            // cleanUpCampfireScene();
-
             break;
           case 'sixth':
-            // cleanUpCampfireScene();
-
             break;
           case 'seventh':
-            // cleanUpCampfireScene();
-
             break;
           default:
             break;
         }
-
-
       },
       on: function () {
         events.on.apply(events, arguments);

@@ -69,21 +69,21 @@ function CreativeWriting() {
   }
 
   this.rotateLeft = function () {
-    _this.rotateHorTween = tweenMax.to(_this.thisRotation, 20, {
+    _this.rotateHorTween = tweenMax.to(_this.thisRotation, 10, {
       ease: Power2.easeInOut,
       y: .35,
       onComplete: _this.rotateRight
     });
   }
   this.rotateRight = function () {
-    _this.rotateHorTween = tweenMax.to(_this.thisRotation, 20, {
+    _this.rotateHorTween = tweenMax.to(_this.thisRotation, 10, {
       ease: Power2.easeInOut,
       y: -.35,
       onComplete: _this.rotateLeft
     });
   }
   this.rotateRightStart = function () {
-    _this.rotateHorTween = tweenMax.to(_this.thisRotation, 10, {
+    _this.rotateHorTween = tweenMax.to(_this.thisRotation, 5, {
       ease: Power2.easeInOut,
       y: -.35,
       onComplete: _this.rotateLeft
@@ -91,14 +91,14 @@ function CreativeWriting() {
   }
 
   this.rotateUp = function () {
-    _this.rotateVertTween = tweenMax.to(_this.thisRotation, 15, {
+    _this.rotateVertTween = tweenMax.to(_this.thisRotation, 12, {
       ease: Power2.easeInOut,
       x: -.25,
       onComplete: _this.rotateDown
     });
   }
   this.rotateUpStart = function () {
-    _this.rotateVertTween = tweenMax.to(_this.thisRotation, 10, {
+    _this.rotateVertTween = tweenMax.to(_this.thisRotation, 5, {
       ease: Power2.easeInOut,
       x: -.25,
       onComplete: _this.rotateDown
@@ -107,7 +107,7 @@ function CreativeWriting() {
 
   
   this.rotateDown = function () {
-    _this.rotateVertTween = tweenMax.to(_this.thisRotation, 15, {
+    _this.rotateVertTween = tweenMax.to(_this.thisRotation, 12, {
       ease: Power2.easeInOut,
       x: .25,
       onComplete: _this.rotateUp

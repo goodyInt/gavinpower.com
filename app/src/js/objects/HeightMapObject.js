@@ -209,7 +209,7 @@ HeightMap.prototype.getIdleTween = function () {
       switch (tweenCounter) {
       
         case -1:
-          tweenPauseTime = 4.35;
+          tweenPauseTime =  3.25;
             //console.log('Hello hold: ' + tweenPauseTime);
           break;
         case 0:
@@ -420,7 +420,8 @@ HeightMap.prototype.applyMap = function () {
     switch (tweenCounter) {
      
       case -1:
-        thisTweenTime = 3.3;
+      thisEase = Power1.easeOut;
+        thisTweenTime = 3.25;
          //console.log('Hello tweenTime: ' + thisTweenTime);
         break;
       case 0:

@@ -18,32 +18,22 @@ var imagesLoader = new ImagesLoader([
   './img/heightMap/heightMap-white.jpg'
 ]);
 
-// preload
 imagesLoader.start();
 imagesLoader.onProgress(function (percent) {
   loader.update(percent);
 });
 
 imagesLoader.onComplete(function () {
- 
-  loader.out();
+ loader.out();
   tweenMax.delayedCall(0.8, SCENE.in);
   tweenMax.delayedCall(1.5, function () {
-    //console.log(introSection);
     introSection.show();
-    var thisIntroSection = introSection;
     introSection.startUpFirstTime(function () {
-     // console.log(thisIntroSection);
       map.$el.show();
       map.in();
       menu.in();
-     
       console.log('all set in main - bring in the map')
-     // thisIntroSection.textIn();
-      //console.log(theIntroSection);
-     
     });
-
   });
 });
 
@@ -104,10 +94,11 @@ SCENE.on('section:changeBegin', function () {
       secondSection.start();
     
       break;
-    case 'third':
-     
+    case 'third':  
       thirdSection.in();
       thirdSection.start();
+      //
+      
       break;
     case 'fourth':
       fourthSection.in();
@@ -170,6 +161,8 @@ SCENE.on('section:changeComplete', function () {
   console.log('changeComplete to: ' + to);
   console.log('changeComplete from: ' + from);
   SCENE.cleanUpLastScene(from);
+  
+  
   switch (from) {
     case 'intro':
     console.log('calling intro.stop() changeComplete');
@@ -202,6 +195,7 @@ SCENE.on('section:changeComplete', function () {
     default:
       break;
   }
+
 });
 
 // map

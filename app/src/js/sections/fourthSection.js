@@ -1,87 +1,98 @@
 'use strict';
 
 var Section = require('../classes/SectionClass');
-
-var animatedSprite = require('../objects/AnimatedSpriteObject');
-var Smoke = require('../objects/SmokeObject');
-
+var StoryScene = require('../objects/StoryTellingObject');
+var TextPanel = require('../objects/TextPanelObject');
 var fourthSection = new Section('fourth');
 
-var fourthAnimatedText = new animatedSprite();
+var ourStoryScene = new StoryScene();
+fourthSection.add(ourStoryScene.el);
 
-var fourthSmoke = new Smoke({  
+var nectBtnTextString = "<<< let's tell one together";
+var nextBtn = new TextPanel(
+  nectBtnTextString, {
+    align: 'center',
+    style: '',
+    size: 85,
+    lineSpacing: 40,
+    color: '#999999'
+  }
+);
 
-  frontColor: '#19e7ff',
-  backColor: '#19e7ff',
-  
-  layers: 3,
-  data: [
-    { positionX : 3.7, positionY: 13.9, positionZ: 7.8, rotationZ: 3.7, scale: 6.9 },
-    { positionX : 2.8, positionY: -2.6, positionZ: -4, rotationZ: 1.2, scale: 2.7 },
-    { positionX : 12, positionY: -9.5, positionZ: 6.3, rotationZ: -2, scale: 1.7 } 
-  ]
-});
+var _this = this;
+this.bringInTheBtn = function () {
+  clearInterval(_this.bringInTheNextBtnInterval);
+  nextBtn.in();
+  fourthSection.nextBtnIsIn = true;
+}
 
-fourthSection.add(fourthSmoke.el);
-fourthSection.add(fourthAnimatedText.el);
-fourthAnimatedText.out();
-
-fourthSmoke.el.visible = false;
+fourthSection.add(nextBtn.el);
 
 fourthSection.onIn(function () {
-  fourthAnimatedText.in();
-  fourthSection.smokeStart();
 });
 
 fourthSection.onOut(function () {
-  fourthAnimatedText.out();
+  console.log('fourthSection.onOut');
+  ourStoryScene.onOut();
 });
 
 fourthSection.onStart(function () {
-  fourthAnimatedText.start();
+  console.log('fourthSection.onStart');
+  ourStoryScene.start();
+ // _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 4500);
 });
 
 fourthSection.onStop(function () {
-  fourthAnimatedText.stop();
-  fourthSection.smokeStop();
+  console.log('fourthSection.onStop');
+  ourStoryScene.stop();
+  clearInterval(_this.bringInTheNextBtnInterval);
+  nextBtn.overOut();
+  nextBtn.out('up');
 });
 
-var fourthSmokePlaying = false;
+////
+fourthSection.nextBtnIsIn = false;
+fourthSection.nextBtnIsOver = false;
+fourthSection.nextBtnIsDown = false;
 
-fourthSection.smokeStart = function () {
-  
-  if (fourthSmokePlaying) {
-    return false;
-  }
-  fourthSmokePlaying = true;
-  fourthSmoke.start();
-  fourthSmoke.el.visible = true;
+fourthSection.getTheNextBtn = function () {
+  //console.log('fourthSection.getTheNextBtn');
+  return nextBtn;
+};
+fourthSection.theNextBtnIsOver = function () {
+  console.log('fourthSection.theNextBtnIsOver');
+  nextBtn.over();
+  fourthSection.nextBtnIsOver = true;
+
+};
+fourthSection.theNextBtnIsDown = function () {
+  console.log('fourthSection.theNextBtnIsDown');
+  nextBtn.down('#0000ff');
+  fourthSection.nextBtnIsDown = true;
+};
+fourthSection.theNextBtnIsUp = function () {
+  console.log('fourthSection.theNextBtnIsUp');
+  nextBtn.overOut();
+  fourthSection.nextBtnIsDown = false;
 };
 
-fourthSection.smokeStop = function () {
-  if (!fourthSmokePlaying) {
-    return false;
-  }
-
-  fourthSmokePlaying = false;
-
-  fourthSmoke.stop();
-
-  fourthSmoke.el.visible = false;
-};
-
-fourthSection.updateColors = function (color1, color2) {
-  fourthSmoke.updateColors(color1, color2);
+fourthSection.theNextBtnIsOut = function () {
+  console.log('fourthSection.theNextBtnIsOut');
+  nextBtn.overOut();
+  fourthSection.nextBtnIsOver = false;
 };
 
 fourthSection.setPositions = function () {
-  var thisPos= {x: fourthSection.el.position.x, y: fourthSection.el.position.y,z: fourthSection.el.position.z}
-  //console.log('');
-  //console.log('fourthSection.setPositions()');
-  //console.log('x: ' + thisPos.x);
-  //console.log('y: ' + thisPos.y);
-  //console.log('z: ' + thisPos.z);
-};
+  ourStoryScene.el.position.x = 0;
+  ourStoryScene.el.position.y = 10;
+  ourStoryScene.el.position.z = 0;
 
+  nextBtn.el.position.x = 20;
+  nextBtn.el.position.y = 20;
+  nextBtn.el.position.z = -30;
+  nextBtn.el.rotation.y = -40 * (Math.PI / 180);
+  nextBtn.el.rotation.z = -20 * (Math.PI / 180);
+
+};
 
 module.exports = fourthSection;
