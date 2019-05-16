@@ -1,4 +1,5 @@
  var gulp = require('gulp');
+ var babel = require('gulp-babel');
  var sass = require('gulp-sass');
  var imagemin = require('gulp-imagemin');
 
@@ -12,6 +13,19 @@
  var browserSyncReuseTab = require('browser-sync-reuse-tab')(browserSync)
  var autoprefixer = require('autoprefixer');
  
+// babel
+
+gulp.task('bableJs', function() {
+  return gulp.src(
+    [
+   // 'node_modules/babel-polyfill/dist/polyfill.js',
+    'app/dist/js/bundle.js'
+    ])
+    .pipe(babel({presets: ['@babel/preset-env']}))
+    .pipe(gulp.dest('app/dist/js/'))
+});
+
+
 
 // preprocess scss
  gulp.task("preProCss", function () {
@@ -90,7 +104,10 @@ gulp.task('preProJs', function(done) {
 gulp.task("buildDev", gulp.series('preProCss','copyHtml','moveStats','postProCss','preProJs'));
 
 // build for production
-gulp.task("buildProd", gulp.series('preProJs','preProCss','copyHtml', 'postProCss', 'minImg','moveFonts','moveSounds','uglifyCss','uglifyJs'));
+gulp.task("buildProd", gulp.series('preProJs','preProCss','copyHtml', 'postProCss', 'minImg','moveFonts','moveSounds','bableJs','uglifyCss','uglifyJs'));
+
+// build for production
+gulp.task("buildPreProd", gulp.series('preProJs','preProCss','copyHtml', 'postProCss', 'minImg','moveFonts','moveStats','moveSounds','bableJs','uglifyCss','uglifyJs'));
 
 // watch and reload
 gulp.task("watch", function () {

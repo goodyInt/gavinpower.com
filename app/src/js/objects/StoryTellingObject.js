@@ -17,15 +17,8 @@ function StoryTellingScene() {
   var loader = new THREE.FontLoader();
   var _this = this;
   var shaderMaterial;
-  // loader.load('fonts/Brittany Signature_Regular.json', function (font) {
-  // loader.load('fonts/Brush Script MT_Italic.json', function (font) {
-  // loader.load('fonts/Millennial Solstice_Regular.json', function (font) {
-  // loader.load('fonts/optimer_bold.typeface.json', function (font) {
-  // loader.load('fonts/[z] Arista_Regular.json', function (font) {
-  //  loader.load('fonts/Silhouette_Regular.json', function (font) {
   loader.load('fonts/helvetiker_bold.typeface.json', function (font) {
 
-    //MeshDepthMaterial
     var signMaterial = new THREE.MeshPhongMaterial({
       color: 0x000000,
       specular: 0xffffff,
@@ -38,26 +31,16 @@ function StoryTellingScene() {
       specular: 0x222222,
     });
 
-    // var platformMaterial = new THREE.MeshLambertMaterial({
-    // color: '#111111'
-    //});
-
-
     var platform = new THREE.Mesh(new THREE.BoxBufferGeometry(200, 2, 200), platformMaterial);
     platform.position.y = -27;
     platform.position.z = -55;
     platform.castShadow = false;
     platform.receiveShadow = true;
     _this.el.add(platform);
-    ///*
+
     var firePlaceMat = new THREE.MeshLambertMaterial({
-      color: '#111111',
-      specular: 0x111111,
+      color: '#111111'
     });
-    //*/
-    //  var firePlaceMat = new THREE.MeshStandardMaterial({
-    //  color: '#111111'
-    //});
 
 
     var firePlacePath = new THREE.Mesh(new THREE.BoxBufferGeometry(16, 1, 200), firePlaceMat);
@@ -66,7 +49,6 @@ function StoryTellingScene() {
     firePlacePath.castShadow = false;
     firePlacePath.receiveShadow = false;
     _this.el.add(firePlacePath);
-
     _this.storySignHolder = new THREE.Object3D();
 
     var copySize = 20;
@@ -142,7 +124,6 @@ function StoryTellingScene() {
     _this.el.add(_this.tellingSignHolder);
     ////
 
-    //var centerOffset = -0.5 * (storySignGeo.boundingBox.max.x - storySignGeo.boundingBox.min.x);
     _this.storySignHolder.position.x = -50;
     _this.storySignHolder.position.y = -6;
     _this.storySignHolder.position.z = -75;
@@ -151,7 +132,6 @@ function StoryTellingScene() {
     _this.storySignHolder.rotateZ(5 * (Math.PI / 180));
 
     //
-    // centerOffset = -0.5 * (tellingSignGeo.boundingBox.max.x - tellingSignGeo.boundingBox.min.x);
     _this.tellingSignHolder.position.x = 50;
     _this.tellingSignHolder.position.y = -6;
     _this.tellingSignHolder.position.z = -75;

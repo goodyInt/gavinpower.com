@@ -688,14 +688,14 @@ var SCENE = (function () {
       sectionLines2.el.position.z = sectionLocations[2].z;
       //
 
-      rangeX = [-50, 50];
-      rangeY = [parameters.sectionHeight, -parameters.sectionHeight];
-      rangeZ = [-100, 100];
-      numOfParticles = 40;
+      rangeX = [-75, 75];
+      rangeY = [50, 15];
+      rangeZ = [-100, 50];
+      numOfParticles = 100;
       numOfLines = 10;
-      stripsRangeX = [-50, 50];
-      stripsRangeY = [-80, 80];
-      stripsRangeZ = [-80, -45];
+      stripsRangeX = [-75, 75];
+      stripsRangeY = [50, 15];
+      stripsRangeZ =  [-100, 50];
 
       theSectionParticles3 = new BackgroundParticles({
         rangeX: rangeX,

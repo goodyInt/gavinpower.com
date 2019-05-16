@@ -5,12 +5,12 @@ var OBJLoader = require('three-obj-loader');
 OBJLoader(THREE);
 var MTLLoader = require('three-mtl-loader');
 
-
+/*
 console.log('typeof THREE.OBJLoader');
 console.log(typeof THREE.OBJLoader);
 console.log('typeof THREE.MTLLoader');
 console.log(typeof MTLLoader);
-
+*/
 function CampScene() {
   this.creativeObject = {};
   console.log('CampScene 001');
@@ -24,12 +24,11 @@ function CampScene() {
   var _this = this;
 
   loader.load('fonts/helvetiker_bold.typeface.json', function (font) {
-
     var platformMaterial = new THREE.MeshPhongMaterial({
       color: 0x111111,
       specular: 0x222222,
-
     });
+  
 
     var platform = new THREE.Mesh(new THREE.BoxBufferGeometry(200, 2, 60), platformMaterial);
     platform.position.y = -27;
@@ -163,12 +162,12 @@ function CampScene() {
 
   //addTrees
   var mtlLoader = new MTLLoader();
+ 
   var materials = mtlLoader.parse(getTreeMatAsString());
+  
   var objLoader = new THREE.OBJLoader();
-  var material = new THREE.MeshLambertMaterial({ color: 0xcc8729 });
   objLoader.setMaterials(materials);
   var tree0 = objLoader.parse(getTreeGeoAsString());
-  
   tree0.scale.set(4, 4, 4 );
   
   tree0.position.x = -35;
@@ -177,7 +176,6 @@ function CampScene() {
   tree0.rotation.y = 0.7;
   tree0.traverse(function (child) {
     if (child instanceof THREE.Mesh) {
-      console.log('child instanceof THREE.Mesh!!!')
       child.castShadow = true;
       child.receiveShadow = true;
     }
