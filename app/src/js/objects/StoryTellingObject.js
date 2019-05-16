@@ -2,6 +2,8 @@
 var THREE = require('three');
 var dilate = require('../utils/dilateUtil');
 var outlineMaterial = require('../materials/outlineMaterial');
+var waterMaterial = require('../materials/waterMaterial');
+
 
 function StoryTellingScene() {
   this.creativeObject = {};
@@ -17,8 +19,19 @@ function StoryTellingScene() {
   var loader = new THREE.FontLoader();
   var _this = this;
   var shaderMaterial;
-  loader.load('fonts/helvetiker_bold.typeface.json', function (font) {
+  var waterShaderMaterial;
+  var clock = new THREE.Clock();
+  var waterSpeed = 2;
 
+
+
+  this.typeTheCopy = function () {
+    //console.log('typeTheCopy waterShaderMaterial.uniforms: ' + waterShaderMaterial.uniforms);
+   // console.log(waterShaderMaterial.uniforms.iGlobalTime.value);
+    waterShaderMaterial.uniforms.iGlobalTime.value += clock.getDelta() * waterSpeed;
+  }
+  console.log('typeTheCopyInterval typeTheCopyInterval typeTheCopyInterval');
+  loader.load('fonts/helvetiker_bold.typeface.json', function (font) {
     var signMaterial = new THREE.MeshPhongMaterial({
       color: 0x000000,
       specular: 0xffffff,
@@ -38,18 +51,25 @@ function StoryTellingScene() {
     platform.receiveShadow = true;
     _this.el.add(platform);
 
-    var firePlaceMat = new THREE.MeshLambertMaterial({
+    var waterPlaceMat = new THREE.MeshLambertMaterial({
       color: '#111111'
     });
 
+    waterShaderMaterial = new THREE.ShaderMaterial({
+      uniforms: waterMaterial.uniforms,
+      vertexShader: waterMaterial.vertexShader,
+      fragmentShader: waterMaterial.fragmentShader,
+    });
 
-    var firePlacePath = new THREE.Mesh(new THREE.BoxBufferGeometry(16, 1, 200), firePlaceMat);
-    firePlacePath.position.y = -26;
-    firePlacePath.position.z = -55;
-    firePlacePath.castShadow = false;
-    firePlacePath.receiveShadow = false;
-    _this.el.add(firePlacePath);
+
+    var waterPlacePath = new THREE.Mesh(new THREE.BoxBufferGeometry(16, 1, 200), waterShaderMaterial);
+    waterPlacePath.position.y = -26;
+    waterPlacePath.position.z = -55;
+    waterPlacePath.castShadow = false;
+    waterPlacePath.receiveShadow = false;
+    _this.el.add(waterPlacePath);
     _this.storySignHolder = new THREE.Object3D();
+
 
     var copySize = 20;
     var copyWidth = 5;
@@ -142,21 +162,25 @@ function StoryTellingScene() {
 
   StoryTellingScene.prototype.start = function () {
     console.log('StoryTellingScene.prototype.start');
-   // this.el.visible = true;
+    this.typeTheCopyInterval = setInterval(this.typeTheCopy, 40);
+    // this.el.visible = true;
   };
 
   StoryTellingScene.prototype.onOut = function () {
     console.log('StoryTellingScene.prototype.onOut');
+    clearInterval(this.typeTheCopyInterval);
   };
 
   StoryTellingScene.prototype.stop = function () {
     console.log('StoryTellingScene.prototype.stop');
-  //  this.el.visible = false;
+    //  this.el.visible = false;
   };
 
   StoryTellingScene.prototype.hide = function () {
     console.log('StoryTellingScene.prototype.hide');
   };
+
+
 
 }
 
