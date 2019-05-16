@@ -687,7 +687,6 @@ var SCENE = (function () {
       sectionLines2.el.position.y = sectionLocations[2].y;
       sectionLines2.el.position.z = sectionLocations[2].z;
       //
-
       rangeX = [-75, 75];
       rangeY = [50, 15];
       rangeZ = [-100, 50];
@@ -851,7 +850,7 @@ var SCENE = (function () {
 
     function prepCampfireScene() {
       //    console.log('prepCampfireScene');
-      //dumb hack  - not sure why, but adding these lights here fixes a rendering bug in story scene where the render order is mixed up
+      // dumb hack  - not sure why, but adding these lights here fixes a rendering bug in story scene where the render order is mixed up
       scene.add(fireLight);
       scene.add(fireLight2)
       animateTheFire = setInterval(animateFire, 100);
