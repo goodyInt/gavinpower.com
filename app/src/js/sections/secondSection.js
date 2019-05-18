@@ -15,7 +15,7 @@ var writingText = new TextPanel(
     align: 'center',
    // font: 'Times New Roman, Times, serif',
     style: '',
-    size: 95,
+    size: 65,
     lineSpacing: 40,
     color: 'rgba(255, 255, 255, 1)'
   }

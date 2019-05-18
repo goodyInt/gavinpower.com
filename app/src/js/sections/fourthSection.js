@@ -1,14 +1,64 @@
 'use strict';
 
 var Section = require('../classes/SectionClass');
-var StoryScene = require('../objects/StoryTellingObject');
+var CampScene = require('../objects/CampSceneObject');
 var TextPanel = require('../objects/TextPanelObject');
+var Fire = require('../objects/FireObject');
 var fourthSection = new Section('fourth');
 
-var ourStoryScene = new StoryScene();
-fourthSection.add(ourStoryScene.el);
 
-var nectBtnTextString = "<<< let's tell one together";
+var fourthCampFire = new Fire({
+  color1: '#ff5000',
+  color2: '#ff0000',
+  color3: '#ff0000',
+  color4: '#ff5000',
+
+  layers: 4,
+  data: [{
+      positionX: -2,
+      positionY: -.25,
+      positionZ: 1,
+      rotationZ: (-5 * Math.PI / 180),
+      scale: 1
+    },
+    {
+      positionX: -1.5,
+      positionY: -.75,
+      positionZ: 3,
+      rotationZ: (-5 * Math.PI / 180),
+      scale: 1
+    },
+    {
+      positionX: 1.5,
+      positionY: -1,
+      positionZ: -3,
+      rotationZ: (-5 * Math.PI / 180),
+      scale: 1
+    },
+    {
+      positionX: 2,
+      positionY: -1.5,
+      positionZ: -1,
+      rotationZ: (-5 * Math.PI / 180),
+      scale: 1
+    }
+  ]
+});
+
+fourthSection.add(fourthCampFire.el);
+
+var fireX = -1;
+var fireY = -19;
+var fireZ = 13;
+fourthCampFire.el.position.x = fireX;
+fourthCampFire.el.position.y = fireY;
+fourthCampFire.el.position.z = fireZ;
+fourthCampFire.el.visible = false;
+
+var ourCampScene = new CampScene();
+fourthSection.add(ourCampScene.el);
+
+var nectBtnTextString = '<<< I like code. I like details. I love...';
 var nextBtn = new TextPanel(
   nectBtnTextString, {
     align: 'center',
@@ -29,22 +79,59 @@ this.bringInTheBtn = function () {
 fourthSection.add(nextBtn.el);
 
 fourthSection.onIn(function () {
+  prepFire();
 });
+
+var fireYCounter = 0;
+var fireXCounter = 0;
+var fireZCounter = 0;
+
+function animateFire() {
+  fireYCounter += .65;
+  fireXCounter += .15;
+  fireZCounter += .35;
+
+  fireY += Math.sin(fireYCounter) * .35;
+  fireX += Math.sin(fireXCounter) * .1;
+  fireZ += Math.sin(fireZCounter) * .25;
+
+ // console.log(fireX,fireY,fireZ);
+  fourthCampFire.el.position.x = fireX;
+  fourthCampFire.el.position.y = fireY;
+  fourthCampFire.el.position.z = fireZ;
+}
+
+var animateTheFire;
+
+function prepFire() {
+  console.log('prepFire');
+  fourthCampFire.start();
+  fourthCampFire.el.visible = true;
+  animateTheFire = setInterval(animateFire, 100);
+}
+
+function extinguishFire() {
+  console.log('extinguishFire');
+  fourthCampFire.stop();
+  fourthCampFire.el.visible = false;
+  clearInterval(animateTheFire);
+}
 
 fourthSection.onOut(function () {
   console.log('fourthSection.onOut');
-  ourStoryScene.onOut();
+  ourCampScene.onOut();
 });
 
 fourthSection.onStart(function () {
   console.log('fourthSection.onStart');
-  ourStoryScene.start();
- // _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 4500);
+  ourCampScene.start();
+  _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 4500);
 });
 
 fourthSection.onStop(function () {
   console.log('fourthSection.onStop');
-  ourStoryScene.stop();
+  extinguishFire();
+  ourCampScene.stop();
   clearInterval(_this.bringInTheNextBtnInterval);
   nextBtn.overOut();
   nextBtn.out('up');
@@ -83,9 +170,9 @@ fourthSection.theNextBtnIsOut = function () {
 };
 
 fourthSection.setPositions = function () {
-  ourStoryScene.el.position.x = 0;
-  ourStoryScene.el.position.y = 10;
-  ourStoryScene.el.position.z = 0;
+  ourCampScene.el.position.x = 0;
+  ourCampScene.el.position.y = 10;
+  ourCampScene.el.position.z = 0;
 
   nextBtn.el.position.x = 20;
   nextBtn.el.position.y = 20;

@@ -11,6 +11,7 @@ console.log(typeof THREE.OBJLoader);
 console.log('typeof THREE.MTLLoader');
 console.log(typeof MTLLoader);
 */
+
 function CampScene() {
   this.creativeObject = {};
   console.log('CampScene 001');
@@ -28,7 +29,6 @@ function CampScene() {
       color: 0x111111,
       specular: 0x222222,
     });
-  
 
     var platform = new THREE.Mesh(new THREE.BoxBufferGeometry(200, 2, 60), platformMaterial);
     platform.position.y = -27;
@@ -41,7 +41,7 @@ function CampScene() {
       color: '#000000'
     });
 
-    var platformBottom = new THREE.Mesh(new THREE.BoxBufferGeometry(200, 1, 60), firePlaceBotMat);
+    var platformBottom = new THREE.Mesh(new THREE.BoxBufferGeometry(200, 2, 60), firePlaceBotMat);
     platformBottom.position.y = -29;
     platformBottom.position.z = 5;
     platformBottom.castShadow = false;
@@ -49,16 +49,15 @@ function CampScene() {
     _this.el.add(platformBottom);
 
     var firePlaceMat = new THREE.MeshLambertMaterial({
-      color: '#111111'
+      color: '#101010'
     });
 
-    var firePlacePath = new THREE.Mesh(new THREE.BoxBufferGeometry(16, 1, 60), firePlaceMat);
-    firePlacePath.position.y = -26;
-    firePlacePath.position.z = 33;
+    var firePlacePath = new THREE.Mesh(new THREE.BoxBufferGeometry(16, 4, 36), firePlaceMat);
+    firePlacePath.position.y = -27;
+    firePlacePath.position.z = 28;
     firePlacePath.castShadow = false;
     firePlacePath.receiveShadow = false;
     _this.el.add(firePlacePath);
-
 
     var seatMaterial = new THREE.MeshPhongMaterial({
       color: 0x101010,
@@ -82,7 +81,6 @@ function CampScene() {
     rightSeat.receiveShadow = false;
     _this.el.add(rightSeat);
 
-
     var designSignGeo = new THREE.TextBufferGeometry("DESIGN", {
       font: font,
       size: 16,
@@ -99,7 +97,6 @@ function CampScene() {
       color: 0x222222,
       specular: 0xffffff,
       shininess: 30
-
     });
 
     var designSign = new THREE.Mesh(designSignGeo, designSignMaterial);
@@ -110,13 +107,11 @@ function CampScene() {
     designSign.position.x = centerOffset;
     designSign.position.y = -25;
     designSign.position.z = -25;
-
     //_this.el.visible = false;
 
   });
 
   function Log() {
-
     var logMaterial = new THREE.MeshPhongMaterial({
       color: 0x111111,
       shininess: 10
@@ -125,7 +120,6 @@ function CampScene() {
     var logEndMaterial = new THREE.MeshPhongMaterial({
       color: 0x000000,
       shininess: 10
-
     });
 
     var geometry = new THREE.BoxGeometry(2.5, 2.5, 10);
@@ -196,7 +190,6 @@ CampScene.prototype.stop = function () {
   console.log('CampScene.prototype.stop');
  // this.el.visible = false;
 };
-
 
 CampScene.prototype.hide = function () {
   console.log('CampScene.prototype.hide');
@@ -672,10 +665,8 @@ f 104//159 91//159 107//159
 f 103//160 105//160 93//160
 f 103//161 104//161 105//161
 f 104//162 92//162 105//162
-
 `;
 }
-
 
 function getTreeMatAsString() {
   return `
@@ -683,7 +674,6 @@ function getTreeMatAsString() {
 # Material Count: 3
 
 newmtl Material.002
-
 
 #this is the base of tree
 # Ka - Ambient Colour
@@ -700,7 +690,6 @@ Ni 1.000000
 d 1.000000
 illum 2
 
-
 #this is the trunk of the tree
 newmtl Material.003
 Ns 56.078431
@@ -713,7 +702,6 @@ Ni 1.000000
 d 1.000000
 illum 2
 
-
 #these are the leaves
 newmtl Material.004
 Ns 96.078431
@@ -724,7 +712,6 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-
 
 `;
 }

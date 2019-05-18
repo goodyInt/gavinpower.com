@@ -21,6 +21,7 @@ var BackgroundLines = require('../objects/BackgroundLinesObject');
 var SCENE = (function () {
 
   var instance;
+  var map;
 
   function init() {
 
@@ -106,19 +107,19 @@ var SCENE = (function () {
         z: 0
       },
       {
-        x: 200,
+        x: 150,
         y: 0,
         z: -200
       },
       {
         x: -150,
-        y: -50,
+        y: 200,
         z: -400
       },
       {
-        x: 150,
+        x: -150,
         y: 200,
-        z: -600
+        z: -710
       },
       {
         x: -50,
@@ -137,32 +138,33 @@ var SCENE = (function () {
       }
     ];
     var sectionZoomOffset = [{
-        min: 0,
-        max: 45,
+        forward: 0,
+        backward: 45,
       },
       {
-        min: -5,
-        max: 90,
+        forward: -5,
+        backward: 90,
       },
       {
-        min: -5,
-        max: 50,
+        forward: 305,
+        backward: 10,
       },
       {
-        min: 400,
-        max: 400,
+        forward: -15,
+        backward: 320,
+
       },
       {
-        min: 0,
-        max: 0,
+        forward: 0,
+        backward: 0,
       },
       {
-        min: 0,
-        max: 0,
+        forward: 0,
+        backward: 0,
       },
       {
-        min: 0,
-        max: 0,
+        forward: 0,
+        backward: 0,
       }
     ];
     var sectionsMap = {}; // map name with index
@@ -206,14 +208,34 @@ var SCENE = (function () {
 
       function onScroll(event) {
         event.preventDefault();
+
         var dist = camera.position.z - sections[currentIndex].el.position.z;
         var zSpeed = event.originalEvent.wheelDelta * .01;
+        if (currentIndex == 2) {
+          console.log('currentIndex = 2  dist: ' + dist);
+          if(dist<-173){
+            previousIndex = 3;
+            currentIndex = 3;
+            map.setActive(currentIndex);
+          }
+
+        }
+        if (currentIndex == 3) {
+          console.log('currentIndex = 3  dist: ' + dist);
+          
+          if(dist>140){
+            previousIndex = 2;
+            currentIndex = 2;
+            map.setActive(currentIndex);
+          }
+
+        }
         if (zSpeed > 0) {
-          if (dist > 0 - sectionZoomOffset[currentIndex].min) {
+          if (dist > 0 - sectionZoomOffset[currentIndex].forward) {
             scrollZ(zSpeed);
           }
         } else {
-          if (dist < 50 + sectionZoomOffset[currentIndex].max) {
+          if (dist < 50 + sectionZoomOffset[currentIndex].backward) {
             scrollZ(zSpeed);
           }
         }
@@ -339,13 +361,14 @@ var SCENE = (function () {
             }
             break;
           case 2:
-            console.log('onDocumentMouseUp section 1');
-            var sectionNextBtn = raycaster.intersectObject(sections[2].getTheNextBtn().el, true);
+
+            break;
+          case 3:
+            console.log('onDocumentMouseUp section 3');
+            var sectionNextBtn = raycaster.intersectObject(sections[3].getTheNextBtn().el, true);
             if (sectionNextBtn.length > 0) {
               next();
             }
-            break;
-          case 3:
             break;
           case 4:
             break;
@@ -388,7 +411,7 @@ var SCENE = (function () {
       ambientLight = new THREE.AmbientLight(0x404040); // 
       scene.add(ambientLight);
 
-      light = new THREE.DirectionalLight('#ffffff', 0.5);
+      light = new THREE.DirectionalLight('#ffffff', 0.55);
       light.position.set(0.2, 1, 0.5);
       scene.add(light);
 
@@ -404,27 +427,36 @@ var SCENE = (function () {
       storyMoonLight.position.set(0, 800, -2250);
       storyMoonLight.castShadow = true;
 
-      fireLight = new THREE.PointLight(0xff0000, .025, 100);
-      fireLight.position.set(sectionLocations[2].x, sectionLocations[2].y - 12, sectionLocations[2].z - 12);
+      var fireIntensity = .025;
 
-      fireLight2 = new THREE.PointLight(0xffa500, .025, 100);
-      fireLight2.position.set(sectionLocations[2].x, sectionLocations[2].y - 12, sectionLocations[2].x - 8);
+      fireLight = new THREE.PointLight(0xff0000, fireIntensity, 100);
+      // fireLight.position.set(sectionLocations[3].x, sectionLocations[3].y - 12, sectionLocations[3].z - 12);
 
-      //  var fireLightHelper = new THREE.PointLightHelper( fireLight, 1 );
-      // scene.add( fireLightHelper );
+      fireLight2 = new THREE.PointLight(0xffa500, fireIntensity, 100);
+      // fireLight2.position.set(sectionLocations[3].x, sectionLocations[3].y - 12, sectionLocations[3].z - 8);
+      console.log('sectionLocations[3].x: ' + sectionLocations[3].x);
+      console.log('sectionLocations[3].y: ' + sectionLocations[3].y);
+      console.log('sectionLocations[3].z: ' + sectionLocations[3].z);
+
+      fireLight.position.set(fireLightX - 5, fireLightY, fireLightZ);
+      fireLight2.position.set(fireLight2X - 5, fireLight2Y, fireLight2Z);
+
+
+      // var fireLightHelper = new THREE.PointLightHelper( fireLight, 1 );
+      //scene.add( fireLightHelper );
 
       // var fireLight2Helper = new THREE.PointLightHelper( fireLight2, 1 );
       // scene.add( fireLight2Helper );
 
       var storyLightIntensity = 2.6;
-      var lightDistance = 400;
+      var lightDistance = 225;
 
       storyLight = new THREE.SpotLight(0x00ffff, storyLightIntensity, lightDistance);
       storyLight.penumbra = .5;
-      storyLight.position.set(sectionLocations[3].x - 100, sectionLocations[3].y + 120, sectionLocations[3].z - 120);
-      storyLightSpotlightTarget.position.x = sectionLocations[3].x - 65;
-      storyLightSpotlightTarget.position.y = sectionLocations[3].y;
-      storyLightSpotlightTarget.position.z = sectionLocations[3].z - 120;
+      storyLight.position.set(sectionLocations[2].x - 100, sectionLocations[2].y + 120, sectionLocations[2].z - 120);
+      storyLightSpotlightTarget.position.x = sectionLocations[2].x - 65;
+      storyLightSpotlightTarget.position.y = sectionLocations[2].y;
+      storyLightSpotlightTarget.position.z = sectionLocations[2].z - 120;
       storyLight.target = storyLightSpotlightTarget;
 
       // var storyLightHelper = new THREE.SpotLightHelper( storyLight );
@@ -432,10 +464,10 @@ var SCENE = (function () {
 
       storyLight2 = new THREE.SpotLight(0x00ffff, storyLightIntensity, lightDistance);
       storyLight2.penumbra = .5;
-      storyLight2.position.set(sectionLocations[3].x + 100, sectionLocations[3].y + 120, sectionLocations[3].z - 120);
-      storyLightSpotlightTarget2.position.x = sectionLocations[3].x + 65;
-      storyLightSpotlightTarget2.position.y = sectionLocations[3].y;
-      storyLightSpotlightTarget2.position.z = sectionLocations[3].z - 120;
+      storyLight2.position.set(sectionLocations[2].x + 100, sectionLocations[2].y + 120, sectionLocations[2].z - 120);
+      storyLightSpotlightTarget2.position.x = sectionLocations[2].x + 65;
+      storyLightSpotlightTarget2.position.y = sectionLocations[2].y;
+      storyLightSpotlightTarget2.position.z = sectionLocations[2].z - 120;
       storyLight2.target = storyLightSpotlightTarget2;
 
       // var storyLight2Helper = new THREE.SpotLightHelper( storyLight2 );
@@ -444,7 +476,7 @@ var SCENE = (function () {
       scene.add(moonLight);
 
       // - dumb hack.  these, for some reason, need to be added later so that story scene renders in the correct order
-      // scene.add(fireLight);
+      /// scene.add(fireLight); //leave these off or the one shader in story telling does not work properl;y!!! ahhhh!
       // scene.add(fireLight2)
 
       scene.add(storyLight);
@@ -511,31 +543,32 @@ var SCENE = (function () {
             }
             break;
           case 2:
-            if (sections[2].nextBtnIsIn) {
-              var sectionNextBtn = raycaster.intersectObject(sections[2].getTheNextBtn().el, true);
+
+            break;
+          case 3:
+            if (sections[3].nextBtnIsIn) {
+              var sectionNextBtn = raycaster.intersectObject(sections[3].getTheNextBtn().el, true);
               if (sectionNextBtn.length > 0) {
                 jQuery('html,body').css('cursor', 'pointer');
-                if (!sections[2].nextBtnIsDown) {
+                if (!sections[3].nextBtnIsDown) {
                   if (!mouseDown) {
-                    sections[2].theNextBtnIsOver();
+                    sections[3].theNextBtnIsOver();
                   } else {
-                    sections[2].theNextBtnIsDown();
+                    sections[3].theNextBtnIsDown();
                   }
                 }
               } else {
                 jQuery('html,body').css('cursor', 'default');
-                if (sections[2].nextBtnIsOver) {
-                  if (!sections[2].nextBtnIsDown) {
-                    sections[2].theNextBtnIsOut();
+                if (sections[3].nextBtnIsOver) {
+                  if (!sections[3].nextBtnIsDown) {
+                    sections[3].theNextBtnIsOut();
                   }
                 }
-                if (sections[2].nextBtnIsDown) {
-                  sections[2].theNextBtnIsUp();
+                if (sections[3].nextBtnIsDown) {
+                  sections[3].theNextBtnIsUp();
                 }
               }
             }
-            break;
-          case 3:
             break;
           case 4:
             break;
@@ -578,6 +611,7 @@ var SCENE = (function () {
       });
       scene.add(theAtmosphereParticles.el);
       //
+      //////////// 0
       rangeX = [-50, 50];
       rangeY = [parameters.sectionHeight, -parameters.sectionHeight];
       rangeZ = [-100, 100];
@@ -613,6 +647,7 @@ var SCENE = (function () {
       sectionLines0.el.position.y = sectionLocations[0].y;
       sectionLines0.el.position.z = sectionLocations[0].z;
       //
+      //////////// 1
       rangeX = [-50, 50];
       rangeY = [parameters.sectionHeight, -parameters.sectionHeight];
       rangeZ = [-100, 100];
@@ -647,15 +682,17 @@ var SCENE = (function () {
       sectionLines1.el.position.x = sectionLocations[1].x;
       sectionLines1.el.position.y = sectionLocations[1].y;
       sectionLines1.el.position.z = sectionLocations[1].z;
+      //
 
-      rangeX = [-150, 150];
-      rangeY = [-60, 150];
-      rangeZ = [-80, -40];
-      numOfParticles = 500;
-      numOfLines = 0;
-      stripsRangeX = [-50, 50];
-      stripsRangeY = [-80, 80];
-      stripsRangeZ = [-100, -50];
+      /////////// 2
+      rangeX = [-75, 75];
+      rangeY = [40, 20];
+      rangeZ = [-100, 50];
+      numOfParticles = 150;
+      numOfLines = 10;
+      stripsRangeX = [-75, 75];
+      stripsRangeY = [40, 20];
+      stripsRangeZ = [-100, 50];
 
       theSectionParticles2 = new BackgroundParticles({
         rangeX: rangeX,
@@ -665,12 +702,10 @@ var SCENE = (function () {
         stripsRangeY: stripsRangeY,
         stripsRangeZ: stripsRangeZ,
         count: numOfParticles,
-        particleSize: .5,
-        strips: false,
-        color1: '#ffffff',
-        color2: '#4C4C4C'
+        strips: true,
+        color1: '#00ffff',
+        color2: '#00ffff'
       });
-
       scene.add(theSectionParticles2.el);
       theSectionParticles2.el.position.x = sectionLocations[2].x;
       theSectionParticles2.el.position.y = sectionLocations[2].y;
@@ -687,14 +722,15 @@ var SCENE = (function () {
       sectionLines2.el.position.y = sectionLocations[2].y;
       sectionLines2.el.position.z = sectionLocations[2].z;
       //
-      rangeX = [-75, 75];
-      rangeY = [50, 15];
-      rangeZ = [-100, 50];
-      numOfParticles = 100;
-      numOfLines = 10;
-      stripsRangeX = [-75, 75];
-      stripsRangeY = [50, 15];
-      stripsRangeZ =  [-100, 50];
+      //////////// 3
+      rangeX = [-150, 150];
+      rangeY = [-60, 150];
+      rangeZ = [-80, -40];
+      numOfParticles = 500;
+      numOfLines = 0;
+      stripsRangeX = [-50, 50];
+      stripsRangeY = [-80, 80];
+      stripsRangeZ = [-100, -50];
 
       theSectionParticles3 = new BackgroundParticles({
         rangeX: rangeX,
@@ -704,10 +740,12 @@ var SCENE = (function () {
         stripsRangeY: stripsRangeY,
         stripsRangeZ: stripsRangeZ,
         count: numOfParticles,
-        strips: true,
-        color1: '#00ffff',
-        color2: '#00ffff'
+        particleSize: .5,
+        strips: false,
+        color1: '#ffffff',
+        color2: '#4C4C4C'
       });
+
       scene.add(theSectionParticles3.el);
       theSectionParticles3.el.position.x = sectionLocations[3].x;
       theSectionParticles3.el.position.y = sectionLocations[3].y;
@@ -724,6 +762,7 @@ var SCENE = (function () {
       sectionLines3.el.position.y = sectionLocations[3].y;
       sectionLines3.el.position.z = sectionLocations[3].z;
       //
+      //////////// 4
       rangeX = [-50, 50];
       rangeY = [parameters.sectionHeight, -parameters.sectionHeight];
       rangeZ = [-100, 100];
@@ -762,6 +801,7 @@ var SCENE = (function () {
       sectionLines4.el.position.y = sectionLocations[4].y;
       sectionLines4.el.position.z = sectionLocations[4].z;
       //
+      //////////// 5
       theSectionParticles5 = new BackgroundParticles({
         rangeX: rangeX,
         rangeY: rangeY,
@@ -787,6 +827,7 @@ var SCENE = (function () {
       sectionLines5.el.position.y = sectionLocations[5].y;
       sectionLines5.el.position.z = sectionLocations[5].z;
       //
+      //////////// 6
       theSectionParticles6 = new BackgroundParticles({
         rangeX: rangeX,
         rangeY: rangeY,
@@ -814,12 +855,12 @@ var SCENE = (function () {
     }
 
     // SECTION 3 CAMPFIRE
-    var fireLightX = sectionLocations[2].x;
-    var fireLightY = sectionLocations[2].y - 19;
-    var fireLightZ = sectionLocations[2].z - 10;
-    var fireLight2X = sectionLocations[2].x;
-    var fireLight2Y = sectionLocations[2].y - 19;
-    var fireLight2Z = sectionLocations[2].z - 10;
+    var fireLightX = sectionLocations[3].x;
+    var fireLightY = sectionLocations[3].y - 16;
+    var fireLightZ = sectionLocations[3].z + 10;
+    var fireLight2X = sectionLocations[3].x;
+    var fireLight2Y = sectionLocations[3].y - 16;
+    var fireLight2Z = sectionLocations[3].z + 10;
     var firelightYCounter = 0;
     var firelightXCounter = 0;
     var firelightZCounter = 0;
@@ -841,9 +882,10 @@ var SCENE = (function () {
       fireLightZ += Math.sin(firelightZCounter) * 2;
       fireLight2Y += Math.sin(firelight2YCounter) * .5;
       fireLight2X += Math.sin(firelight2XCounter) * 1.5;
+
       fireLight2Z += Math.sin(firelight2ZCounter) * 2;
-      fireLight.intensity = Math.random() * .25 + .1;
-      fireLight2.intensity = Math.random() * .25 + .1;
+      fireLight.intensity = Math.random() * .45 + .15;
+      fireLight2.intensity = Math.random() * .45 + .15;
       fireLight.position.set(fireLightX - 5, fireLightY, fireLightZ);
       fireLight2.position.set(fireLight2X - 5, fireLight2Y, fireLight2Z);
     }
@@ -896,6 +938,7 @@ var SCENE = (function () {
       height = $viewport.height();
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
+      sections[2].handleResize();
       renderer.setSize(width * resolution, height * resolution);
     }
 
@@ -976,7 +1019,7 @@ var SCENE = (function () {
         }
         setupBackground();
       },
-      setUpNextScene: function (to) {
+      setUpNextScene: function (to,from) {
 
         console.log('setUpNextScene to: ' + to);
 
@@ -988,12 +1031,18 @@ var SCENE = (function () {
             cameraShake = true;
             break;
           case 'third':
-            prepCampfireScene();
             cameraShake = false;
+            if (from !== 'fourth') {
+              prepStoryScerne();
+              prepCampfireScene();
+            }
             break;
           case 'fourth':
             cameraShake = false;
-            prepStoryScerne();
+            if (from !== 'third') {
+              prepStoryScerne();
+              prepCampfireScene();
+            }
             break;
           case 'fifth':
             cameraShake = true;
@@ -1008,7 +1057,7 @@ var SCENE = (function () {
             break;
         }
       },
-      cleanUpLastScene: function (from) {
+      cleanUpLastScene: function (from,to) {
 
         console.log('cleanUpLastScene from: ' + from);
         switch (from) {
@@ -1017,10 +1066,16 @@ var SCENE = (function () {
           case 'second':
             break;
           case 'third':
+          if (to !== 'fourth') {
             cleanUpCampfireScene();
+            cleanStoryScerne();
+          }
             break;
           case 'fourth':
+          if (to !== 'third') {
+            cleanUpCampfireScene();
             cleanStoryScerne();
+          }
             break;
           case 'fifth':
             break;
@@ -1042,7 +1097,7 @@ var SCENE = (function () {
         animateCamera(index);
       },
       getMap: function () {
-        var map = new MapObj();
+         map = new MapObj();
         for (var i = 0, j = sections.length; i < j; i++) {
           map.addNode(i);
         }
@@ -1104,7 +1159,6 @@ var SCENE = (function () {
             }]
           },
           fov: 60,
-
           ease: 'easeOutCubic',
           onUpdate: function () {
             camera.fov = this.target.fov;

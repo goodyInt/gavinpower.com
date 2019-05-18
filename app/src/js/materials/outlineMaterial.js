@@ -4,7 +4,7 @@ var outlineShader = new THREE.ShaderMaterial({
   uniforms: {
    
     fogDensity: {
-      value: 0.1
+      value: 0.5
     },
     fogColor: {
       value: 0x000000

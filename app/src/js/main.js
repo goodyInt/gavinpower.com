@@ -24,7 +24,7 @@ imagesLoader.onProgress(function (percent) {
 });
 
 imagesLoader.onComplete(function () {
- loader.out();
+  loader.out();
   tweenMax.delayedCall(0.8, SCENE.in);
   tweenMax.delayedCall(1.5, function () {
     introSection.show();
@@ -74,14 +74,13 @@ SCENE.addSections([
 ]);
 
 SCENE.on('section:changeBegin', function () {
-
   var way = this.way;
   var to = this.to.name;
   var from = this.from.name;
   console.log('');
   console.log('changeBegin to: ' + to);
   console.log('changeBegin from: ' + from);
-  SCENE.setUpNextScene(to);
+  SCENE.setUpNextScene(to,from);
   switch (to) {
     case 'intro':
       if (from !== 'intro') {
@@ -92,23 +91,29 @@ SCENE.on('section:changeBegin', function () {
     case 'second':
       secondSection.in();
       secondSection.start();
-    
+
       break;
-    case 'third':  
+    case 'third':
+    if (from !== 'fourth') {
       thirdSection.in();
       thirdSection.start();
       //
-      
-      break;
-    case 'fourth':
       fourthSection.in();
       fourthSection.start();
-    
+    }
+      break;
+    case 'fourth':
+    if (from !== 'third') {
+      thirdSection.in();
+      thirdSection.start();
+      fourthSection.in();
+      fourthSection.start();
+    }
       break;
     case 'fifth':
       fifthSection.in();
       fifthSection.start();
-  
+
       break;
     case 'sixth':
       sixthSection.in();
@@ -118,7 +123,7 @@ SCENE.on('section:changeBegin', function () {
     case 'seventh':
       seventhSection.in();
       seventhSection.start();
-    
+
       break;
     default:
       break;
@@ -133,11 +138,16 @@ SCENE.on('section:changeBegin', function () {
       secondSection.out(way);
       break;
     case 'third':
+     if (to !== 'fourth') {
       thirdSection.out(way);
-    
+      fourthSection.out(way);
+     }
       break;
     case 'fourth':
+     if (to !== 'third') {
+      thirdSection.out(way);
       fourthSection.out(way);
+     }
       break;
     case 'fifth':
       fifthSection.out(way);
@@ -160,37 +170,40 @@ SCENE.on('section:changeComplete', function () {
   console.log('');
   console.log('changeComplete to: ' + to);
   console.log('changeComplete from: ' + from);
-  SCENE.cleanUpLastScene(from);
-  
-  
+  SCENE.cleanUpLastScene(from,to);
+
   switch (from) {
     case 'intro':
-    console.log('calling intro.stop() changeComplete');
+      console.log('calling intro.stop() changeComplete');
       introSection.stop();
       break;
     case 'second':
       secondSection.stop();
-  
+
       break;
     case 'third':
-      thirdSection.stop();
-  
+      if (to !== 'fourth') {
+        fourthSection.stop();
+        thirdSection.stop();
+      }
       break;
     case 'fourth':
-      fourthSection.stop();
-   
+      if (to !== 'third') {
+        fourthSection.stop();
+        thirdSection.stop();
+      }
       break;
     case 'fifth':
       fifthSection.stop();
-     
+
       break;
     case 'sixth':
       sixthSection.stop();
-     
+
       break;
     case 'seventh':
       seventhSection.stop();
-    
+
       break;
     default:
       break;
