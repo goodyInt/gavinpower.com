@@ -74,7 +74,7 @@ sixthSection.updateColors = function (color1, color2) {
   sixthSmoke.updateColors(color1, color2);
 };
 
-sixthSection.setPositions = function () {
+sixthSection.setUp = function (scene,camera) {
   var thisPos= {x: sixthSection.el.position.x, y: sixthSection.el.position.y,z: sixthSection.el.position.z}
   //console.log('');
   //console.log('sixthSection.setPositions()');

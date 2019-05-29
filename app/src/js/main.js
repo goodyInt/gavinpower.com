@@ -4,7 +4,7 @@ var Menu = require('./objects/MenuObject');
 var tweenMax = require('tweenMax');
 var SCENE = require('./modules/sceneModule');
 var jQuery = require('jquery');
-var introSection = require('./sections/introSection');
+var zeroSection = require('./sections/zeroSection');
 var secondSection = require('./sections/secondSection');
 var thirdSection = require('./sections/thirdSection');
 var fourthSection = require('./sections/fourthSection');
@@ -27,8 +27,8 @@ imagesLoader.onComplete(function () {
   loader.out();
   tweenMax.delayedCall(0.8, SCENE.in);
   tweenMax.delayedCall(1.5, function () {
-    introSection.show();
-    introSection.startUpFirstTime(function () {
+    zeroSection.show();
+    zeroSection.startUpFirstTime(function () {
       map.$el.show();
       map.in();
       menu.in();
@@ -63,7 +63,7 @@ SCENE.config({
 });
 SCENE.setViewport($viewport);
 SCENE.addSections([
-  introSection,
+  zeroSection,
   secondSection,
   thirdSection,
   fourthSection,
@@ -81,10 +81,10 @@ SCENE.on('section:changeBegin', function () {
   console.log('changeBegin from: ' + from);
   SCENE.setUpNextScene(to,from);
   switch (to) {
-    case 'intro':
-      if (from !== 'intro') {
-        introSection.in();
-        introSection.start();
+    case 'zero':
+      if (from !== 'zero') {
+        zeroSection.in();
+        zeroSection.start();
       }
       break;
     case 'second':
@@ -128,9 +128,9 @@ SCENE.on('section:changeBegin', function () {
       break;
   }
   switch (from) {
-    case 'intro':
-      if (to !== 'intro') {
-        introSection.out(way);
+    case 'zero':
+      if (to !== 'zero') {
+        zeroSection.out(way);
       }
       break;
     case 'second':
@@ -172,9 +172,9 @@ SCENE.on('section:changeComplete', function () {
   SCENE.cleanUpLastScene(from,to);
 
   switch (from) {
-    case 'intro':
-      console.log('calling intro.stop() changeComplete');
-      introSection.stop();
+    case 'zero':
+      console.log('calling zero.stop() changeComplete');
+      zeroSection.stop();
       break;
     case 'second':
       secondSection.stop();

@@ -123,7 +123,7 @@ secondSection.theNextBtnIsOut = function () {
 
 /////
 
-secondSection.setPositions = function () {
+secondSection.setUp = function (scene,camera) {
   creativeWriting.el.position.x = 0;
   creativeWriting.el.position.y = 10;
   creativeWriting.el.position.z = -20;

@@ -58,9 +58,9 @@ fourthCampFire.el.visible = false;
 var ourCampScene = new CampScene();
 fourthSection.add(ourCampScene.el);
 
-var nectBtnTextString = '<<< I like code. I like details. I love...';
+var nextBtnTextString = '<<< I like code. I like details. I love...';
 var nextBtn = new TextPanel(
-  nectBtnTextString, {
+  nextBtnTextString, {
     align: 'center',
     style: '',
     size: 85,
@@ -169,7 +169,7 @@ fourthSection.theNextBtnIsOut = function () {
   fourthSection.nextBtnIsOver = false;
 };
 
-fourthSection.setPositions = function () {
+fourthSection.setUp = function (scene,camera) {
   ourCampScene.el.position.x = 0;
   ourCampScene.el.position.y = 10;
   ourCampScene.el.position.z = 0;

@@ -4,7 +4,7 @@ var Section = require('../classes/SectionClass');
 
 var HeightMap = require('../objects/HeightMapObject');
 
-var introSection = new Section('intro');
+var zeroSection = new Section('zero');
 
 var agencyURL = './img/heightMap/heightMap-helloFriend.jpg';
 
@@ -94,7 +94,7 @@ heightMap.el.position.z = -20;
 heightMap.el.rotation.y = 0.25;
 heightMap.el.rotation.x = 0.1;
 heightMap.el.visible = false;
-introSection.add(heightMap.el);
+zeroSection.add(heightMap.el);
 
 var nextBtn = new TextPanel(
   'with a degree in... >>>', {
@@ -106,105 +106,105 @@ var nextBtn = new TextPanel(
 );
 nextBtn.el.position.set(20, 0, 0);
 nextBtn.el.rotation.y = .35;
-introSection.add(nextBtn.el);
+zeroSection.add(nextBtn.el);
 
-introSection.onIn(function () {
-  //console.log('introSection.onIn()');
+zeroSection.onIn(function () {
+  //console.log('zeroSection.onIn()');
   // text.in();
 });
 
-introSection.onOut(function (way) {
-  //console.log('introSection.onOut()');
+zeroSection.onOut(function (way) {
+  //console.log('zeroSection.onOut()');
   // text.out(way);
 });
 
-introSection.onStart(function () {
-  //console.log('introSection.onStart');
+zeroSection.onStart(function () {
+  //console.log('zeroSection.onStart');
   if (!heightMap.ready) {
     return false;
   }
   heightMap.start();
 });
 
-introSection.onStop(function () {
-  //console.log('introSection.onStop() heightMap.ready: ' + heightMap.ready);
+zeroSection.onStop(function () {
+  //console.log('zeroSection.onStop() heightMap.ready: ' + heightMap.ready);
   if (!heightMap.ready) {
     return false;
   }
   heightMap.stop();
   nextBtn.overOut();
-  introSection.nextBtnIsOver = false;
-  introSection.nextBtnIsDown = false;
+  zeroSection.nextBtnIsOver = false;
+  zeroSection.nextBtnIsDown = false;
 });
 
-introSection.show = function () {
-  //console.log('introSection.show()');
+zeroSection.show = function () {
+  //console.log('zeroSection.show()');
   heightMap.el.visible = true;
 };
 
-introSection.textIn = function () {
-  //console.log('introSection.textIn');
+zeroSection.textIn = function () {
+  //console.log('zeroSection.textIn');
   nextBtn.in();
-  introSection.nextBtnIsIn = true;
+  zeroSection.nextBtnIsIn = true;
 };
 
-heightMap.setOnCompleteFunction(introSection.textIn);
+heightMap.setOnCompleteFunction(zeroSection.textIn);
 
-introSection.startUpFirstTime = function (mainFunction) {
-  //console.log('introSection.startUpFirstTime()');
+zeroSection.startUpFirstTime = function (mainFunction) {
+  //console.log('zeroSection.startUpFirstTime()');
   heightMap.startItUp(mainFunction);
   this.playing = true;
 };
 
-introSection.hide = function () {
-  //console.log('introSection.hide()');
+zeroSection.hide = function () {
+  //console.log('zeroSection.hide()');
   heightMap.el.visible = false;
 };
 
 ////
-introSection.nextBtnIsIn = false;
-introSection.nextBtnIsOver = false;
-introSection.nextBtnIsDown = false;
+zeroSection.nextBtnIsIn = false;
+zeroSection.nextBtnIsOver = false;
+zeroSection.nextBtnIsDown = false;
 
-introSection.getTheNextBtn = function () {
+zeroSection.getTheNextBtn = function () {
   return nextBtn;
 };
-introSection.theNextBtnIsOver = function () {
-  //console.log('introSection.theNextBtnIsOver');
+zeroSection.theNextBtnIsOver = function () {
+  //console.log('zeroSection.theNextBtnIsOver');
   nextBtn.over();
-  introSection.nextBtnIsOver = true;
+  zeroSection.nextBtnIsOver = true;
 
 };
-introSection.theNextBtnIsDown = function () {
-  //console.log('introSection.theNextBtnIsDown');
+zeroSection.theNextBtnIsDown = function () {
+  //console.log('zeroSection.theNextBtnIsDown');
   nextBtn.down('#ff0000');
-  introSection.nextBtnIsDown = true;
+  zeroSection.nextBtnIsDown = true;
 };
-introSection.theNextBtnIsUp = function () {
-  //console.log('introSection.theNextBtnIsUp');
+zeroSection.theNextBtnIsUp = function () {
+  //console.log('zeroSection.theNextBtnIsUp');
   nextBtn.overOut();
-  introSection.nextBtnIsDown = false;
+  zeroSection.nextBtnIsDown = false;
 };
 
-introSection.theNextBtnIsOut = function () {
-  //console.log('introSection.theNextBtnIsOut');
+zeroSection.theNextBtnIsOut = function () {
+  //console.log('zeroSection.theNextBtnIsOut');
   nextBtn.overOut();
-  introSection.nextBtnIsOver = false;
+  zeroSection.nextBtnIsOver = false;
 };
 
 /////
 
-introSection.setPositions = function () {
+zeroSection.setUp = function (scene,camera) {
   var thisPos = {
-    x: introSection.el.position.x,
-    y: introSection.el.position.y,
-    z: introSection.el.position.z
+    x: zeroSection.el.position.x,
+    y: zeroSection.el.position.y,
+    z: zeroSection.el.position.z
   }
   //console.log('');
-  //console.log('introSection.setPositions()');
+  //console.log('zeroSection.setPositions()');
   //console.log('x: ' + thisPos.x);
   //console.log('y: ' + thisPos.y);
   //console.log('z: ' + thisPos.z);
 };
 
-module.exports = introSection;
+module.exports = zeroSection;

@@ -41,9 +41,6 @@ var SCENE = (function () {
     var resolution;
     var renderer;
     var scene;
-    var theEffectComposer;
-
-
 
     //lights
     var light;
@@ -176,6 +173,7 @@ var SCENE = (function () {
     var events = new Events();
 
     function navigation() {
+
       function next() {
         jQuery('html,body').css('cursor', 'default');
         if (currentIndex === totalSections) {
@@ -198,7 +196,6 @@ var SCENE = (function () {
       }
 
       // scroll
-
       function onScrollCamera(e) {
         e.preventDefault();
         var zSpeed = e.originalEvent.wheelDelta * .01;
@@ -207,7 +204,6 @@ var SCENE = (function () {
 
       function onScroll(event) {
         event.preventDefault();
-
         var dist = camera.position.z - sections[currentIndex].el.position.z;
         var zSpeed = event.originalEvent.wheelDelta * .01;
         if (currentIndex == 2) {
@@ -216,16 +212,13 @@ var SCENE = (function () {
             currentIndex = 3;
             map.setActive(currentIndex);
           }
-
         }
         if (currentIndex == 3) {
-          
           if(dist>140){
             previousIndex = 2;
             currentIndex = 2;
             map.setActive(currentIndex);
           }
-
         }
         if (zSpeed > 0) {
           if (dist > 0 - sectionZoomOffset[currentIndex].forward) {
@@ -272,8 +265,6 @@ var SCENE = (function () {
         storyLight2.position.z += zSpeed;
         storyLightSpotlightTarget.position.z += zSpeed;
         storyLightSpotlightTarget2.position.z += zSpeed;
-
-
       }
 
       function onKeyDown(event) {
@@ -319,16 +310,20 @@ var SCENE = (function () {
             break;
           case 2:
             console.log('onDocumentMouseDown section 2');
-            var sectionNextBtn = raycaster.intersectObject(sections[2].getTheNextBtn().el, true);
-            if (sectionNextBtn.length > 0) {
-              sections[2].theNextBtnIsDown();
-            }
             break;
           case 3:
               console.log('onDocumentMouseDown section 3');
+              var sectionNextBtn = raycaster.intersectObject(sections[3].getTheNextBtn().el, true);
+              if (sectionNextBtn.length > 0) {
+                sections[3].theNextBtnIsDown();
+              }
             break;
           case 4:
               console.log('onDocumentMouseDown section 4');
+              var sectionNextBtn = raycaster.intersectObject(sections[4].getTheNextBtn().el, true);
+              if (sectionNextBtn.length > 0) {
+                sections[4].theNextBtnIsDown();
+              }
             break;
           case 5:
               console.log('onDocumentMouseDown section 5');
@@ -373,6 +368,10 @@ var SCENE = (function () {
             break;
           case 4:
               console.log('onDocumentMouseUp section 4');
+              var sectionNextBtn = raycaster.intersectObject(sections[4].getTheNextBtn().el, true);
+              if (sectionNextBtn.length > 0) {
+                next();
+              }
             break;
           case 5:
               console.log('onDocumentMouseUp section 5');
@@ -412,6 +411,9 @@ var SCENE = (function () {
       scene = new THREE.Scene();
       scene.fog = new THREE.FogExp2(parameters.fogColor, 0.01);
 
+
+      // SET ALL THE LIGHTS UP FOR THE LIGHT
+
       ambientLight = new THREE.AmbientLight(0x404040); // 
       scene.add(ambientLight);
 
@@ -432,7 +434,6 @@ var SCENE = (function () {
       storyMoonLight.castShadow = true;
 
       var fireIntensity = .025;
-
       fireLight = new THREE.PointLight(0xff0000, fireIntensity, 100);
       // fireLight.position.set(sectionLocations[3].x, sectionLocations[3].y - 12, sectionLocations[3].z - 12);
 
@@ -469,12 +470,10 @@ var SCENE = (function () {
       storyLightSpotlightTarget2.position.y = sectionLocations[2].y;
       storyLightSpotlightTarget2.position.z = sectionLocations[2].z - 120;
       storyLight2.target = storyLightSpotlightTarget2;
-
       // var storyLight2Helper = new THREE.SpotLightHelper( storyLight2 );
       // scene.add(storyLight2Helper);
 
       scene.add(moonLight);
-
       // - dumb hack.  these, for some reason, need to be added later so that story scene renders in the correct order
       /// scene.add(fireLight); //leave these off or the one shader in story telling does not work properl;y!!! ahhhh!
       // scene.add(fireLight2)
@@ -571,6 +570,29 @@ var SCENE = (function () {
             }
             break;
           case 4:
+              if (sections[4].nextBtnIsIn) {
+                var sectionNextBtn = raycaster.intersectObject(sections[4].getTheNextBtn().el, true);
+                if (sectionNextBtn.length > 0) {
+                  jQuery('html,body').css('cursor', 'pointer');
+                  if (!sections[4].nextBtnIsDown) {
+                    if (!mouseDown) {
+                      sections[4].theNextBtnIsOver();
+                    } else {
+                      sections[4].theNextBtnIsDown();
+                    }
+                  }
+                } else {
+                  jQuery('html,body').css('cursor', 'default');
+                  if (sections[4].nextBtnIsOver) {
+                    if (!sections[4].nextBtnIsDown) {
+                      sections[4].theNextBtnIsOut();
+                    }
+                  }
+                  if (sections[4].nextBtnIsDown) {
+                    sections[4].theNextBtnIsUp();
+                  }
+                }
+              }
             break;
           case 5:
             break;
@@ -766,8 +788,8 @@ var SCENE = (function () {
       rangeX = [-50, 50];
       rangeY = [parameters.sectionHeight, -parameters.sectionHeight];
       rangeZ = [-100, 100];
-      numOfParticles = 4;
-      numOfLines = 1;
+      numOfParticles = 0;
+      numOfLines = 0;
       stripsRangeX = [-50, 50];
       stripsRangeY = [-80, 80];
       stripsRangeZ = [-80, -45];
@@ -780,7 +802,7 @@ var SCENE = (function () {
         stripsRangeY: stripsRangeY,
         stripsRangeZ: stripsRangeZ,
         count: numOfParticles,
-        strips: true,
+        strips: false,
         color1: '#a800e9',
         color2: '#f400c6'
       });
@@ -1005,6 +1027,7 @@ var SCENE = (function () {
       },
 
       addSections: function (_sections) {
+       
         sections = _sections;
         totalSections = sections.length - 1;
 
@@ -1014,7 +1037,11 @@ var SCENE = (function () {
           section.el.position.x = sectionLocations[i].x;
           section.el.position.y = sectionLocations[i].y;
           section.el.position.z = sectionLocations[i].z;
-          section.setPositions();
+          console.log('this.scene1');
+          console.log(scene);
+          console.log(camera);
+          section.setUp(scene,camera);
+       
           scene.add(section.el);
         }
         setupBackground();
@@ -1024,7 +1051,7 @@ var SCENE = (function () {
         console.log('setUpNextScene to: ' + to);
 
         switch (to) {
-          case 'intro':
+          case 'zero':
             cameraShake = true;
             break;
           case 'second':
@@ -1045,7 +1072,7 @@ var SCENE = (function () {
             }
             break;
           case 'fifth':
-            cameraShake = true;
+            cameraShake = false;
             break;
           case 'sixth':
             cameraShake = true;
@@ -1061,7 +1088,7 @@ var SCENE = (function () {
 
         console.log('cleanUpLastScene from: ' + from);
         switch (from) {
-          case 'intro':
+          case 'zero':
             break;
           case 'second':
             break;

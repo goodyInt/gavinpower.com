@@ -86,7 +86,7 @@ thirdSection.theNextBtnIsOut = function () {
   thirdSection.nextBtnIsOver = false;
 };
 
-thirdSection.setPositions = function () {
+thirdSection.setUp = function (scene,camera) {
   ourStoryScene.el.position.x = 0;
   ourStoryScene.el.position.y = 10;
   ourStoryScene.el.position.z = -10;

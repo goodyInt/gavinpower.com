@@ -28,7 +28,7 @@ function HeightMap(options) {
   this.totalVerts = this.geometry.vertices.length;
   this.lastVert = this.totalVerts - 1;
   this.theIdleTween;
-  this.introAnimationInterval;
+  this.zeroAnimationInterval;
   this.whenCompleteFunction;
   this.completeAnimationFunction;
 
@@ -382,7 +382,7 @@ HeightMap.prototype.applyMap = function () {
 
     var lastZ = _this.geometry.vertices[_this.lastVert].z * 100;
     if (lastZ > -1 && lastZ < 1) {
-      clearInterval(_this.introAnimationInterval);
+      clearInterval(_this.zeroAnimationInterval);
       for (var i = 0, j = _this.totalVerts; i < j; i++) {
         var vertex = _this.geometry.vertices[i];
         vertex.x = _this.originalVerticesSquare[i].x
@@ -495,11 +495,11 @@ HeightMap.prototype.startItUp = function (whenCompleteFunction) {
   this.loops = 0;
   this.tweenSpeed = .01;
 
-  var startIntro = function () {
-    //console.log('startIntro.startItUp');
-    _this.introAnimationInterval = setInterval(_this.applyMap.updateFirstInt, 25);
+  var startZero = function () {
+    //console.log('startZero.startItUp');
+    _this.zeroAnimationInterval = setInterval(_this.applyMap.updateFirstInt, 25);
   }
-  setTimeout(startIntro, 1000)
+  setTimeout(startZero, 1000)
 }
 
 HeightMap.prototype.setOnCompleteFunction = function (theCompleteAnimationFunction) {

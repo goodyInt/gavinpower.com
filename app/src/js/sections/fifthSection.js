@@ -2,77 +2,86 @@
 
 var Section = require('../classes/SectionClass');
 
-var animatedSprite = require('../objects/AnimatedSpriteObject');
-var Smoke = require('../objects/SmokeObject');
+var CityScene = require('../objects/CitySceneObject');
+
+var TextPanel = require('../objects/TextPanelObject');
 
 var fifthSection = new Section('fifth');
 
-var fifthAnimatedText = new animatedSprite();
+var ourCityScene;
+var _this = this;
 
-var fifthSmoke = new Smoke({  
- 
-  frontColor: '#b904ff',
-  backColor: '#b904ff',
-  
-  layers: 3,
-  data: [
-    { positionX : 40.7, positionY: 5.9, positionZ: 1.8, rotationZ: 4.7, scale: 6.9 },
-    { positionX : -3.8, positionY: 12.6, positionZ: -12, rotationZ: 1.7, scale: 1.7 },
-    { positionX : 3, positionY: 5.5, positionZ: 7.3, rotationZ: -2, scale: 3.7 } 
-  ]
-});
+fifthSection.nextBtnIsIn = false;
+fifthSection.nextBtnIsOver = false;
+fifthSection.nextBtnIsDown = false;
 
-fifthSection.add(fifthSmoke.el);
-fifthSection.add(fifthAnimatedText.el);
-fifthAnimatedText.out();
+var nextBtnTextString = '<<< I like code. I like details. I love...';
+var nextBtn = new TextPanel(
+  nextBtnTextString, {
+    align: 'center',
+    style: '',
+    size: 85,
+    lineSpacing: 40,
+    color: '#999999'
+  }
+);
+this.bringInTheBtn = function () {
+  clearInterval(_this.bringInTheNextBtnInterval);
+  nextBtn.in();
+  fifthSection.nextBtnIsIn = true;
+}
+fifthSection.getTheNextBtn = function () {
+  return nextBtn;
+};
+fifthSection.theNextBtnIsOver = function () {
+  console.log('fifthSection.theNextBtnIsOver');
+  nextBtn.over();
+  fifthSection.nextBtnIsOver = true;
 
-fifthSmoke.el.visible = false;
+};
+fifthSection.theNextBtnIsDown = function () {
+  console.log('fifthSection.theNextBtnIsDown');
+  nextBtn.down('#0000ff');
+  fifthSection.nextBtnIsDown = true;
+};
+fifthSection.theNextBtnIsUp = function () {
+  console.log('fifthSection.theNextBtnIsUp');
+  nextBtn.overOut();
+  fifthSection.nextBtnIsDown = false;
+};
+
+fifthSection.theNextBtnIsOut = function () {
+  console.log('fifthSection.theNextBtnIsOut');
+  nextBtn.overOut();
+  fifthSection.nextBtnIsOver = false;
+};
+
+fifthSection.add(nextBtn.el);
+
+
 
 fifthSection.onIn(function () {
-  fifthAnimatedText.in();
-  fifthSection.smokeStart();
 });
 
 fifthSection.onOut(function () {
-  fifthAnimatedText.out();
+  ourCityScene.start();
 });
 
 fifthSection.onStart(function () {
-  fifthAnimatedText.start();
+  _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 4500);
 });
 
 fifthSection.onStop(function () {
-  fifthAnimatedText.stop();
-  fifthSection.smokeStop();
+  ourCityScene.stop();
+  clearInterval(_this.bringInTheNextBtnInterval);
 });
 
-var fifthSmokePlaying = false;
-
-fifthSection.smokeStart = function () {
-  
-  if (fifthSmokePlaying) {
-    return false;
-  }
-  fifthSmokePlaying = true;
-  fifthSmoke.start();
-  fifthSmoke.el.visible = true;
-};
-
-fifthSection.smokeStop = function () {
-  if (!fifthSmokePlaying) {
-    return false;
-  }
-  fifthSmokePlaying = false;
-  fifthSmoke.stop();
-  fifthSmoke.el.visible = false;
-};
-
-fifthSection.updateColors = function (color1, color2) {
-  fifthSmoke.updateColors(color1, color2);
-};
-
-fifthSection.setPositions = function () {
-  var thisPos= {x: fifthSection.el.position.x, y: fifthSection.el.position.y,z: fifthSection.el.position.z}
+fifthSection.setUp = function (scene,camera) {
+  ourCityScene = new CityScene(scene,camera);
+  fifthSection.add(ourCityScene.el);
+  ourCityScene.el.position.x = 0;
+  ourCityScene.el.position.y = 0;
+  ourCityScene.el.position.z = 0;
 };
 
 module.exports = fifthSection;
