@@ -3,10 +3,10 @@
 var Section = require('../classes/SectionClass');
 var StoryScene = require('../objects/StoryTellingObject');
 var TextPanel = require('../objects/TextPanelObject');
-var thirdSection = new Section('third');
+var twoSection = new Section('two');
 
 var ourStoryScene = new StoryScene();
-thirdSection.add(ourStoryScene.el);
+twoSection.add(ourStoryScene.el);
 
 var nectBtnTextString = "<<< let's tell one together";
 var nextBtn = new TextPanel(
@@ -23,70 +23,70 @@ var _this = this;
 this.bringInTheBtn = function () {
   clearInterval(_this.bringInTheNextBtnInterval);
   nextBtn.in();
-  thirdSection.nextBtnIsIn = true;
+  twoSection.nextBtnIsIn = true;
 }
 
-thirdSection.add(nextBtn.el);
+twoSection.add(nextBtn.el);
 
-thirdSection.onIn(function () {
+twoSection.onIn(function () {
 });
 
-thirdSection.onOut(function () {
-//  console.log('thirdSection.onOut');
+twoSection.onOut(function () {
+//  console.log('twoSection.onOut');
   ourStoryScene.onOut();
 });
 
-thirdSection.onStart(function () {
- // console.log('thirdSection.onStart');
+twoSection.onStart(function () {
+ // console.log('twoSection.onStart');
   ourStoryScene.start();
  // _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 4500);
 });
 
-thirdSection.onStop(function () {
- // console.log('thirdSection.onStop');
+twoSection.onStop(function () {
+ // console.log('twoSection.onStop');
   ourStoryScene.stop();
   clearInterval(_this.bringInTheNextBtnInterval);
   nextBtn.overOut();
   nextBtn.out('up');
 });
 
-thirdSection.handleResize = function (){
+twoSection.handleResize = function (){
   ourStoryScene.updateShaderHW();
 }
 
 ////
-thirdSection.nextBtnIsIn = false;
-thirdSection.nextBtnIsOver = false;
-thirdSection.nextBtnIsDown = false;
+twoSection.nextBtnIsIn = false;
+twoSection.nextBtnIsOver = false;
+twoSection.nextBtnIsDown = false;
 
-thirdSection.getTheNextBtn = function () {
-  //console.log('thirdSection.getTheNextBtn');
+twoSection.getTheNextBtn = function () {
+  //console.log('twoSection.getTheNextBtn');
   return nextBtn;
 };
-thirdSection.theNextBtnIsOver = function () {
- // console.log('thirdSection.theNextBtnIsOver');
+twoSection.theNextBtnIsOver = function () {
+ // console.log('twoSection.theNextBtnIsOver');
   nextBtn.over();
-  thirdSection.nextBtnIsOver = true;
+  twoSection.nextBtnIsOver = true;
 
 };
-thirdSection.theNextBtnIsDown = function () {
- // console.log('thirdSection.theNextBtnIsDown');
+twoSection.theNextBtnIsDown = function () {
+ // console.log('twoSection.theNextBtnIsDown');
   nextBtn.down('#0000ff');
-  thirdSection.nextBtnIsDown = true;
+  twoSection.nextBtnIsDown = true;
 };
-thirdSection.theNextBtnIsUp = function () {
-  //console.log('thirdSection.theNextBtnIsUp');
+twoSection.theNextBtnIsUp = function () {
+  //console.log('twoSection.theNextBtnIsUp');
   nextBtn.overOut();
-  thirdSection.nextBtnIsDown = false;
+  twoSection.nextBtnIsDown = false;
 };
 
-thirdSection.theNextBtnIsOut = function () {
- // console.log('thirdSection.theNextBtnIsOut');
+twoSection.theNextBtnIsOut = function () {
+ // console.log('twoSection.theNextBtnIsOut');
   nextBtn.overOut();
-  thirdSection.nextBtnIsOver = false;
+  twoSection.nextBtnIsOver = false;
 };
 
-thirdSection.setUp = function (scene,camera) {
+twoSection.setUp = function (scene,camera) {
   ourStoryScene.el.position.x = 0;
   ourStoryScene.el.position.y = 10;
   ourStoryScene.el.position.z = -10;
@@ -99,4 +99,4 @@ thirdSection.setUp = function (scene,camera) {
 
 };
 
-module.exports = thirdSection;
+module.exports = twoSection;

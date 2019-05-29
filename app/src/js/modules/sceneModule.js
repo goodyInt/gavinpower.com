@@ -1057,7 +1057,7 @@ var SCENE = (function () {
           case 'one':
             cameraShake = true;
             break;
-          case 'third':
+          case 'two':
             cameraShake = false;
             if (from !== 'fourth') {
               prepStoryScerne();
@@ -1066,7 +1066,7 @@ var SCENE = (function () {
             break;
           case 'fourth':
             cameraShake = false;
-            if (from !== 'third') {
+            if (from !== 'two') {
               prepStoryScerne();
               prepCampfireScene();
             }
@@ -1092,14 +1092,14 @@ var SCENE = (function () {
             break;
           case 'one':
             break;
-          case 'third':
+          case 'two':
           if (to !== 'fourth') {
             cleanUpCampfireScene();
             cleanStoryScerne();
           }
             break;
           case 'fourth':
-          if (to !== 'third') {
+          if (to !== 'two') {
             cleanUpCampfireScene();
             cleanStoryScerne();
           }

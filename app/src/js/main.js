@@ -6,7 +6,7 @@ var SCENE = require('./modules/sceneModule');
 var jQuery = require('jquery');
 var zeroSection = require('./sections/zeroSection');
 var oneSection = require('./sections/oneSection');
-var thirdSection = require('./sections/thirdSection');
+var twoSection = require('./sections/twoSection');
 var fourthSection = require('./sections/fourthSection');
 var fifthSection = require('./sections/fifthSection');
 var sixthSection = require('./sections/sixthSection');
@@ -65,7 +65,7 @@ SCENE.setViewport($viewport);
 SCENE.addSections([
   zeroSection,
   oneSection,
-  thirdSection,
+  twoSection,
   fourthSection,
   fifthSection,
   sixthSection,
@@ -92,19 +92,19 @@ SCENE.on('section:changeBegin', function () {
       oneSection.start();
 
       break;
-    case 'third':
+    case 'two':
     if (from !== 'fourth') {
-      thirdSection.in();
-      thirdSection.start();
+      twoSection.in();
+      twoSection.start();
       //
       fourthSection.in();
       fourthSection.start();
     }
       break;
     case 'fourth':
-    if (from !== 'third') {
-      thirdSection.in();
-      thirdSection.start();
+    if (from !== 'two') {
+      twoSection.in();
+      twoSection.start();
       fourthSection.in();
       fourthSection.start();
     }
@@ -136,15 +136,15 @@ SCENE.on('section:changeBegin', function () {
     case 'one':
       oneSection.out(way);
       break;
-    case 'third':
+    case 'two':
      if (to !== 'fourth') {
-      thirdSection.out(way);
+      twoSection.out(way);
       fourthSection.out(way);
      }
       break;
     case 'fourth':
-     if (to !== 'third') {
-      thirdSection.out(way);
+     if (to !== 'two') {
+      twoSection.out(way);
       fourthSection.out(way);
      }
       break;
@@ -180,16 +180,16 @@ SCENE.on('section:changeComplete', function () {
       oneSection.stop();
 
       break;
-    case 'third':
+    case 'two':
       if (to !== 'fourth') {
         fourthSection.stop();
-        thirdSection.stop();
+        twoSection.stop();
       }
       break;
     case 'fourth':
-      if (to !== 'third') {
+      if (to !== 'two') {
         fourthSection.stop();
-        thirdSection.stop();
+        twoSection.stop();
       }
       break;
     case 'fifth':
