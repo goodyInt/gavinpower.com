@@ -5,7 +5,7 @@ var tweenMax = require('tweenMax');
 var SCENE = require('./modules/sceneModule');
 var jQuery = require('jquery');
 var zeroSection = require('./sections/zeroSection');
-var secondSection = require('./sections/secondSection');
+var oneSection = require('./sections/oneSection');
 var thirdSection = require('./sections/thirdSection');
 var fourthSection = require('./sections/fourthSection');
 var fifthSection = require('./sections/fifthSection');
@@ -64,7 +64,7 @@ SCENE.config({
 SCENE.setViewport($viewport);
 SCENE.addSections([
   zeroSection,
-  secondSection,
+  oneSection,
   thirdSection,
   fourthSection,
   fifthSection,
@@ -87,9 +87,9 @@ SCENE.on('section:changeBegin', function () {
         zeroSection.start();
       }
       break;
-    case 'second':
-      secondSection.in();
-      secondSection.start();
+    case 'one':
+      oneSection.in();
+      oneSection.start();
 
       break;
     case 'third':
@@ -133,8 +133,8 @@ SCENE.on('section:changeBegin', function () {
         zeroSection.out(way);
       }
       break;
-    case 'second':
-      secondSection.out(way);
+    case 'one':
+      oneSection.out(way);
       break;
     case 'third':
      if (to !== 'fourth') {
@@ -176,8 +176,8 @@ SCENE.on('section:changeComplete', function () {
       console.log('calling zero.stop() changeComplete');
       zeroSection.stop();
       break;
-    case 'second':
-      secondSection.stop();
+    case 'one':
+      oneSection.stop();
 
       break;
     case 'third':

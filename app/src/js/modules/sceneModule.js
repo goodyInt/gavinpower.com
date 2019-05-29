@@ -1054,7 +1054,7 @@ var SCENE = (function () {
           case 'zero':
             cameraShake = true;
             break;
-          case 'second':
+          case 'one':
             cameraShake = true;
             break;
           case 'third':
@@ -1090,7 +1090,7 @@ var SCENE = (function () {
         switch (from) {
           case 'zero':
             break;
-          case 'second':
+          case 'one':
             break;
           case 'third':
           if (to !== 'fourth') {

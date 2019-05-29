@@ -4,14 +4,14 @@ var Section = require('../classes/SectionClass');
 var CreativeWriting = require('../objects/CreativeWritingObject');
 var TextPanel = require('../objects/TextPanelObject');
 
-var secondSection = new Section('second');
+var oneSection = new Section('one');
 
 var creativeWriting = new CreativeWriting();
-secondSection.add(creativeWriting.el);
+oneSection.add(creativeWriting.el);
 
-var secondSectionString = 'Writing.'; //\nAnd I have a passion\n...<<<<\n';
+var oneSectionString = 'Writing.'; //\nAnd I have a passion\n...<<<<\n';
 var writingText = new TextPanel(
-  secondSectionString, {
+  oneSectionString, {
     align: 'center',
    // font: 'Times New Roman, Times, serif',
     style: '',
@@ -32,16 +32,16 @@ var nextBtn = new TextPanel(
   }
 );
 
-var secondSectionStringCounter = 0;
+var oneSectionStringCounter = 0;
 var stringToType = '';
 var _this = this;
 this.typeTheCopy = function () {
-  stringToType += secondSectionString[secondSectionStringCounter];
- // console.log(secondSectionString[secondSectionStringCounter]);
+  stringToType += oneSectionString[oneSectionStringCounter];
+ // console.log(oneSectionString[oneSectionStringCounter]);
   writingText.updateCopy(stringToType);
-  secondSectionStringCounter++;
-  //console.log('secondSectionString.length' + secondSectionString.length);
-  if (secondSectionStringCounter == secondSectionString.length) {
+  oneSectionStringCounter++;
+  //console.log('oneSectionString.length' + oneSectionString.length);
+  if (oneSectionStringCounter == oneSectionString.length) {
     clearInterval(_this.typeTheCopyInterval);
     _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 1000);
   }
@@ -49,7 +49,7 @@ this.typeTheCopy = function () {
 this.bringInTheBtn = function () {
   clearInterval(_this.bringInTheNextBtnInterval);
   nextBtn.in();
-  secondSection.nextBtnIsIn = true;
+  oneSection.nextBtnIsIn = true;
 }
 
 this.startTheTyping = function () {
@@ -57,23 +57,23 @@ this.startTheTyping = function () {
   _this.typeTheCopyInterval = setInterval(_this.typeTheCopy, 350);
 }
 
-secondSection.add(writingText.el);
-secondSection.add(nextBtn.el);
+oneSection.add(writingText.el);
+oneSection.add(nextBtn.el);
 
-secondSection.onIn(function () {
-  console.log('secondSection.onIn');
-  console.log('secondSection.el.position.z: ' + secondSection.el.position.z);
+oneSection.onIn(function () {
+  console.log('oneSection.onIn');
+  console.log('oneSection.el.position.z: ' + oneSection.el.position.z);
   writingText.in();
 });
 
-secondSection.onOut(function () {
-  console.log('secondSection.onOut');
+oneSection.onOut(function () {
+  console.log('oneSection.onOut');
   creativeWriting.onOut();
 });
 
-secondSection.onStart(function () {
-  console.log('secondSection.onStart');
-  secondSectionStringCounter = 0;
+oneSection.onStart(function () {
+  console.log('oneSection.onStart');
+  oneSectionStringCounter = 0;
   stringToType = '';
   writingText.updateCopy('');
   creativeWriting.show();
@@ -81,8 +81,8 @@ secondSection.onStart(function () {
   _this.startTheTypeingInterval = setInterval(_this.startTheTyping, 4000);
 });
 
-secondSection.onStop(function () {
-  console.log('secondSection.onStop');
+oneSection.onStop(function () {
+  console.log('oneSection.onStop');
   creativeWriting.stop();
   creativeWriting.hide();
   nextBtn.overOut();
@@ -90,40 +90,40 @@ secondSection.onStop(function () {
 });
 
 ////
-secondSection.nextBtnIsIn = false;
-secondSection.nextBtnIsOver = false;
-secondSection.nextBtnIsDown = false;
+oneSection.nextBtnIsIn = false;
+oneSection.nextBtnIsOver = false;
+oneSection.nextBtnIsDown = false;
 
-secondSection.getTheNextBtn = function () {
-  //console.log('secondSection.getTheNextBtn');
+oneSection.getTheNextBtn = function () {
+  //console.log('oneSection.getTheNextBtn');
   return nextBtn;
 };
-secondSection.theNextBtnIsOver = function () {
-  //console.log('secondSection.theNextBtnIsOver');
+oneSection.theNextBtnIsOver = function () {
+  //console.log('oneSection.theNextBtnIsOver');
   nextBtn.over();
-  secondSection.nextBtnIsOver = true;
+  oneSection.nextBtnIsOver = true;
 
 };
-secondSection.theNextBtnIsDown = function () {
-  //console.log('secondSection.theNextBtnIsDown');
+oneSection.theNextBtnIsDown = function () {
+  //console.log('oneSection.theNextBtnIsDown');
   nextBtn.down('#00ff00');
-  secondSection.nextBtnIsDown = true;
+  oneSection.nextBtnIsDown = true;
 };
-secondSection.theNextBtnIsUp = function () {
-  //console.log('secondSection.theNextBtnIsUp');
+oneSection.theNextBtnIsUp = function () {
+  //console.log('oneSection.theNextBtnIsUp');
   nextBtn.overOut();
-  secondSection.nextBtnIsDown = false;
+  oneSection.nextBtnIsDown = false;
 };
 
-secondSection.theNextBtnIsOut = function () {
-  //console.log('secondSection.theNextBtnIsOut');
+oneSection.theNextBtnIsOut = function () {
+  //console.log('oneSection.theNextBtnIsOut');
   nextBtn.overOut();
-  secondSection.nextBtnIsOver = false;
+  oneSection.nextBtnIsOver = false;
 };
 
 /////
 
-secondSection.setUp = function (scene,camera) {
+oneSection.setUp = function (scene,camera) {
   creativeWriting.el.position.x = 0;
   creativeWriting.el.position.y = 10;
   creativeWriting.el.position.z = -20;
@@ -140,4 +140,4 @@ secondSection.setUp = function (scene,camera) {
 
 };
 
-module.exports = secondSection;
+module.exports = oneSection;
