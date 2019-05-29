@@ -337,7 +337,7 @@ var SCENE = (function () {
             break;
         }
       }
-
+      document.addEventListener('mouseup', onDocumentMouseUp, false);
 
       function onDocumentMouseUp(event) {
         mouseDown = false;

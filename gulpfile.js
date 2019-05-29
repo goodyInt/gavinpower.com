@@ -25,8 +25,6 @@ gulp.task('bableJs', function() {
     .pipe(gulp.dest('app/dist/js/'))
 });
 
-
-
 // preprocess scss
  gulp.task("preProCss", function () {
    return gulp.src('app/src/sass/hireStyle.scss')
