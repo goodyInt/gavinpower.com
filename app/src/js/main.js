@@ -7,10 +7,10 @@ var jQuery = require('jquery');
 var zeroSection = require('./sections/zeroSection');
 var oneSection = require('./sections/oneSection');
 var twoSection = require('./sections/twoSection');
-var fourthSection = require('./sections/fourthSection');
-var fifthSection = require('./sections/fifthSection');
-var sixthSection = require('./sections/sixthSection');
-var seventhSection = require('./sections/seventhSection');
+var threeSection = require('./sections/threeSection');
+var fourSection = require('./sections/fourSection');
+var fiveSection = require('./sections/fiveSection');
+var sixSection = require('./sections/sixSection');
 var menu = new Menu();
 var loader = new Loader();
 
@@ -66,10 +66,10 @@ SCENE.addSections([
   zeroSection,
   oneSection,
   twoSection,
-  fourthSection,
-  fifthSection,
-  sixthSection,
-  seventhSection
+  threeSection,
+  fourSection,
+  fiveSection,
+  sixSection
 ]);
 
 SCENE.on('section:changeBegin', function () {
@@ -93,35 +93,35 @@ SCENE.on('section:changeBegin', function () {
 
       break;
     case 'two':
-    if (from !== 'fourth') {
+    if (from !== 'three') {
       twoSection.in();
       twoSection.start();
       //
-      fourthSection.in();
-      fourthSection.start();
+      threeSection.in();
+      threeSection.start();
     }
       break;
-    case 'fourth':
+    case 'three':
     if (from !== 'two') {
       twoSection.in();
       twoSection.start();
-      fourthSection.in();
-      fourthSection.start();
+      threeSection.in();
+      threeSection.start();
     }
       break;
-    case 'fifth':
-      fifthSection.in();
-      fifthSection.start();
+    case 'four':
+      fourSection.in();
+      fourSection.start();
 
       break;
-    case 'sixth':
-      sixthSection.in();
-      sixthSection.start();
+    case 'five':
+      fiveSection.in();
+      fiveSection.start();
 
       break;
-    case 'seventh':
-      seventhSection.in();
-      seventhSection.start();
+    case 'six':
+      sixSection.in();
+      sixSection.start();
 
       break;
     default:
@@ -137,25 +137,25 @@ SCENE.on('section:changeBegin', function () {
       oneSection.out(way);
       break;
     case 'two':
-     if (to !== 'fourth') {
+     if (to !== 'three') {
       twoSection.out(way);
-      fourthSection.out(way);
+      threeSection.out(way);
      }
       break;
-    case 'fourth':
+    case 'three':
      if (to !== 'two') {
       twoSection.out(way);
-      fourthSection.out(way);
+      threeSection.out(way);
      }
       break;
-    case 'fifth':
-      fifthSection.out(way);
+    case 'four':
+      fourSection.out(way);
       break;
-    case 'sixth':
-      sixthSection.out(way);
+    case 'five':
+      fiveSection.out(way);
       break;
-    case 'seventh':
-      seventhSection.out(way);
+    case 'six':
+      sixSection.out(way);
       break;
     default:
       break;
@@ -181,27 +181,27 @@ SCENE.on('section:changeComplete', function () {
 
       break;
     case 'two':
-      if (to !== 'fourth') {
-        fourthSection.stop();
+      if (to !== 'three') {
+        threeSection.stop();
         twoSection.stop();
       }
       break;
-    case 'fourth':
+    case 'three':
       if (to !== 'two') {
-        fourthSection.stop();
+        threeSection.stop();
         twoSection.stop();
       }
       break;
-    case 'fifth':
-      fifthSection.stop();
+    case 'four':
+      fourSection.stop();
 
       break;
-    case 'sixth':
-      sixthSection.stop();
+    case 'five':
+      fiveSection.stop();
 
       break;
-    case 'seventh':
-      seventhSection.stop();
+    case 'six':
+      sixSection.stop();
 
       break;
     default:

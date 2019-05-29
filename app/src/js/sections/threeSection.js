@@ -4,10 +4,10 @@ var Section = require('../classes/SectionClass');
 var CampScene = require('../objects/CampSceneObject');
 var TextPanel = require('../objects/TextPanelObject');
 var Fire = require('../objects/FireObject');
-var fourthSection = new Section('fourth');
+var threeSection = new Section('three');
 
 
-var fourthCampFire = new Fire({
+var threeCampFire = new Fire({
   color1: '#ff5000',
   color2: '#ff0000',
   color3: '#ff0000',
@@ -45,18 +45,18 @@ var fourthCampFire = new Fire({
   ]
 });
 
-fourthSection.add(fourthCampFire.el);
+threeSection.add(threeCampFire.el);
 
 var fireX = -1;
 var fireY = -19;
 var fireZ = 13;
-fourthCampFire.el.position.x = fireX;
-fourthCampFire.el.position.y = fireY;
-fourthCampFire.el.position.z = fireZ;
-fourthCampFire.el.visible = false;
+threeCampFire.el.position.x = fireX;
+threeCampFire.el.position.y = fireY;
+threeCampFire.el.position.z = fireZ;
+threeCampFire.el.visible = false;
 
 var ourCampScene = new CampScene();
-fourthSection.add(ourCampScene.el);
+threeSection.add(ourCampScene.el);
 
 var nextBtnTextString = '<<< I like code. I like details. I love...';
 var nextBtn = new TextPanel(
@@ -73,12 +73,12 @@ var _this = this;
 this.bringInTheBtn = function () {
   clearInterval(_this.bringInTheNextBtnInterval);
   nextBtn.in();
-  fourthSection.nextBtnIsIn = true;
+  threeSection.nextBtnIsIn = true;
 }
 
-fourthSection.add(nextBtn.el);
+threeSection.add(nextBtn.el);
 
-fourthSection.onIn(function () {
+threeSection.onIn(function () {
   prepFire();
 });
 
@@ -96,40 +96,40 @@ function animateFire() {
   fireZ += Math.sin(fireZCounter) * .25;
 
  // console.log(fireX,fireY,fireZ);
-  fourthCampFire.el.position.x = fireX;
-  fourthCampFire.el.position.y = fireY;
-  fourthCampFire.el.position.z = fireZ;
+  threeCampFire.el.position.x = fireX;
+  threeCampFire.el.position.y = fireY;
+  threeCampFire.el.position.z = fireZ;
 }
 
 var animateTheFire;
 
 function prepFire() {
   console.log('prepFire');
-  fourthCampFire.start();
-  fourthCampFire.el.visible = true;
+  threeCampFire.start();
+  threeCampFire.el.visible = true;
   animateTheFire = setInterval(animateFire, 100);
 }
 
 function extinguishFire() {
   console.log('extinguishFire');
-  fourthCampFire.stop();
-  fourthCampFire.el.visible = false;
+  threeCampFire.stop();
+  threeCampFire.el.visible = false;
   clearInterval(animateTheFire);
 }
 
-fourthSection.onOut(function () {
-  console.log('fourthSection.onOut');
+threeSection.onOut(function () {
+  console.log('threeSection.onOut');
   ourCampScene.onOut();
 });
 
-fourthSection.onStart(function () {
-  console.log('fourthSection.onStart');
+threeSection.onStart(function () {
+  console.log('threeSection.onStart');
   ourCampScene.start();
   _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 4500);
 });
 
-fourthSection.onStop(function () {
-  console.log('fourthSection.onStop');
+threeSection.onStop(function () {
+  console.log('threeSection.onStop');
   extinguishFire();
   ourCampScene.stop();
   clearInterval(_this.bringInTheNextBtnInterval);
@@ -138,38 +138,38 @@ fourthSection.onStop(function () {
 });
 
 ////
-fourthSection.nextBtnIsIn = false;
-fourthSection.nextBtnIsOver = false;
-fourthSection.nextBtnIsDown = false;
+threeSection.nextBtnIsIn = false;
+threeSection.nextBtnIsOver = false;
+threeSection.nextBtnIsDown = false;
 
-fourthSection.getTheNextBtn = function () {
-  //console.log('fourthSection.getTheNextBtn');
+threeSection.getTheNextBtn = function () {
+  //console.log('threeSection.getTheNextBtn');
   return nextBtn;
 };
-fourthSection.theNextBtnIsOver = function () {
-  console.log('fourthSection.theNextBtnIsOver');
+threeSection.theNextBtnIsOver = function () {
+  console.log('threeSection.theNextBtnIsOver');
   nextBtn.over();
-  fourthSection.nextBtnIsOver = true;
+  threeSection.nextBtnIsOver = true;
 
 };
-fourthSection.theNextBtnIsDown = function () {
-  console.log('fourthSection.theNextBtnIsDown');
+threeSection.theNextBtnIsDown = function () {
+  console.log('threeSection.theNextBtnIsDown');
   nextBtn.down('#0000ff');
-  fourthSection.nextBtnIsDown = true;
+  threeSection.nextBtnIsDown = true;
 };
-fourthSection.theNextBtnIsUp = function () {
-  console.log('fourthSection.theNextBtnIsUp');
+threeSection.theNextBtnIsUp = function () {
+  console.log('threeSection.theNextBtnIsUp');
   nextBtn.overOut();
-  fourthSection.nextBtnIsDown = false;
+  threeSection.nextBtnIsDown = false;
 };
 
-fourthSection.theNextBtnIsOut = function () {
-  console.log('fourthSection.theNextBtnIsOut');
+threeSection.theNextBtnIsOut = function () {
+  console.log('threeSection.theNextBtnIsOut');
   nextBtn.overOut();
-  fourthSection.nextBtnIsOver = false;
+  threeSection.nextBtnIsOver = false;
 };
 
-fourthSection.setUp = function (scene,camera) {
+threeSection.setUp = function (scene,camera) {
   ourCampScene.el.position.x = 0;
   ourCampScene.el.position.y = 10;
   ourCampScene.el.position.z = 0;
@@ -182,4 +182,4 @@ fourthSection.setUp = function (scene,camera) {
 
 };
 
-module.exports = fourthSection;
+module.exports = threeSection;

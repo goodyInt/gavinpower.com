@@ -1059,25 +1059,25 @@ var SCENE = (function () {
             break;
           case 'two':
             cameraShake = false;
-            if (from !== 'fourth') {
+            if (from !== 'three') {
               prepStoryScerne();
               prepCampfireScene();
             }
             break;
-          case 'fourth':
+          case 'three':
             cameraShake = false;
             if (from !== 'two') {
               prepStoryScerne();
               prepCampfireScene();
             }
             break;
-          case 'fifth':
+          case 'four':
             cameraShake = false;
             break;
-          case 'sixth':
+          case 'five':
             cameraShake = true;
             break;
-          case 'seventh':
+          case 'six':
             cameraShake = true;
             break;
           default:
@@ -1093,22 +1093,22 @@ var SCENE = (function () {
           case 'one':
             break;
           case 'two':
-          if (to !== 'fourth') {
+          if (to !== 'three') {
             cleanUpCampfireScene();
             cleanStoryScerne();
           }
             break;
-          case 'fourth':
+          case 'three':
           if (to !== 'two') {
             cleanUpCampfireScene();
             cleanStoryScerne();
           }
             break;
-          case 'fifth':
+          case 'four':
             break;
-          case 'sixth':
+          case 'five':
             break;
-          case 'seventh':
+          case 'six':
             break;
           default:
             break;
