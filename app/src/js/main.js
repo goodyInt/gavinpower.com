@@ -32,8 +32,7 @@ imagesLoader.onComplete(function () {
       map.$el.show();
       map.in();
       menu.in();
-      console.log('all set in main - bring in the map')
-    });
+     });
   });
 });
 

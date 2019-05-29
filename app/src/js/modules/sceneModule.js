@@ -203,7 +203,6 @@ var SCENE = (function () {
         e.preventDefault();
         var zSpeed = e.originalEvent.wheelDelta * .01;
         camera.position.z -= zSpeed;
-        console.log(camera.position.z);
       }
 
       function onScroll(event) {
@@ -212,7 +211,6 @@ var SCENE = (function () {
         var dist = camera.position.z - sections[currentIndex].el.position.z;
         var zSpeed = event.originalEvent.wheelDelta * .01;
         if (currentIndex == 2) {
-          console.log('currentIndex = 2  dist: ' + dist);
           if(dist<-173){
             previousIndex = 3;
             currentIndex = 3;
@@ -221,7 +219,6 @@ var SCENE = (function () {
 
         }
         if (currentIndex == 3) {
-          console.log('currentIndex = 3  dist: ' + dist);
           
           if(dist>140){
             previousIndex = 2;
@@ -328,12 +325,16 @@ var SCENE = (function () {
             }
             break;
           case 3:
+              console.log('onDocumentMouseDown section 3');
             break;
           case 4:
+              console.log('onDocumentMouseDown section 4');
             break;
           case 5:
+              console.log('onDocumentMouseDown section 5');
             break;
           case 6:
+              console.log('onDocumentMouseDown section 6');
             break;
         }
       }
@@ -371,10 +372,13 @@ var SCENE = (function () {
             }
             break;
           case 4:
+              console.log('onDocumentMouseUp section 4');
             break;
           case 5:
+              console.log('onDocumentMouseUp section 5');
             break;
           case 6:
+              console.log('onDocumentMouseUp section 6');
             break;
         }
       }
@@ -434,13 +438,9 @@ var SCENE = (function () {
 
       fireLight2 = new THREE.PointLight(0xffa500, fireIntensity, 100);
       // fireLight2.position.set(sectionLocations[3].x, sectionLocations[3].y - 12, sectionLocations[3].z - 8);
-      console.log('sectionLocations[3].x: ' + sectionLocations[3].x);
-      console.log('sectionLocations[3].y: ' + sectionLocations[3].y);
-      console.log('sectionLocations[3].z: ' + sectionLocations[3].z);
-
+     
       fireLight.position.set(fireLightX - 5, fireLightY, fireLightZ);
       fireLight2.position.set(fireLight2X - 5, fireLight2Y, fireLight2Z);
-
 
       // var fireLightHelper = new THREE.PointLightHelper( fireLight, 1 );
       //scene.add( fireLightHelper );

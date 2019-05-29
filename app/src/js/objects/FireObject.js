@@ -53,7 +53,7 @@ function Fire(options) {
   this.el = new THREE.Object3D();
   this.planeArray = [];
   for (var i = 0; i < parameters.layers; i++) {
-    console.log('fire: ' + i);
+
     var positionX;
     var positionY;
     var positionZ;

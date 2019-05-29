@@ -5,16 +5,8 @@ var OBJLoader = require('three-obj-loader');
 OBJLoader(THREE);
 var MTLLoader = require('three-mtl-loader');
 
-/*
-console.log('typeof THREE.OBJLoader');
-console.log(typeof THREE.OBJLoader);
-console.log('typeof THREE.MTLLoader');
-console.log(typeof MTLLoader);
-*/
-
 function CampScene() {
   this.creativeObject = {};
-  console.log('CampScene 001');
   this.el = new THREE.Object3D();
   this.thisRotation = this.el.rotation;
   this.rotateHorTween;

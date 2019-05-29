@@ -7,7 +7,6 @@ var waterMaterial = require('../materials/waterMaterial');
 
 function StoryTellingScene() {
   this.creativeObject = {};
-  console.log('StoryTellingScene 001');
   this.el = new THREE.Object3D();
   this.thisRotation = this.el.rotation;
   this.rotateHorTween;
@@ -26,11 +25,9 @@ function StoryTellingScene() {
   this.moveTheWater = function () {
     waterShaderMaterial.uniforms.uGlobalTime.value += clock.getDelta() * waterSpeed;
   }
- 
   this.updateShaderHW = function () { 
     waterShaderMaterial.uniforms.uResolution.value = new THREE.Vector2(window.innerWidth, window.innerHeight);
   }
-
   loader.load('fonts/helvetiker_bold.typeface.json', function (font) {
     var signMaterial = new THREE.MeshPhongMaterial({
       color: 0x000000,

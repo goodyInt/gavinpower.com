@@ -115,7 +115,6 @@ function TextPanel(text, options) {
     } else {
       left = canvas.width;
     }
-   // console.log('updateCopy word: ' + word);
     context.fillText(word, left, lineHeight * k);
   }
   texture.needsUpdate = true;

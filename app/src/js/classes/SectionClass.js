@@ -60,7 +60,7 @@ Section.prototype.out = function (way) {
  */
 Section.prototype.start = function () {
   //console.log('');
-  console.log('SectionClass.start() -'+this.name+'.playing: ' + this.playing);
+//  console.log('SectionClass.start() -'+this.name+'.playing: ' + this.playing);
   if (this.playing) {
     return false;
   }
@@ -74,7 +74,7 @@ Section.prototype.start = function () {
  * @method stop
  */
 Section.prototype.stop = function () {
-  console.log('SectionClass.stop() - '+this.name+'.playing: ' + this.playing);
+  //console.log('SectionClass.stop() - '+this.name+'.playing: ' + this.playing);
   ////console.log(this);
   if (!this.playing) {
     return false;

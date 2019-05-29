@@ -5,7 +5,7 @@ var linesMaterial = require('../materials/customLinesMaterial');
 
 function CreativeWriting() {
   this.creativeObject = {};
-  console.log('CreativeWriting.5');
+
   this.el = new THREE.Object3D();
   this.thisRotation = this.el.rotation;
   this.rotateHorTween;
@@ -139,7 +139,7 @@ function CreativeWriting() {
 }
 
 CreativeWriting.prototype.start = function () {
-  console.log('CreativeWriting.prototype.start');
+
 
   tweenMax.to({
     factor: 1
@@ -147,10 +147,7 @@ CreativeWriting.prototype.start = function () {
     delay: 1,
     factor: 0,
     ease: Power1.easeIn,
-    onUpdate: this.animateTextIn,
-    onComplete: function () {
-      console.log('this.animateTextIn onComplete: time to party');
-    }
+    onUpdate: this.animateTextIn
   });
   this.el.rotation.y = this.el.rotation.x = 0 * (Math.PI / 180);
 
@@ -164,18 +161,14 @@ CreativeWriting.prototype.start = function () {
 
 };
 CreativeWriting.prototype.onOut = function () {
-  console.log('CreativeWriting.prototype.onOut');
+
   tweenMax.to({
     factor: 1
   }, 1, {
     delay: 0,
     factor: 0,
     ease: Power1.easeOut,
-    onUpdate: this.animateTextOut,
-    onComplete: function () {
-      console.log('this.animateTextOut onComplete');
-    
-    }
+    onUpdate: this.animateTextOut
   });
 
 

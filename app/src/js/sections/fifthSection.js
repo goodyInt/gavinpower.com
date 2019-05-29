@@ -62,11 +62,8 @@ fifthSection.smokeStop = function () {
   if (!fifthSmokePlaying) {
     return false;
   }
-
   fifthSmokePlaying = false;
-
   fifthSmoke.stop();
-
   fifthSmoke.el.visible = false;
 };
 
@@ -76,11 +73,6 @@ fifthSection.updateColors = function (color1, color2) {
 
 fifthSection.setPositions = function () {
   var thisPos= {x: fifthSection.el.position.x, y: fifthSection.el.position.y,z: fifthSection.el.position.z}
-  //console.log('');
-  //console.log('fifthSection.setPositions()');
-  //console.log('x: ' + thisPos.x);
-  //console.log('y: ' + thisPos.y);
-  //console.log('z: ' + thisPos.z);
 };
 
 module.exports = fifthSection;

@@ -32,18 +32,18 @@ thirdSection.onIn(function () {
 });
 
 thirdSection.onOut(function () {
-  console.log('thirdSection.onOut');
+//  console.log('thirdSection.onOut');
   ourStoryScene.onOut();
 });
 
 thirdSection.onStart(function () {
-  console.log('thirdSection.onStart');
+ // console.log('thirdSection.onStart');
   ourStoryScene.start();
  // _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 4500);
 });
 
 thirdSection.onStop(function () {
-  console.log('thirdSection.onStop');
+ // console.log('thirdSection.onStop');
   ourStoryScene.stop();
   clearInterval(_this.bringInTheNextBtnInterval);
   nextBtn.overOut();
@@ -64,24 +64,24 @@ thirdSection.getTheNextBtn = function () {
   return nextBtn;
 };
 thirdSection.theNextBtnIsOver = function () {
-  console.log('thirdSection.theNextBtnIsOver');
+ // console.log('thirdSection.theNextBtnIsOver');
   nextBtn.over();
   thirdSection.nextBtnIsOver = true;
 
 };
 thirdSection.theNextBtnIsDown = function () {
-  console.log('thirdSection.theNextBtnIsDown');
+ // console.log('thirdSection.theNextBtnIsDown');
   nextBtn.down('#0000ff');
   thirdSection.nextBtnIsDown = true;
 };
 thirdSection.theNextBtnIsUp = function () {
-  console.log('thirdSection.theNextBtnIsUp');
+  //console.log('thirdSection.theNextBtnIsUp');
   nextBtn.overOut();
   thirdSection.nextBtnIsDown = false;
 };
 
 thirdSection.theNextBtnIsOut = function () {
-  console.log('thirdSection.theNextBtnIsOut');
+ // console.log('thirdSection.theNextBtnIsOut');
   nextBtn.overOut();
   thirdSection.nextBtnIsOver = false;
 };
