@@ -1,11 +1,36 @@
 'use strict';
 
 var Section = require('../classes/SectionClass');
+var THREE = require('three');
 var CampScene = require('../objects/CampSceneObject');
 var TextPanel = require('../objects/TextPanelObject');
 var Fire = require('../objects/FireObject');
 var threeSection = new Section('three');
+var BackgroundParticles = require('../objects/backgroundParticlesObject');
+//////////// 3
+ var theSectionParticles3 = new BackgroundParticles({
+      rangeX: [-115, 115],
+       rangeY: [-30, 50],
+       rangeZ: [-90, -30],
+       count: 500,
+       particleSize: .5,
+       strips: false,
+       color1: '#ffffff',
+       color2: '#5D5D5D'
+     });
+ threeSection.add(theSectionParticles3.el);
+  
+var moonLight = new THREE.SpotLight(0x888888, 1.65, 0, Math.PI / 2);
+moonLight.position.set(0, 500, -650);
+moonLight.castShadow = true;
+threeSection.add(moonLight);
 
+//var spotLightHelper = new THREE.SpotLightHelper(moonLight);
+//threeSection.add(spotLightHelper);
+
+var moonShadowCamera = new THREE.PerspectiveCamera(70, 1, 100, 3000)
+moonLight.shadow = new THREE.LightShadow(moonShadowCamera);
+moonLight.shadow.bias = 0.0001;
 
 var threeCampFire = new Fire({
   color1: '#ff5000',
@@ -56,6 +81,9 @@ threeCampFire.el.position.z = fireZ;
 threeCampFire.el.visible = false;
 
 var ourCampScene = new CampScene();
+ourCampScene.el.position.x = 0;
+ourCampScene.el.position.y = 10;
+ourCampScene.el.position.z = 0;
 threeSection.add(ourCampScene.el);
 
 var nextBtnTextString = '<<< I like code. I like details. I love...';
@@ -68,6 +96,11 @@ var nextBtn = new TextPanel(
     color: '#999999'
   }
 );
+nextBtn.el.position.x = 20;
+nextBtn.el.position.y = 20;
+nextBtn.el.position.z = -30;
+nextBtn.el.rotation.y = -40 * (Math.PI / 180);
+nextBtn.el.rotation.z = -20 * (Math.PI / 180);
 
 var _this = this;
 this.bringInTheBtn = function () {
@@ -143,43 +176,24 @@ threeSection.nextBtnIsOver = false;
 threeSection.nextBtnIsDown = false;
 
 threeSection.getTheNextBtn = function () {
-  //console.log('threeSection.getTheNextBtn');
   return nextBtn;
 };
 threeSection.theNextBtnIsOver = function () {
-  console.log('threeSection.theNextBtnIsOver');
   nextBtn.over();
   threeSection.nextBtnIsOver = true;
-
 };
 threeSection.theNextBtnIsDown = function () {
-  console.log('threeSection.theNextBtnIsDown');
-  nextBtn.down('#0000ff');
+  nextBtn.down('#ffffff');
   threeSection.nextBtnIsDown = true;
 };
 threeSection.theNextBtnIsUp = function () {
-  console.log('threeSection.theNextBtnIsUp');
   nextBtn.overOut();
   threeSection.nextBtnIsDown = false;
 };
 
 threeSection.theNextBtnIsOut = function () {
-  console.log('threeSection.theNextBtnIsOut');
   nextBtn.overOut();
   threeSection.nextBtnIsOver = false;
-};
-
-threeSection.setUp = function (scene,camera) {
-  ourCampScene.el.position.x = 0;
-  ourCampScene.el.position.y = 10;
-  ourCampScene.el.position.z = 0;
-
-  nextBtn.el.position.x = 20;
-  nextBtn.el.position.y = 20;
-  nextBtn.el.position.z = -30;
-  nextBtn.el.rotation.y = -40 * (Math.PI / 180);
-  nextBtn.el.rotation.z = -20 * (Math.PI / 180);
-
 };
 
 module.exports = threeSection;

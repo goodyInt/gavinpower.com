@@ -79,7 +79,6 @@ SCENE.on('section:changeBegin', function () {
   console.log('');
   console.log('changeBegin to: ' + to);
   console.log('changeBegin from: ' + from);
-  SCENE.setUpNextScene(to,from);
   switch (to) {
     case 'zero':
       if (from !== 'zero') {
@@ -105,6 +104,7 @@ SCENE.on('section:changeBegin', function () {
     if (from !== 'two') {
       twoSection.in();
       twoSection.start();
+      //
       threeSection.in();
       threeSection.start();
     }
@@ -163,22 +163,17 @@ SCENE.on('section:changeBegin', function () {
 });
 
 SCENE.on('section:changeComplete', function () {
-
-  var to = this.to.name;
+ var to = this.to.name;
   var from = this.from.name;
   console.log('');
   console.log('changeComplete to: ' + to);
   console.log('changeComplete from: ' + from);
-  SCENE.cleanUpLastScene(from,to);
-
   switch (from) {
     case 'zero':
-      console.log('calling zero.stop() changeComplete');
       zeroSection.stop();
       break;
     case 'one':
       oneSection.stop();
-
       break;
     case 'two':
       if (to !== 'three') {
@@ -194,20 +189,16 @@ SCENE.on('section:changeComplete', function () {
       break;
     case 'four':
       fourSection.stop();
-
       break;
     case 'five':
       fiveSection.stop();
-
       break;
     case 'six':
       sixSection.stop();
-
       break;
     default:
       break;
   }
-
 });
 
 // map

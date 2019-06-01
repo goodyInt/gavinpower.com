@@ -71,7 +71,7 @@ function BackgroundParticles(options) {
 }
 BackgroundParticles.defaultOptions = {
   count: 1000,
-  particleSize: 0.25,
+  particleSize: .35,
   rangeX: [-100, 100],
   rangeY: [-100, 100],
   rangeZ: [-100, 100],

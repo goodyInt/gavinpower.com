@@ -15,8 +15,71 @@ function CampScene() {
 
   var loader = new THREE.FontLoader();
   var _this = this;
+  var animateTheFire;
+
+  var fireLight;
+  var fireLight2;
+  var fireLightX = 0;
+  var fireLightY =  - 16;
+  var fireLightZ =  10;
+  var fireLight2X = 0;
+  var fireLight2Y =  - 16;
+  var fireLight2Z = 10;
+  var firelightYCounter = 0;
+  var firelightXCounter = 0;
+  var firelightZCounter = 0;
+  var firelight2YCounter = 0;
+  var firelight2XCounter = 0;
+  var firelight2ZCounter = 0;
+
+  var fireIntensity = .025;
+  fireLight = new THREE.PointLight(0xff0000, fireIntensity, 100);
+  fireLight.position.set(fireLightX - 5, fireLightY, fireLightZ);
+  // var fireLightHelper = new THREE.PointLightHelper( fireLight, 1 );
+  //scene.add( fireLightHelper );
+
+  fireLight2 = new THREE.PointLight(0xffa500, fireIntensity, 100);
+  fireLight2.position.set(fireLight2X - 5, fireLight2Y, fireLight2Z);
+  // var fireLight2Helper = new THREE.PointLightHelper( fireLight2, 1 );
+  // scene.add( fireLight2Helper );
+
+  this.animateFire = function (){
+
+    firelightYCounter += .35;
+    firelightXCounter += .5;
+    firelightZCounter += .45;
+    firelight2YCounter += .3;
+    firelight2XCounter += .6;
+    firelight2ZCounter += .5;
+
+    fireLightY += Math.sin(firelightYCounter) * .5;
+    fireLightX += Math.sin(firelightXCounter) * 1.5;
+    fireLightZ += Math.sin(firelightZCounter) * 2;
+    fireLight2Y += Math.sin(firelight2YCounter) * .5;
+    fireLight2X += Math.sin(firelight2XCounter) * 1.5;
+
+    fireLight2Z += Math.sin(firelight2ZCounter) * 2;
+    fireLight.intensity = Math.random() * .45 + .15;
+    fireLight2.intensity = Math.random() * .45 + .15;
+    fireLight.position.set(fireLightX - 5, fireLightY, fireLightZ);
+    fireLight2.position.set(fireLight2X - 5, fireLight2Y, fireLight2Z);
+  }
+
+  this.prepCampfireScene = function() {
+    //    console.log('prepCampfireScene');
+    // dumb hack  - not sure why, but adding these lights here fixes a rendering bug in story scene where the render order is mixed up
+    _this.el.add(fireLight);
+    _this.el.add(fireLight2)
+    animateTheFire = setInterval(_this.animateFire, 100);
+  }
+
+  this.cleanUpCampfireScene = function () {
+    //  console.log('cleanUpCampfireScene currentIndex: ' + currentIndex);
+    clearInterval(_this.animateTheFire);
+  }
 
   loader.load('fonts/helvetiker_bold.typeface.json', function (font) {
+
     var platformMaterial = new THREE.MeshPhongMaterial({
       color: 0x111111,
       specular: 0x222222,
@@ -148,14 +211,14 @@ function CampScene() {
 
   //addTrees
   var mtlLoader = new MTLLoader();
- 
+
   var materials = mtlLoader.parse(getTreeMatAsString());
-  
+
   var objLoader = new THREE.OBJLoader();
   objLoader.setMaterials(materials);
   var tree0 = objLoader.parse(getTreeGeoAsString());
-  tree0.scale.set(4, 4, 4 );
-  
+  tree0.scale.set(4, 4, 4);
+
   tree0.position.x = -35;
   tree0.position.y = -26;
   tree0.position.z = 20;
@@ -171,16 +234,18 @@ function CampScene() {
 
 CampScene.prototype.start = function () {
   console.log('CampScene.prototype.start');
+  this.prepCampfireScene();
   //this.el.visible = true;
 
 };
 CampScene.prototype.onOut = function () {
   console.log('CampScene.prototype.onOut');
+  this.cleanUpCampfireScene();
 };
 
 CampScene.prototype.stop = function () {
   console.log('CampScene.prototype.stop');
- // this.el.visible = false;
+  // this.el.visible = false;
 };
 
 CampScene.prototype.hide = function () {

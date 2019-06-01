@@ -31,6 +31,9 @@ function HeightMap(options) {
   this.zeroAnimationInterval;
   this.whenCompleteFunction;
   this.completeAnimationFunction;
+  var sceneLight;
+
+  
 
   if (this.firstRun) {
     for (var i = 0; i < this.totalVerts; i++) {
@@ -63,7 +66,6 @@ function HeightMap(options) {
   };
 
   this.loadMaps();
-
   this.el = group;
 
   this.start = function () {
@@ -503,7 +505,7 @@ HeightMap.prototype.startItUp = function (whenCompleteFunction) {
 }
 
 HeightMap.prototype.setOnCompleteFunction = function (theCompleteAnimationFunction) {
-  
+
   this.completeAnimationFunction = theCompleteAnimationFunction;
  
 }

@@ -4,7 +4,6 @@ var dilate = require('../utils/dilateUtil');
 var outlineMaterial = require('../materials/outlineMaterial');
 var waterMaterial = require('../materials/waterMaterial');
 
-
 function StoryTellingScene() {
   this.creativeObject = {};
   this.el = new THREE.Object3D();
@@ -21,11 +20,44 @@ function StoryTellingScene() {
   var waterShaderMaterial;
   var clock = new THREE.Clock();
   var waterSpeed = 1;
+  var storyLight;
+  var storyLight2;
+  var storyLightSpotlightTarget = new THREE.Object3D();
+  var storyLightSpotlightTarget2 = new THREE.Object3D();
+  var storyLightIntensity = 3.6;
+  var storyLightDistance = 225;
+  var smallScreenZOffset = -100;
+
+  storyLight = new THREE.SpotLight(0x00ffff, storyLightIntensity, storyLightDistance);
+  storyLight.penumbra = .5;
+  storyLight.position.set( - 100, 120,  - 120);
+  storyLightSpotlightTarget.position.x = - 65;
+  storyLightSpotlightTarget.position.y = 0;
+  storyLightSpotlightTarget.position.z = - 120 + smallScreenZOffset;
+  storyLight.target = storyLightSpotlightTarget;
+
+   //var storyLightHelper = new THREE.SpotLightHelper( storyLight );
+   //this.el.add(storyLightHelper);
+
+  storyLight2 = new THREE.SpotLight(0x00ffff, storyLightIntensity, storyLightDistance);
+  storyLight2.penumbra = .5;
+  storyLight2.position.set(100,  120,  - 120);
+  storyLightSpotlightTarget2.position.x = 65;
+  storyLightSpotlightTarget2.position.y = 0;
+  storyLightSpotlightTarget2.position.z =  - 120 + smallScreenZOffset;
+  storyLight2.target = storyLightSpotlightTarget2;
+  //var storyLight2Helper = new THREE.SpotLightHelper( storyLight2 );
+  //this.el.add(storyLight2Helper);
+
+  this.el.add(storyLight);
+  this.el.add(storyLightSpotlightTarget);
+  this.el.add(storyLight2);
+  this.el.add(storyLightSpotlightTarget2);
 
   this.moveTheWater = function () {
     waterShaderMaterial.uniforms.uGlobalTime.value += clock.getDelta() * waterSpeed;
   }
-  this.updateShaderHW = function () { 
+  this.updateShaderHW = function () {
     waterShaderMaterial.uniforms.uResolution.value = new THREE.Vector2(window.innerWidth, window.innerHeight);
   }
   loader.load('fonts/helvetiker_bold.typeface.json', function (font) {
@@ -50,73 +82,73 @@ function StoryTellingScene() {
     });
 
     var platformBottom = new THREE.Mesh(new THREE.BoxBufferGeometry(20, 2, 10), platformMaterial);
-    platformBottom.position.x= 0;
+    platformBottom.position.x = 0;
     platformBottom.position.y = -27;
     platformBottom.position.z = 40;
     platformBottom.castShadow = false;
     platformBottom.receiveShadow = true;
     _this.el.add(platformBottom);
 
-    var platformStep0 = new THREE.Mesh(new THREE.BoxBufferGeometry(20, 2, 10), platformMaterialSteps);
-    platformStep0.position.x= 0;
+    var platformStep0 = new THREE.Mesh(new THREE.BoxBufferGeometry(40, 2, 10), platformMaterialSteps);
+    platformStep0.position.x = 0;
     platformStep0.position.y = -27;
-    platformStep0.position.z = -180;
+    platformStep0.position.z = -170 +smallScreenZOffset;
     platformStep0.castShadow = false;
     platformStep0.receiveShadow = true;
     _this.el.add(platformStep0);
 
-    var platformStep1 = new THREE.Mesh(new THREE.BoxBufferGeometry(20, 2, 10), platformMaterialSteps);
-    platformStep1.position.x= 0;
+    var platformStep1 = new THREE.Mesh(new THREE.BoxBufferGeometry(30, 2, 10), platformMaterialSteps);
+    platformStep1.position.x = 0;
     platformStep1.position.y = -27;
-    platformStep1.position.z = -210;
+    platformStep1.position.z = -190 +smallScreenZOffset;
     platformStep1.castShadow = false;
     platformStep1.receiveShadow = true;
     _this.el.add(platformStep1);
 
     var platformStep2 = new THREE.Mesh(new THREE.BoxBufferGeometry(20, 2, 10), platformMaterialSteps);
-    platformStep2.position.x= 0;
+    platformStep2.position.x = 0;
     platformStep2.position.y = -27;
-    platformStep2.position.z = -240;
+    platformStep2.position.z = -210+smallScreenZOffset;
     platformStep2.castShadow = false;
     platformStep2.receiveShadow = true;
     _this.el.add(platformStep2);
 
-    var platformLeft = new THREE.Mesh(new THREE.BoxBufferGeometry(100, 2, 200), platformMaterial);
-    platformLeft.position.x= -58;
+    var platformLeft = new THREE.Mesh(new THREE.BoxBufferGeometry(100, 2, 300), platformMaterial);
+    platformLeft.position.x = -58;
     platformLeft.position.y = -27;
-    platformLeft.position.z = -55;
+    platformLeft.position.z = -55+smallScreenZOffset*.5;
     platformLeft.castShadow = false;
     platformLeft.receiveShadow = true;
     _this.el.add(platformLeft);
-    
-    var borderGeometry = new THREE.PlaneGeometry(200, 2);
+
+    var borderGeometry = new THREE.PlaneGeometry(300, 2);
 
     var platformLeftBorder = new THREE.Mesh(borderGeometry, platformMaterialBorder);
-    platformLeftBorder.position.x= -8;
+    platformLeftBorder.position.x = -8;
     platformLeftBorder.position.y = -27;
-    platformLeftBorder.position.z = -55;
+    platformLeftBorder.position.z = -55 +smallScreenZOffset*.5;;
     platformLeftBorder.castShadow = false;
     platformLeftBorder.receiveShadow = true;
     platformLeftBorder.rotateY(90 * (Math.PI / 180));
     _this.el.add(platformLeftBorder);
 
-    var platformRight = new THREE.Mesh(new THREE.BoxBufferGeometry(100, 2, 200), platformMaterial);
-    platformRight.position.x= 58;
+    var platformRight = new THREE.Mesh(new THREE.BoxBufferGeometry(100, 2, 300), platformMaterial);
+    platformRight.position.x = 58;
     platformRight.position.y = -27;
-    platformRight.position.z = -55;
+    platformRight.position.z = -55+smallScreenZOffset*.5;
     platformRight.castShadow = false;
     platformRight.receiveShadow = true;
     _this.el.add(platformRight);
 
     var platformRightBorder = new THREE.Mesh(borderGeometry, platformMaterialBorder);
-    platformRightBorder.position.x= 8;
+    platformRightBorder.position.x = 8;
     platformRightBorder.position.y = -27;
-    platformRightBorder.position.z = -55;
+    platformRightBorder.position.z = -55+ smallScreenZOffset*.5;
     platformRightBorder.castShadow = false;
     platformRightBorder.receiveShadow = true;
     platformRightBorder.rotateY(-90 * (Math.PI / 180));
     _this.el.add(platformRightBorder);
-    
+
     waterShaderMaterial = new THREE.ShaderMaterial({
       uniforms: waterMaterial.uniforms,
       vertexShader: waterMaterial.vertexShader,
@@ -124,9 +156,9 @@ function StoryTellingScene() {
       fog: true
     });
 
-    var theRiver = new THREE.Mesh(new THREE.BoxBufferGeometry(16, .1, 194), waterShaderMaterial);
+    var theRiver = new THREE.Mesh(new THREE.BoxBufferGeometry(16, .1, 294), waterShaderMaterial);
     theRiver.position.y = -29;
-    theRiver.position.z = -60;
+    theRiver.position.z = -60 +smallScreenZOffset*.5;
     theRiver.castShadow = false;
     theRiver.receiveShadow = false;
     _this.el.add(theRiver);
@@ -192,8 +224,8 @@ function StoryTellingScene() {
     tellingSignGeo.center();
 
     var tellingSign = new THREE.Mesh(tellingSignGeo, signMaterial);
-    tellingSign.castShadow = false;
-    tellingSign.receiveShadow = false;
+    tellingSign.castShadow = true;
+    tellingSign.receiveShadow = true;
 
     var outlineGeometryTelling = tellingSignGeo.clone();
     dilate(outlineGeometryTelling, 1.5);
@@ -207,14 +239,14 @@ function StoryTellingScene() {
 
     _this.storySignHolder.position.x = -50;
     _this.storySignHolder.position.y = -5;
-    _this.storySignHolder.position.z = -75;
+    _this.storySignHolder.position.z = -75+ smallScreenZOffset;
     _this.storySignHolder.rotateY(65 * (Math.PI / 180));
     _this.storySignHolder.rotateX(25 * (Math.PI / 180));
     _this.storySignHolder.rotateZ(2 * (Math.PI / 180));
     //
     _this.tellingSignHolder.position.x = 50;
     _this.tellingSignHolder.position.y = -6;
-    _this.tellingSignHolder.position.z = -75;
+    _this.tellingSignHolder.position.z = -75+ smallScreenZOffset;
     _this.tellingSignHolder.rotateY(-65 * (Math.PI / 180));
     _this.tellingSignHolder.rotateX(25 * (Math.PI / 180));
     _this.tellingSignHolder.rotateZ(-2 * (Math.PI / 180));

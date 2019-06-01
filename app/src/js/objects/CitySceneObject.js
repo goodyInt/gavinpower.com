@@ -4,7 +4,7 @@ var THREE = require('three');
 var skyMaterial = require('../materials/skyMaterial');
 var orbitControls = require('../objects/GoodyOrbitControls');
 
-function CitySceneObject(scene, camera) {
+function CitySceneObject( ) {
 
   this.el = new THREE.Object3D();
   this.thisRotation = this.el.rotation;
@@ -38,7 +38,7 @@ function CitySceneObject(scene, camera) {
   }
 
   function init() {
-
+/*
     var controls = new THREE.OrbitControls(camera);
     controls.enableDamping = true;
     controls.dampingFactor = 0.5;
@@ -46,7 +46,7 @@ function CitySceneObject(scene, camera) {
     controls.maxPolarAngle = Math.PI * .49;
     controls.maxDistance = 50;
     controls.minDistance = 15;
-
+*/
     //var gridHelper = new THREE.GridHelper(60, 120, 0x000000, 0x000000);
     //city.add(gridHelper);
     //----------------------------------------------------------------- Buildings
@@ -137,16 +137,16 @@ function CitySceneObject(scene, camera) {
 
     //----------------------------------------------------------------- Scene Lights
     ambientLight = new THREE.AmbientLight(0x404040);
-    scene.add(ambientLight);
+     this.el.add(ambientLight);
     //
     sunLight = new THREE.DirectionalLight(0x000000, 0.5);
-    scene.add(sunLight);
+     this.el.add(sunLight);
     sunLight.position.set(0, -2, -60);
     sunLight.castShadow = true;
     sunLight.shadow.camera.right = 8;
     sunLight.shadow.camera.left = -8;
     var sunLightHelper = new THREE.CameraHelper(sunLight.shadow.camera);
-    scene.add(sunLightHelper);
+     this.el.add(sunLightHelper);
 
     //----------------------------------------------------------------- Cars
 
@@ -269,7 +269,7 @@ function CitySceneObject(scene, camera) {
   function initSky() {
     sky = new THREE.Sky();
     sky.scale.setScalar(450000);
-    scene.add(sky);
+     this.el.add(sky);
 
     sunObjectPos = new THREE.Object3D();
     sunObjectPos.position.y = -700000;
@@ -370,7 +370,7 @@ function CitySceneObject(scene, camera) {
     requestAnimationFrame(animate);
     theParticles.rotation.y += 0.002;
     theParticles.rotation.x += 0.002;
-    camera.lookAt(city.position);
+   // camera.lookAt(city.position);
     //  renderer.render(scene, camera);
     controls.update();
     // stats.update();

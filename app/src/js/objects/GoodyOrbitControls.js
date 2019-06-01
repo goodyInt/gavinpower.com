@@ -722,7 +722,7 @@ THREE.OrbitControls = function ( object, domElement ) {
 
 		// Prevent the browser from scrolling.
 
-		//event.preventDefault();
+		event.preventDefault();
 
 		// Manually set the focus since calling preventDefault above
 		// prevents the browser from setting it automatically.
@@ -841,7 +841,7 @@ THREE.OrbitControls = function ( object, domElement ) {
 
 		if ( scope.enabled === false || scope.enableZoom === false || ( state !== STATE.NONE && state !== STATE.ROTATE ) ) return;
 
-	//	event.preventDefault();
+		event.preventDefault();
 		event.stopPropagation();
 
 		scope.dispatchEvent( startEvent );

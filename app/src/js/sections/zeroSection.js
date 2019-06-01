@@ -1,16 +1,35 @@
 'use strict';
 
 var Section = require('../classes/SectionClass');
-
 var HeightMap = require('../objects/HeightMapObject');
-
-var zeroSection = new Section('zero');
-
 var agencyURL = './img/heightMap/heightMap-helloFriend.jpg';
-
 var HASH = require('../modules/hashModule');
-
 var TextPanel = require('../objects/TextPanelObject');
+var zeroSection = new Section('zero');
+var BackgroundParticles = require('../objects/backgroundParticlesObject');
+var BackgroundLines = require('../objects/BackgroundLinesObject');
+
+var theSectionParticles0 = new BackgroundParticles({
+  rangeX: [-50, 50],
+  rangeY: [30, -30],
+  rangeZ: [-100, 100],
+  stripsRangeX: [-50, 50],
+  stripsRangeY: [-80, 80],
+  stripsRangeZ: [-80, -45],
+  count: 400,
+  strips: true,
+  color1: '#eb0013',
+  color2: '#8D000C'
+});
+zeroSection.add(theSectionParticles0.el);
+
+var sectionLines0 = new BackgroundLines({
+  rangeX: [-50, 50],
+  rangeY: [30, -30],
+  rangeZ: [-100, 100],
+  count: 100
+});
+zeroSection.add(sectionLines0.el);
 
 var sprites = {
   jam3: './img/heightMap/heightMap-helloJam3.jpg',
@@ -19,6 +38,10 @@ var sprites = {
   tbwa: './img/heightMap/heightMap-helloTBWA.jpg',
   churchandstate: './img/heightMap/heightMap-helloC+S.jpg'
 };
+
+zeroSection.nextBtnIsIn = false;
+zeroSection.nextBtnIsOver = false;
+zeroSection.nextBtnIsDown = false;
 
 if (sprites[HASH.hash]) {
   agencyURL = sprites[HASH.hash];
@@ -33,24 +56,6 @@ var heightMap = new HeightMap({
       name: 'blackScreen',
       url: './img/heightMap/heightMap-black.jpg'
     },
-    /*
-    {
-      name: 'H',
-      url: './img/heightMap/heightMap-H.jpg'
-    },
-    {
-      name: 'HE',
-      url: './img/heightMap/heightMap-HE.jpg'
-    },
-    {
-      name: 'HEL',
-      url: './img/heightMap/heightMap-HEL.jpg'
-    },
-    {
-      name: 'HELL',
-      url: './img/heightMap/heightMap-HELL.jpg'
-    },
-    */
     {
       name: 'Hello',
       url: './img/heightMap/heightMap-hello.jpg'
@@ -104,22 +109,18 @@ var nextBtn = new TextPanel(
     lineSpacing: 0
   }
 );
+
 nextBtn.el.position.set(20, 0, 0);
 nextBtn.el.rotation.y = .35;
 zeroSection.add(nextBtn.el);
 
 zeroSection.onIn(function () {
-  //console.log('zeroSection.onIn()');
-  // text.in();
 });
 
 zeroSection.onOut(function (way) {
-  //console.log('zeroSection.onOut()');
-  // text.out(way);
 });
 
 zeroSection.onStart(function () {
-  //console.log('zeroSection.onStart');
   if (!heightMap.ready) {
     return false;
   }
@@ -127,7 +128,6 @@ zeroSection.onStart(function () {
 });
 
 zeroSection.onStop(function () {
-  //console.log('zeroSection.onStop() heightMap.ready: ' + heightMap.ready);
   if (!heightMap.ready) {
     return false;
   }
@@ -138,12 +138,10 @@ zeroSection.onStop(function () {
 });
 
 zeroSection.show = function () {
-  //console.log('zeroSection.show()');
   heightMap.el.visible = true;
 };
 
 zeroSection.textIn = function () {
-  //console.log('zeroSection.textIn');
   nextBtn.in();
   zeroSection.nextBtnIsIn = true;
 };
@@ -151,60 +149,32 @@ zeroSection.textIn = function () {
 heightMap.setOnCompleteFunction(zeroSection.textIn);
 
 zeroSection.startUpFirstTime = function (mainFunction) {
-  //console.log('zeroSection.startUpFirstTime()');
   heightMap.startItUp(mainFunction);
   this.playing = true;
 };
 
 zeroSection.hide = function () {
-  //console.log('zeroSection.hide()');
   heightMap.el.visible = false;
 };
-
-////
-zeroSection.nextBtnIsIn = false;
-zeroSection.nextBtnIsOver = false;
-zeroSection.nextBtnIsDown = false;
 
 zeroSection.getTheNextBtn = function () {
   return nextBtn;
 };
 zeroSection.theNextBtnIsOver = function () {
-  //console.log('zeroSection.theNextBtnIsOver');
   nextBtn.over();
   zeroSection.nextBtnIsOver = true;
-
 };
 zeroSection.theNextBtnIsDown = function () {
-  //console.log('zeroSection.theNextBtnIsDown');
-  nextBtn.down('#ff0000');
+  nextBtn.down('#ffffff');
   zeroSection.nextBtnIsDown = true;
 };
 zeroSection.theNextBtnIsUp = function () {
-  //console.log('zeroSection.theNextBtnIsUp');
   nextBtn.overOut();
   zeroSection.nextBtnIsDown = false;
 };
-
 zeroSection.theNextBtnIsOut = function () {
-  //console.log('zeroSection.theNextBtnIsOut');
   nextBtn.overOut();
   zeroSection.nextBtnIsOver = false;
-};
-
-/////
-
-zeroSection.setUp = function (scene,camera) {
-  var thisPos = {
-    x: zeroSection.el.position.x,
-    y: zeroSection.el.position.y,
-    z: zeroSection.el.position.z
-  }
-  //console.log('');
-  //console.log('zeroSection.setPositions()');
-  //console.log('x: ' + thisPos.x);
-  //console.log('y: ' + thisPos.y);
-  //console.log('z: ' + thisPos.z);
 };
 
 module.exports = zeroSection;

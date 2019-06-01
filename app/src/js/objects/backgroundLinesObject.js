@@ -25,9 +25,9 @@ function BackgroundLines (options) {
   for (var i = 0; i < parameters.count; i++) {
     var lineCopy = line.clone();
 
-    lineCopy.position.x = random(-20, 20);
+    lineCopy.position.x = random(parameters.rangeX[0], parameters.rangeX[1]);
     lineCopy.position.y = random(parameters.rangeY[0], parameters.rangeY[1]);
-    lineCopy.position.z = random(-50, 50);
+    lineCopy.position.z = random(parameters.rangeZ[0], parameters.rangeZ[1]);
 
     group.add(lineCopy);
   }
@@ -38,7 +38,9 @@ function BackgroundLines (options) {
 
 BackgroundLines.defaultOptions = {
   count: 200,
+  rangeX: [-100, 100],
   rangeY: [-100, 100],
+  rangeZ: [-100, 100],
   color1: '#ffffff'
   
 };
