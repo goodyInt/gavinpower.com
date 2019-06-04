@@ -11,20 +11,22 @@ function CampScene() {
   this.thisRotation = this.el.rotation;
   this.rotateHorTween;
   this.rotateVertTween;
-  this.frontPosArray = [];
+  this.animateTheFireInt;
+
 
   var loader = new THREE.FontLoader();
   var _this = this;
-  var animateTheFire;
 
   var fireLight;
+  var fireLightHelper;
   var fireLight2;
-  var fireLightX = 0;
-  var fireLightY =  - 16;
-  var fireLightZ =  10;
-  var fireLight2X = 0;
-  var fireLight2Y =  - 16;
-  var fireLight2Z = 10;
+  var fireLight2Helper;
+  var fireLightX = 2;
+  var fireLightY =  -18;
+  var fireLightZ =  14;
+  var fireLight2X = 2;
+  var fireLight2Y =  - 18;
+  var fireLight2Z =  14;
   var firelightYCounter = 0;
   var firelightXCounter = 0;
   var firelightZCounter = 0;
@@ -32,16 +34,16 @@ function CampScene() {
   var firelight2XCounter = 0;
   var firelight2ZCounter = 0;
 
-  var fireIntensity = .025;
+  var fireIntensity = .035;
   fireLight = new THREE.PointLight(0xff0000, fireIntensity, 100);
-  fireLight.position.set(fireLightX - 5, fireLightY, fireLightZ);
-  // var fireLightHelper = new THREE.PointLightHelper( fireLight, 1 );
-  //scene.add( fireLightHelper );
-
+  fireLight.position.set(fireLightX, fireLightY, fireLightZ);
+ // fireLightHelper = new THREE.PointLightHelper( fireLight, 1 );
+ // fireLightHelper.matrix = fireLightHelper.light.matrix;
+ 
   fireLight2 = new THREE.PointLight(0xffa500, fireIntensity, 100);
-  fireLight2.position.set(fireLight2X - 5, fireLight2Y, fireLight2Z);
-  // var fireLight2Helper = new THREE.PointLightHelper( fireLight2, 1 );
-  // scene.add( fireLight2Helper );
+  fireLight2.position.set(fireLight2X, fireLight2Y, fireLight2Z);
+ // fireLight2Helper = new THREE.PointLightHelper( fireLight2, 1 );
+ // fireLight2Helper.matrix = fireLight2Helper.light.matrix;
 
   this.animateFire = function (){
 
@@ -57,25 +59,38 @@ function CampScene() {
     fireLightZ += Math.sin(firelightZCounter) * 2;
     fireLight2Y += Math.sin(firelight2YCounter) * .5;
     fireLight2X += Math.sin(firelight2XCounter) * 1.5;
+    
 
     fireLight2Z += Math.sin(firelight2ZCounter) * 2;
-    fireLight.intensity = Math.random() * .45 + .15;
-    fireLight2.intensity = Math.random() * .45 + .15;
+    fireLight.intensity = Math.random() * 1.35 + .15;
+    fireLight2.intensity = Math.random() * 1.35 + .15;
     fireLight.position.set(fireLightX - 5, fireLightY, fireLightZ);
     fireLight2.position.set(fireLight2X - 5, fireLight2Y, fireLight2Z);
   }
+  
 
   this.prepCampfireScene = function() {
-    //    console.log('prepCampfireScene');
+       console.log('prepCampfireScene');
     // dumb hack  - not sure why, but adding these lights here fixes a rendering bug in story scene where the render order is mixed up
     _this.el.add(fireLight);
-    _this.el.add(fireLight2)
-    animateTheFire = setInterval(_this.animateFire, 100);
+   // _this.el.add( fireLightHelper );
+    _this.el.add(fireLight2);
+   // _this.el.add( fireLight2Helper );
+
+   
+    _this.animateTheFireInt = setInterval(_this.animateFire, 100);
   }
 
   this.cleanUpCampfireScene = function () {
-    //  console.log('cleanUpCampfireScene currentIndex: ' + currentIndex);
-    clearInterval(_this.animateTheFire);
+    console.log('cleanUpCampfireScene');
+
+    _this.el.remove(fireLight);
+    _this.el.remove(fireLight2)
+//    _this.el.remove( fireLightHelper );
+ //   _this.el.remove( fireLight2Helper );
+ 
+    clearInterval(_this.animateTheFireInt);
+
   }
 
   loader.load('fonts/helvetiker_bold.typeface.json', function (font) {
@@ -116,7 +131,7 @@ function CampScene() {
 
     var seatMaterial = new THREE.MeshPhongMaterial({
       color: 0x101010,
-      specular: 0x444444,
+      specular: 0x666666,
       shininess: 20
     });
 
@@ -149,21 +164,20 @@ function CampScene() {
 
     var centerOffset = -0.5 * (designSignGeo.boundingBox.max.x - designSignGeo.boundingBox.min.x);
     var designSignMaterial = new THREE.MeshPhongMaterial({
-      color: 0x222222,
+      color: 0x111111,
       specular: 0xffffff,
-      shininess: 30
+      shininess: 16
     });
 
     var designSign = new THREE.Mesh(designSignGeo, designSignMaterial);
     designSign.castShadow = true;
     designSign.receiveShadow = true;
     _this.el.add(designSign);
-
+    console.log('centerOffset: ' + centerOffset);
     designSign.position.x = centerOffset;
     designSign.position.y = -25;
     designSign.position.z = -25;
     //_this.el.visible = false;
-
   });
 
   function Log() {
@@ -171,12 +185,12 @@ function CampScene() {
       color: 0x111111,
       shininess: 10
     });
-
+  
     var logEndMaterial = new THREE.MeshPhongMaterial({
       color: 0x000000,
       shininess: 10
     });
-
+  
     var geometry = new THREE.BoxGeometry(2.5, 2.5, 10);
 
     THREE.Mesh.call(this, geometry, logMaterial);
@@ -241,11 +255,13 @@ CampScene.prototype.start = function () {
 CampScene.prototype.onOut = function () {
   console.log('CampScene.prototype.onOut');
   this.cleanUpCampfireScene();
+
 };
 
 CampScene.prototype.stop = function () {
   console.log('CampScene.prototype.stop');
   // this.el.visible = false;
+  
 };
 
 CampScene.prototype.hide = function () {

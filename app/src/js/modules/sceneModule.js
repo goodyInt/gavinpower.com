@@ -41,6 +41,7 @@ var SCENE = (function () {
 
     var sections = [];
     var sectionData = [{
+      //scene0 hello friend
         x: 0,
         y: 0,
         z: 0,
@@ -54,6 +55,7 @@ var SCENE = (function () {
         maxPolarAngle: Math.PI * .80
       },
       {
+        //scene1 creative writing
         x: 150,
         y: 0,
         z: -200,
@@ -67,6 +69,7 @@ var SCENE = (function () {
         maxPolarAngle: Math.PI * .75
       },
       {
+        //scene2 story telling
         x: -150,
         y: 200,
         z: -600,
@@ -74,13 +77,19 @@ var SCENE = (function () {
         forward: 78,
         backward: 420,
         cameraShake: false,
+        minAzimuthAngle: -Math.PI * .5,
+        maxAzimuthAngle: Math.PI * .5,
+        minPolarAngle: Math.PI * .1,
+        maxPolarAngle: Math.PI * .9/*
         minAzimuthAngle: 0,
         maxAzimuthAngle: 0,
         minPolarAngle: Math.PI * .5,
         maxPolarAngle: Math.PI * .5
+        */
       },
       {
-        x: -150,
+        //scene3 campfire
+        x: -150, 
         y: 200,
         z: -620,
         zCameraOffset: 60,
@@ -93,19 +102,21 @@ var SCENE = (function () {
         maxPolarAngle: Math.PI * .5
       },
       {
+        //scene4 city
         x: -150,
-        y: 800,
+        y: 400,
         z: -820,
-        zCameraOffset: 60,
-        forward: 10,
-        backward: 100,
+        zCameraOffset: 30,
+        forward:  10,
+        backward: 30,
         cameraShake: false,
-        minAzimuthAngle: -Math.PI * .5,
-        maxAzimuthAngle: Math.PI * .5,
-        minPolarAngle: Math.PI * .1,
-        maxPolarAngle: Math.PI * .9
+        minAzimuthAngle: -Math.PI,
+        maxAzimuthAngle: Math.PI ,
+        minPolarAngle: Math.PI * .01,
+        maxPolarAngle: Math.PI * .45
       },
       {
+      //scene5
         x: 0,
         y: 50,
         z: -1200,
@@ -119,6 +130,7 @@ var SCENE = (function () {
         maxPolarAngle: Math.PI * .9
       },
       {
+        //scene6
         x: 50,
         y: -50,
         z: -1400,
@@ -227,7 +239,8 @@ var SCENE = (function () {
 
       controls = new THREE.OrbitControls(camera, renderer.domElement);
       controls.enableDamping = true;
-      controls.dampingFactor = 1.50;
+      controls.dampingFactor = .50;
+      
       controls.enablePan = false;
       controls.enableZoom = true;
       controls.zoomSpeed = .5;
@@ -300,6 +313,10 @@ var SCENE = (function () {
     }
 
     function animateCamera(index) {
+
+      var tweenTime = 1.5;
+
+
       currentIndex = index;
       cameraShakeY = 0;
       cameraShakeX = 0;
@@ -320,8 +337,11 @@ var SCENE = (function () {
           index: index
         },
       };
-      var tweenTime = 3.5;
+   
+      events.trigger('section:changeBegin', data);
+      var theDelay =  3;
       tweenMax.to(camera.position, tweenTime, {
+        delay: theDelay,
         x: nextPosition.x,
         y: nextPosition.y,
         z: nextPosition.z + nextPosition.zCameraOffset,
@@ -329,7 +349,7 @@ var SCENE = (function () {
         onStart: function () {
           isScrolling = true;
           // SOUNDS.wind.play();
-          events.trigger('section:changeBegin', data);
+         
           controls.enabled = false;
         },
         onComplete: function () {
@@ -349,12 +369,14 @@ var SCENE = (function () {
         }
       });
       tweenMax.to(cameraTarget, tweenTime, {
+        delay: theDelay,
         x: nextPosition.x,
         y: nextPosition.y,
         z: nextPosition.z,
         ease: window.Quart.easeInOut
       });
       tweenMax.to(controls, tweenTime, {
+        delay: theDelay,
         minDistance: sectionData[currentIndex].forward,
         maxDistance: sectionData[currentIndex].backward,
         ease: window.Quart.easeInOut

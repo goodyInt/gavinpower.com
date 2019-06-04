@@ -24,35 +24,35 @@ function StoryTellingScene() {
   var storyLight2;
   var storyLightSpotlightTarget = new THREE.Object3D();
   var storyLightSpotlightTarget2 = new THREE.Object3D();
-  var storyLightIntensity = 3.6;
-  var storyLightDistance = 225;
+  var storyLightIntensity = 4.6;
+  var storyLightDistance = 650;
   var smallScreenZOffset = -100;
 
   storyLight = new THREE.SpotLight(0x00ffff, storyLightIntensity, storyLightDistance);
-  storyLight.penumbra = .5;
-  storyLight.position.set( - 100, 120,  - 120);
-  storyLightSpotlightTarget.position.x = - 65;
+  storyLight.penumbra = .65;
+  storyLight.angle = Math.PI/8;
+  storyLight.position.set(-120,200,-550);
+  storyLightSpotlightTarget.position.x = -120;
   storyLightSpotlightTarget.position.y = 0;
-  storyLightSpotlightTarget.position.z = - 120 + smallScreenZOffset;
+  storyLightSpotlightTarget.position.z = 0;
   storyLight.target = storyLightSpotlightTarget;
 
    //var storyLightHelper = new THREE.SpotLightHelper( storyLight );
-   //this.el.add(storyLightHelper);
+  // storyLightHelper.matrix = storyLightHelper.light.matrix;
+  // this.el.add(storyLightHelper);
 
   storyLight2 = new THREE.SpotLight(0x00ffff, storyLightIntensity, storyLightDistance);
-  storyLight2.penumbra = .5;
-  storyLight2.position.set(100,  120,  - 120);
-  storyLightSpotlightTarget2.position.x = 65;
+  storyLight2.penumbra = .65;
+  storyLight2.angle = Math.PI/8;
+  storyLight2.position.set(120, 200, -550);
+  storyLightSpotlightTarget2.position.x = 120;
   storyLightSpotlightTarget2.position.y = 0;
-  storyLightSpotlightTarget2.position.z =  - 120 + smallScreenZOffset;
+  storyLightSpotlightTarget2.position.z = 0
   storyLight2.target = storyLightSpotlightTarget2;
-  //var storyLight2Helper = new THREE.SpotLightHelper( storyLight2 );
+  //var storyLight2Helper = new THREE.SpotLightHelper(storyLight2);
+  //storyLight2Helper.matrix = storyLight2Helper.light.matrix;
   //this.el.add(storyLight2Helper);
 
-  this.el.add(storyLight);
-  this.el.add(storyLightSpotlightTarget);
-  this.el.add(storyLight2);
-  this.el.add(storyLightSpotlightTarget2);
 
   this.moveTheWater = function () {
     waterShaderMaterial.uniforms.uGlobalTime.value += clock.getDelta() * waterSpeed;
@@ -207,7 +207,6 @@ function StoryTellingScene() {
     outlineMesh.receiveShadow = false;
     _this.storySignHolder.add(outlineMesh);
     _this.storySignHolder.add(storySign);
-
     _this.el.add(_this.storySignHolder);
 
     _this.tellingSignHolder = new THREE.Object3D();
@@ -255,12 +254,20 @@ function StoryTellingScene() {
   StoryTellingScene.prototype.start = function () {
     console.log('StoryTellingScene.prototype.start');
     this.moveTheWaterInterval = setInterval(this.moveTheWater, 40);
+    this.el.add(storyLight);
+    this.el.add(storyLightSpotlightTarget);
+    this.el.add(storyLight2);
+    this.el.add(storyLightSpotlightTarget2);
     // this.el.visible = true;
   };
 
   StoryTellingScene.prototype.onOut = function () {
     console.log('StoryTellingScene.prototype.onOut');
     clearInterval(this.moveTheWaterInterval);
+    this.el.remove(storyLight);
+    this.el.remove(storyLightSpotlightTarget);
+    this.el.remove(storyLight2);
+    this.el.remove(storyLightSpotlightTarget2);
   };
 
   StoryTellingScene.prototype.stop = function () {

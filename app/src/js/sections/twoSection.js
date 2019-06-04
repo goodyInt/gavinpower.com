@@ -7,6 +7,10 @@ var StoryScene = require('../objects/StoryTellingSceneObject');
 var TextPanel = require('../objects/TextPanelObject');
 var BackgroundParticles = require('../objects/backgroundParticlesObject');
 var BackgroundLines = require('../objects/BackgroundLinesObject');
+var _this = this;
+var lightsHolder = new THREE.Object3D();
+
+twoSection.add(lightsHolder);
 
 var theSectionParticles2 = new BackgroundParticles({
   rangeX: [-115, 115],
@@ -52,7 +56,7 @@ twoSection.add(ourStoryScene.el);
 var moonLight = new THREE.SpotLight(0x888888, 1.65, 0, Math.PI / 2);
 moonLight.position.set(0, 500, -250);
 moonLight.castShadow = true;
-twoSection.add(moonLight);
+
 
 var spotLightHelper = new THREE.SpotLightHelper(moonLight);
 //twoSection.add(spotLightHelper);
@@ -77,7 +81,7 @@ nextBtn.el.position.z = -30;
 nextBtn.el.rotation.y = -40 * (Math.PI / 180);
 nextBtn.el.rotation.z = -20 * (Math.PI / 180);
 
-var _this = this;
+
 this.bringInTheBtn = function () {
   clearInterval(_this.bringInTheNextBtnInterval);
   nextBtn.in();
@@ -87,13 +91,22 @@ twoSection.add(nextBtn.el);
 twoSection.onIn(function () {});
 
 twoSection.onOut(function () {
-  //  console.log('twoSection.onOut');
+ 
   ourStoryScene.onOut();
+  console.log('twoSection.onOut');
+  console.log('this');
+  console.log(this);
+  console.log('_this');
+  console.log(_this);
+  console.log(twoSection);
+
+/// lightsHolder.remove(moonLight);
 });
 
 twoSection.onStart(function () {
   // console.log('twoSection.onStart');
   ourStoryScene.start();
+  //lightsHolder.add(moonLight);
   // _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 4500);
 });
 

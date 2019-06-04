@@ -5,7 +5,6 @@ var TextPanel = require('../objects/TextPanelObject');
 var fourSection = new Section('four');
 var _this = this;
 var BackgroundParticles = require('../objects/backgroundParticlesObject');
-var BackgroundLines = require('../objects/BackgroundLinesObject');
 
 var theSectionParticles4 = new BackgroundParticles({
   rangeX: [-30, 30],
@@ -17,18 +16,10 @@ var theSectionParticles4 = new BackgroundParticles({
   count: 100,
   particleSize: .35,
   strips: false,
-  color1: '#a800e9',
-  color2: '#f400c6'
+  color1: '#ffffff',
+  color2: '#5D5D5D'
 });
 fourSection.add(theSectionParticles4.el);
-
-var sectionLines4 = new BackgroundLines({
-  rangeX: [-115, 115],
-  rangeY: [40, 10],
-  rangeZ: [300, -5],
-  count: 20
-});
-fourSection.add(sectionLines4.el);
 
 var ourCityScene = new CityScene();
 ourCityScene.el.position.x = 0;
@@ -40,7 +31,7 @@ fourSection.nextBtnIsIn = false;
 fourSection.nextBtnIsOver = false;
 fourSection.nextBtnIsDown = false;
 
-var nextBtnTextString = '<<< I like code. I like details. I love...';
+var nextBtnTextString = '<<<...';
 var nextBtn = new TextPanel(
   nextBtnTextString, {
     align: 'center',
@@ -50,6 +41,11 @@ var nextBtn = new TextPanel(
     color: '#999999'
   }
 );
+nextBtn.el.position.x = 20;
+nextBtn.el.position.y = 20;
+nextBtn.el.position.z = -30;
+nextBtn.el.rotation.y = -40 * (Math.PI / 180);
+nextBtn.el.rotation.z = -20 * (Math.PI / 180);
 
 this.bringInTheBtn = function () {
   clearInterval(_this.bringInTheNextBtnInterval);
@@ -84,16 +80,18 @@ fourSection.onIn(function () {
 });
 
 fourSection.onOut(function () {
-//  ourCityScene.start();
+
+ourCityScene.stop();
+clearInterval(_this.bringInTheNextBtnInterval);
 });
 
 fourSection.onStart(function () {
+  ourCityScene.start();
   _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 4500);
 });
 
 fourSection.onStop(function () {
-  ourCityScene.stop();
-  clearInterval(_this.bringInTheNextBtnInterval);
+ 
 });
 
 module.exports = fourSection;

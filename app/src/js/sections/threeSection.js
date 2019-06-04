@@ -7,6 +7,10 @@ var TextPanel = require('../objects/TextPanelObject');
 var Fire = require('../objects/FireObject');
 var threeSection = new Section('three');
 var BackgroundParticles = require('../objects/backgroundParticlesObject');
+
+var lightsHolder = new THREE.Object3D();
+
+threeSection.add(lightsHolder);
 //////////// 3
  var theSectionParticles3 = new BackgroundParticles({
       rangeX: [-115, 115],
@@ -23,7 +27,7 @@ var BackgroundParticles = require('../objects/backgroundParticlesObject');
 var moonLight = new THREE.SpotLight(0x888888, 1.65, 0, Math.PI / 2);
 moonLight.position.set(0, 500, -650);
 moonLight.castShadow = true;
-threeSection.add(moonLight);
+//
 
 //var spotLightHelper = new THREE.SpotLightHelper(moonLight);
 //threeSection.add(spotLightHelper);
@@ -152,12 +156,17 @@ function extinguishFire() {
 
 threeSection.onOut(function () {
   console.log('threeSection.onOut');
+  console.log(this);
+  console.log(_this);
+  console.log(threeSection);
+ lightsHolder.remove(moonLight);
   ourCampScene.onOut();
 });
 
 threeSection.onStart(function () {
   console.log('threeSection.onStart');
   ourCampScene.start();
+  lightsHolder.add(moonLight);
   _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 4500);
 });
 
@@ -165,6 +174,7 @@ threeSection.onStop(function () {
   console.log('threeSection.onStop');
   extinguishFire();
   ourCampScene.stop();
+
   clearInterval(_this.bringInTheNextBtnInterval);
   nextBtn.overOut();
   nextBtn.out('up');
