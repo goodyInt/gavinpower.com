@@ -93,6 +93,11 @@ THREE.OrbitControls = function ( object, domElement ) {
 		return spherical.phi;
 
 	};
+	this.setPolarAngle = function (pa) {
+		 spherical.phi = pa;
+		 this.update();
+
+	};
 
 	this.getAzimuthalAngle = function () {
 
@@ -126,6 +131,8 @@ THREE.OrbitControls = function ( object, domElement ) {
 	// this method is exposed, but perhaps it would be better if we can make it private...
 	this.update = function () {
 
+//		console.log('update0');
+
 		var offset = new THREE.Vector3();
 
 		// so camera.up is the orbit axis
@@ -136,7 +143,7 @@ THREE.OrbitControls = function ( object, domElement ) {
 		var lastQuaternion = new THREE.Quaternion();
 
 		return function update() {
-
+		
 			var position = scope.object.position;
 
 			offset.copy( position ).sub( scope.target );
@@ -146,7 +153,7 @@ THREE.OrbitControls = function ( object, domElement ) {
 
 			// angle from z-axis around y-axis
 			spherical.setFromVector3( offset );
-
+		
 			if ( scope.autoRotate && state === STATE.NONE ) {
 
 				rotateLeft( getAutoRotationAngle() );
@@ -154,17 +161,17 @@ THREE.OrbitControls = function ( object, domElement ) {
 			}
 
 			spherical.theta += sphericalDelta.theta;
+		
 			spherical.phi += sphericalDelta.phi;
-
+		
+		
 			// restrict theta to be between desired limits
 			spherical.theta = Math.max( scope.minAzimuthAngle, Math.min( scope.maxAzimuthAngle, spherical.theta ) );
 
 			// restrict phi to be between desired limits
 			spherical.phi = Math.max( scope.minPolarAngle, Math.min( scope.maxPolarAngle, spherical.phi ) );
-
+			
 			spherical.makeSafe();
-
-
 			spherical.radius *= scale;
 
 			// restrict radius to be between desired limits
@@ -186,7 +193,7 @@ THREE.OrbitControls = function ( object, domElement ) {
 
 				sphericalDelta.theta *= ( 1 - scope.dampingFactor );
 				sphericalDelta.phi *= ( 1 - scope.dampingFactor );
-
+		
 				panOffset.multiplyScalar( 1 - scope.dampingFactor );
 
 			} else {
@@ -292,16 +299,14 @@ THREE.OrbitControls = function ( object, domElement ) {
 
 	this.rotate = function(degrees) {
 		rotateLeft(degrees);
-	
 	}
 	this.rotateItUp = function( angle ) {
 		rotateUp(angle);
+
 		this.update();
-
 	}
-	this.zoomDistance = function ( amount ) {
 
-		//console.log( 'zoomDistance' );
+	this.zoomDistance = function ( amount ) {
 		this.zoomSpeed = .015;
 
 		if ( amount < 0 ) {
@@ -319,18 +324,13 @@ THREE.OrbitControls = function ( object, domElement ) {
 
 	}
 	function rotateLeft( angle ) {
-
 		sphericalDelta.theta -= angle;
-	
 		//console.log('spherical.theta: ' + 	spherical.theta);
 		//console.log('sphericalDelta.theta:' + sphericalDelta.theta);
-
 	}
 
 	function rotateUp( angle ) {
-		//console.log('rotateUp');
 		sphericalDelta.phi -= angle;
-
 	}
 
 	var panLeft = function () {

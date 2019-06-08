@@ -20,6 +20,7 @@ var SCENE = (function () {
       quality: 1,
       sectionHeight: 30
     };
+
     var $viewport;
     var renderer;
     var scene;
@@ -38,10 +39,15 @@ var SCENE = (function () {
     var isStarted = false;
     var isScrolling = false;
     var theAtmosphereParticles;
+    var cityDevMode = false;
+    var rotatePolarAngleObject = {
+      rotateToPolarAngle: 1.5
+    }
 
     var sections = [];
+
     var sectionData = [{
-      //scene0 hello friend
+        //scene0 hello friend
         x: 0,
         y: 0,
         z: 0,
@@ -49,10 +55,14 @@ var SCENE = (function () {
         forward: 10,
         backward: 100,
         cameraShake: true,
+        autoRotate: false,
+        autoRotateSpeed: 1.0,
+        rotateToPolarAngle: 1.5,
         minAzimuthAngle: -Math.PI * .25,
         maxAzimuthAngle: Math.PI * .2,
         minPolarAngle: Math.PI * .2,
-        maxPolarAngle: Math.PI * .80
+        maxPolarAngle: Math.PI * .80,
+        maxPolarAngleFinish: Math.PI * .80
       },
       {
         //scene1 creative writing
@@ -63,10 +73,14 @@ var SCENE = (function () {
         forward: 20,
         backward: 150,
         cameraShake: true,
+        autoRotate: false,
+        autoRotateSpeed: 1.0,
+        rotateToPolarAngle: 1.5,
         minAzimuthAngle: -Math.PI * .25,
         maxAzimuthAngle: Math.PI * .25,
         minPolarAngle: Math.PI * .25,
-        maxPolarAngle: Math.PI * .75
+        maxPolarAngle: Math.PI * .75,
+        maxPolarAngleFinish: Math.PI * .75
       },
       {
         //scene2 story telling
@@ -77,46 +91,55 @@ var SCENE = (function () {
         forward: 78,
         backward: 420,
         cameraShake: false,
-        minAzimuthAngle: -Math.PI * .5,
-        maxAzimuthAngle: Math.PI * .5,
-        minPolarAngle: Math.PI * .1,
-        maxPolarAngle: Math.PI * .9/*
+        autoRotate: false,
+        rotateToPolarAngle: 1.5,
+        autoRotateSpeed: 1.0,
         minAzimuthAngle: 0,
         maxAzimuthAngle: 0,
         minPolarAngle: Math.PI * .5,
-        maxPolarAngle: Math.PI * .5
-        */
+        maxPolarAngle: Math.PI * .5,
+        maxPolarAngleFinish: Math.PI * .5
       },
       {
         //scene3 campfire
-        x: -150, 
+        x: -150,
         y: 200,
         z: -620,
         zCameraOffset: 60,
         forward: 30,
         backward: 100,
         cameraShake: false,
+        autoRotate: false,
+        rotateToPolarAngle: 1.5,
+        autoRotateSpeed: .35,
         minAzimuthAngle: 0,
         maxAzimuthAngle: 0,
         minPolarAngle: Math.PI * .5,
-        maxPolarAngle: Math.PI * .5
+        maxPolarAngle: Math.PI * .5,
+        maxPolarAngleFinish: Math.PI * .5
       },
       {
         //scene4 city
-        x: -150,
+        x: 150,
         y: 400,
         z: -820,
         zCameraOffset: 30,
-        forward:  10,
-        backward: 30,
+        forward: 10,
+        backward: 20,
+        //backward: 420,
         cameraShake: false,
+        autoRotate: true,
+        autoRotateSpeed: 0.4,
+        rotateToPolarAngle: 0,
         minAzimuthAngle: -Math.PI,
-        maxAzimuthAngle: Math.PI ,
-        minPolarAngle: Math.PI * .01,
-        maxPolarAngle: Math.PI * .45
+        maxAzimuthAngle: Math.PI * 2,
+        minPolarAngle: 0,
+        maxPolarAngle: 0,
+        maxPolarAngleFinish: Math.PI * .45
+       // maxPolarAngleFinish: Math.PI
       },
       {
-      //scene5
+        //scene5
         x: 0,
         y: 50,
         z: -1200,
@@ -124,10 +147,15 @@ var SCENE = (function () {
         forward: 10,
         backward: 100,
         cameraShake: true,
+        autoRotate: false,
+        autoRotateSpeed: 1.0,
+        rotateToPolarAngle: 1.5,
         minAzimuthAngle: -Math.PI * .5,
         maxAzimuthAngle: Math.PI * .5,
         minPolarAngle: Math.PI * .1,
-        maxPolarAngle: Math.PI * .9
+        maxPolarAngle: Math.PI * .9,
+        maxPolarAngleFinish: Math.PI * .9
+
       },
       {
         //scene6
@@ -138,10 +166,14 @@ var SCENE = (function () {
         forward: 10,
         backward: 100,
         cameraShake: true,
+        autoRotate: false,
+        rotateToPolarAngle: 1.5,
+        autoRotateSpeed: 1.0,
         minAzimuthAngle: -Math.PI * .5,
         maxAzimuthAngle: Math.PI * .5,
         minPolarAngle: Math.PI * .1,
-        maxPolarAngle: Math.PI * .9
+        maxPolarAngle: Math.PI * .9,
+        maxPolarAngleFinish: Math.PI * .9
       }
     ];
 
@@ -162,7 +194,7 @@ var SCENE = (function () {
         if (currentIndex === totalSections) {
           if (!isLocked) {
             events.trigger('end');
-            currentIndex=0;
+            currentIndex = 0;
             animateCamera(currentIndex);
           }
           return false;
@@ -170,6 +202,7 @@ var SCENE = (function () {
         currentIndex++;
         animateCamera(currentIndex);
       }
+
       function prev() {
         jQuery('html,body').css('cursor', 'default');
         if (currentIndex === 0) {
@@ -178,7 +211,7 @@ var SCENE = (function () {
         currentIndex--;
         animateCamera(currentIndex);
       }
-      
+
       document.addEventListener('mouseup', onDocumentMouseUp, false);
       document.addEventListener('mousedown', onDocumentMouseDown, false);
       document.addEventListener('touchstart', onDocumentTouchStart, false);
@@ -195,7 +228,13 @@ var SCENE = (function () {
           sections[currentIndex].theNextBtnIsDown();
         }
       }
+
       function onDocumentMouseUp(event) {
+        console.log('');
+        console.log('onDocumentMouseUp');
+        console.log(controls);
+        console.log('controls.getPolarAngle()');
+        console.log(controls.getPolarAngle());
         mouseDown = false;
         event.preventDefault();
         mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2 - 1;
@@ -203,9 +242,10 @@ var SCENE = (function () {
         raycaster.setFromCamera(mouse, camera);
         var sectionNextBtn = raycaster.intersectObject(sections[currentIndex].getTheNextBtn().el, true);
         if (sectionNextBtn.length > 0) {
-            next();
+          next();
         }
       }
+
       function onDocumentTouchStart(event) {
         event.preventDefault();
         event.clientX = event.touches[0].clientX;
@@ -230,17 +270,17 @@ var SCENE = (function () {
 
       scene = new THREE.Scene();
       scene.fog = new THREE.FogExp2(parameters.fogColor, 0.01);
+      //scene.fog = new THREE.FogExp2(parameters.fogColor, 0.000001);
 
       ambientLight = new THREE.AmbientLight(0x404040); // 
       scene.add(ambientLight);
 
-      camera = new THREE.PerspectiveCamera(190, $viewport.width() / $viewport.height(), 1, 4000);
+      camera = new THREE.PerspectiveCamera(190, $viewport.width() / $viewport.height(), 1, 8000);
       camera.position.set(0, 0, 60);
 
       controls = new THREE.OrbitControls(camera, renderer.domElement);
       controls.enableDamping = true;
       controls.dampingFactor = .50;
-      
       controls.enablePan = false;
       controls.enableZoom = true;
       controls.zoomSpeed = .5;
@@ -278,7 +318,6 @@ var SCENE = (function () {
           }
         }
       }
-    
       jQuery(window).on('resize', onResize);
       $viewport.on('mousemove', onMouseMove);
       navigation();
@@ -312,10 +351,33 @@ var SCENE = (function () {
       renderer.setSize($viewport.width(), $viewport.height());
     }
 
+    var spinCameraDownInterval;
+
+    function cityCameraDownInt() {
+      console.log('cityCameraDownInt');
+      rotateDownSpeed = .01;
+      spinCameraDownInterval = setInterval(spinCameraDown, 40);
+    }
+
+    var rotateDownSpeed = .01;
+
+    function spinCameraDown() {
+     // console.log('spinCameraDown');
+      if (!mouseDown) {
+        if (rotateDownSpeed < .35) {
+          rotateDownSpeed *= 1.01;
+        }
+        controls.rotateItUp(-rotateDownSpeed * Math.PI / 180);
+      }
+    }
+
     function animateCamera(index) {
-
-      var tweenTime = 1.5;
-
+      var tweenTime = 3.0;
+      if (currentIndex == 4) {
+        console.log('spinCameraDownInterval');
+        console.log(spinCameraDownInterval);
+        clearInterval(spinCameraDownInterval);
+      }
 
       currentIndex = index;
       cameraShakeY = 0;
@@ -337,20 +399,20 @@ var SCENE = (function () {
           index: index
         },
       };
-   
+
       events.trigger('section:changeBegin', data);
-      var theDelay =  3;
+      var theDelay = .35;
       tweenMax.to(camera.position, tweenTime, {
         delay: theDelay,
         x: nextPosition.x,
         y: nextPosition.y,
         z: nextPosition.z + nextPosition.zCameraOffset,
-        ease: window.Quart.easeInOut,
+        ease: Power2.easeInOut,
         onStart: function () {
           isScrolling = true;
           // SOUNDS.wind.play();
-         
-          controls.enabled = false;
+          controls.autoRotate = sectionData[currentIndex].autoRotate;
+          controls.autoRotateSpeed = sectionData[currentIndex].autoRotateSpeed;
         },
         onComplete: function () {
           if (previousIndex === index) {
@@ -359,27 +421,42 @@ var SCENE = (function () {
           isScrolling = false;
           events.trigger('section:changeComplete', data);
           cameraShake = sectionData[currentIndex].cameraShake;
-          controls.minAzimuthAngle = sectionData[currentIndex].minAzimuthAngle;
-          controls.maxAzimuthAngle = sectionData[currentIndex].maxAzimuthAngle;
-          controls.minPolarAngle = sectionData[currentIndex].minPolarAngle;
-          controls.maxPolarAngle = sectionData[currentIndex].maxPolarAngle;
-          controls.enabled = true;
-
           previousIndex = index;
         }
       });
+
       tweenMax.to(cameraTarget, tweenTime, {
         delay: theDelay,
         x: nextPosition.x,
         y: nextPosition.y,
         z: nextPosition.z,
-        ease: window.Quart.easeInOut
+        ease: Power2.easeInOut
       });
+
       tweenMax.to(controls, tweenTime, {
         delay: theDelay,
+        minAzimuthAngle: sectionData[currentIndex].minAzimuthAngle,
+        maxAzimuthAngle: sectionData[currentIndex].maxAzimuthAngle,
+        minPolarAngle: sectionData[currentIndex].minPolarAngle,
+        maxPolarAngle: sectionData[currentIndex].maxPolarAngle,
         minDistance: sectionData[currentIndex].forward,
         maxDistance: sectionData[currentIndex].backward,
-        ease: window.Quart.easeInOut
+        ease: Power2.easeInOut,
+        onComplete: function () {
+          console.log('controls onComplete');
+        }
+      });
+      tweenMax.to(controls, .1, {
+        delay: theDelay + tweenTime + .1,
+        maxPolarAngle: sectionData[currentIndex].maxPolarAngleFinish,
+        ease: Power2.easeInOut,
+        onComplete: function () {
+          console.log('controls onComplete maxPolarAngleFinish');
+          if (currentIndex == 4) {
+            cityCameraDownInt();
+          }
+
+        }
       });
     }
     return {
@@ -387,7 +464,6 @@ var SCENE = (function () {
         $viewport = $el;
         setup();
       },
-
       config: function (options) {
         parameters = jQuery.extend(parameters, options);
       },
@@ -404,6 +480,11 @@ var SCENE = (function () {
           section.el.position.y = sectionData[i].y;
           section.el.position.z = sectionData[i].z;
           scene.add(section.el);
+        }
+        // set cityDevMode to true to add helper to sunlight shadow cam in city scene
+
+        if (cityDevMode) {
+          scene.add(new THREE.CameraHelper(sections[4].theSunlight().shadow.camera));
         }
 
         theAtmosphereParticles = new BackgroundParticles({

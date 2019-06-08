@@ -26,7 +26,6 @@ ourCityScene.el.position.x = 0;
 ourCityScene.el.position.y = 0;
 ourCityScene.el.position.z = 0;
 fourSection.add(ourCityScene.el);
-
 fourSection.nextBtnIsIn = false;
 fourSection.nextBtnIsOver = false;
 fourSection.nextBtnIsDown = false;
@@ -77,21 +76,31 @@ fourSection.theNextBtnIsOut = function () {
 fourSection.add(nextBtn.el);
 
 fourSection.onIn(function () {
+  console.log('fourSection.onIn');
 });
 
 fourSection.onOut(function () {
-
-ourCityScene.stop();
-clearInterval(_this.bringInTheNextBtnInterval);
+  console.log('fourSection.onOut');
+  ourCityScene.stop();
+  clearInterval(_this.bringInTheNextBtnInterval);
 });
 
 fourSection.onStart(function () {
+  console.log('fourSection.onStart');
   ourCityScene.start();
   _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 4500);
 });
 
 fourSection.onStop(function () {
- 
+  console.log('fourSection.onStop');
 });
+
+fourSection.theSunlight = function () {
+ return ourCityScene.theSunlight();
+};
+
+
+
+
 
 module.exports = fourSection;
