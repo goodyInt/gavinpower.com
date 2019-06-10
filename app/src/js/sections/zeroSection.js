@@ -115,19 +115,25 @@ nextBtn.el.rotation.y = .35;
 zeroSection.add(nextBtn.el);
 
 zeroSection.onIn(function () {
+  console.log('zeroSection.onIn');
 });
 
 zeroSection.onOut(function (way) {
+  console.log('zeroSection.onOut');
+
 });
 
 zeroSection.onStart(function () {
+  console.log('zeroSection.onStart');
   if (!heightMap.ready) {
     return false;
   }
+  zeroSection.show();
   heightMap.start();
 });
 
 zeroSection.onStop(function () {
+  console.log('zeroSection.onStop');
   if (!heightMap.ready) {
     return false;
   }
@@ -135,10 +141,22 @@ zeroSection.onStop(function () {
   nextBtn.overOut();
   zeroSection.nextBtnIsOver = false;
   zeroSection.nextBtnIsDown = false;
+  zeroSection.hide();
 });
 
 zeroSection.show = function () {
+  console.log('zeroSection.show');
   heightMap.el.visible = true;
+  theSectionParticles0.el.visible = true;
+  nextBtn.el.visible = true;
+  sectionLines0.el.visible = true;
+};
+zeroSection.hide = function () {
+  console.log('zeroSection.hide');
+  heightMap.el.visible = false;
+  theSectionParticles0.el.visible = false;
+  sectionLines0.el.visible = false;
+  nextBtn.el.visible = false;
 };
 
 zeroSection.textIn = function () {
@@ -151,10 +169,6 @@ heightMap.setOnCompleteFunction(zeroSection.textIn);
 zeroSection.startUpFirstTime = function (mainFunction) {
   heightMap.startItUp(mainFunction);
   this.playing = true;
-};
-
-zeroSection.hide = function () {
-  heightMap.el.visible = false;
 };
 
 zeroSection.getTheNextBtn = function () {

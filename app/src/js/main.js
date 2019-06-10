@@ -32,7 +32,7 @@ imagesLoader.onComplete(function () {
       map.$el.show();
       map.in();
       menu.in();
-     });
+    });
   });
 });
 
@@ -73,6 +73,8 @@ SCENE.addSections([
 ]);
 
 SCENE.on('section:changeBegin', function () {
+
+ 
   var way = this.way;
   var to = this.to.name;
   var from = this.from.name;
@@ -92,26 +94,26 @@ SCENE.on('section:changeBegin', function () {
 
       break;
     case 'two':
-    if (from !== 'three') {
-      twoSection.in();
-      twoSection.start();
-      //
-      threeSection.in();
-      threeSection.start();
-    }
+      if (from !== 'three') {
+        twoSection.in();
+        twoSection.start();
+        //
+        threeSection.in();
+        threeSection.start();
+      }
       break;
     case 'three':
-    if (from !== 'two') {
-      twoSection.in();
-      twoSection.start();
-      //
-      threeSection.in();
-      threeSection.start();
-    }
+      if (from !== 'two') {
+        twoSection.in();
+        twoSection.start();
+        //
+        threeSection.in();
+        threeSection.start();
+      }
       break;
     case 'four':
-      fourSection.in();
-      fourSection.start();
+       fourSection.in();
+ 
 
       break;
     case 'five':
@@ -137,16 +139,16 @@ SCENE.on('section:changeBegin', function () {
       oneSection.out(way);
       break;
     case 'two':
-     if (to !== 'three') {
-      twoSection.out(way);
-      threeSection.out(way);
-     }
+      if (to !== 'three') {
+        twoSection.out(way);
+        threeSection.out(way);
+      }
       break;
     case 'three':
-     if (to !== 'two') {
-      twoSection.out(way);
-      threeSection.out(way);
-     }
+      if (to !== 'two') {
+        twoSection.out(way);
+        threeSection.out(way);
+      }
       break;
     case 'four':
       fourSection.out(way);
@@ -163,7 +165,7 @@ SCENE.on('section:changeBegin', function () {
 });
 
 SCENE.on('section:changeComplete', function () {
- var to = this.to.name;
+  var to = this.to.name;
   var from = this.from.name;
   console.log('');
   console.log('changeComplete to: ' + to);
@@ -199,6 +201,28 @@ SCENE.on('section:changeComplete', function () {
     default:
       break;
   }
+  switch (to) {
+    case 'zero':
+
+      break;
+    case 'one':
+      break;
+    case 'two':
+      break;
+    case 'three':
+      break;
+    case 'four':
+    
+      fourSection.start();
+      
+      break;
+    case 'five':
+      break;
+    case 'six':
+      break;
+    default:
+      break;
+  }
 });
 
 // map
@@ -215,5 +239,16 @@ map.onClick(function (index) {
 SCENE.on('section:changeBegin', function () {
   map.setActive(this.to.index);
 });
+
+SCENE.on('section:newEvent', function () {
+ console.log('section:newEvent: ' + this.data);
+});
+
+
+SCENE.on('newsNoSectionsEvent', function () {
+
+  console.log('newsNoSectionsEvent: ' +  this.data);
+
+ });
 
 SCENE.start();

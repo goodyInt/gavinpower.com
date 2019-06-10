@@ -45,24 +45,43 @@ sixAnimatedText.out();
 sixSmoke.el.visible = false;
 
 sixSection.onIn(function () {
+  console.log('sixSection.onIn');
   sixAnimatedText.in();
   sixSection.smokeStart();
 });
 
 sixSection.onOut(function () {
+  console.log('sixSection.onOut');
   sixAnimatedText.out();
 });
 
 sixSection.onStart(function () {
+  console.log('sixSection.onStart');
   sixAnimatedText.start();
+  sixSection.show();
   _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 4500);
 });
 
 sixSection.onStop(function () {
+  console.log('sixSection.onStop');
   sixAnimatedText.stop();
   sixSection.smokeStop();
+  sixSection.hide();
   clearInterval(_this.bringInTheNextBtnInterval);
 });
+sixSection.show = function () {
+  console.log('sixSection.show');
+  sixSmoke.el.visible = true;
+  sixAnimatedText.el.visible = true;
+  nextBtn.el.visible = true;
+ 
+};
+sixSection.hide = function () {
+  console.log('sixSection.hide');
+  sixSmoke.el.visible = false;
+  sixAnimatedText.el.visible = false;
+  nextBtn.el.visible = false;
+};
 
 var sixSmokePlaying = false;
 

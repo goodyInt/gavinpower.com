@@ -57,7 +57,6 @@ var moonLight = new THREE.SpotLight(0x888888, 1.65, 0, Math.PI / 2);
 moonLight.position.set(0, 500, -250);
 moonLight.castShadow = true;
 
-
 var spotLightHelper = new THREE.SpotLightHelper(moonLight);
 //twoSection.add(spotLightHelper);
 
@@ -91,37 +90,47 @@ twoSection.add(nextBtn.el);
 twoSection.onIn(function () {});
 
 twoSection.onOut(function () {
- 
   ourStoryScene.onOut();
-  console.log('twoSection.onOut');
-  console.log('this');
-  console.log(this);
-  console.log('_this');
-  console.log(_this);
-  console.log(twoSection);
-
 /// lightsHolder.remove(moonLight);
 });
 
 twoSection.onStart(function () {
-  // console.log('twoSection.onStart');
+  console.log('twoSection.onStart');
+  twoSection.show();
   ourStoryScene.start();
   //lightsHolder.add(moonLight);
   // _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 4500);
 });
 
 twoSection.onStop(function () {
-  // console.log('twoSection.onStop');
+   console.log('twoSection.onStop');
+  twoSection.hide();
   ourStoryScene.stop();
   clearInterval(_this.bringInTheNextBtnInterval);
   nextBtn.overOut();
   nextBtn.out('up');
 });
 
+twoSection.show = function () {
+  console.log('twoSection.show');
+  theSectionParticles2.el.visible = true;
+  sectionLines2.el.visible = true;
+  ourStoryScene.el.visible = true;
+  nextBtn.el.visible = true;
+  theSectionParticlesWhite2.el.visible = true;
+};
+twoSection.hide = function () {
+  console.log('twoSection.hide');
+  theSectionParticlesWhite2.el.visible = false;
+  sectionLines2.el.visible = false;
+  theSectionParticles2.el.visible = false;
+  ourStoryScene.el.visible = false;
+  nextBtn.el.visible = false;
+};
+
 twoSection.handleResize = function () {
   ourStoryScene.updateShaderHW();
 }
-
 ////
 twoSection.nextBtnIsIn = false;
 twoSection.nextBtnIsOver = false;

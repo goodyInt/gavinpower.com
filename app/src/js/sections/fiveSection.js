@@ -42,27 +42,47 @@ this.bringInTheBtn = function () {
 fiveSection.add(fiveSmoke.el);
 fiveSection.add(fiveAnimatedText.el);
 fiveAnimatedText.out();
-fiveSmoke.el.visible = false;
+
 
 fiveSection.onIn(function () {
+  console.log('fiveSection.onIn')
   fiveAnimatedText.in();
   fiveSection.smokeStart();
 });
 
 fiveSection.onOut(function () {
+  console.log('fiveSection.onOut')
   fiveAnimatedText.out();
 });
 
 fiveSection.onStart(function () {
+  console.log('fiveSection.onStart')
   fiveAnimatedText.start();
   _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 4500);
+  fiveSection.show();
 });
 
 fiveSection.onStop(function () {
+  console.log('fiveSection.onStop')
   fiveAnimatedText.stop();
   fiveSection.smokeStop();
   clearInterval(_this.bringInTheNextBtnInterval);
+  fiveSection.hide();
 });
+
+fiveSection.show = function () {
+  console.log('fiveSection.show');
+  fiveSmoke.el.visible = true;
+  fiveAnimatedText.el.visible = true;
+  nextBtn.el.visible = true;
+ 
+};
+fiveSection.hide = function () {
+  console.log('fiveSection.hide');
+  fiveSmoke.el.visible = false;
+  fiveAnimatedText.el.visible = false;
+  nextBtn.el.visible = false;
+};
 
 var fiveSmokePlaying = false;
 
@@ -73,7 +93,7 @@ fiveSection.smokeStart = function () {
   }
   fiveSmokePlaying = true;
   fiveSmoke.start();
-  fiveSmoke.el.visible = true;
+
 };
 
 fiveSection.smokeStop = function () {
@@ -83,7 +103,7 @@ fiveSection.smokeStop = function () {
 
   fiveSmokePlaying = false;
   fiveSmoke.stop();
-  fiveSmoke.el.visible = false;
+
 };
 
 fiveSection.updateColors = function (color1, color2) {

@@ -94,7 +94,7 @@ oneSection.add(nextBtn.el);
 
 oneSection.onIn(function () {
   console.log('oneSection.onIn');
-  console.log('oneSection.el.position.z: ' + oneSection.el.position.z);
+ 
   writingText.in();
 });
 
@@ -108,7 +108,7 @@ oneSection.onStart(function () {
   oneSectionStringCounter = 0;
   stringToType = '';
   writingText.updateCopy('');
-  creativeWriting.show();
+  oneSection.show();
   creativeWriting.start();
   _this.startTheTypeingInterval = setInterval(_this.startTheTyping, 4000);
 });
@@ -116,10 +116,27 @@ oneSection.onStart(function () {
 oneSection.onStop(function () {
   console.log('oneSection.onStop');
   creativeWriting.stop();
-  creativeWriting.hide();
   nextBtn.overOut();
   nextBtn.out('up');
+  oneSection.hide();
 });
+oneSection.show = function () {
+  console.log('oneSection.show');
+  creativeWriting.show();
+  theSectionParticles1.el.visible = true;
+  sectionLines1.el.visible = true;
+  
+  writingText.el.visible = true;
+  nextBtn.el.visible = true;
+};
+oneSection.hide = function () {
+  console.log('oneSection.hide');
+  creativeWriting.hide();
+  theSectionParticles1.el.visible = false;
+  sectionLines1.el.visible = false;
+  writingText.el.visible = false;
+  nextBtn.el.visible = false;
+};
 
 oneSection.nextBtnIsIn = false;
 oneSection.nextBtnIsOver = false;
