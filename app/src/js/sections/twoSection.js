@@ -8,9 +8,8 @@ var TextPanel = require('../objects/TextPanelObject');
 var BackgroundParticles = require('../objects/backgroundParticlesObject');
 var BackgroundLines = require('../objects/BackgroundLinesObject');
 var _this = this;
-var lightsHolder = new THREE.Object3D();
-
-twoSection.add(lightsHolder);
+var Events = require('../classes/EventsClass');
+var twoEvents = new Events();
 
 var theSectionParticles2 = new BackgroundParticles({
   rangeX: [-115, 115],
@@ -53,16 +52,20 @@ ourStoryScene.el.position.y = 10;
 ourStoryScene.el.position.z = 350;
 twoSection.add(ourStoryScene.el);
 
-var moonLight = new THREE.SpotLight(0x888888, 1.65, 0, Math.PI / 2);
-moonLight.position.set(0, 500, -250);
-moonLight.castShadow = true;
+twoSection.on =  function () {
+  twoEvents.on.apply(twoEvents, arguments);
+}
 
-var spotLightHelper = new THREE.SpotLightHelper(moonLight);
-//twoSection.add(spotLightHelper);
+ourStoryScene.on('sectionFullyLoaded', function () {
+  console.table(this);
+  twoEvents.trigger('sectionFullyLoaded', {section: 2 , message: 'Section Two is Loaded'});
+});
 
-var moonShadowCamera = new THREE.PerspectiveCamera(70, 1, 100, 3000)
-moonLight.shadow = new THREE.LightShadow(moonShadowCamera);
-moonLight.shadow.bias = 0.0001;
+ourStoryScene.on('sectionUnloaded', function () {
+  console.table(this);
+  twoEvents.trigger('sectionUnloaded', {section: 2 , message: 'Section Two is UnLoaded'});
+});
+
 
 var nectBtnTextString = "<<< let's tell one together";
 var nextBtn = new TextPanel(
@@ -87,19 +90,28 @@ this.bringInTheBtn = function () {
   twoSection.nextBtnIsIn = true;
 }
 twoSection.add(nextBtn.el);
-twoSection.onIn(function () {});
+
+twoSection.onIn(function () {
+  console.log('twoSection.onIn');
+ 
+  ourStoryScene.el.visible = true;
+  theSectionParticles2.el.visible = true;
+  theSectionParticlesWhite2.el.visible = true;
+  sectionLines2.el.visible = true;
+  nextBtn.el.visible = true;
+  ourStoryScene.onIn();
+  
+});
 
 twoSection.onOut(function () {
+  console.log('twoSection.onOut');
   ourStoryScene.onOut();
-/// lightsHolder.remove(moonLight);
 });
 
 twoSection.onStart(function () {
   console.log('twoSection.onStart');
   twoSection.show();
   ourStoryScene.start();
-  //lightsHolder.add(moonLight);
-  // _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 4500);
 });
 
 twoSection.onStop(function () {
@@ -113,11 +125,6 @@ twoSection.onStop(function () {
 
 twoSection.show = function () {
   console.log('twoSection.show');
-  theSectionParticles2.el.visible = true;
-  sectionLines2.el.visible = true;
-  ourStoryScene.el.visible = true;
-  nextBtn.el.visible = true;
-  theSectionParticlesWhite2.el.visible = true;
 };
 twoSection.hide = function () {
   console.log('twoSection.hide');
@@ -131,7 +138,7 @@ twoSection.hide = function () {
 twoSection.handleResize = function () {
   ourStoryScene.updateShaderHW();
 }
-////
+
 twoSection.nextBtnIsIn = false;
 twoSection.nextBtnIsOver = false;
 twoSection.nextBtnIsDown = false;

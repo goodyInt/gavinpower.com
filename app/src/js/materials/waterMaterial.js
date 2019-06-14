@@ -11,10 +11,16 @@ var waterShader = new THREE.ShaderMaterial({
       value: new THREE.Vector2(window.innerWidth, window.innerHeight)
     },
     fogDensity: {
-      value: 0.1
+      value: 1000.005
     },
     fogColor: {
       value: 0x000000
+    },
+    tintDensity: {
+      value: 0.85
+    },
+    tintColor: {
+      value: new THREE.Color(0x000000)
     }
   },
   vertexShader: [
@@ -28,6 +34,9 @@ var waterShader = new THREE.ShaderMaterial({
     'uniform vec3 fogColor;',
     'uniform float uGlobalTime;',
     'uniform vec2 uResolution;',
+    'uniform vec3 tintColor;',
+    'uniform float tintDensity;',
+    
 
     'const int NUM_STEPS = 8;',
 
@@ -39,7 +48,7 @@ var waterShader = new THREE.ShaderMaterial({
     'const float SEA_FREQ = 0.16;',
     'const vec3 SEA_BASE = vec3(0.0,0.12,0.12);',
     'const vec3 SEA_WATER_COLOR = vec3(0.0,0.1,0.1);',
-  
+    
     'mat2 octave_m = mat2(1.6,1.2,-1.2,1.6);',
 
     'mat3 fromEuler(vec3 ang) {',
@@ -196,10 +205,11 @@ var waterShader = new THREE.ShaderMaterial({
       'heightMapTracing(ori,dir,p);',
       'vec3 dist = p - ori;',
       'vec3 n = getNormal(p,dot(dist,dist) * (0.1 / uResolution.x));',
-      'vec3 light = normalize(vec3(0.0,1.0,0.8));',
+      'vec3 light = normalize(vec3(0.0,0.8,0.8));',
 
       // color
-      'vec3 color = mix(getSkyColor(dir), getSeaColor(p,n,light,dir,dist), pow(smoothstep(0.0,-0.05,dir.y),0.3));',
+      'vec3 colorOrig = mix(getSkyColor(dir), getSeaColor(p,n,light,dir,dist), pow(smoothstep(0.0,-0.05,dir.y),0.3));',
+      'vec3 color = mix(colorOrig,tintColor,tintDensity);',
 
       // post
       'gl_FragColor = vec4(pow(color,vec3(0.75)), 1.0);',

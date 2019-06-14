@@ -1,9 +1,11 @@
 'use strict';
 var THREE = require('three');
+var Fire = require('../objects/FireObject');
 
 var OBJLoader = require('three-obj-loader');
 OBJLoader(THREE);
 var MTLLoader = require('three-mtl-loader');
+var Events = require('../classes/EventsClass');
 
 function CampScene() {
   this.creativeObject = {};
@@ -12,92 +14,183 @@ function CampScene() {
   this.rotateHorTween;
   this.rotateVertTween;
   this.animateTheFireInt;
-
-
   var loader = new THREE.FontLoader();
   var _this = this;
-
-  var fireLight;
-  var fireLightHelper;
-  var fireLight2;
-  var fireLight2Helper;
+  this.events = new Events();
+  this.fireLight;
+  this.fireLight2;
   var fireLightX = 2;
-  var fireLightY =  -18;
-  var fireLightZ =  14;
+  var fireLightY = -18;
+  var fireLightZ = 14;
   var fireLight2X = 2;
-  var fireLight2Y =  - 18;
-  var fireLight2Z =  14;
+  var fireLight2Y = -18;
+  var fireLight2Z = 14;
   var firelightYCounter = 0;
   var firelightXCounter = 0;
   var firelightZCounter = 0;
   var firelight2YCounter = 0;
   var firelight2XCounter = 0;
   var firelight2ZCounter = 0;
+  this.lightsHolder = new THREE.Object3D();
 
+  this.moonLight = new THREE.SpotLight(0x333333, 0.00, 1250, Math.PI / 2);
+  this.moonLight.position.set(0, 500, -650);
+  this.moonLight.castShadow = true;
+  this.lightsHolder.add(this.moonLight);
+  _this.el.add(_this.lightsHolder);
+
+  var moonLightLightTarget = new THREE.Object3D();
+  moonLightLightTarget.position.x = 0;
+  moonLightLightTarget.position.y = 0;
+  moonLightLightTarget.position.z = -155;
+  this.moonLight.target = moonLightLightTarget;
+  this.el.add(moonLightLightTarget);
+
+  this.on = function () {
+    _this.events.on.apply(_this.events, arguments);
+  }
+
+  //var moonLightHelper = new THREE.SpotLightHelper(moonLight);
+  //moonLightHelper.matrix = moonLightHelper.light.matrix;
+  //this.el.add(moonLightHelper);
+
+  var moonShadowCamera = new THREE.PerspectiveCamera(70, 1, 100, 3000)
+  this.moonLight.shadow = new THREE.LightShadow(moonShadowCamera);
+  this.moonLight.shadow.bias = 0.0001;
+
+  var fireXYZ = {
+    fireX: -1,
+    fireY: -29,
+    fireZ: 13,
+    yOffset: -15
+  }
+  var fireLightXYZ = {
+    fireX: -1,
+    fireY: -29,
+    fireZ: 13,
+    yOffset: -200
+  }
   var fireIntensity = .035;
-  fireLight = new THREE.PointLight(0xff0000, fireIntensity, 100);
-  fireLight.position.set(fireLightX, fireLightY, fireLightZ);
- // fireLightHelper = new THREE.PointLightHelper( fireLight, 1 );
- // fireLightHelper.matrix = fireLightHelper.light.matrix;
- 
-  fireLight2 = new THREE.PointLight(0xffa500, fireIntensity, 100);
-  fireLight2.position.set(fireLight2X, fireLight2Y, fireLight2Z);
- // fireLight2Helper = new THREE.PointLightHelper( fireLight2, 1 );
- // fireLight2Helper.matrix = fireLight2Helper.light.matrix;
+  this.fireLight = new THREE.PointLight(0xff0000, fireIntensity, 80);
+  this.fireLight.position.set(fireLightX, fireLightY + fireLightXYZ.yOffset, fireLightZ);
+  
+  /*var fireLightHelper = new THREE.PointLightHelper(this.fireLight, 1);
+  fireLightHelper.matrix = fireLightHelper.light.matrix;
+  this.el.add(fireLightHelper);*/
 
-  this.animateFire = function (){
+  this.fireLight2 = new THREE.PointLight(0xffa500, fireIntensity, 80);
+  this.fireLight2.position.set(fireLight2X, fireLight2Y + fireLightXYZ.yOffset, fireLight2Z);
+  
+  /*var fireLight2Helper = new THREE.PointLightHelper(this.fireLight2, 1);
+  fireLight2Helper.matrix = fireLight2Helper.light.matrix;
+  this.el.add(fireLight2Helper);*/
 
+  var fireYCounter = 0;
+  var fireXCounter = 0;
+  var fireZCounter = 0;
+
+
+  this.animateFire = function () {
+    console.log('animateFire');
+
+    //fire 
+    fireYCounter += .65;
+    fireXCounter += .15;
+    fireZCounter += .35;
+
+    fireXYZ.fireY += Math.sin(fireYCounter) * .35;
+    fireXYZ.fireX += Math.sin(fireXCounter) * .1;
+    fireXYZ.fireZ += Math.sin(fireZCounter) * .25;
+
+    threeCampFire.el.position.x = fireXYZ.fireX;
+    threeCampFire.el.position.y = fireXYZ.fireY + fireXYZ.yOffset;
+    threeCampFire.el.position.z = fireXYZ.fireZ;
+
+    //firelights
     firelightYCounter += .35;
     firelightXCounter += .5;
     firelightZCounter += .45;
     firelight2YCounter += .3;
     firelight2XCounter += .6;
-    firelight2ZCounter += .5;
-
+    firelight2ZCounter += .5;;
     fireLightY += Math.sin(firelightYCounter) * .5;
     fireLightX += Math.sin(firelightXCounter) * 1.5;
     fireLightZ += Math.sin(firelightZCounter) * 2;
     fireLight2Y += Math.sin(firelight2YCounter) * .5;
     fireLight2X += Math.sin(firelight2XCounter) * 1.5;
-    
 
     fireLight2Z += Math.sin(firelight2ZCounter) * 2;
-    fireLight.intensity = Math.random() * 1.35 + .15;
-    fireLight2.intensity = Math.random() * 1.35 + .15;
-    fireLight.position.set(fireLightX - 5, fireLightY, fireLightZ);
-    fireLight2.position.set(fireLight2X - 5, fireLight2Y, fireLight2Z);
+    _this.fireLight.intensity = Math.random() * 1.35 + .15;
+    _this.fireLight2.intensity = Math.random() * 1.35 + .15;
+    _this.fireLight.position.set(fireLightX - 5, fireLightY + fireLightXYZ.yOffset, fireLightZ);
+    _this.fireLight2.position.set(fireLight2X - 5, fireLight2Y + fireLightXYZ.yOffset, fireLight2Z);
   }
-  
 
-  this.prepCampfireScene = function() {
-       console.log('prepCampfireScene');
-    // dumb hack  - not sure why, but adding these lights here fixes a rendering bug in story scene where the render order is mixed up
-    _this.el.add(fireLight);
-   // _this.el.add( fireLightHelper );
-    _this.el.add(fireLight2);
-   // _this.el.add( fireLight2Helper );
+  var threeCampFire = new Fire({
+    color1: '#ff5000',
+    color2: '#ff0000',
+    color3: '#ff0000',
+    color4: '#ff5000',
 
-   
+    layers: 4,
+    data: [{
+        positionX: -2,
+        positionY: -.25,
+        positionZ: 1,
+        rotationZ: (-5 * Math.PI / 180),
+        scale: 1
+      },
+      {
+        positionX: -1.5,
+        positionY: -.75,
+        positionZ: 3,
+        rotationZ: (-5 * Math.PI / 180),
+        scale: 1
+      },
+      {
+        positionX: 1.5,
+        positionY: -1,
+        positionZ: -3,
+        rotationZ: (-5 * Math.PI / 180),
+        scale: 1
+      },
+      {
+        positionX: 2,
+        positionY: -1.5,
+        positionZ: -1,
+        rotationZ: (-5 * Math.PI / 180),
+        scale: 1
+      }
+    ]
+  });
+
+  _this.el.add(threeCampFire.el);
+  threeCampFire.el.visible = false;
+  threeCampFire.el.position.x = fireXYZ.fireX;
+  threeCampFire.el.position.y = fireXYZ.fireY + fireXYZ.yOffset;
+  threeCampFire.el.position.z = fireXYZ.fireZ;
+
+  function lightFire() {
+    console.log('lightFire');
+    threeCampFire.el.visible = true;
+    threeCampFire.start();
     _this.animateTheFireInt = setInterval(_this.animateFire, 100);
   }
 
-  this.cleanUpCampfireScene = function () {
-    console.log('cleanUpCampfireScene');
-
-    _this.el.remove(fireLight);
-    _this.el.remove(fireLight2)
-//    _this.el.remove( fireLightHelper );
- //   _this.el.remove( fireLight2Helper );
- 
+  function extinguishFire() {
+    console.log('extinguishFire');
+    threeCampFire.el.visible = false;
+    threeCampFire.stop();
     clearInterval(_this.animateTheFireInt);
-
   }
 
-  loader.load('fonts/helvetiker_bold.typeface.json', function (font) {
+  
 
+  loader.load('fonts/helvetiker_bold.typeface.json', function (font) {
     var platformMaterial = new THREE.MeshPhongMaterial({
-      color: 0x111111,
-      specular: 0x222222,
+      color: 0x000000,
+      specular: 0x111111,
+      shininess: 20
     });
 
     var platform = new THREE.Mesh(new THREE.BoxBufferGeometry(200, 2, 60), platformMaterial);
@@ -131,7 +224,7 @@ function CampScene() {
 
     var seatMaterial = new THREE.MeshPhongMaterial({
       color: 0x101010,
-      specular: 0x666666,
+      specular: 0x222222,
       shininess: 20
     });
 
@@ -173,11 +266,9 @@ function CampScene() {
     designSign.castShadow = true;
     designSign.receiveShadow = true;
     _this.el.add(designSign);
-    console.log('centerOffset: ' + centerOffset);
     designSign.position.x = centerOffset;
     designSign.position.y = -25;
     designSign.position.z = -25;
-    //_this.el.visible = false;
   });
 
   function Log() {
@@ -185,12 +276,12 @@ function CampScene() {
       color: 0x111111,
       shininess: 10
     });
-  
+
     var logEndMaterial = new THREE.MeshPhongMaterial({
       color: 0x000000,
       shininess: 10
     });
-  
+
     var geometry = new THREE.BoxGeometry(2.5, 2.5, 10);
 
     THREE.Mesh.call(this, geometry, logMaterial);
@@ -217,7 +308,6 @@ function CampScene() {
     log.position.x = 5 * Math.sin((i / 3) * (Math.PI * 2));
     log.position.y = -24;
     log.position.z = 15;
-
     log.rotation.z = (Math.PI / 2) / 2;
     log.rotation.y = (Math.PI / 2) / 2;
     _this.el.add(log);
@@ -225,14 +315,11 @@ function CampScene() {
 
   //addTrees
   var mtlLoader = new MTLLoader();
-
   var materials = mtlLoader.parse(getTreeMatAsString());
-
   var objLoader = new THREE.OBJLoader();
   objLoader.setMaterials(materials);
   var tree0 = objLoader.parse(getTreeGeoAsString());
   tree0.scale.set(4, 4, 4);
-
   tree0.position.x = -35;
   tree0.position.y = -26;
   tree0.position.z = 20;
@@ -244,32 +331,103 @@ function CampScene() {
     }
   });
   _this.el.add(tree0);
-}
 
-CampScene.prototype.start = function () {
-  console.log('CampScene.prototype.start');
-  this.prepCampfireScene();
-  //this.el.visible = true;
+  CampScene.prototype.onIn = function () {
+    console.log('CampScene.prototype.onIn');
+   
+  };
 
-};
-CampScene.prototype.onOut = function () {
-  console.log('CampScene.prototype.onOut');
-  this.cleanUpCampfireScene();
+  var turnLightsOn = function () {
+    console.log('CampScene turnLightsOn');
+    _this.el.add(_this.fireLight);
+    _this.el.add(_this.fireLight2);
 
-};
+    _this.events.trigger('sectionFullyLoaded', {
+      message: 'CampScene Is Loaded'
+    });
 
-CampScene.prototype.stop = function () {
-  console.log('CampScene.prototype.stop');
-  // this.el.visible = false;
-  
-};
+    var lightTime = 2;
+    var delayTime = .25;
+    fireXYZ.yOffset = -10;
+    fireLightXYZ.yOffset = -200;
 
-CampScene.prototype.hide = function () {
-  console.log('CampScene.prototype.hide');
-};
+    lightFire();
 
-function getTreeGeoAsString() {
-  return `
+    TweenMax.to(fireXYZ, lightTime, {
+      delay: delayTime,
+      yOffset: 0,
+      ease: Power1.easeOut
+    });
+
+    TweenMax.to(fireLightXYZ, lightTime, {
+      delay: delayTime,
+      yOffset: 0,
+      ease: Power1.easeOut
+    });
+
+    TweenMax.to(_this.moonLight, lightTime, {
+      delay: 0,
+      intensity: 45,
+      ease: Power1.easeOut
+    });
+  };
+
+  CampScene.prototype.start = function () {
+    console.log('CampScene.prototype.start: ' + this.fireLight);
+    this.fireLight.intensity = 0;
+    this.fireLight2.intensity = 0;
+    this.lightsOn = setTimeout(turnLightsOn, 500);
+  };
+
+  this.CompleteUnload = function () {
+    extinguishFire();
+    _this.el.remove(_this.fireLight);
+    _this.el.remove(_this.fireLight2);
+   
+    _this.events.trigger('sectionUnloaded', {
+      message: 'Campfire Unload Is Complete'
+    });
+  }
+
+  CampScene.prototype.onOut = function () {
+    console.log('CampScene.prototype.onOut')
+    var lightTime = 1.5;
+    var delayTime = .25;
+
+    TweenMax.to(_this.moonLight, lightTime, {
+      delay: delayTime,
+      intensity: 0,
+      ease: Power1.easeOut
+    });
+
+    TweenMax.to(fireXYZ, lightTime, {
+      delay: delayTime,
+      yOffset: -10,
+      ease: Power1.easeOut
+    });
+    
+    TweenMax.to(fireLightXYZ, lightTime, {
+      delay: delayTime,
+      yOffset: -200,
+      ease: Power1.easeOut,
+      onComplete: _this.CompleteUnload
+    });
+  };
+
+  CampScene.prototype.stop = function () {
+    console.log('CampScene.prototype.stop');
+  //  this.el.remove(this.fireLight);
+  //  this.el.remove(this.fireLight2);
+ //   this.el.remove(this.lightsHolder);
+   
+  };
+
+  CampScene.prototype.hide = function () {
+    console.log('CampScene.prototype.hide');
+  };
+
+  function getTreeGeoAsString() {
+    return `
 # Blender v2.79 (sub 0) OBJ File: 'pine.blend'
 # www.blender.org
 mtllib pine.mtl
@@ -739,10 +897,10 @@ f 103//160 105//160 93//160
 f 103//161 104//161 105//161
 f 104//162 92//162 105//162
 `;
-}
+  }
 
-function getTreeMatAsString() {
-  return `
+  function getTreeMatAsString() {
+    return `
 # Blender MTL File: 'pine.blend'
 # Material Count: 3
 
@@ -787,6 +945,7 @@ d 1.000000
 illum 2
 
 `;
+  }
 }
 
 module.exports = CampScene;

@@ -2,6 +2,7 @@
 var THREE = require('three');
 var tweenMax = require('tweenMax');
 var linesMaterial = require('../materials/customLinesMaterial');
+var Events = require('../classes/EventsClass');
 
 function CreativeWriting() {
   this.creativeObject = {};
@@ -11,9 +12,15 @@ function CreativeWriting() {
   this.rotateHorTween;
   this.rotateVertTween;
   this.frontPosArray = [];
+  this.events = new Events();
 
   var loader = new THREE.FontLoader();
   var _this = this;
+  
+  this.on = function () {
+   
+    _this.events.on.apply(_this.events, arguments);
+  }
   loader.load('fonts/[z] Arista_Regular.json', function (font) {
     init(font);
     //animate();
@@ -26,7 +33,7 @@ function CreativeWriting() {
       fragmentShader: linesMaterial.fragmentShader,
       blending: THREE.AdditiveBlending,
       depthTest: false,
-      transparent: true,
+      transparent: false,
       fog: true
     });
 
@@ -105,7 +112,7 @@ function CreativeWriting() {
     });
   }
 
-  
+
   this.rotateDown = function () {
     _this.rotateVertTween = tweenMax.to(_this.thisRotation, 12, {
       ease: Power2.easeInOut,
@@ -130,17 +137,21 @@ function CreativeWriting() {
     var attributes = _this.creativeObject.geometry.attributes;
     var array = attributes.displacement.array;
     offsetZ = startZ + ((finishZ - startZ) * this.target.factor);
-   // console.log(offsetZ);
+    // console.log(offsetZ);
     for (var i = 0; i < _this.frontPosArray.length; i++) {
       array[_this.frontPosArray[i]] = offsetZ;
     }
     attributes.displacement.needsUpdate = true;
   }
+  this.unloadIsComplete = function () {
+    _this.events.trigger('sectionUnloaded', {
+      message: 'Creative Writing is UnLoaded'
+    });
+  }
 }
 
 CreativeWriting.prototype.start = function () {
-
-
+  console.log('CreativeWriting start');
   tweenMax.to({
     factor: 1
   }, 1.5, {
@@ -152,12 +163,17 @@ CreativeWriting.prototype.start = function () {
   this.el.rotation.y = this.el.rotation.x = 0 * (Math.PI / 180);
 
   //if (!this.rotateHorTween) {
-    this.rotateRightStart();
-    this.rotateUpStart();
- // } else {
-   // this.rotateHorTween.resume();
-    //this.rotateVertTween.resume();
- // }
+  this.rotateRightStart();
+  this.rotateUpStart();
+  // } else {
+  // this.rotateHorTween.resume();
+  //this.rotateVertTween.resume();
+  // }
+  console.log('CreativeWriting HERE');
+  this.events.trigger('sectionFullyLoaded', {
+    message: 'Creative Writing is Loaded'
+  });
+ 
 
 };
 CreativeWriting.prototype.onOut = function () {
@@ -168,7 +184,8 @@ CreativeWriting.prototype.onOut = function () {
     delay: 0,
     factor: 0,
     ease: Power1.easeOut,
-    onUpdate: this.animateTextOut
+    onUpdate: this.animateTextOut,
+    onComplete: this.unloadIsComplete
   });
 
 

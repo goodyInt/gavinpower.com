@@ -4,6 +4,7 @@ var jQuery = require('jquery');
 var THREE = require('three');
 var SPRITE3D = require('../libs/sprite3DLib');
 var random = require('../utils/randomUtil');
+var Events = require('../classes/EventsClass');
 
 /**
  * Animated smoke
@@ -20,6 +21,11 @@ var random = require('../utils/randomUtil');
 
 function Smoke(options) {
   var parameters = jQuery.extend(Smoke.defaultOptions, options);
+  this.events = new Events();
+  var _this = this;
+  this.on = function () {
+    _this.events.on.apply(_this.events, arguments);
+  }
 
   var texture = new THREE.TextureLoader().load('./img/fireConvert.png');
   texture.flipY = false;
@@ -83,6 +89,9 @@ function Smoke(options) {
 Smoke.prototype.start = function () {
 
   this.sprite.start();
+  this.events.trigger('sectionFullyLoaded', {
+    message: 'Smoke is Loaded'
+  });
 };
 
 Smoke.prototype.stop = function () {

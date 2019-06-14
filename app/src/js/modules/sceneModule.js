@@ -37,7 +37,8 @@ var SCENE = (function () {
     var isLocked = false;
     var isActive = false;
     var isStarted = false;
-    var isScrolling = false;
+    var isFlying = false;
+    var navFrozen = false;
     var theAtmosphereParticles;
     var cityDevMode = false;
     var rotatePolarAngleObject = {
@@ -93,6 +94,7 @@ var SCENE = (function () {
         minPolarAngle: Math.PI * .5,
         maxPolarAngle: Math.PI * .5,
         maxPolarAngleFinish: Math.PI * .5
+        //   maxPolarAngleFinish: Math.PI * .5
       },
       {
         //scene3 campfire
@@ -126,8 +128,8 @@ var SCENE = (function () {
         maxAzimuthAngle: Math.PI * 2,
         minPolarAngle: 0,
         maxPolarAngle: 0,
-       
-       // maxPolarAngle: Math.PI * .45,
+
+        // maxPolarAngle: Math.PI * .45,
         maxPolarAngleFinish: Math.PI * .45
         // maxPolarAngleFinish: Math.PI
       },
@@ -208,9 +210,8 @@ var SCENE = (function () {
       document.addEventListener('mouseup', onDocumentMouseUp, false);
 
       function onDocumentMouseDown(event) {
-
         mouseDown = true;
-        if (currentIndex == 4) {
+        if (currentIndex == 4 && spinningDownStarted) {
           clearInterval(spinCameraDownInt);
         }
         event.preventDefault();
@@ -224,12 +225,13 @@ var SCENE = (function () {
       }
 
       function onDocumentMouseUp(event) {
-   
-        if (currentIndex == 4) {
-          if (controls.getPolarAngle() <  sectionData[currentIndex].maxPolarAngleFinish) {
+        if (currentIndex == 4 && spinningDownStarted) {
+          if (controls.getPolarAngle() < sectionData[currentIndex].maxPolarAngleFinish) {
             spinCameraDownInt = setInterval(spinCameraDown, 40);
           }
         }
+        console.log('');
+        console.log('onDocumentMouseUp');
         mouseDown = false;
         event.preventDefault();
         mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2 - 1;
@@ -265,7 +267,7 @@ var SCENE = (function () {
 
       scene = new THREE.Scene();
       scene.fog = new THREE.FogExp2(parameters.fogColor, 0.01);
-      //scene.fog = new THREE.FogExp2(parameters.fogColor, 0.000001);
+      //  scene.fog = new THREE.FogExp2(parameters.fogColor, 0.000001);
 
       ambientLight = new THREE.AmbientLight(0x404040); // 
       scene.add(ambientLight);
@@ -347,9 +349,13 @@ var SCENE = (function () {
     }
 
     var spinCameraDownInt;
+    var spinningDownStarted = false;
+
     function cityCameraDownInt() {
       console.log('cityCameraDownInt');
+
       rotateDownSpeed = .01;
+      spinningDownStarted = true;
       spinCameraDownInt = setInterval(spinCameraDown, 40);
     }
 
@@ -368,29 +374,33 @@ var SCENE = (function () {
       }
     }
 
+    var nextPosition;
+    var toFromCallbackData;
+
     function animateCamera(index) {
+
      
-      var tweenTime = 3.0;
+      navFrozen = true;
       if (currentIndex == 4) {
-        console.log('spinCameraDownInt');
-        console.log(spinCameraDownInt);
         clearInterval(spinCameraDownInt);
+        spinningDownStarted = false;
         controls.autoRotate = false;
-        controls.autoRotateSpeed = 0;
         tweenMax.killTweensOf(controls);
       }
+
+      controls.autoRotateSpeed = 0;
 
       currentIndex = index;
       cameraShakeY = 0;
       cameraShakeX = 0;
 
-      var nextPosition = {
+      nextPosition = {
         x: sectionData[currentIndex].x,
         y: sectionData[currentIndex].y,
         z: sectionData[currentIndex].z,
         zCameraOffset: sectionData[currentIndex].zCameraOffset
       }
-      var data = {
+      toFromCallbackData = {
         from: {
           name: sectionsMap[previousIndex],
           index: previousIndex
@@ -399,63 +409,70 @@ var SCENE = (function () {
           name: sectionsMap[index],
           index: index
         },
+        callback: {
+          func: contAnimateCamera
+        }
       };
 
 
-      events.trigger('section:changeBegin', data);
+      events.trigger('section:changeBegin', toFromCallbackData);
+      console.log('Wait Here for unload!');
+     
+    }
 
-      var theDelay = 1.35;
-      tweenMax.to(camera.position, tweenTime, {
-        delay: theDelay,
-        x: nextPosition.x,
-        y: nextPosition.y,
-        z: nextPosition.z + nextPosition.zCameraOffset,
-        ease: Power2.easeInOut,
-        onStart: function () {
-          isScrolling = true;
-          // SOUNDS.wind.play();
+    function contAnimateCamera() {
+      console.log('contAnimateCamera');
+            var tweenTime = 3.0;
+            var index  = currentIndex;
+            var theDelay = 0;
+            tweenMax.to(camera.position, tweenTime, {
+              delay: theDelay,
+              x: nextPosition.x,
+              y: nextPosition.y,
+              z: nextPosition.z + nextPosition.zCameraOffset,
+              ease: Power2.easeInOut,
+              onStart: function () {
+                isFlying = true;
+                // SOUNDS.wind.play();
 
-        },
-        onComplete: function () {
-          if (previousIndex === index) {
-            return false;
-          }
-          isScrolling = false;
-          events.trigger('section:changeComplete', data);
-          cameraShake = sectionData[currentIndex].cameraShake;
-          previousIndex = index;
-        }
-      });
+              },
+              onComplete: function () {
+                if (previousIndex === index) {
+                  return false;
+                }
+                isFlying = false;
+                events.trigger('section:changeComplete', toFromCallbackData);
+                cameraShake = sectionData[currentIndex].cameraShake;
+                previousIndex = index;
+                navFrozen = false;
+              }
+            });
 
-      tweenMax.to(cameraTarget, tweenTime, {
-        delay: theDelay,
-        x: nextPosition.x,
-        y: nextPosition.y,
-        z: nextPosition.z,
-        ease: Power2.easeInOut
-      });
+            tweenMax.to(cameraTarget, tweenTime, {
+              delay: theDelay,
+              x: nextPosition.x,
+              y: nextPosition.y,
+              z: nextPosition.z,
+              ease: Power2.easeInOut
+            });
 
-      tweenMax.to(controls, tweenTime, {
-        delay: theDelay,
-        minAzimuthAngle: sectionData[currentIndex].minAzimuthAngle,
-        maxAzimuthAngle: sectionData[currentIndex].maxAzimuthAngle,
-        minPolarAngle: sectionData[currentIndex].minPolarAngle,
-        maxPolarAngle: sectionData[currentIndex].maxPolarAngle,
-        minDistance: sectionData[currentIndex].forward,
-        maxDistance: sectionData[currentIndex].backward,
-        ease: Power2.easeInOut,
-        onComplete: function () {
-          console.log('controls onComplete');
-        }
-      });
-      tweenMax.to(controls, .1, {
-        delay: theDelay + tweenTime + .1,
-        maxPolarAngle: sectionData[currentIndex].maxPolarAngleFinish,
-        ease: Power2.easeInOut,
-        onComplete: function () {
-          console.log('controls onComplete maxPolarAngleFinish');
-        }
-      });
+            tweenMax.to(controls, tweenTime, {
+              delay: theDelay,
+              minAzimuthAngle: sectionData[currentIndex].minAzimuthAngle,
+              maxAzimuthAngle: sectionData[currentIndex].maxAzimuthAngle,
+              minPolarAngle: sectionData[currentIndex].minPolarAngle,
+              maxPolarAngle: sectionData[currentIndex].maxPolarAngle,
+              minDistance: sectionData[currentIndex].forward,
+              maxDistance: sectionData[currentIndex].backward,
+              ease: Power2.easeInOut
+            });
+            tweenMax.to(controls, .1, {
+              delay: theDelay + tweenTime + .1,
+              maxPolarAngle: sectionData[currentIndex].maxPolarAngleFinish,
+              ease: Power2.easeInOut
+            });
+        
+
     }
     return {
       setViewport: function ($el) {
@@ -478,7 +495,7 @@ var SCENE = (function () {
           section.el.position.y = sectionData[i].y;
           section.el.position.z = sectionData[i].z;
           scene.add(section.el);
-          if(i>0){
+          if (i > 0) {
             section.hide();
           }
         }
@@ -487,9 +504,20 @@ var SCENE = (function () {
         if (cityDevMode) {
           scene.add(new THREE.CameraHelper(sections[4].theSunlight().shadow.camera));
         }
+        for (var i = 0; i < sections.length; i++) {
+          sections[i].on('sectionFullyLoaded', function () {
+            events.trigger('sectionFullyLoaded', this);
+          });
+          sections[i].on('sectionUnloaded', function () {
+            events.trigger('sectionUnloaded', this);
+          });
+        }
 
-        sections[4].on('cityLightsAreOn', function () {
-          console.log('cityLights are on IN FOUR: ' + this.data);
+        /*
+        sections[4].on('sectionFullyLoaded', function () {
+          console.log('');
+          console.log('sectionFullyLoaded: ' + this.section);
+          console.log('sectionFullyLoaded: ' + this.message);
           controls.autoRotateSpeed = 0;
           controls.autoRotate = true;
           tweenMax.to(controls, 10, {
@@ -497,8 +525,8 @@ var SCENE = (function () {
             ease: Power2.easeInOut,
             onComplete: cityCameraDownInt
           });
-
         });
+        */
 
         theAtmosphereParticles = new BackgroundParticles({
           rangeX: [-100, 100],
@@ -512,13 +540,16 @@ var SCENE = (function () {
         scene.add(theAtmosphereParticles.el);
       },
       on: function () {
-
         events.on.apply(events, arguments);
       },
       goTo: function (index) {
         if (index === currentIndex) {
           return false;
         }
+        if (navFrozen) {
+          return false;
+        }
+
         animateCamera(index);
       },
       getMap: function () {
@@ -539,11 +570,13 @@ var SCENE = (function () {
             to: {
               name: sectionsMap[currentIndex],
               index: currentIndex
+            },
+            callback: {
+              func: function (){console.log('starting up dummy func');}
             }
           };
 
           events.trigger('section:changeBegin', data);
-
           isStarted = true;
         }
         if (!frameId) {

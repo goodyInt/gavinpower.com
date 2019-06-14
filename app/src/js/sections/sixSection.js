@@ -4,6 +4,8 @@ var Section = require('../classes/SectionClass');
 var animatedSprite = require('../objects/AnimatedSpriteObject');
 var Smoke = require('../objects/SmokeObject');
 var sixSection = new Section('six');
+var Events = require('../classes/EventsClass');
+var sixEvents = new Events();
 
 var sixAnimatedText = new animatedSprite();
 var TextPanel = require('../objects/TextPanelObject');
@@ -17,6 +19,15 @@ var sixSmoke = new Smoke({
     { positionX : -4.8, positionY: 9.6, positionZ: 4, rotationZ: 1.7, scale: 2.2 },
     { positionX : 3, positionY: 7.5, positionZ: -4.3, rotationZ: 3, scale: 1.7 } 
   ]
+});
+
+
+sixSection.on =  function () {
+  sixEvents.on.apply(sixEvents, arguments);
+}
+sixSmoke.on('sectionFullyLoaded', function () {
+  console.table(this);
+  sixEvents.trigger('sectionFullyLoaded', {section: 6 , message: 'Section Six is Loaded'});
 });
 
 var nextBtnTextString = '<<< Section 6 Lets go to 1...';
@@ -53,6 +64,8 @@ sixSection.onIn(function () {
 sixSection.onOut(function () {
   console.log('sixSection.onOut');
   sixAnimatedText.out();
+  sixEvents.trigger('sectionUnloaded', {section: 6 , message: 'Section Six is UnLoaded'});
+
 });
 
 sixSection.onStart(function () {

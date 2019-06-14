@@ -3,6 +3,7 @@ var THREE = require('three');
 var dilate = require('../utils/dilateUtil');
 var outlineMaterial = require('../materials/outlineMaterial');
 var waterMaterial = require('../materials/waterMaterial');
+var Events = require('../classes/EventsClass');
 
 function StoryTellingScene() {
   this.creativeObject = {};
@@ -13,6 +14,9 @@ function StoryTellingScene() {
   this.frontPosArray = [];
   this.storySignHolder;
   this.tellingSignHolder;
+  var outlineMeshTelling;
+  var outlineMeshStory;
+  this.lightsOn;
 
   var loader = new THREE.FontLoader();
   var _this = this;
@@ -24,35 +28,70 @@ function StoryTellingScene() {
   var storyLight2;
   var storyLightSpotlightTarget = new THREE.Object3D();
   var storyLightSpotlightTarget2 = new THREE.Object3D();
-  var storyLightIntensity = 4.6;
+  var storyLightIntensity = 5.0;
   var storyLightDistance = 650;
   var smallScreenZOffset = -100;
+  var lightsHolder = new THREE.Object3D();
+  var moonLightLightTarget = new THREE.Object3D();
+  this.events = new Events();
+  this.on = function () {
+    this.events.on.apply(this.events, arguments);
+  }
 
-  storyLight = new THREE.SpotLight(0x00ffff, storyLightIntensity, storyLightDistance);
+  var waterTintObject = {
+    tintDensity: 1.0
+  };
+  var outlineColorObject = {
+    oColor: '#000000'
+  };
+  var outlineColour = new THREE.Color(outlineColorObject.oColor);
+
+  var moonLight = new THREE.SpotLight(0x00ffff, 0.0000, 700, Math.PI * .25);
+  moonLight.position.set(0, 150, -150);
+  moonLight.castShadow = true;
+  lightsHolder.add(moonLight);
+
+  //var moonLightHelper = new THREE.SpotLightHelper(moonLight);
+ // moonLightHelper.matrix = moonLightHelper.light.matrix;
+ // this.el.add(moonLightHelper);
+
+  moonLightLightTarget.position.x = 0;
+  moonLightLightTarget.position.y = 0;
+  moonLightLightTarget.position.z = -140;
+  moonLight.target = moonLightLightTarget;
+  this.el.add(moonLightLightTarget);
+
+  var moonShadowCamera = new THREE.PerspectiveCamera(70, 1, 100, 3000)
+  moonLight.shadow = new THREE.LightShadow(moonShadowCamera);
+  moonLight.shadow.bias = 0.0001;
+
+  storyLight = new THREE.SpotLight(0x00ffff, 0, storyLightDistance);
   storyLight.penumbra = .65;
-  storyLight.angle = Math.PI/8;
-  storyLight.position.set(-120,200,-550);
+  storyLight.angle = Math.PI / 8;
+  storyLight.position.set(-120, 200, -550);
   storyLightSpotlightTarget.position.x = -120;
   storyLightSpotlightTarget.position.y = 0;
   storyLightSpotlightTarget.position.z = 0;
   storyLight.target = storyLightSpotlightTarget;
+  this.el.add(storyLightSpotlightTarget);
 
-   //var storyLightHelper = new THREE.SpotLightHelper( storyLight );
+  //var storyLightHelper = new THREE.SpotLightHelper( storyLight );
   // storyLightHelper.matrix = storyLightHelper.light.matrix;
   // this.el.add(storyLightHelper);
 
-  storyLight2 = new THREE.SpotLight(0x00ffff, storyLightIntensity, storyLightDistance);
+  storyLight2 = new THREE.SpotLight(0x00ffff, 0, storyLightDistance);
   storyLight2.penumbra = .65;
-  storyLight2.angle = Math.PI/8;
+  storyLight2.angle = Math.PI / 8;
   storyLight2.position.set(120, 200, -550);
   storyLightSpotlightTarget2.position.x = 120;
   storyLightSpotlightTarget2.position.y = 0;
   storyLightSpotlightTarget2.position.z = 0
   storyLight2.target = storyLightSpotlightTarget2;
+  this.el.add(storyLightSpotlightTarget2);
+
   //var storyLight2Helper = new THREE.SpotLightHelper(storyLight2);
   //storyLight2Helper.matrix = storyLight2Helper.light.matrix;
   //this.el.add(storyLight2Helper);
-
 
   this.moveTheWater = function () {
     waterShaderMaterial.uniforms.uGlobalTime.value += clock.getDelta() * waterSpeed;
@@ -72,9 +111,16 @@ function StoryTellingScene() {
       color: 0x111111,
       specular: 0x222222,
     });
+    /*
     var platformMaterialSteps = new THREE.MeshPhongMaterial({
       color: 0x101010,
       specular: 0x000000,
+    });
+    */
+    var platformMaterialSteps = new THREE.MeshPhongMaterial({
+      color: 0x000000,
+      specular: 0x111111,
+      shininess: 20
     });
     var platformMaterialBorder = new THREE.MeshPhongMaterial({
       color: 0x333333,
@@ -92,7 +138,7 @@ function StoryTellingScene() {
     var platformStep0 = new THREE.Mesh(new THREE.BoxBufferGeometry(40, 2, 10), platformMaterialSteps);
     platformStep0.position.x = 0;
     platformStep0.position.y = -27;
-    platformStep0.position.z = -170 +smallScreenZOffset;
+    platformStep0.position.z = -170 + smallScreenZOffset;
     platformStep0.castShadow = false;
     platformStep0.receiveShadow = true;
     _this.el.add(platformStep0);
@@ -100,7 +146,7 @@ function StoryTellingScene() {
     var platformStep1 = new THREE.Mesh(new THREE.BoxBufferGeometry(30, 2, 10), platformMaterialSteps);
     platformStep1.position.x = 0;
     platformStep1.position.y = -27;
-    platformStep1.position.z = -190 +smallScreenZOffset;
+    platformStep1.position.z = -190 + smallScreenZOffset;
     platformStep1.castShadow = false;
     platformStep1.receiveShadow = true;
     _this.el.add(platformStep1);
@@ -108,7 +154,7 @@ function StoryTellingScene() {
     var platformStep2 = new THREE.Mesh(new THREE.BoxBufferGeometry(20, 2, 10), platformMaterialSteps);
     platformStep2.position.x = 0;
     platformStep2.position.y = -27;
-    platformStep2.position.z = -210+smallScreenZOffset;
+    platformStep2.position.z = -210 + smallScreenZOffset;
     platformStep2.castShadow = false;
     platformStep2.receiveShadow = true;
     _this.el.add(platformStep2);
@@ -116,7 +162,7 @@ function StoryTellingScene() {
     var platformLeft = new THREE.Mesh(new THREE.BoxBufferGeometry(100, 2, 300), platformMaterial);
     platformLeft.position.x = -58;
     platformLeft.position.y = -27;
-    platformLeft.position.z = -55+smallScreenZOffset*.5;
+    platformLeft.position.z = -55 + smallScreenZOffset * .5;
     platformLeft.castShadow = false;
     platformLeft.receiveShadow = true;
     _this.el.add(platformLeft);
@@ -126,7 +172,7 @@ function StoryTellingScene() {
     var platformLeftBorder = new THREE.Mesh(borderGeometry, platformMaterialBorder);
     platformLeftBorder.position.x = -8;
     platformLeftBorder.position.y = -27;
-    platformLeftBorder.position.z = -55 +smallScreenZOffset*.5;;
+    platformLeftBorder.position.z = -55 + smallScreenZOffset * .5;;
     platformLeftBorder.castShadow = false;
     platformLeftBorder.receiveShadow = true;
     platformLeftBorder.rotateY(90 * (Math.PI / 180));
@@ -135,7 +181,7 @@ function StoryTellingScene() {
     var platformRight = new THREE.Mesh(new THREE.BoxBufferGeometry(100, 2, 300), platformMaterial);
     platformRight.position.x = 58;
     platformRight.position.y = -27;
-    platformRight.position.z = -55+smallScreenZOffset*.5;
+    platformRight.position.z = -55 + smallScreenZOffset * .5;
     platformRight.castShadow = false;
     platformRight.receiveShadow = true;
     _this.el.add(platformRight);
@@ -143,7 +189,7 @@ function StoryTellingScene() {
     var platformRightBorder = new THREE.Mesh(borderGeometry, platformMaterialBorder);
     platformRightBorder.position.x = 8;
     platformRightBorder.position.y = -27;
-    platformRightBorder.position.z = -55+ smallScreenZOffset*.5;
+    platformRightBorder.position.z = -55 + smallScreenZOffset * .5;
     platformRightBorder.castShadow = false;
     platformRightBorder.receiveShadow = true;
     platformRightBorder.rotateY(-90 * (Math.PI / 180));
@@ -158,7 +204,7 @@ function StoryTellingScene() {
 
     var theRiver = new THREE.Mesh(new THREE.BoxBufferGeometry(16, .1, 294), waterShaderMaterial);
     theRiver.position.y = -29;
-    theRiver.position.z = -60 +smallScreenZOffset*.5;
+    theRiver.position.z = -60 + smallScreenZOffset * .5;
     theRiver.castShadow = false;
     theRiver.receiveShadow = false;
     _this.el.add(theRiver);
@@ -200,16 +246,19 @@ function StoryTellingScene() {
       transparent: false,
       fog: true
     });
+    shaderMaterial.uniforms["outlineColor"].value = outlineColour;
 
-    var outlineMesh = new THREE.Mesh(outlineGeometry, shaderMaterial);
+    //shaderMaterial.outlineColor =  
+
+    outlineMeshStory = new THREE.Mesh(outlineGeometry, shaderMaterial);
     outlineGeometry.computeBoundingBox();
-    outlineMesh.castShadow = false;
-    outlineMesh.receiveShadow = false;
-    _this.storySignHolder.add(outlineMesh);
+    outlineMeshStory.castShadow = false;
+    outlineMeshStory.receiveShadow = false;
+    _this.storySignHolder.add(outlineMeshStory);
     _this.storySignHolder.add(storySign);
-    _this.el.add(_this.storySignHolder);
 
     _this.tellingSignHolder = new THREE.Object3D();
+
     var tellingSignGeo = new THREE.TextGeometry("TELLING", {
       font: font,
       size: copySize,
@@ -228,56 +277,146 @@ function StoryTellingScene() {
 
     var outlineGeometryTelling = tellingSignGeo.clone();
     dilate(outlineGeometryTelling, 1.5);
-    var outlineMeshTelling = new THREE.Mesh(outlineGeometryTelling, shaderMaterial);
-    outlineGeometryTelling.computeBoundingBox();
 
+    outlineMeshTelling = new THREE.Mesh(outlineGeometryTelling, shaderMaterial);
+    outlineGeometryTelling.computeBoundingBox();
     _this.tellingSignHolder.add(tellingSign);
     _this.tellingSignHolder.add(outlineMeshTelling);
-    _this.el.add(_this.tellingSignHolder);
-    ////
 
     _this.storySignHolder.position.x = -50;
-    _this.storySignHolder.position.y = -5;
-    _this.storySignHolder.position.z = -75+ smallScreenZOffset;
+    _this.storySignHolder.position.y = -4;
+    _this.storySignHolder.position.z = -75 + smallScreenZOffset;
     _this.storySignHolder.rotateY(65 * (Math.PI / 180));
     _this.storySignHolder.rotateX(25 * (Math.PI / 180));
     _this.storySignHolder.rotateZ(2 * (Math.PI / 180));
-    //
+
     _this.tellingSignHolder.position.x = 50;
-    _this.tellingSignHolder.position.y = -6;
-    _this.tellingSignHolder.position.z = -75+ smallScreenZOffset;
+    _this.tellingSignHolder.position.y = -4;
+    _this.tellingSignHolder.position.z = -75 + smallScreenZOffset;
     _this.tellingSignHolder.rotateY(-65 * (Math.PI / 180));
     _this.tellingSignHolder.rotateX(25 * (Math.PI / 180));
     _this.tellingSignHolder.rotateZ(-2 * (Math.PI / 180));
+    _this.el.add(_this.storySignHolder);
+    _this.el.add(_this.tellingSignHolder);
   });
 
   StoryTellingScene.prototype.start = function () {
     console.log('StoryTellingScene.prototype.start');
-    this.moveTheWaterInterval = setInterval(this.moveTheWater, 40);
-    this.el.add(storyLight);
-    this.el.add(storyLightSpotlightTarget);
-    this.el.add(storyLight2);
-    this.el.add(storyLightSpotlightTarget2);
-    // this.el.visible = true;
+    storyLight2.intensity = 0;
+    storyLight.intensity = 0;
+    moonLight.intensity = 0;
+    _this.lightsOn = setTimeout(turnLightsOn, 500);
   };
+
+  var turnLightsOn = function () {
+    console.log('turnLightsOn');
+      _this.el.add(storyLight);
+      _this.el.add(storyLight2);
+    _this.el.add(lightsHolder);
+
+    _this.events.trigger('sectionFullyLoaded', {
+      message: 'StoryTelling Is Loaded'
+    });
+
+    var lightTime = 2;
+    var delayTime = .25;
+
+    TweenMax.to(storyLight, lightTime, {
+      delay: delayTime,
+      intensity: storyLightIntensity,
+      ease: Power1.easeOut
+    });
+    TweenMax.to(storyLight2, lightTime, {
+      delay: delayTime,
+      intensity: storyLightIntensity,
+      ease: Power1.easeOut
+    });
+    TweenMax.to(moonLight, lightTime, {
+      delay: delayTime,
+      intensity: 0.65,
+      ease: Power1.easeOut
+    });
+
+    TweenMax.to(outlineColorObject, lightTime, {
+      delay: delayTime,
+      oColor: '#00ffff',
+      ease: Power1.easeOut,
+      onUpdate: function () {
+        outlineColour.set(outlineColorObject.oColor);
+        shaderMaterial.uniforms["outlineColor"].value = outlineColour;
+      }
+    });
+
+    TweenMax.to(waterTintObject, lightTime, {
+      delay: delayTime,
+      tintDensity: 0.0,
+      ease: Power1.easeOut,
+      onUpdate: function () {
+        waterShaderMaterial.uniforms["tintDensity"].value = waterTintObject.tintDensity;
+      }
+    });
+   
+  }
+
+  StoryTellingScene.prototype.onIn = function () {
+    console.log('StoryTellingScene.prototype.onIn');
+    _this.moveTheWaterInterval = setInterval(_this.moveTheWater, 40);
+
+  };
+
 
   StoryTellingScene.prototype.onOut = function () {
     console.log('StoryTellingScene.prototype.onOut');
-    clearInterval(this.moveTheWaterInterval);
-    this.el.remove(storyLight);
-    this.el.remove(storyLightSpotlightTarget);
-    this.el.remove(storyLight2);
-    this.el.remove(storyLightSpotlightTarget2);
+
+    var lightTime = 1;
+    TweenMax.to(storyLight, lightTime, {
+      intensity: 0,
+      ease: Power1.easeOut
+    });
+    TweenMax.to(storyLight2, lightTime, {
+      intensity: 0,
+      ease: Power1.easeOut
+    });
+    TweenMax.to(moonLight, lightTime, {
+      intensity: 0,
+      ease: Power1.easeOut
+    });
+    TweenMax.to(outlineColorObject, lightTime, {
+      oColor: '#000000',
+      ease: Power1.easeOut,
+      onUpdate: function () {
+        outlineColour.set(outlineColorObject.oColor);
+        shaderMaterial.uniforms["outlineColor"].value = outlineColour;
+      }
+    });
+    TweenMax.to(waterTintObject, lightTime, {
+      tintDensity: 0.85,
+      ease: Power1.easeOut,
+      onUpdate: function () {
+        waterShaderMaterial.uniforms["tintDensity"].value = waterTintObject.tintDensity;
+      },
+      onComplete: this.CompleteUnload
+    });
+   
   };
+ 
 
   StoryTellingScene.prototype.stop = function () {
     console.log('StoryTellingScene.prototype.stop');
-    //  this.el.visible = false;
+    clearInterval(this.moveTheWaterInterval);
+   
+    //    this.el.remove(this.storySignHolder);
+    //  this.el.remove(this.tellingSignHolder);
   };
-
-  StoryTellingScene.prototype.hide = function () {
-    console.log('StoryTellingScene.prototype.hide');
-  };
+  this.CompleteUnload = function () {
+    console.log('CompleteUnload in StoryTelling');
+    _this.el.remove(storyLight);
+    _this.el.remove(storyLight2);
+    _this.el.remove(lightsHolder);
+    _this.events.trigger('sectionUnloaded', {
+      message: 'StoryTelling Unload Is Complete'
+    });
+  }
 }
 
 module.exports = StoryTellingScene;

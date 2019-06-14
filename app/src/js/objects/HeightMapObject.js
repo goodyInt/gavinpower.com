@@ -6,6 +6,7 @@ var tweenMax = require('tweenMax');
 var Events = require('../classes/EventsClass');
 var random = require('../utils/randomUtil');
 var map = require('../utils/mapUtil');
+var Events = require('../classes/EventsClass');
 
 function HeightMap(options) {
 
@@ -31,8 +32,13 @@ function HeightMap(options) {
   this.zeroAnimationInterval;
   this.whenCompleteFunction;
   this.completeAnimationFunction;
-  var sceneLight;
+  this.zeroTimeOut; 
 
+  var _this = this;
+
+  this.on = function () {
+    _this.events.on.apply(_this.events, arguments);
+  }
   
 
   if (this.firstRun) {
@@ -71,7 +77,9 @@ function HeightMap(options) {
   this.start = function () {
   };
 
-  this.stop = function () {};
+  this.stop = function () {
+    clearTimeout(_this.zeroTimeOut);
+  };
 
   this.on('ready', function () {
     
@@ -92,6 +100,9 @@ function HeightMap(options) {
       rotateHorTween.pause();
       rotateVertTween.pause();
     };
+    this.events.trigger('sectionFullyLoaded', {
+      message: 'HeightMap is Loaded'
+    });
   }.bind(this));
 
   var thisRotation = this.el.rotation;
@@ -501,7 +512,7 @@ HeightMap.prototype.startItUp = function (whenCompleteFunction) {
     //console.log('startZero.startItUp');
     _this.zeroAnimationInterval = setInterval(_this.applyMap.updateFirstInt, 25);
   }
-  setTimeout(startZero, 1000)
+  this.zeroTimeOut = setTimeout(startZero, 1000);
 }
 
 HeightMap.prototype.setOnCompleteFunction = function (theCompleteAnimationFunction) {

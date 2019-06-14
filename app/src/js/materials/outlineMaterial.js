@@ -8,7 +8,11 @@ var outlineShader = new THREE.ShaderMaterial({
     },
     fogColor: {
       value: 0x000000
-    }
+    },
+    outlineColor: {
+      value: new THREE.Color(0x00ffff)
+    },
+   
   },
   vertexShader: [
     'void main () {',
@@ -19,6 +23,7 @@ var outlineShader = new THREE.ShaderMaterial({
   fragmentShader: [
     'uniform float fogDensity;',
     'uniform vec3 fogColor;',
+    'uniform vec3 outlineColor;',
 
     'void main() {',
     'gl_FragColor = vec4(0.0, 1.0, 1.0, 1.0);',
@@ -26,11 +31,11 @@ var outlineShader = new THREE.ShaderMaterial({
     'const float LOG2 = 0.442695;',
     'float fogFactor = exp2( - fogDensity * fogDensity * depth * depth * LOG2 );',
     'fogFactor = 1.0 - clamp( fogFactor, 0.0, 1.0 );',
-    'gl_FragColor = mix( gl_FragColor, vec4( fogColor, gl_FragColor.w ), fogFactor );',
+
+    
+    'gl_FragColor = mix( vec4( outlineColor, gl_FragColor.w ), vec4( fogColor, gl_FragColor.w ), fogFactor );',
     '}',
-  ].join('\n'),
-  transparent: true,
-  side: THREE.BackSide
+  ].join('\n')
 });
 
 module.exports = outlineShader;

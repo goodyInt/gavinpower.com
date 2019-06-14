@@ -6,6 +6,8 @@ var TextPanel = require('../objects/TextPanelObject');
 var oneSection = new Section('one');
 var BackgroundParticles = require('../objects/backgroundParticlesObject');
 var BackgroundLines = require('../objects/BackgroundLinesObject');
+var Events = require('../classes/EventsClass');
+var oneEvents = new Events();
 
 var theSectionParticles1 = new BackgroundParticles({
   rangeX: [-100, 100],
@@ -34,6 +36,19 @@ creativeWriting.el.position.x = 0;
 creativeWriting.el.position.y = 10;
 creativeWriting.el.position.z = -20;
 oneSection.add(creativeWriting.el);
+
+oneSection.on =  function () {
+  oneEvents.on.apply(oneEvents, arguments);
+}
+creativeWriting.on('sectionFullyLoaded', function () {
+  console.table(this);
+  oneEvents.trigger('sectionFullyLoaded', {section: 1 , message: 'Section One is Loaded'});
+});
+creativeWriting.on('sectionUnloaded', function () {
+  console.table(this);
+  oneEvents.trigger('sectionUnloaded', {section: 1 , message: 'Section One is UnLoaded'});
+
+});
 
 var oneSectionString = 'Writing.'; //\nAnd I have a passion\n...<<<<\n';
 var writingText = new TextPanel(
@@ -94,23 +109,26 @@ oneSection.add(nextBtn.el);
 
 oneSection.onIn(function () {
   console.log('oneSection.onIn');
- 
-  writingText.in();
-});
-
-oneSection.onOut(function () {
-  console.log('oneSection.onOut');
-  creativeWriting.onOut();
-});
-
-oneSection.onStart(function () {
-  console.log('oneSection.onStart');
   oneSectionStringCounter = 0;
   stringToType = '';
   writingText.updateCopy('');
   oneSection.show();
   creativeWriting.start();
   _this.startTheTypeingInterval = setInterval(_this.startTheTyping, 4000);
+ 
+});
+
+oneSection.onOut(function () {
+  console.log('oneSection.onOut');
+  creativeWriting.onOut();
+ 
+
+});
+
+oneSection.onStart(function () {
+  console.log('oneSection.onStart');
+ //creativeWriting.start();
+  writingText.in();
 });
 
 oneSection.onStop(function () {

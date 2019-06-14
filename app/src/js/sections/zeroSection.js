@@ -8,6 +8,8 @@ var TextPanel = require('../objects/TextPanelObject');
 var zeroSection = new Section('zero');
 var BackgroundParticles = require('../objects/backgroundParticlesObject');
 var BackgroundLines = require('../objects/BackgroundLinesObject');
+var Events = require('../classes/EventsClass');
+var zeroEvents = new Events();
 
 var theSectionParticles0 = new BackgroundParticles({
   rangeX: [-50, 50],
@@ -101,6 +103,14 @@ heightMap.el.rotation.x = 0.1;
 heightMap.el.visible = false;
 zeroSection.add(heightMap.el);
 
+zeroSection.on =  function () {
+  zeroEvents.on.apply(zeroEvents, arguments);
+}
+heightMap.on('sectionFullyLoaded', function () {
+  console.table(this);
+  zeroEvents.trigger('sectionFullyLoaded', {section: 0 , message: 'Section Zero is Loaded'});
+});
+
 var nextBtn = new TextPanel(
   'with a degree in... >>>', {
     align: 'left',
@@ -116,11 +126,12 @@ zeroSection.add(nextBtn.el);
 
 zeroSection.onIn(function () {
   console.log('zeroSection.onIn');
+  zeroSection.show();
 });
 
 zeroSection.onOut(function (way) {
   console.log('zeroSection.onOut');
-
+  zeroEvents.trigger('sectionUnloaded', {section: 0 , message: 'Section Zero is UnLoaded'});
 });
 
 zeroSection.onStart(function () {
@@ -128,7 +139,7 @@ zeroSection.onStart(function () {
   if (!heightMap.ready) {
     return false;
   }
-  zeroSection.show();
+
   heightMap.start();
 });
 

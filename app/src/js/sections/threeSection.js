@@ -4,13 +4,11 @@ var Section = require('../classes/SectionClass');
 var THREE = require('three');
 var CampScene = require('../objects/CampSceneObject');
 var TextPanel = require('../objects/TextPanelObject');
-var Fire = require('../objects/FireObject');
 var threeSection = new Section('three');
 var BackgroundParticles = require('../objects/backgroundParticlesObject');
+var Events = require('../classes/EventsClass');
+var threeEvents = new Events();
 
-var lightsHolder = new THREE.Object3D();
-
-threeSection.add(lightsHolder);
 //////////// 3
 var theSectionParticles3 = new BackgroundParticles({
   rangeX: [-115, 115],
@@ -24,71 +22,26 @@ var theSectionParticles3 = new BackgroundParticles({
 });
 threeSection.add(theSectionParticles3.el);
 
-var moonLight = new THREE.SpotLight(0x888888, 1.65, 0, Math.PI / 2);
-moonLight.position.set(0, 500, -650);
-moonLight.castShadow = true;
-//
-
-//var spotLightHelper = new THREE.SpotLightHelper(moonLight);
-//threeSection.add(spotLightHelper);
-
-var moonShadowCamera = new THREE.PerspectiveCamera(70, 1, 100, 3000)
-moonLight.shadow = new THREE.LightShadow(moonShadowCamera);
-moonLight.shadow.bias = 0.0001;
-
-var threeCampFire = new Fire({
-  color1: '#ff5000',
-  color2: '#ff0000',
-  color3: '#ff0000',
-  color4: '#ff5000',
-
-  layers: 4,
-  data: [{
-      positionX: -2,
-      positionY: -.25,
-      positionZ: 1,
-      rotationZ: (-5 * Math.PI / 180),
-      scale: 1
-    },
-    {
-      positionX: -1.5,
-      positionY: -.75,
-      positionZ: 3,
-      rotationZ: (-5 * Math.PI / 180),
-      scale: 1
-    },
-    {
-      positionX: 1.5,
-      positionY: -1,
-      positionZ: -3,
-      rotationZ: (-5 * Math.PI / 180),
-      scale: 1
-    },
-    {
-      positionX: 2,
-      positionY: -1.5,
-      positionZ: -1,
-      rotationZ: (-5 * Math.PI / 180),
-      scale: 1
-    }
-  ]
-});
-
-threeSection.add(threeCampFire.el);
-
-var fireX = -1;
-var fireY = -19;
-var fireZ = 13;
-threeCampFire.el.position.x = fireX;
-threeCampFire.el.position.y = fireY;
-threeCampFire.el.position.z = fireZ;
-
-
 var ourCampScene = new CampScene();
 ourCampScene.el.position.x = 0;
 ourCampScene.el.position.y = 10;
 ourCampScene.el.position.z = 0;
 threeSection.add(ourCampScene.el);
+
+
+threeSection.on =  function () {
+  threeEvents.on.apply(threeEvents, arguments);
+}
+ourCampScene.on('sectionFullyLoaded', function () {
+  console.table(this);
+  threeEvents.trigger('sectionFullyLoaded', {section: 3 , message: 'Section Three is Loaded'});
+});
+
+ourCampScene.on('sectionUnloaded', function () {
+  console.table(this);
+  threeEvents.trigger('sectionUnloaded', {section: 3 , message: 'Section Three is UnLoaded'});
+});
+
 
 var nextBtnTextString = '<<< I like code. I like details. I love...';
 var nextBtn = new TextPanel(
@@ -112,68 +65,29 @@ this.bringInTheBtn = function () {
   nextBtn.in();
   threeSection.nextBtnIsIn = true;
 }
-
 threeSection.add(nextBtn.el);
 
 threeSection.onIn(function () {
-  prepFire();
+  console.log('threeSection.onIn');
+  ourCampScene.onIn();
+  threeSection.show();
 });
-
-var fireYCounter = 0;
-var fireXCounter = 0;
-var fireZCounter = 0;
-
-function animateFire() {
-  fireYCounter += .65;
-  fireXCounter += .15;
-  fireZCounter += .35;
-
-  fireY += Math.sin(fireYCounter) * .35;
-  fireX += Math.sin(fireXCounter) * .1;
-  fireZ += Math.sin(fireZCounter) * .25;
-
-  // console.log(fireX,fireY,fireZ);
-  threeCampFire.el.position.x = fireX;
-  threeCampFire.el.position.y = fireY;
-  threeCampFire.el.position.z = fireZ;
-}
-
-var animateTheFire;
-
-function prepFire() {
-  console.log('prepFire');
-  threeCampFire.start();
-  animateTheFire = setInterval(animateFire, 100);
-}
-
-function extinguishFire() {
-  console.log('extinguishFire');
-  threeCampFire.stop();
-
-  clearInterval(animateTheFire);
-}
 
 threeSection.onOut(function () {
   console.log('threeSection.onOut');
-  console.log(this);
-  console.log(_this);
-  console.log(threeSection);
-  lightsHolder.remove(moonLight);
   ourCampScene.onOut();
-
+  
 });
 
 threeSection.onStart(function () {
   console.log('threeSection.onStart');
-  threeSection.show();
+ 
   ourCampScene.start();
-  lightsHolder.add(moonLight);
   _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 4500);
 });
 
 threeSection.onStop(function () {
   console.log('threeSection.onStop');
-  extinguishFire();
   ourCampScene.stop();
   clearInterval(_this.bringInTheNextBtnInterval);
   nextBtn.overOut();
@@ -186,16 +100,13 @@ threeSection.show = function () {
   theSectionParticles3.el.visible = true;
   ourCampScene.el.visible = true;
   nextBtn.el.visible = true;
-  threeCampFire.el.visible = true;
 };
 threeSection.hide = function () {
   console.log('threeSection.hide');
   theSectionParticles3.el.visible = false;
   ourCampScene.el.visible = false;
   nextBtn.el.visible = false;
-  threeCampFire.el.visible = false;
 };
-
 ////
 threeSection.nextBtnIsIn = false;
 threeSection.nextBtnIsOver = false;

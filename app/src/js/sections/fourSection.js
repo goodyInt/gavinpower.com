@@ -30,12 +30,24 @@ fourSection.theNextBtnIsOver = function () {
   fourSection.nextBtnIsOver = true;
 };
 
-fourSection.on =  function () {
+fourSection.on = function () {
   fourEvents.on.apply(fourEvents, arguments);
 }
-ourCityScene.on('cityLightsAreOn', function () {
-   fourEvents.trigger('cityLightsAreOn', {data: 'are they ever on in four'});
+ourCityScene.on('sectionFullyLoaded', function () {
+  console.table(this);
+  fourEvents.trigger('sectionFullyLoaded', {
+    section: 4,
+    message: 'Section Four is Loaded'
+  });
 });
+
+ourCityScene.on('sectionUnloaded', function () {
+  console.table(this);
+  fourEvents.trigger('sectionUnloaded', {section: 4 , message: 'Section Four is UnLoaded'});
+
+});
+
+
 
 ourCityScene.el.position.x = 0;
 ourCityScene.el.position.y = 0;
@@ -93,7 +105,6 @@ fourSection.theNextBtnIsOut = function () {
 
 fourSection.onIn(function () {
   console.log('fourSection.onIn');
-
   fourSection.show();
 });
 
@@ -101,18 +112,19 @@ fourSection.onOut(function () {
   console.log('fourSection.onOut');
   ourCityScene.onOut();
   clearInterval(_this.bringInTheNextBtnInterval);
+ 
 });
 
 fourSection.onStart(function () {
   console.log('fourSection.onStart');
-
   ourCityScene.start();
-  _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 4500);
+  _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 14500);
 });
 
 
 fourSection.onStop(function () {
   console.log('fourSection.onStop');
+  ourCityScene.onStop();
   fourSection.hide();
 });
 
@@ -131,7 +143,7 @@ fourSection.hide = function () {
 };
 
 fourSection.theSunlight = function () {
- return ourCityScene.theSunlight();
+  return ourCityScene.theSunlight();
 };
 
 

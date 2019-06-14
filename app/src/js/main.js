@@ -13,6 +13,7 @@ var fiveSection = require('./sections/fiveSection');
 var sixSection = require('./sections/sixSection');
 var menu = new Menu();
 var loader = new Loader();
+var toFromCallbackData;
 
 var imagesLoader = new ImagesLoader([
   './img/heightMap/heightMap-white.jpg'
@@ -72,92 +73,68 @@ SCENE.addSections([
   sixSection
 ]);
 
-SCENE.on('section:changeBegin', function () {
+SCENE.on('sectionFullyLoaded', function () {
+  console.table(this);
+});
 
- 
-  var way = this.way;
-  var to = this.to.name;
-  var from = this.from.name;
-  console.log('');
-  console.log('changeBegin to: ' + to);
-  console.log('changeBegin from: ' + from);
-  switch (to) {
+SCENE.on('sectionUnloaded', function () {
+  console.table(this);
+  switch (toFromCallbackData.to.name) {
     case 'zero':
-      if (from !== 'zero') {
-        zeroSection.in();
-        zeroSection.start();
-      }
+      zeroSection.in();
       break;
     case 'one':
       oneSection.in();
-      oneSection.start();
-
       break;
     case 'two':
-      if (from !== 'three') {
-        twoSection.in();
-        twoSection.start();
-        //
-        threeSection.in();
-        threeSection.start();
-      }
+      twoSection.in();
       break;
     case 'three':
-      if (from !== 'two') {
-        twoSection.in();
-        twoSection.start();
-        //
-        threeSection.in();
-        threeSection.start();
-      }
+      threeSection.in();
       break;
     case 'four':
-       fourSection.in();
- 
-
+      fourSection.in();
       break;
     case 'five':
       fiveSection.in();
-      fiveSection.start();
-
       break;
     case 'six':
       sixSection.in();
-      sixSection.start();
-
       break;
     default:
       break;
   }
+  toFromCallbackData.callback.func();
+});
+
+SCENE.on('section:changeBegin', function () {
+  map.setActive(this.to.index);
+  toFromCallbackData = this;
+  var from = toFromCallbackData.from.name;
+  var to = toFromCallbackData.to.name;
+  console.table(this);
+
   switch (from) {
     case 'zero':
-      if (to !== 'zero') {
-        zeroSection.out(way);
-      }
+     zeroSection.out();
       break;
     case 'one':
-      oneSection.out(way);
+      oneSection.out();
       break;
     case 'two':
-      if (to !== 'three') {
-        twoSection.out(way);
-        threeSection.out(way);
-      }
+      twoSection.out();
       break;
     case 'three':
-      if (to !== 'two') {
-        twoSection.out(way);
-        threeSection.out(way);
-      }
+      threeSection.out();
       break;
     case 'four':
-      fourSection.out(way);
+      fourSection.out();
       break;
     case 'five':
-      fiveSection.out(way);
+      fiveSection.out();
       break;
     case 'six':
-      sixSection.out(way);
+      sixSection.out();
       break;
     default:
       break;
@@ -167,9 +144,7 @@ SCENE.on('section:changeBegin', function () {
 SCENE.on('section:changeComplete', function () {
   var to = this.to.name;
   var from = this.from.name;
-  console.log('');
-  console.log('changeComplete to: ' + to);
-  console.log('changeComplete from: ' + from);
+  console.table(this);
   switch (from) {
     case 'zero':
       zeroSection.stop();
@@ -178,16 +153,10 @@ SCENE.on('section:changeComplete', function () {
       oneSection.stop();
       break;
     case 'two':
-      if (to !== 'three') {
-        threeSection.stop();
-        twoSection.stop();
-      }
+      twoSection.stop();
       break;
     case 'three':
-      if (to !== 'two') {
-        threeSection.stop();
-        twoSection.stop();
-      }
+      threeSection.stop();
       break;
     case 'four':
       fourSection.stop();
@@ -203,22 +172,25 @@ SCENE.on('section:changeComplete', function () {
   }
   switch (to) {
     case 'zero':
-
+        zeroSection.start();
       break;
     case 'one':
+      oneSection.start();
       break;
     case 'two':
+      twoSection.start();
       break;
     case 'three':
+      threeSection.start();
       break;
     case 'four':
-    
       fourSection.start();
-      
       break;
     case 'five':
+      fiveSection.start();
       break;
     case 'six':
+      sixSection.start();
       break;
     default:
       break;
@@ -235,20 +207,5 @@ map.$el.hide();
 map.onClick(function (index) {
   SCENE.goTo(index);
 });
-
-SCENE.on('section:changeBegin', function () {
-  map.setActive(this.to.index);
-});
-
-SCENE.on('section:newEvent', function () {
- console.log('section:newEvent: ' + this.data);
-});
-
-
-SCENE.on('newsNoSectionsEvent', function () {
-
-  console.log('newsNoSectionsEvent: ' +  this.data);
-
- });
 
 SCENE.start();

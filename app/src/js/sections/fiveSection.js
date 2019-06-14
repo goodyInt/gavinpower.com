@@ -4,6 +4,8 @@ var Section = require('../classes/SectionClass');
 var animatedSprite = require('../objects/AnimatedSpriteObject');
 var Smoke = require('../objects/SmokeObject');
 var fiveSection = new Section('five');
+var Events = require('../classes/EventsClass');
+var fiveEvents = new Events();
 
 var fiveAnimatedText = new animatedSprite();
 var TextPanel = require('../objects/TextPanelObject');
@@ -19,6 +21,14 @@ var fiveSmoke = new Smoke({
   ]
 });
 
+
+fiveSection.on =  function () {
+  fiveEvents.on.apply(fiveEvents, arguments);
+}
+fiveSmoke.on('sectionFullyLoaded', function () {
+  console.table(this);
+  fiveEvents.trigger('sectionFullyLoaded', {section: 5 , message: 'Section Five is Loaded'});
+});
 var nextBtnTextString = '<<< Section 5 Lets go to 6...';
 var nextBtn = new TextPanel(
   nextBtnTextString, {
@@ -53,6 +63,8 @@ fiveSection.onIn(function () {
 fiveSection.onOut(function () {
   console.log('fiveSection.onOut')
   fiveAnimatedText.out();
+  fiveEvents.trigger('sectionUnloaded', {section: 5 , message: 'Section Five is UnLoaded'});
+
 });
 
 fiveSection.onStart(function () {
