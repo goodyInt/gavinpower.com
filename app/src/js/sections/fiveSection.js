@@ -58,6 +58,8 @@ fiveSection.onIn(function () {
   console.log('fiveSection.onIn')
   fiveAnimatedText.in();
   fiveSection.smokeStart();
+  fiveEvents.trigger('sectionIsIn', {section: 5 , message: 'Section Five is IN'});
+
 });
 
 fiveSection.onOut(function () {

@@ -114,8 +114,8 @@ oneSection.onIn(function () {
   writingText.updateCopy('');
   oneSection.show();
   creativeWriting.start();
-  _this.startTheTypeingInterval = setInterval(_this.startTheTyping, 4000);
- 
+  oneEvents.trigger('sectionIsIn', {section: 1 , message: 'Section One is IN'});
+
 });
 
 oneSection.onOut(function () {
@@ -128,6 +128,8 @@ oneSection.onOut(function () {
 oneSection.onStart(function () {
   console.log('oneSection.onStart');
  //creativeWriting.start();
+ _this.startTheTypeingInterval = setInterval(_this.startTheTyping, 4000);
+ 
   writingText.in();
 });
 

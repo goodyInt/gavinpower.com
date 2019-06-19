@@ -14,7 +14,7 @@ var twoEvents = new Events();
 var theSectionParticles2 = new BackgroundParticles({
   rangeX: [-115, 115],
   rangeY: [40, 10],
-  rangeZ: [400, 60],
+  rangeZ: [500, 60],
   stripsRangeX: [-115, 115],
   stripsRangeY: [30, 10],
   stripsRangeZ: [400, 60],
@@ -36,11 +36,11 @@ twoSection.add(sectionLines2.el);
 
 var theSectionParticlesWhite2 = new BackgroundParticles({
   rangeX: [-115, 115],
-  rangeY: [20, 10],
-  rangeZ: [130, 0],
-  count: 200,
-  particleSize: .25,
-  strips: true,
+  rangeY: [50, 25],
+  rangeZ: [130, -10],
+  count: 300,
+  particleSize: .35,
+  strips: false,
   color1: '#ffffff',
   color2: '#ffffff'
 });
@@ -64,6 +64,11 @@ ourStoryScene.on('sectionFullyLoaded', function () {
 ourStoryScene.on('sectionUnloaded', function () {
   console.table(this);
   twoEvents.trigger('sectionUnloaded', {section: 2 , message: 'Section Two is UnLoaded'});
+});
+
+ourStoryScene.on('sectionIsIn', function () {
+  console.table(this);
+  twoEvents.trigger('sectionIsIn', {section: 2 , message: 'Section Two sectionIsIn'});
 });
 
 
@@ -93,7 +98,6 @@ twoSection.add(nextBtn.el);
 
 twoSection.onIn(function () {
   console.log('twoSection.onIn');
- 
   ourStoryScene.el.visible = true;
   theSectionParticles2.el.visible = true;
   theSectionParticlesWhite2.el.visible = true;
@@ -110,7 +114,7 @@ twoSection.onOut(function () {
 
 twoSection.onStart(function () {
   console.log('twoSection.onStart');
-  twoSection.show();
+
   ourStoryScene.start();
 });
 
@@ -123,9 +127,6 @@ twoSection.onStop(function () {
   nextBtn.out('up');
 });
 
-twoSection.show = function () {
-  console.log('twoSection.show');
-};
 twoSection.hide = function () {
   console.log('twoSection.hide');
   theSectionParticlesWhite2.el.visible = false;

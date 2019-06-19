@@ -16,11 +16,15 @@ function StoryTellingScene() {
   this.tellingSignHolder;
   var outlineMeshTelling;
   var outlineMeshStory;
+  var storySign;
+  var tellingSign;
+
   this.lightsOn;
 
   var loader = new THREE.FontLoader();
   var _this = this;
   var shaderMaterial;
+  var signMaterial;
   var waterShaderMaterial;
   var clock = new THREE.Clock();
   var waterSpeed = 1;
@@ -52,8 +56,8 @@ function StoryTellingScene() {
   lightsHolder.add(moonLight);
 
   //var moonLightHelper = new THREE.SpotLightHelper(moonLight);
- // moonLightHelper.matrix = moonLightHelper.light.matrix;
- // this.el.add(moonLightHelper);
+  // moonLightHelper.matrix = moonLightHelper.light.matrix;
+  // this.el.add(moonLightHelper);
 
   moonLightLightTarget.position.x = 0;
   moonLightLightTarget.position.y = 0;
@@ -94,18 +98,20 @@ function StoryTellingScene() {
   //this.el.add(storyLight2Helper);
 
   this.moveTheWater = function () {
+
     waterShaderMaterial.uniforms.uGlobalTime.value += clock.getDelta() * waterSpeed;
   }
   this.updateShaderHW = function () {
     waterShaderMaterial.uniforms.uResolution.value = new THREE.Vector2(window.innerWidth, window.innerHeight);
   }
   loader.load('fonts/helvetiker_bold.typeface.json', function (font) {
-    var signMaterial = new THREE.MeshPhongMaterial({
+    signMaterial = new THREE.MeshPhongMaterial({
       color: 0x000000,
       specular: 0xffffff,
       shininess: .1,
       fog: true
     });
+
 
     var platformMaterial = new THREE.MeshPhongMaterial({
       color: 0x111111,
@@ -229,9 +235,10 @@ function StoryTellingScene() {
     storySignGeo.computeBoundingBox();
     storySignGeo.center();
 
-    var storySign = new THREE.Mesh(storySignGeo, signMaterial);
+    storySign = new THREE.Mesh(storySignGeo, signMaterial);
     storySign.castShadow = true;
     storySign.receiveShadow = true;
+    storySign.renderOrder = 1;
 
     var outlineGeometry = storySignGeo.clone();
     dilate(outlineGeometry, 1.5);
@@ -247,7 +254,6 @@ function StoryTellingScene() {
       fog: true
     });
     shaderMaterial.uniforms["outlineColor"].value = outlineColour;
-
     //shaderMaterial.outlineColor =  
 
     outlineMeshStory = new THREE.Mesh(outlineGeometry, shaderMaterial);
@@ -256,7 +262,6 @@ function StoryTellingScene() {
     outlineMeshStory.receiveShadow = false;
     _this.storySignHolder.add(outlineMeshStory);
     _this.storySignHolder.add(storySign);
-
     _this.tellingSignHolder = new THREE.Object3D();
 
     var tellingSignGeo = new THREE.TextGeometry("TELLING", {
@@ -271,9 +276,10 @@ function StoryTellingScene() {
     tellingSignGeo.computeBoundingBox();
     tellingSignGeo.center();
 
-    var tellingSign = new THREE.Mesh(tellingSignGeo, signMaterial);
+    tellingSign = new THREE.Mesh(tellingSignGeo, signMaterial);
     tellingSign.castShadow = true;
     tellingSign.receiveShadow = true;
+    tellingSign.renderOrder = 1;
 
     var outlineGeometryTelling = tellingSignGeo.clone();
     dilate(outlineGeometryTelling, 1.5);
@@ -305,15 +311,9 @@ function StoryTellingScene() {
     storyLight2.intensity = 0;
     storyLight.intensity = 0;
     moonLight.intensity = 0;
-    _this.lightsOn = setTimeout(turnLightsOn, 500);
-  };
-
-  var turnLightsOn = function () {
-    console.log('turnLightsOn');
-      _this.el.add(storyLight);
-      _this.el.add(storyLight2);
+    _this.el.add(storyLight);
+    _this.el.add(storyLight2);
     _this.el.add(lightsHolder);
-
     _this.events.trigger('sectionFullyLoaded', {
       message: 'StoryTelling Is Loaded'
     });
@@ -336,7 +336,6 @@ function StoryTellingScene() {
       intensity: 0.65,
       ease: Power1.easeOut
     });
-
     TweenMax.to(outlineColorObject, lightTime, {
       delay: delayTime,
       oColor: '#00ffff',
@@ -346,7 +345,6 @@ function StoryTellingScene() {
         shaderMaterial.uniforms["outlineColor"].value = outlineColour;
       }
     });
-
     TweenMax.to(waterTintObject, lightTime, {
       delay: delayTime,
       tintDensity: 0.0,
@@ -355,19 +353,17 @@ function StoryTellingScene() {
         waterShaderMaterial.uniforms["tintDensity"].value = waterTintObject.tintDensity;
       }
     });
-   
   }
-
   StoryTellingScene.prototype.onIn = function () {
     console.log('StoryTellingScene.prototype.onIn');
     _this.moveTheWaterInterval = setInterval(_this.moveTheWater, 40);
-
+    _this.events.trigger('sectionIsIn', {
+      message: 'StoryTelling sectionIsIn'
+    });
   };
-
 
   StoryTellingScene.prototype.onOut = function () {
     console.log('StoryTellingScene.prototype.onOut');
-
     var lightTime = 1;
     TweenMax.to(storyLight, lightTime, {
       intensity: 0,
@@ -389,6 +385,7 @@ function StoryTellingScene() {
         shaderMaterial.uniforms["outlineColor"].value = outlineColour;
       }
     });
+    
     TweenMax.to(waterTintObject, lightTime, {
       tintDensity: 0.85,
       ease: Power1.easeOut,
@@ -397,14 +394,11 @@ function StoryTellingScene() {
       },
       onComplete: this.CompleteUnload
     });
-   
   };
  
-
   StoryTellingScene.prototype.stop = function () {
     console.log('StoryTellingScene.prototype.stop');
     clearInterval(this.moveTheWaterInterval);
-   
     //    this.el.remove(this.storySignHolder);
     //  this.el.remove(this.tellingSignHolder);
   };

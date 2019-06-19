@@ -127,12 +127,16 @@ zeroSection.add(nextBtn.el);
 zeroSection.onIn(function () {
   console.log('zeroSection.onIn');
   zeroSection.show();
+  zeroEvents.trigger('sectionIsIn', {section: 0 , message: 'Section Zero is IN'});
+
 });
 
 zeroSection.onOut(function (way) {
   console.log('zeroSection.onOut');
   zeroEvents.trigger('sectionUnloaded', {section: 0 , message: 'Section Zero is UnLoaded'});
 });
+
+
 
 zeroSection.onStart(function () {
   console.log('zeroSection.onStart');

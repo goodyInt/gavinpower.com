@@ -41,13 +41,11 @@ ourCityScene.on('sectionFullyLoaded', function () {
   });
 });
 
+
 ourCityScene.on('sectionUnloaded', function () {
   console.table(this);
   fourEvents.trigger('sectionUnloaded', {section: 4 , message: 'Section Four is UnLoaded'});
-
 });
-
-
 
 ourCityScene.el.position.x = 0;
 ourCityScene.el.position.y = 0;
@@ -62,16 +60,16 @@ var nextBtn = new TextPanel(
   nextBtnTextString, {
     align: 'center',
     style: '',
-    size: 85,
+    size: 25,
     lineSpacing: 40,
     color: '#999999'
   }
 );
-nextBtn.el.position.x = 20;
-nextBtn.el.position.y = 20;
-nextBtn.el.position.z = -30;
-nextBtn.el.rotation.y = -40 * (Math.PI / 180);
-nextBtn.el.rotation.z = -20 * (Math.PI / 180);
+nextBtn.el.position.x = 0;
+nextBtn.el.position.y = 6;
+nextBtn.el.position.z = 0;
+//nextBtn.el.rotation.y = -40 * (Math.PI / 180);
+//nextBtn.el.rotation.z = -20 * (Math.PI / 180);
 
 fourSection.add(nextBtn.el);
 
@@ -87,7 +85,6 @@ fourSection.getTheNextBtn = function () {
 fourSection.theNextBtnIsOver = function () {
   nextBtn.over();
   fourSection.nextBtnIsOver = true;
-
 };
 fourSection.theNextBtnIsDown = function () {
   nextBtn.down('#ffffff');
@@ -106,28 +103,27 @@ fourSection.theNextBtnIsOut = function () {
 fourSection.onIn(function () {
   console.log('fourSection.onIn');
   fourSection.show();
+  fourEvents.trigger('sectionIsIn', {section: 4 , message: 'Section Four is IN'});
+
 });
 
 fourSection.onOut(function () {
   console.log('fourSection.onOut');
   ourCityScene.onOut();
   clearInterval(_this.bringInTheNextBtnInterval);
- 
 });
 
 fourSection.onStart(function () {
   console.log('fourSection.onStart');
   ourCityScene.start();
-  _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 14500);
+  _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 20000);
 });
-
 
 fourSection.onStop(function () {
   console.log('fourSection.onStop');
   ourCityScene.onStop();
   fourSection.hide();
 });
-
 
 fourSection.show = function () {
   console.log('fourSection.show');
@@ -145,9 +141,5 @@ fourSection.hide = function () {
 fourSection.theSunlight = function () {
   return ourCityScene.theSunlight();
 };
-
-
-
-
 
 module.exports = fourSection;

@@ -25,6 +25,9 @@ var SCENE = (function () {
     var renderer;
     var scene;
     var ambientLight;
+    var moonLight;
+    var moonLightLightTarget = new THREE.Object3D();
+
     var camera;
     var cameraShakeY = 0;
     var cameraShakeX = 0;
@@ -37,21 +40,21 @@ var SCENE = (function () {
     var isLocked = false;
     var isActive = false;
     var isStarted = false;
-    var isFlying = false;
+ 
     var navFrozen = false;
     var theAtmosphereParticles;
+    var theAtmosphereParticlesCity;
     var cityDevMode = false;
     var rotatePolarAngleObject = {
       rotateToPolarAngle: 1.5
     }
-
     var sections = [];
-
     var sectionData = [{
         //scene0 hello friend
         x: 0,
         y: 0,
         z: 0,
+        fogDensity: 0.01,
         zCameraOffset: 60,
         forward: 10,
         backward: 100,
@@ -69,6 +72,7 @@ var SCENE = (function () {
         y: 0,
         z: -200,
         zCameraOffset: 60,
+        fogDensity: 0.01,
         forward: 20,
         backward: 150,
         cameraShake: true,
@@ -82,9 +86,10 @@ var SCENE = (function () {
       {
         //scene2 story telling
         x: -150,
-        y: 200,
+        y: -100,
         z: -600,
         zCameraOffset: 420,
+        fogDensity: 0.0055,
         forward: 78,
         backward: 420,
         cameraShake: false,
@@ -99,9 +104,10 @@ var SCENE = (function () {
       {
         //scene3 campfire
         x: -150,
-        y: 200,
+        y: -100,
         z: -620,
         zCameraOffset: 60,
+        fogDensity: 0.0055,
         forward: 30,
         backward: 100,
         cameraShake: false,
@@ -115,23 +121,22 @@ var SCENE = (function () {
       {
         //scene4 city
         x: 150,
-        y: 400,
-        z: -820,
+        y: -200,
+        z: -620,
         zCameraOffset: 30,
+        fogDensity: 0.025,
         forward: 10,
+      //  backward: 2000,
         backward: 20,
-        //backward: 420,
+        // backward: 420,
         cameraShake: false,
-
         rotateToPolarAngle: 0,
-        minAzimuthAngle: -Math.PI,
+        minAzimuthAngle: -Math.PI * 2,
         maxAzimuthAngle: Math.PI * 2,
         minPolarAngle: 0,
         maxPolarAngle: 0,
-
-        // maxPolarAngle: Math.PI * .45,
+       // maxPolarAngleFinish: Math.PI *2
         maxPolarAngleFinish: Math.PI * .45
-        // maxPolarAngleFinish: Math.PI
       },
       {
         //scene5
@@ -139,11 +144,13 @@ var SCENE = (function () {
         y: 50,
         z: -1200,
         zCameraOffset: 60,
+        fogDensity: 0.01,
         forward: 10,
         backward: 100,
         cameraShake: true,
 
         rotateToPolarAngle: 1.5,
+        fogDensity: 0.01,
         minAzimuthAngle: -Math.PI * .5,
         maxAzimuthAngle: Math.PI * .5,
         minPolarAngle: Math.PI * .1,
@@ -157,6 +164,7 @@ var SCENE = (function () {
         y: -50,
         z: -1400,
         zCameraOffset: 60,
+        fogDensity: 0.01,
         forward: 10,
         backward: 100,
         cameraShake: true,
@@ -267,10 +275,23 @@ var SCENE = (function () {
 
       scene = new THREE.Scene();
       scene.fog = new THREE.FogExp2(parameters.fogColor, 0.01);
+      //scene.fog = new THREE.FogExp2(parameters.fogColor, 0.0055);
       //  scene.fog = new THREE.FogExp2(parameters.fogColor, 0.000001);
 
       ambientLight = new THREE.AmbientLight(0x404040); // 
       scene.add(ambientLight);
+
+      moonLight = new THREE.SpotLight(0xcccccc, 0.00, 0, Math.PI / 2);
+      moonLight.position.set(sectionData[3].x + 0, sectionData[3].y + 610, sectionData[3].z - 650);
+      moonLight.castShadow = true;
+      scene.add(moonLight);
+      moonLightLightTarget.position.set(sectionData[3].x + 0, sectionData[3].y + 10, sectionData[3].z - 155);
+      moonLight.target = moonLightLightTarget;
+      scene.add(moonLightLightTarget);
+
+      var moonShadowCamera = new THREE.PerspectiveCamera(70, 1, 100, 3000)
+      moonLight.shadow = new THREE.LightShadow(moonShadowCamera);
+      moonLight.shadow.bias = 0.0001;
 
       camera = new THREE.PerspectiveCamera(190, $viewport.width() / $viewport.height(), 1, 8000);
       camera.position.set(0, 0, 60);
@@ -350,16 +371,19 @@ var SCENE = (function () {
 
     var spinCameraDownInt;
     var spinningDownStarted = false;
+    var rotateDownSpeed = .01;
 
     function cityCameraDownInt() {
       console.log('cityCameraDownInt');
-
       rotateDownSpeed = .01;
       spinningDownStarted = true;
+      tweenMax.to(scene.fog, 10, {
+        delay: 5,
+        density: 0.001,
+        ease: Power2.easeInOut
+      });
       spinCameraDownInt = setInterval(spinCameraDown, 40);
     }
-
-    var rotateDownSpeed = .01;
 
     function spinCameraDown() {
       console.log('spinCameraDown');
@@ -376,20 +400,25 @@ var SCENE = (function () {
 
     var nextPosition;
     var toFromCallbackData;
-
     function animateCamera(index) {
-
-     
       navFrozen = true;
       if (currentIndex == 4) {
         clearInterval(spinCameraDownInt);
         spinningDownStarted = false;
         controls.autoRotate = false;
         tweenMax.killTweensOf(controls);
+        tweenMax.killTweensOf(scene.fog);
+
+        tweenMax.to(controls, 2, {
+          ease: Power2.easeOut,
+          minAzimuthAngle: 0,
+          maxAzimuthAngle: 0,
+          minPolarAngle: Math.PI * .45,
+          maxPolarAngle: Math.PI * .45
+        });
       }
 
       controls.autoRotateSpeed = 0;
-
       currentIndex = index;
       cameraShakeY = 0;
       cameraShakeX = 0;
@@ -413,66 +442,78 @@ var SCENE = (function () {
           func: contAnimateCamera
         }
       };
-
-
       events.trigger('section:changeBegin', toFromCallbackData);
       console.log('Wait Here for unload!');
-     
     }
-
     function contAnimateCamera() {
       console.log('contAnimateCamera');
-            var tweenTime = 3.0;
-            var index  = currentIndex;
-            var theDelay = 0;
-            tweenMax.to(camera.position, tweenTime, {
-              delay: theDelay,
-              x: nextPosition.x,
-              y: nextPosition.y,
-              z: nextPosition.z + nextPosition.zCameraOffset,
-              ease: Power2.easeInOut,
-              onStart: function () {
-                isFlying = true;
-                // SOUNDS.wind.play();
+      var tweenTime = 3.0;
+      var index = currentIndex;
+      var theDelay = 0;
+      if (currentIndex == 0 || currentIndex == 1 || currentIndex == 4 || currentIndex == 5 || currentIndex == 6) {
+        TweenMax.to(moonLight, tweenTime, {
+          delay: theDelay,
+          distance: 0,
+          intensity: 0,
+          ease: Power1.easeInOut
+        });
+      }
+      if (currentIndex == 2 || currentIndex == 3) {
+        TweenMax.to(moonLight, tweenTime, {
+          delay: 0,
+          intensity: 5,
+          distance: 1450,
+          ease: Power1.easeInOut
+        });
+      }
+      tweenMax.to(scene.fog, tweenTime, {
+        delay: theDelay,
+        density: sectionData[currentIndex].fogDensity,
+        ease: Power2.easeInOut
+      });
+      tweenMax.to(camera.position, tweenTime, {
+        delay: theDelay,
+        x: nextPosition.x,
+        y: nextPosition.y,
+        z: nextPosition.z + nextPosition.zCameraOffset,
+        ease: Power2.easeInOut,
+        onStart: function () {
+          // SOUNDS.wind.play();
+        },
+        onComplete: function () {
+          if (previousIndex === index) {
+            return false;
+          }
+          events.trigger('section:changeComplete', toFromCallbackData);
+          cameraShake = sectionData[currentIndex].cameraShake;
+          previousIndex = index;
+          navFrozen = false;
+        }
+      });
 
-              },
-              onComplete: function () {
-                if (previousIndex === index) {
-                  return false;
-                }
-                isFlying = false;
-                events.trigger('section:changeComplete', toFromCallbackData);
-                cameraShake = sectionData[currentIndex].cameraShake;
-                previousIndex = index;
-                navFrozen = false;
-              }
-            });
+      tweenMax.to(cameraTarget, tweenTime, {
+        delay: theDelay,
+        x: nextPosition.x,
+        y: nextPosition.y,
+        z: nextPosition.z,
+        ease: Power2.easeInOut
+      });
 
-            tweenMax.to(cameraTarget, tweenTime, {
-              delay: theDelay,
-              x: nextPosition.x,
-              y: nextPosition.y,
-              z: nextPosition.z,
-              ease: Power2.easeInOut
-            });
-
-            tweenMax.to(controls, tweenTime, {
-              delay: theDelay,
-              minAzimuthAngle: sectionData[currentIndex].minAzimuthAngle,
-              maxAzimuthAngle: sectionData[currentIndex].maxAzimuthAngle,
-              minPolarAngle: sectionData[currentIndex].minPolarAngle,
-              maxPolarAngle: sectionData[currentIndex].maxPolarAngle,
-              minDistance: sectionData[currentIndex].forward,
-              maxDistance: sectionData[currentIndex].backward,
-              ease: Power2.easeInOut
-            });
-            tweenMax.to(controls, .1, {
-              delay: theDelay + tweenTime + .1,
-              maxPolarAngle: sectionData[currentIndex].maxPolarAngleFinish,
-              ease: Power2.easeInOut
-            });
-        
-
+      tweenMax.to(controls, tweenTime, {
+        delay: theDelay,
+        minAzimuthAngle: sectionData[currentIndex].minAzimuthAngle,
+        maxAzimuthAngle: sectionData[currentIndex].maxAzimuthAngle,
+        minPolarAngle: sectionData[currentIndex].minPolarAngle,
+        maxPolarAngle: sectionData[currentIndex].maxPolarAngle,
+        minDistance: sectionData[currentIndex].forward,
+        maxDistance: sectionData[currentIndex].backward,
+        ease: Power2.easeInOut
+      });
+      tweenMax.to(controls, .1, {
+        delay: theDelay + tweenTime + .1,
+        maxPolarAngle: sectionData[currentIndex].maxPolarAngleFinish,
+        ease: Power2.easeInOut
+      });
     }
     return {
       setViewport: function ($el) {
@@ -482,12 +523,9 @@ var SCENE = (function () {
       config: function (options) {
         parameters = jQuery.extend(parameters, options);
       },
-
       addSections: function (_sections) {
-
         sections = _sections;
         totalSections = sections.length - 1;
-
         for (var i = 0, j = sections.length; i < j; i++) {
           var section = sections[i];
           sectionsMap[i] = section.name;
@@ -498,10 +536,9 @@ var SCENE = (function () {
           if (i > 0) {
             section.hide();
           }
-        }
-        // set cityDevMode to true to add helper to sunlight shadow cam in city scene
-
+        }       
         if (cityDevMode) {
+           // set cityDevMode to true to add helper to sunlight shadow cam in city scene
           scene.add(new THREE.CameraHelper(sections[4].theSunlight().shadow.camera));
         }
         for (var i = 0; i < sections.length; i++) {
@@ -511,13 +548,12 @@ var SCENE = (function () {
           sections[i].on('sectionUnloaded', function () {
             events.trigger('sectionUnloaded', this);
           });
+          sections[i].on('sectionIsIn', function () {
+            events.trigger('sectionIsIn', this);
+          });
         }
-
-        /*
+        // special listening
         sections[4].on('sectionFullyLoaded', function () {
-          console.log('');
-          console.log('sectionFullyLoaded: ' + this.section);
-          console.log('sectionFullyLoaded: ' + this.message);
           controls.autoRotateSpeed = 0;
           controls.autoRotate = true;
           tweenMax.to(controls, 10, {
@@ -526,18 +562,29 @@ var SCENE = (function () {
             onComplete: cityCameraDownInt
           });
         });
-        */
 
         theAtmosphereParticles = new BackgroundParticles({
-          rangeX: [-100, 100],
-          rangeY: [-100, 100],
-          rangeZ: [0, -1400],
-          count: 150,
+          rangeX: [-200, 200],
+          rangeY: [-200, 200],
+          rangeZ: [0, 800],
+          count: 500,
           strips: false,
           color1: '#ffffff',
           color2: '#ffffff'
         });
         scene.add(theAtmosphereParticles.el);
+    
+        theAtmosphereParticlesCity = new BackgroundParticles({
+          rangeX: [-100, 200],
+          rangeY: [-50, -185],
+          rangeZ: [-580, -660],
+          count: 200,
+          particleSize: 0.25,
+          strips: false,
+          color1: '#ffffff',
+          color2: '#ffffff'
+        });
+        scene.add(theAtmosphereParticlesCity.el);
       },
       on: function () {
         events.on.apply(events, arguments);
@@ -549,7 +596,6 @@ var SCENE = (function () {
         if (navFrozen) {
           return false;
         }
-
         animateCamera(index);
       },
       getMap: function () {
@@ -572,10 +618,11 @@ var SCENE = (function () {
               index: currentIndex
             },
             callback: {
-              func: function (){console.log('starting up dummy func');}
+              func: function () {
+                console.log('starting up dummy func');
+              }
             }
           };
-
           events.trigger('section:changeBegin', data);
           isStarted = true;
         }

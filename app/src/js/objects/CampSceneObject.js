@@ -31,32 +31,10 @@ function CampScene() {
   var firelight2YCounter = 0;
   var firelight2XCounter = 0;
   var firelight2ZCounter = 0;
-  this.lightsHolder = new THREE.Object3D();
-
-  this.moonLight = new THREE.SpotLight(0x333333, 0.00, 1250, Math.PI / 2);
-  this.moonLight.position.set(0, 500, -650);
-  this.moonLight.castShadow = true;
-  this.lightsHolder.add(this.moonLight);
-  _this.el.add(_this.lightsHolder);
-
-  var moonLightLightTarget = new THREE.Object3D();
-  moonLightLightTarget.position.x = 0;
-  moonLightLightTarget.position.y = 0;
-  moonLightLightTarget.position.z = -155;
-  this.moonLight.target = moonLightLightTarget;
-  this.el.add(moonLightLightTarget);
 
   this.on = function () {
     _this.events.on.apply(_this.events, arguments);
   }
-
-  //var moonLightHelper = new THREE.SpotLightHelper(moonLight);
-  //moonLightHelper.matrix = moonLightHelper.light.matrix;
-  //this.el.add(moonLightHelper);
-
-  var moonShadowCamera = new THREE.PerspectiveCamera(70, 1, 100, 3000)
-  this.moonLight.shadow = new THREE.LightShadow(moonShadowCamera);
-  this.moonLight.shadow.bias = 0.0001;
 
   var fireXYZ = {
     fireX: -1,
@@ -183,8 +161,6 @@ function CampScene() {
     threeCampFire.stop();
     clearInterval(_this.animateTheFireInt);
   }
-
-  
 
   loader.load('fonts/helvetiker_bold.typeface.json', function (font) {
     var platformMaterial = new THREE.MeshPhongMaterial({
@@ -334,11 +310,15 @@ function CampScene() {
 
   CampScene.prototype.onIn = function () {
     console.log('CampScene.prototype.onIn');
-   
+    _this.events.trigger('sectionIsIn', {
+      message: 'CampScene sectionIsIn'
+    });
   };
-
-  var turnLightsOn = function () {
-    console.log('CampScene turnLightsOn');
+  
+  CampScene.prototype.start = function () {
+    console.log('CampScene.prototype.start: ' + this.fireLight);
+    this.fireLight.intensity = 0;
+    this.fireLight2.intensity = 0;
     _this.el.add(_this.fireLight);
     _this.el.add(_this.fireLight2);
 
@@ -364,19 +344,6 @@ function CampScene() {
       yOffset: 0,
       ease: Power1.easeOut
     });
-
-    TweenMax.to(_this.moonLight, lightTime, {
-      delay: 0,
-      intensity: 45,
-      ease: Power1.easeOut
-    });
-  };
-
-  CampScene.prototype.start = function () {
-    console.log('CampScene.prototype.start: ' + this.fireLight);
-    this.fireLight.intensity = 0;
-    this.fireLight2.intensity = 0;
-    this.lightsOn = setTimeout(turnLightsOn, 500);
   };
 
   this.CompleteUnload = function () {
@@ -393,12 +360,6 @@ function CampScene() {
     console.log('CampScene.prototype.onOut')
     var lightTime = 1.5;
     var delayTime = .25;
-
-    TweenMax.to(_this.moonLight, lightTime, {
-      delay: delayTime,
-      intensity: 0,
-      ease: Power1.easeOut
-    });
 
     TweenMax.to(fireXYZ, lightTime, {
       delay: delayTime,

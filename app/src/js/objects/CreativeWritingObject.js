@@ -33,7 +33,7 @@ function CreativeWriting() {
       fragmentShader: linesMaterial.fragmentShader,
       blending: THREE.AdditiveBlending,
       depthTest: false,
-      transparent: false,
+      transparent: true,
       fog: true
     });
 

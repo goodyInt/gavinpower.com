@@ -12,13 +12,13 @@ var threeEvents = new Events();
 //////////// 3
 var theSectionParticles3 = new BackgroundParticles({
   rangeX: [-115, 115],
-  rangeY: [-30, 50],
+  rangeY: [-30, 100],
   rangeZ: [-90, -30],
   count: 500,
   particleSize: .5,
   strips: false,
   color1: '#ffffff',
-  color2: '#5D5D5D'
+  color2: '#ffffff'
 });
 threeSection.add(theSectionParticles3.el);
 
@@ -35,6 +35,11 @@ threeSection.on =  function () {
 ourCampScene.on('sectionFullyLoaded', function () {
   console.table(this);
   threeEvents.trigger('sectionFullyLoaded', {section: 3 , message: 'Section Three is Loaded'});
+});
+
+ourCampScene.on('sectionIsIn', function () {
+  console.table(this);
+  threeEvents.trigger('sectionIsIn', {section: 3 , message: 'Section Three sectionIsIn'});
 });
 
 ourCampScene.on('sectionUnloaded', function () {
@@ -69,8 +74,11 @@ threeSection.add(nextBtn.el);
 
 threeSection.onIn(function () {
   console.log('threeSection.onIn');
+
+  theSectionParticles3.el.visible = true;
+  ourCampScene.el.visible = true;
+  nextBtn.el.visible = true;
   ourCampScene.onIn();
-  threeSection.show();
 });
 
 threeSection.onOut(function () {
@@ -95,12 +103,7 @@ threeSection.onStop(function () {
   threeSection.hide();
 });
 
-threeSection.show = function () {
-  console.log('threeSection.show');
-  theSectionParticles3.el.visible = true;
-  ourCampScene.el.visible = true;
-  nextBtn.el.visible = true;
-};
+
 threeSection.hide = function () {
   console.log('threeSection.hide');
   theSectionParticles3.el.visible = false;

@@ -59,6 +59,8 @@ sixSection.onIn(function () {
   console.log('sixSection.onIn');
   sixAnimatedText.in();
   sixSection.smokeStart();
+  sixEvents.trigger('sectionIsIn', {section: 6 , message: 'Section Six is IN'});
+
 });
 
 sixSection.onOut(function () {
