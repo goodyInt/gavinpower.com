@@ -43,13 +43,6 @@ function TextPanel(text, options) {
   canvas.height = height;
   canvas2.width = floorPowerOfTwo(width);;
   canvas2.height = floorPowerOfTwo(height);;
-  console.log('');
-  console.log(text);
-  console.log('canvas.width: ' + canvas.width);
-  console.log('canvas.height: ' + canvas.height);
-  console.log('canvas2.width: ' + canvas2.width);
-  console.log('canvas2.height: ' + canvas2.height);
-
   context.font = font;
   context.fillStyle = parameters.color;
   context.textAlign = parameters.align;
@@ -110,7 +103,6 @@ function TextPanel(text, options) {
   }
 
   this.updateCopy = function (text) {
-     console.log('updateCopy text: ' + text);
     text = text || '';
     var words = text.split('\n');
     var wordsCount = words.length;

@@ -187,11 +187,6 @@ var SCENE = (function () {
     function navigation() {
       function next() {
         jQuery('html,body').css('cursor', 'default');
-        console.log('');
-        console.log('next');
-        console.log('currentIndex ' + currentIndex);
-        console.log('totalSections ' + totalSections);
-        console.log('isLocked ' + isLocked);
         if (currentIndex === totalSections) {
           if (!isLocked) {
             events.trigger('end');
@@ -234,41 +229,8 @@ var SCENE = (function () {
       }
 
       function onDocumentMouseUp(event) {
-        console.log('');
-        console.log('onDocumentMouseUp');
-        /*
-        console.log('renderer.context');
-        console.table(renderer.context);
-        console.log('renderer.capabilities');
-        console.table(renderer.capabilities);
-        console.log('renderer.extensions');
-        console.table(renderer.extensions);
-        console.log('renderer.properties');
-        console.table(renderer.properties);
-        console.log('renderer.renderLists');
-        console.table(renderer.renderLists);
-        console.log('renderer.state');
-        console.table(renderer.state);
-        console.log('renderer.info');
-        console.table(renderer.info);
-        console.log('renderer.vr');
-        console.table(renderer.vr);
-        console.log('renderer.shadowMap');
-        console.table(renderer.shadowMap);
-        console.log('renderer.getContext');
-        console.table(renderer.getContext());
-        
-        console.log('renderer.getContextAttributes');
-        console.table(renderer.getContextAttributes());
-        */
-        console.log('renderer.info');
-        console.table(renderer.info);
-        console.log('renderer.info.memory.textures');
-        console.table(renderer.info.memory.textures);
-
         if (currentIndex == 4 && spinningDownStarted) {
           if (controls.getPolarAngle() < sectionData[currentIndex].maxPolarAngleFinish) {
-           console.log('onDocumentMouseUp spinCameraDownInt:');
            clearInterval(spinCameraDownInt); 
            spinCameraDownInt = setInterval(spinCameraDown, 40);
           }
@@ -304,18 +266,8 @@ var SCENE = (function () {
 
       renderer.debug.checkShaderErrors = true;
 
-      console.log('renderer.context');
-      console.table(renderer.context);
       console.log('renderer.capabilities');
       console.table(renderer.capabilities);
-      console.log('renderer.extensions');
-      console.table(renderer.extensions);
-      console.log('renderer.properties');
-      console.table(renderer.properties);
-      console.log('renderer.renderLists');
-      console.table(renderer.renderLists);
-      console.log('renderer.state');
-      console.table(renderer.state);
       console.log('renderer.info');
       console.table(renderer.info);
      
@@ -328,9 +280,7 @@ var SCENE = (function () {
 
       scene = new THREE.Scene();
       scene.fog = new THREE.FogExp2(parameters.fogColor, 0.01);
-      //scene.fog = new THREE.FogExp2(parameters.fogColor, 0.0055);
-      //  scene.fog = new THREE.FogExp2(parameters.fogColor, 0.000001);
-
+      
       ambientLight = new THREE.AmbientLight(0x404040,1.5); // 
       scene.add(ambientLight);
 
@@ -403,7 +353,6 @@ var SCENE = (function () {
       stats.update();
     }
 
-  //  var count = 0 ;
     function render() {
       if (cameraShake) {
         cameraShakeY += 0.005;
@@ -414,8 +363,6 @@ var SCENE = (function () {
       controls.target = cameraTarget;
       controls.update();
       renderer.render(scene, camera);
-     // count++;
-    //  if(count>500){   count = 0 ;  console.table(renderer.info);}
     }
 
     function onResize() {
@@ -499,12 +446,9 @@ var SCENE = (function () {
           func: contAnimateCamera
         }
       };
-      console.log('Wait Here for unload!');
       events.trigger('section:changeBegin', toFromCallbackData);
-  
     }
     function contAnimateCamera() {
-      console.log('contAnimateCamera');
       var tweenTime = 3.0;
       var index = currentIndex;
       var theDelay = 0;
@@ -524,7 +468,6 @@ var SCENE = (function () {
           ease: Power1.easeInOut
         });
       }
-    
       tweenMax.to(scene.fog, tweenTime, {
         delay: theDelay,
         density: sectionData[currentIndex].fogDensity,
@@ -690,7 +633,7 @@ var SCENE = (function () {
             },
             callback: {
               func: function () {
-                console.log('starting up dummy func');
+               // placeholder function 
               }
             }
           };

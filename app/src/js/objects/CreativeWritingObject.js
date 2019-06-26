@@ -23,7 +23,6 @@ function CreativeWriting() {
   }
   loader.load('fonts/[z] Arista_Regular.json', function (font) {
     init(font);
-    //animate();
   });
 
   function init(font) {
@@ -45,7 +44,6 @@ function CreativeWriting() {
       bevelThickness: .1,
       bevelSize: .35,
       bevelEnabled: true,
-      // bevelOffset: 100,
       bevelSegments: 9
     });
 
@@ -139,7 +137,6 @@ function CreativeWriting() {
     var attributes = _this.creativeObject.geometry.attributes;
     var array = attributes.displacement.array;
     offsetZ = startZ + ((finishZ - startZ) * this.target.factor);
-    // console.log(offsetZ);
     for (var i = 0; i < _this.frontPosArray.length; i++) {
       array[_this.frontPosArray[i]] = offsetZ;
     }
@@ -153,7 +150,6 @@ function CreativeWriting() {
 }
 
 CreativeWriting.prototype.start = function () {
-  console.log('CreativeWriting start');
   tweenMax.to({
     factor: 1
   }, 1.5, {
@@ -163,15 +159,8 @@ CreativeWriting.prototype.start = function () {
     onUpdate: this.animateTextIn
   });
   this.el.rotation.y = this.el.rotation.x = 0 * (Math.PI / 180);
-
-  //if (!this.rotateHorTween) {
   this.rotateRightStart();
   this.rotateUpStart();
-  // } else {
-  // this.rotateHorTween.resume();
-  //this.rotateVertTween.resume();
-  // }
-  console.log('CreativeWriting HERE');
   this.events.trigger('sectionFullyLoaded', {
     message: 'Creative Writing is Loaded'
   });
@@ -189,25 +178,14 @@ CreativeWriting.prototype.onOut = function () {
   });
   this.rotateHorTween.pause();
   this.rotateVertTween.pause();
-  /*
-    tweenMax.to(this.thisRotation, 1, {
-      delay: .5,
-      ease: Power1.easeOut,
-      y: 0,
-      x:0
-    });
-    */
 };
 
 CreativeWriting.prototype.stop = function () {
-  console.log('CreativeWriting.prototype.stop');
 };
 CreativeWriting.prototype.show = function () {
-  console.log('CreativeWriting.prototype.show');
   this.creativeObject.visible = true;
 };
 CreativeWriting.prototype.hide = function () {
-  console.log('CreativeWriting.prototype.hide');
   this.creativeObject.visible = false;
 };
 

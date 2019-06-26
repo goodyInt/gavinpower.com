@@ -307,8 +307,7 @@ function StoryTellingScene() {
   });
 
   StoryTellingScene.prototype.start = function () {
-    console.log('StoryTellingScene.prototype.start');
-    storyLight2.intensity = 0;
+      storyLight2.intensity = 0;
     storyLight.intensity = 0;
     moonLight.intensity = 0;
     _this.el.add(storyLight);
@@ -355,7 +354,7 @@ function StoryTellingScene() {
     });
   }
   StoryTellingScene.prototype.onIn = function () {
-    console.log('StoryTellingScene.prototype.onIn');
+  
     _this.moveTheWaterInterval = setInterval(_this.moveTheWater, 40);
     _this.events.trigger('sectionIsIn', {
       message: 'StoryTelling sectionIsIn'
@@ -363,7 +362,7 @@ function StoryTellingScene() {
   };
 
   StoryTellingScene.prototype.onOut = function () {
-    console.log('StoryTellingScene.prototype.onOut');
+  
     var lightTime = 1;
     TweenMax.to(storyLight, lightTime, {
       intensity: 0,
@@ -397,13 +396,9 @@ function StoryTellingScene() {
   };
  
   StoryTellingScene.prototype.stop = function () {
-    console.log('StoryTellingScene.prototype.stop');
     clearInterval(this.moveTheWaterInterval);
-    //    this.el.remove(this.storySignHolder);
-    //  this.el.remove(this.tellingSignHolder);
   };
   this.CompleteUnload = function () {
-    console.log('CompleteUnload in StoryTelling');
     _this.el.remove(storyLight);
     _this.el.remove(storyLight2);
     _this.el.remove(lightsHolder);

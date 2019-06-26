@@ -130,18 +130,15 @@ nextBtn.el.rotation.y = .35;
 zeroSection.add(nextBtn.el);
 
 zeroSection.onIn(function () {
-  console.log('zeroSection.onIn');
   zeroSection.show();
   zeroEvents.trigger('sectionIsIn', {section: 0 , message: 'Section Zero is IN'});
 });
 
 zeroSection.onOut(function (way) {
-  console.log('zeroSection.onOut');
   zeroEvents.trigger('sectionUnloaded', {section: 0 , message: 'Section Zero is UnLoaded'});
 });
 
 zeroSection.onStart(function () {
-  console.log('zeroSection.onStart');
   if (!heightMap.ready) {
     return false;
   }
@@ -150,7 +147,6 @@ zeroSection.onStart(function () {
 });
 
 zeroSection.onStop(function () {
-  console.log('zeroSection.onStop');
   if (!heightMap.ready) {
     return false;
   }
@@ -162,14 +158,12 @@ zeroSection.onStop(function () {
 });
 
 zeroSection.show = function () {
-  console.log('zeroSection.show');
   heightMap.el.visible = true;
   theSectionParticles0.el.visible = true;
   nextBtn.el.visible = true;
   sectionLines0.el.visible = true;
 };
 zeroSection.hide = function () {
-  console.log('zeroSection.hide');
   heightMap.el.visible = false;
   theSectionParticles0.el.visible = false;
   sectionLines0.el.visible = false;

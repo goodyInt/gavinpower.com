@@ -44,7 +44,6 @@ var nextBtn = new TextPanel(
 sixSection.add(nextBtn.el);
 
 this.bringInTheBtn = function () {
-  console.log('section six bring in the BTN')
   clearInterval(_this.bringInTheNextBtnInterval);
   nextBtn.in();
   sixSection.nextBtnIsIn = true;
@@ -56,7 +55,7 @@ sixAnimatedText.out();
 sixSmoke.el.visible = false;
 
 sixSection.onIn(function () {
-  console.log('sixSection.onIn');
+
   sixAnimatedText.in();
   sixSection.smokeStart();
   sixEvents.trigger('sectionIsIn', {section: 6 , message: 'Section Six is IN'});
@@ -64,7 +63,7 @@ sixSection.onIn(function () {
 });
 
 sixSection.onOut(function () {
-  console.log('sixSection.onOut');
+
   sixAnimatedText.out();
   sixEvents.trigger('sectionUnloaded', {section: 6 , message: 'Section Six is UnLoaded'});
 });
@@ -75,7 +74,7 @@ function logAnalytics(){
 }
 
 sixSection.onStart(function () {
-  console.log('sixSection.onStart');
+
   logAnalytics();
   sixAnimatedText.start();
   sixSection.show();
@@ -83,21 +82,21 @@ sixSection.onStart(function () {
 });
 
 sixSection.onStop(function () {
-  console.log('sixSection.onStop');
+
   sixAnimatedText.stop();
   sixSection.smokeStop();
   sixSection.hide();
   clearInterval(_this.bringInTheNextBtnInterval);
 });
 sixSection.show = function () {
-  console.log('sixSection.show');
+
   sixSmoke.el.visible = true;
   sixAnimatedText.el.visible = true;
   nextBtn.el.visible = true;
  
 };
 sixSection.hide = function () {
-  console.log('sixSection.hide');
+
   sixSmoke.el.visible = false;
   sixAnimatedText.el.visible = false;
   nextBtn.el.visible = false;

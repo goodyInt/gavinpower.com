@@ -9,7 +9,6 @@ var BackgroundParticles = require('../objects/backgroundParticlesObject');
 var Events = require('../classes/EventsClass');
 var threeEvents = new Events();
 
-//////////// 3
 var theSectionParticles3 = new BackgroundParticles({
   rangeX: [-115, 115],
   rangeY: [-30, 100],
@@ -28,7 +27,6 @@ ourCampScene.el.position.y = 10;
 ourCampScene.el.position.z = 0;
 threeSection.add(ourCampScene.el);
 
-
 threeSection.on =  function () {
   threeEvents.on.apply(threeEvents, arguments);
 }
@@ -46,7 +44,6 @@ ourCampScene.on('sectionUnloaded', function () {
   console.table(this);
   threeEvents.trigger('sectionUnloaded', {section: 3 , message: 'Section Three is UnLoaded'});
 });
-
 
 var nextBtnTextString = '<<< I like code. I like details. I love...';
 var nextBtn = new TextPanel(
@@ -73,8 +70,6 @@ this.bringInTheBtn = function () {
 threeSection.add(nextBtn.el);
 
 threeSection.onIn(function () {
-  console.log('threeSection.onIn');
-
   theSectionParticles3.el.visible = true;
   ourCampScene.el.visible = true;
   nextBtn.el.visible = true;
@@ -82,25 +77,20 @@ threeSection.onIn(function () {
 });
 
 threeSection.onOut(function () {
-  console.log('threeSection.onOut');
   ourCampScene.onOut();
-  
 });
-
 
 function logAnalytics(){
   threeEvents.trigger('logAnalytics', {section: "3"}); 
 }
 
 threeSection.onStart(function () {
-  console.log('threeSection.onStart');
   logAnalytics();
   ourCampScene.start();
   _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 4500);
 });
 
 threeSection.onStop(function () {
-  console.log('threeSection.onStop');
   ourCampScene.stop();
   clearInterval(_this.bringInTheNextBtnInterval);
   nextBtn.overOut();
@@ -108,14 +98,12 @@ threeSection.onStop(function () {
   threeSection.hide();
 });
 
-
 threeSection.hide = function () {
-  console.log('threeSection.hide');
   theSectionParticles3.el.visible = false;
   ourCampScene.el.visible = false;
   nextBtn.el.visible = false;
 };
-////
+
 threeSection.nextBtnIsIn = false;
 threeSection.nextBtnIsOver = false;
 threeSection.nextBtnIsDown = false;

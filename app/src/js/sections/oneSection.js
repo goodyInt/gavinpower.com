@@ -108,51 +108,41 @@ oneSection.add(writingText.el);
 oneSection.add(nextBtn.el);
 
 oneSection.onIn(function () {
-  console.log('oneSection.onIn');
   oneSectionStringCounter = 0;
   stringToType = '';
   writingText.updateCopy('');
   oneSection.show();
   creativeWriting.start();
   oneEvents.trigger('sectionIsIn', {section: 1 , message: 'Section One is IN'});
-
 });
 
 oneSection.onOut(function () {
-  console.log('oneSection.onOut');
   creativeWriting.onOut();
 });
-
 
 function logAnalytics(){
   oneEvents.trigger('logAnalytics', {section: "1"}); 
 }
 oneSection.onStart(function () {
-  console.log('oneSection.onStart');
-
  _this.startTheTypeingInterval = setInterval(_this.startTheTyping, 4000);
  logAnalytics();
   writingText.in();
 });
 
 oneSection.onStop(function () {
-  console.log('oneSection.onStop');
   creativeWriting.stop();
   nextBtn.overOut();
   nextBtn.out('up');
   oneSection.hide();
 });
 oneSection.show = function () {
-  console.log('oneSection.show');
   creativeWriting.show();
   theSectionParticles1.el.visible = true;
   sectionLines1.el.visible = true;
-  
   writingText.el.visible = true;
   nextBtn.el.visible = true;
 };
 oneSection.hide = function () {
-  console.log('oneSection.hide');
   creativeWriting.hide();
   theSectionParticles1.el.visible = false;
   sectionLines1.el.visible = false;

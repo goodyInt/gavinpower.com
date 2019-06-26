@@ -67,7 +67,6 @@ function CampScene() {
   var fireXCounter = 0;
   var fireZCounter = 0;
 
-
   this.animateFire = function () {
    
     //fire 
@@ -306,14 +305,12 @@ function CampScene() {
   _this.el.add(tree0);
 
   CampScene.prototype.onIn = function () {
-    console.log('CampScene.prototype.onIn');
     _this.events.trigger('sectionIsIn', {
       message: 'CampScene sectionIsIn'
     });
   };
   
   CampScene.prototype.start = function () {
-    console.log('CampScene.prototype.start: ' + this.fireLight);
     this.fireLight.intensity = 0;
     this.fireLight2.intensity = 0;
     _this.el.add(_this.fireLight);
@@ -354,7 +351,6 @@ function CampScene() {
   }
 
   CampScene.prototype.onOut = function () {
-    console.log('CampScene.prototype.onOut')
     var lightTime = 1.5;
     var delayTime = .25;
 
@@ -373,15 +369,9 @@ function CampScene() {
   };
 
   CampScene.prototype.stop = function () {
-    console.log('CampScene.prototype.stop');
-  //  this.el.remove(this.fireLight);
-  //  this.el.remove(this.fireLight2);
- //   this.el.remove(this.lightsHolder);
-   
   };
 
   CampScene.prototype.hide = function () {
-    console.log('CampScene.prototype.hide');
   };
 
   function getTreeGeoAsString() {

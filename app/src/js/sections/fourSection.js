@@ -22,32 +22,9 @@ var theSectionParticles4 = new BackgroundParticles({
   color2: '#5D5D5D'
 });
 fourSection.add(theSectionParticles4.el);
-
-
-console.log('');
-console.log('');
-console.log('');
-console.log('');
-console.log('section4');
-console.log('section4');
-console.log('section4');
-console.log('section4');
-console.log(this.sceneRenderer);
-
 var ourCityScene = new CityScene();
-
 fourSection.finalInit = function () {
-  console.log('');
-console.log('');
-console.log('');
-console.log('');
-console.log('section4');
-console.log('section4');
-console.log('section4');
-console.log('section4');
-console.log(this.sceneRenderer);
-  ourCityScene.finalInit(this.sceneRenderer)
-  
+ ourCityScene.finalInit(this.sceneRenderer)
 };
 
 fourSection.theNextBtnIsOver = function () {
@@ -93,13 +70,9 @@ var nextBtn = new TextPanel(
 nextBtn.el.position.x = 0;
 nextBtn.el.position.y = 6;
 nextBtn.el.position.z = 0;
-//nextBtn.el.rotation.y = -40 * (Math.PI / 180);
-//nextBtn.el.rotation.z = -20 * (Math.PI / 180);
-
 fourSection.add(nextBtn.el);
 
 this.bringInTheBtn = function () {
-  console.log('fourSection bringInTheBtn');
   clearInterval(_this.bringInTheNextBtnInterval);
   nextBtn.in();
   fourSection.nextBtnIsIn = true;
@@ -126,44 +99,36 @@ fourSection.theNextBtnIsOut = function () {
 };
 
 fourSection.onIn(function () {
-  console.log('fourSection.onIn');
   fourSection.show();
   fourEvents.trigger('sectionIsIn', {section: 4 , message: 'Section Four is IN'});
-
 });
 
 fourSection.onOut(function () {
-  console.log('fourSection.onOut');
   ourCityScene.onOut();
   clearInterval(_this.bringInTheNextBtnInterval);
 });
-
 
 function logAnalytics(){
   fourEvents.trigger('logAnalytics', {section: "4"}); 
 }
 
 fourSection.onStart(function () {
-  console.log('fourSection.onStart');
   ourCityScene.start();
   logAnalytics();
   _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 20000);
 });
 
 fourSection.onStop(function () {
-  console.log('fourSection.onStop');
   ourCityScene.onStop();
   fourSection.hide();
 });
 
 fourSection.show = function () {
-  console.log('fourSection.show');
   theSectionParticles4.el.visible = true;
   ourCityScene.el.visible = true;
   nextBtn.el.visible = true;
 };
 fourSection.hide = function () {
-  console.log('fourSection.hide');
   theSectionParticles4.el.visible = false;
   ourCityScene.el.visible = false;
   nextBtn.el.visible = false;

@@ -97,18 +97,15 @@ this.bringInTheBtn = function () {
 twoSection.add(nextBtn.el);
 
 twoSection.onIn(function () {
-  console.log('twoSection.onIn');
   ourStoryScene.el.visible = true;
   theSectionParticles2.el.visible = true;
   theSectionParticlesWhite2.el.visible = true;
   sectionLines2.el.visible = true;
   nextBtn.el.visible = true;
-  ourStoryScene.onIn();
-  
+  ourStoryScene.onIn();  
 });
 
 twoSection.onOut(function () {
-  console.log('twoSection.onOut');
   ourStoryScene.onOut();
 });
 
@@ -116,13 +113,11 @@ function logAnalytics(){
   twoEvents.trigger('logAnalytics', {section: "2"}); 
 }
 twoSection.onStart(function () {
-  console.log('twoSection.onStart');
   logAnalytics();
   ourStoryScene.start();
 });
 
 twoSection.onStop(function () {
-   console.log('twoSection.onStop');
   twoSection.hide();
   ourStoryScene.stop();
   clearInterval(_this.bringInTheNextBtnInterval);
@@ -131,7 +126,6 @@ twoSection.onStop(function () {
 });
 
 twoSection.hide = function () {
-  console.log('twoSection.hide');
   theSectionParticlesWhite2.el.visible = false;
   sectionLines2.el.visible = false;
   theSectionParticles2.el.visible = false;

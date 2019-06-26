@@ -84,7 +84,6 @@ function HeightMap(options) {
     
     this.ready = true;
     this.start = function () {
-      //console.log('heightmap start start start rotateHorTween: ' + rotateHorTween)
       if (!rotateHorTween) {
         rotateRight();
         rotateUp();
@@ -108,7 +107,7 @@ function HeightMap(options) {
 
   var rotateHorTween;
   var rotateLeft = function () {
-    ////console.log('rotateLeft');
+  
     rotateHorTween = tweenMax.to(thisRotation, 20, {
       ease: Power2.easeInOut,
       y: .25,
@@ -116,7 +115,7 @@ function HeightMap(options) {
     });
   }
   var rotateRight = function () {
-    //console.log('rotateRight');
+   
     rotateHorTween = tweenMax.to(thisRotation, 20, {
       ease: Power2.easeInOut,
       y: -.25,
@@ -207,9 +206,6 @@ HeightMap.prototype.getLines = function () {
 var tweenCounter = -1;
 var tweenPauseTime = 1;
 HeightMap.prototype.getIdleTween = function () {
-  //console.log('');
-  //console.log('getIdleTween tweenCounter:' + tweenCounter);
-  //console.log('getIdleTween tweenPauseTime:' + tweenPauseTime);
   var _this = this;
   return tweenMax.to({}, tweenPauseTime, {
     paused: false,
@@ -485,7 +481,7 @@ HeightMap.prototype.applyMap = function () {
            //console.log('default tweenTime: ' + thisTweenTime);
         break;
     }
-    //  console.log('thisEase: '+ thisEase);
+   
     tweenMax.to({
       factor: 1
     }, thisTweenTime, {
@@ -495,29 +491,22 @@ HeightMap.prototype.applyMap = function () {
       onUpdate: updateFun
     });
     this.previous = this.current;
-  } else {
-    //console.log('HERE is where it was was');
-    //this.startItUp();
-  }
+  } 
 };
 HeightMap.prototype.startItUp = function (whenCompleteFunction) {
-  //console.log('starting animation in 1 secs:')
   this.whenCompleteFunction = whenCompleteFunction;
   var _this = this;
   this.loops = 0;
   this.tweenSpeed = .01;
 
   var startZero = function () {
-    //console.log('startZero.startItUp');
     _this.zeroAnimationInterval = setInterval(_this.applyMap.updateFirstInt, 25);
   }
   this.zeroTimeOut = setTimeout(startZero, 1000);
 }
 
 HeightMap.prototype.setOnCompleteFunction = function (theCompleteAnimationFunction) {
-
   this.completeAnimationFunction = theCompleteAnimationFunction;
- 
 }
 
 HeightMap.prototype.setColors = function () {

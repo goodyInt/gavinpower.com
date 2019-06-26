@@ -148,8 +148,6 @@ THREE.OrbitControls = function (object, domElement) {
 	// this method is exposed, but perhaps it would be better if we can make it private...
 	this.update = function () {
 
-		//		console.log('update0');
-
 		var offset = new THREE.Vector3();
 
 		// so camera.up is the orbit axis
@@ -356,8 +354,6 @@ THREE.OrbitControls = function (object, domElement) {
 
 	function rotateLeft(angle) {
 		sphericalDelta.theta -= angle;
-		// console.log('spherical.theta: ' + spherical.theta);
-		// console.log('sphericalDelta.theta:' + sphericalDelta.theta);
 	}
 
 	function rotateUp(angle) {
@@ -502,7 +498,6 @@ THREE.OrbitControls = function (object, domElement) {
 
 	function handleMouseDownDolly(event) {
 
-		//console.log( 'handleMouseDownDolly' );
 
 		dollyStart.set(event.clientX, event.clientY);
 

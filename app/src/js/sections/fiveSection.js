@@ -26,7 +26,6 @@ fiveSection.on =  function () {
   fiveEvents.on.apply(fiveEvents, arguments);
 }
 fiveSmoke.on('sectionFullyLoaded', function () {
-  console.table(this);
   fiveEvents.trigger('sectionFullyLoaded', {section: 5 , message: 'Section Five is Loaded'});
 });
 var nextBtnTextString = '<<< Section 5 Lets go to 6...';
@@ -43,7 +42,7 @@ var nextBtn = new TextPanel(
 fiveSection.add(nextBtn.el);
 
 this.bringInTheBtn = function () {
-  console.log('section five bring in the BTN')
+
   clearInterval(_this.bringInTheNextBtnInterval);
   nextBtn.in();
   fiveSection.nextBtnIsIn = true;
@@ -53,20 +52,15 @@ fiveSection.add(fiveSmoke.el);
 fiveSection.add(fiveAnimatedText.el);
 fiveAnimatedText.out();
 
-
 fiveSection.onIn(function () {
-  console.log('fiveSection.onIn')
   fiveAnimatedText.in();
   fiveSection.smokeStart();
   fiveEvents.trigger('sectionIsIn', {section: 5 , message: 'Section Five is IN'});
-
 });
 
 fiveSection.onOut(function () {
-  console.log('fiveSection.onOut')
   fiveAnimatedText.out();
   fiveEvents.trigger('sectionUnloaded', {section: 5 , message: 'Section Five is UnLoaded'});
-
 });
 
 function logAnalytics(){
@@ -74,7 +68,6 @@ function logAnalytics(){
 }
 
 fiveSection.onStart(function () {
-  console.log('fiveSection.onStart')
   logAnalytics();
   fiveAnimatedText.start();
   _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 4500);
@@ -82,7 +75,6 @@ fiveSection.onStart(function () {
 });
 
 fiveSection.onStop(function () {
-  console.log('fiveSection.onStop')
   fiveAnimatedText.stop();
   fiveSection.smokeStop();
   clearInterval(_this.bringInTheNextBtnInterval);
@@ -90,14 +82,12 @@ fiveSection.onStop(function () {
 });
 
 fiveSection.show = function () {
-  console.log('fiveSection.show');
   fiveSmoke.el.visible = true;
   fiveAnimatedText.el.visible = true;
   nextBtn.el.visible = true;
  
 };
 fiveSection.hide = function () {
-  console.log('fiveSection.hide');
   fiveSmoke.el.visible = false;
   fiveAnimatedText.el.visible = false;
   nextBtn.el.visible = false;

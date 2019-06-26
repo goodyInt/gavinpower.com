@@ -79,18 +79,10 @@ SCENE.on('sectionFullyLoaded', function () {
 
 SCENE.on('sectionUnloaded', function () {
   console.table(this);
-
-  var from = toFromCallbackData.from.name;
-  var to = toFromCallbackData.to.name;
-  console.log('from: ' + from);
-  console.log(from);
-  console.log('this.section: ' + this.section);
-
   if (this.section == 2) {
-    console.log('2 returning...');
     return;
   }
-  switch (to) {
+  switch (toFromCallbackData.to.name) {
     case 'zero':
       zeroSection.in();
       break;
@@ -117,19 +109,12 @@ SCENE.on('sectionUnloaded', function () {
     default:
       break;
   }
- // toFromCallbackData.callback.func();
+
 });
 SCENE.on('sectionIsIn', function () {
   console.table(this);
-  var from = toFromCallbackData.from.name;
-  var to = toFromCallbackData.to.name;
-  console.log('sectionIsIn from: ' + from);
-  console.log('sectionIsIn to: ' + to);
-  console.log('this.section: ' + this.section);
-
-  console.log(' sectionIsIn this.section: ' + this.section);
   if (this.section == 2) {
-    console.log('2 returning...');
+    // sectioon 2 and 3 load at the same time
     return;
   }
 
@@ -137,22 +122,21 @@ SCENE.on('sectionIsIn', function () {
 });
 
 SCENE.on('section:changeBegin', function () {
+  console.table(this);
   map.setActive(this.to.index);
   toFromCallbackData = this;
   var from = toFromCallbackData.from.name;
   var to = toFromCallbackData.to.name;
-  console.table(this);
-
   switch (from) {
     case 'zero':
-     zeroSection.out();
+      zeroSection.out();
       break;
     case 'one':
       oneSection.out();
       break;
     case 'two':
       if (to == 'three') {
-       toFromCallbackData.callback.func();
+        toFromCallbackData.callback.func();
       } else {
         twoSection.out();
         threeSection.out();
@@ -160,7 +144,7 @@ SCENE.on('section:changeBegin', function () {
       break;
     case 'three':
       if (to == 'two') {
-       toFromCallbackData.callback.func();
+        toFromCallbackData.callback.func();
       } else {
         twoSection.out();
         threeSection.out();
@@ -181,10 +165,10 @@ SCENE.on('section:changeBegin', function () {
 });
 
 SCENE.on('section:changeComplete', function () {
-  console.log('section:changeComplete');
+  console.table(this);
   var to = this.to.name;
   var from = this.from.name;
-  console.table(this);
+
   switch (from) {
     case 'zero':
       zeroSection.stop();
@@ -193,15 +177,13 @@ SCENE.on('section:changeComplete', function () {
       oneSection.stop();
       break;
     case 'two':
-      if (to == 'three') {
-      } else {
+      if (to == 'three') {} else {
         twoSection.stop();
         threeSection.stop();
       }
       break;
     case 'three':
-      if (to == 'two') {
-      } else {
+      if (to == 'two') {} else {
         twoSection.stop();
         threeSection.stop();
       }
@@ -228,7 +210,6 @@ SCENE.on('section:changeComplete', function () {
       break;
     case 'two':
       if (from == 'three') {
-
       } else {
         twoSection.start();
         threeSection.start();
