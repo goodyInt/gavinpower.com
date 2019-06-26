@@ -23,25 +23,42 @@ function CitySceneObject() {
   var sunriseInt;
   var sunSphere;
   var buildings = [];
+  var numberOfCars=10;
   this.events = new Events();
 
   this.on = function () {
     _this.events.on.apply(_this.events, arguments);
   }
 
+  this.finalInit = function (sceneRenderer) {
+    console.log('CitySceneObject finalInit')
+    console.log('CitySceneObject');
+    console.log('CitySceneObject');
+    console.log(sceneRenderer);
+    console.table(sceneRenderer.capabilities);
+    numberOfCars =  sceneRenderer.capabilities.maxTextures - 4;
+    if(numberOfCars>10){
+      numberOfCars = 10
+    }
+  
+
+    console.log('numberOfCars: ' + numberOfCars);
+    for (var i = 0; i < numberOfCars; i++) {
+      createCar();
+    };
+  }
+
   var grountMat = new THREE.MeshPhongMaterial({
     color: 0x111111,
     specular: 0xffffff,
-    shininess: 20
-   // ,side: THREE.DoubleSide
+    shininess: 20,
+    side: THREE.DoubleSide
   });
 
   var ground = new THREE.Mesh(new THREE.PlaneGeometry(120, 120), grountMat);
   ground.rotation.x = -90 * Math.PI / 180;
   ground.position.y = -0.001;
-
-  ground.castShadow = false;
-  ground.receiveShadow = false;
+  ground.receiveShadow = true;
   ground.both = true;
   city.add(ground);
 
@@ -50,6 +67,7 @@ function CitySceneObject() {
   //----------------------------------------------------------------- Buildings
 
   var segments = 2;
+
   var buildingMatArray = [
     new THREE.MeshLambertMaterial({
       color: 0x333333
@@ -81,14 +99,13 @@ function CitySceneObject() {
   var buildingHeight;
   var buildingCounter = 0;
 
-
   for (var i = 0; i < 49; i++) {
     var building = new THREE.Mesh(buildingGeo, buildingMatArray[Math.floor(Math.random() * 7)]);
     downtown.add(building);
     buildings.push(building);
-    building.castShadow = false;
-    building.receiveShadow = false;
-    
+    building.castShadow = true;
+    building.receiveShadow = true;
+
     if (buildingX < 0) {
       buildingHeight = 3 + buildingX * .5;
     }
@@ -101,6 +118,7 @@ function CitySceneObject() {
     if (buildingZ >= 0) {
       buildingHeight += (3 - buildingZ * .5);
     }
+
     building.scale.y = Math.random() * (buildingHeight * .75) + buildingHeight * .25 + .5;
     building.scale.x = building.scale.z = buildingWidth + Math.random() * .3 - .15;
     building.position.x = buildingX;
@@ -161,12 +179,11 @@ function CitySceneObject() {
 
   sunSphere.castShadow = false;
   sunSphere.receiveShadow = false;
-  
+
   var sunYOffset = 100;
 
   sunObjectPos = new THREE.Object3D();
   sunObjectPos.position.y = -700000;
-
 
   sunObject = {
     sunInc: .515
@@ -186,16 +203,20 @@ function CitySceneObject() {
   var xLights = [];
   var zCars = [];
   var zLights = [];
+
   var createCar = function () {
     var carLight = new THREE.PointLight(0xffffff, 0.05, 1.9);
     carLight.castShadow = false;
+
     var carMesh = new THREE.Mesh(carGeo, carMatRanCol);
     city.add(carMesh);
+    carMesh.castShadow = false;
+    carMesh.receiveShadow = false;
     carlights.add(carLight);
     carMesh.position.y = .25;
     carLight.position.y = .25 - .01;
-  
- 
+
+
     if (carOnX) {
       carMesh.position.x = carLight.position.x = targetVal;
       xCars.push(carMesh);
@@ -210,13 +231,14 @@ function CitySceneObject() {
     carOnX = !carOnX;
   };
 
-  for (var i = 0; i < 10; i++) {
-    createCar();
-  };
+  // renderer.capabilities.maxTextures
+
+  //var numberOfLights = renderer.capabilities.maxTextures
+  
 
   var carLanes = [-5, -3, -1, 1, 3, 5];
 
-  function tweenX(car, light, theDelay = 0) {
+  function tweenX(car, light) {
     ranColor.setHex(Math.random() * 0xffffff);
     car.material.color.set(ranColor);
     car.material.specular.set(ranColor);
@@ -224,13 +246,13 @@ function CitySceneObject() {
     var tweenTime = Math.random() * 2 + .25;
     TweenMax.to(light.position, tweenTime, {
       x: -car.position.x,
-      delay: theDelay,
+      delay: 0,
       ease: Power2.easeInOut
     });
     TweenMax.to(car.position, tweenTime, {
       x: -car.position.x,
       ease: Power2.easeInOut,
-      delay: theDelay,
+      delay: 0,
       onComplete: resetX,
       onCompleteParams: [car, light]
     });
@@ -246,27 +268,27 @@ function CitySceneObject() {
 
   }
 
-  function resetX(car, light, theDelay = 0) {
+  function resetX(car, light) {
     var carZ = carLanes[newPos(car.position.z)];
     var carY = Math.random() * 1.4 + .1;
     var tweenTime = 1;
     TweenMax.to(light.position, tweenTime, {
       z: carZ,
       y: carY + .1,
-      delay: theDelay,
+      delay: 0,
       ease: Power2.easeInOut
     });
     TweenMax.to(car.position, tweenTime, {
       z: carZ,
       y: carY,
-      delay: theDelay,
+      delay: 0,
       ease: Power2.easeInOut,
       onComplete: tweenX,
       onCompleteParams: [car, light]
     });
   }
 
-  function resetXStart(car, light, theDelay = 0) {
+  function resetXStart(car, light, theDelay) {
     var carZ = carLanes[Math.floor((Math.random() * 6))];
     var carY = Math.random() * 1.4 + .1;
     var tweenTime = 1;
@@ -291,7 +313,7 @@ function CitySceneObject() {
     });
   }
 
-  function tweenZ(car, light, theDelay = 0) {
+  function tweenZ(car, light) {
     ranColor.setHex(Math.random() * 0xffffff);
     car.material.color.set(ranColor);
     car.material.specular.set(ranColor);
@@ -299,39 +321,39 @@ function CitySceneObject() {
     var tweenTime = Math.random() * 2 + .25;
     TweenMax.to(light.position, tweenTime, {
       z: -car.position.z,
-      delay: theDelay,
+      delay: 0,
       ease: Power2.easeInOut
     });
     TweenMax.to(car.position, tweenTime, {
       z: -car.position.z,
-      delay: theDelay,
+      delay: 0,
       ease: Power2.easeInOut,
       onComplete: resetZ,
       onCompleteParams: [car, light]
     });
   }
 
-  function resetZ(car, light, theDelay = 0) {
+  function resetZ(car, light) {
     var carX = carLanes[newPos(car.position.z)];
     var carY = Math.random() * 1.4 + .1;
     var tweenTime = 1;
     TweenMax.to(light.position, tweenTime, {
       x: carX,
       y: carY + .1,
-      delay: theDelay,
+      delay: 0,
       ease: Power2.easeInOut
     });
     TweenMax.to(car.position, tweenTime, {
       x: carX,
       y: carY,
-      delay: theDelay,
+      delay: 0,
       ease: Power2.easeInOut,
       onComplete: tweenZ,
       onCompleteParams: [car, light]
     });
   }
 
-  function resetZStart(car, light, theDelay = 0) {
+  function resetZStart(car, light, theDelay) {
     var carX = carLanes[Math.floor((Math.random() * 6))];
     var carY = Math.random() * 1.4 + .1;
     var tweenTime = 1;
@@ -439,20 +461,11 @@ function CitySceneObject() {
         _this.el.remove(sky);
         city.remove(carlights);
         _this.el.remove(sunSphere);
-      
-        ground.castShadow = false;
-        ground.receiveShadow = false;
-    
-        for (var i = 0; i < 49; i++) {
-          buildings[i].castShadow = false;
-          buildings[i].receiveShadow = false;
-        }
-
         _this.events.trigger('sectionUnloaded', {
           message: 'CityScene Unload Is Complete'
         });
-        
-       
+
+
       }
     });
     TweenMax.to(_this.sunLight.position, 1, {
@@ -525,14 +538,6 @@ function CitySceneObject() {
     sunColorObject.sunColor = '#fb3203';
     var lightDelay = 0;
 
-    ground.castShadow = false;
-    ground.receiveShadow = true;
-
-    for (var i = 0; i < 49; i++) {
-      buildings[i].castShadow = true;
-      buildings[i].receiveShadow = true;
-    }
-
     city.add(carlights);
     for (var i = 0; i < xCars.length; i++) {
       xLights[i].color.set(0xffffff);
@@ -568,11 +573,7 @@ function CitySceneObject() {
       lightDelay += .3
     }
     lightDelay += .5
-    for (var i = 0; i < zCars.length; i++) {
-
-    }
-  
-
+   
     _this.el.add(_this.sunLight);
     _this.el.add(sky);
     _this.el.add(sunSphere);

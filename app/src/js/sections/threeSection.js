@@ -87,9 +87,14 @@ threeSection.onOut(function () {
   
 });
 
+
+function logAnalytics(){
+  threeEvents.trigger('logAnalytics', {section: "3"}); 
+}
+
 threeSection.onStart(function () {
   console.log('threeSection.onStart');
- 
+  logAnalytics();
   ourCampScene.start();
   _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 4500);
 });

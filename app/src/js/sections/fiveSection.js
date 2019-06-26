@@ -69,8 +69,13 @@ fiveSection.onOut(function () {
 
 });
 
+function logAnalytics(){
+  fiveEvents.trigger('logAnalytics', {section: "5"}); 
+}
+
 fiveSection.onStart(function () {
   console.log('fiveSection.onStart')
+  logAnalytics();
   fiveAnimatedText.start();
   _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 4500);
   fiveSection.show();

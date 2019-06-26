@@ -7,7 +7,7 @@ var outlineShader = new THREE.ShaderMaterial({
       value: 0.5
     },
     fogColor: {
-      value: 0x000000
+      value:new THREE.Color(0x000000)
     },
     outlineColor: {
       value: new THREE.Color(0x00ffff)

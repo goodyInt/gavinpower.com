@@ -112,9 +112,12 @@ twoSection.onOut(function () {
   ourStoryScene.onOut();
 });
 
+function logAnalytics(){
+  twoEvents.trigger('logAnalytics', {section: "2"}); 
+}
 twoSection.onStart(function () {
   console.log('twoSection.onStart');
-
+  logAnalytics();
   ourStoryScene.start();
 });
 

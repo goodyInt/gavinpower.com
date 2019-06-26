@@ -23,7 +23,32 @@ var theSectionParticles4 = new BackgroundParticles({
 });
 fourSection.add(theSectionParticles4.el);
 
+
+console.log('');
+console.log('');
+console.log('');
+console.log('');
+console.log('section4');
+console.log('section4');
+console.log('section4');
+console.log('section4');
+console.log(this.sceneRenderer);
+
 var ourCityScene = new CityScene();
+
+fourSection.finalInit = function () {
+  console.log('');
+console.log('');
+console.log('');
+console.log('');
+console.log('section4');
+console.log('section4');
+console.log('section4');
+console.log('section4');
+console.log(this.sceneRenderer);
+  ourCityScene.finalInit(this.sceneRenderer)
+  
+};
 
 fourSection.theNextBtnIsOver = function () {
   nextBtn.over();
@@ -33,6 +58,7 @@ fourSection.theNextBtnIsOver = function () {
 fourSection.on = function () {
   fourEvents.on.apply(fourEvents, arguments);
 }
+
 ourCityScene.on('sectionFullyLoaded', function () {
   console.table(this);
   fourEvents.trigger('sectionFullyLoaded', {
@@ -40,7 +66,6 @@ ourCityScene.on('sectionFullyLoaded', function () {
     message: 'Section Four is Loaded'
   });
 });
-
 
 ourCityScene.on('sectionUnloaded', function () {
   console.table(this);
@@ -113,9 +138,15 @@ fourSection.onOut(function () {
   clearInterval(_this.bringInTheNextBtnInterval);
 });
 
+
+function logAnalytics(){
+  fourEvents.trigger('logAnalytics', {section: "4"}); 
+}
+
 fourSection.onStart(function () {
   console.log('fourSection.onStart');
   ourCityScene.start();
+  logAnalytics();
   _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 20000);
 });
 

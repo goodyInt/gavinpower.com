@@ -67,11 +67,16 @@ sixSection.onOut(function () {
   console.log('sixSection.onOut');
   sixAnimatedText.out();
   sixEvents.trigger('sectionUnloaded', {section: 6 , message: 'Section Six is UnLoaded'});
-
 });
+
+
+function logAnalytics(){
+  sixEvents.trigger('logAnalytics', {section: "6"}); 
+}
 
 sixSection.onStart(function () {
   console.log('sixSection.onStart');
+  logAnalytics();
   sixAnimatedText.start();
   sixSection.show();
   _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 4500);

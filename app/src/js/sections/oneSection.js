@@ -121,15 +121,17 @@ oneSection.onIn(function () {
 oneSection.onOut(function () {
   console.log('oneSection.onOut');
   creativeWriting.onOut();
- 
-
 });
 
+
+function logAnalytics(){
+  oneEvents.trigger('logAnalytics', {section: "1"}); 
+}
 oneSection.onStart(function () {
   console.log('oneSection.onStart');
- //creativeWriting.start();
+
  _this.startTheTypeingInterval = setInterval(_this.startTheTyping, 4000);
- 
+ logAnalytics();
   writingText.in();
 });
 

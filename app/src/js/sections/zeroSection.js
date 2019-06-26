@@ -38,7 +38,8 @@ var sprites = {
   poundandgrain: './img/heightMap/heightMap-helloP&G.jpg',
   ubisoft: './img/heightMap/heightMap-helloUbisoft.jpg',
   tbwa: './img/heightMap/heightMap-helloTBWA.jpg',
-  churchandstate: './img/heightMap/heightMap-helloC+S.jpg'
+  churchandstate: './img/heightMap/heightMap-helloC+S.jpg',
+  tacu: './img/heightMap/heightMap-tacu.jpg'
 };
 
 zeroSection.nextBtnIsIn = false;
@@ -49,6 +50,10 @@ if (sprites[HASH.hash]) {
   agencyURL = sprites[HASH.hash];
 }
 
+function logAnalytics(){
+  zeroEvents.trigger('logAnalytics', {section: "0"}); 
+}
+ 
 var heightMap = new HeightMap({
   horizontal: true,
   vertical: true,
@@ -128,7 +133,6 @@ zeroSection.onIn(function () {
   console.log('zeroSection.onIn');
   zeroSection.show();
   zeroEvents.trigger('sectionIsIn', {section: 0 , message: 'Section Zero is IN'});
-
 });
 
 zeroSection.onOut(function (way) {
@@ -136,14 +140,12 @@ zeroSection.onOut(function (way) {
   zeroEvents.trigger('sectionUnloaded', {section: 0 , message: 'Section Zero is UnLoaded'});
 });
 
-
-
 zeroSection.onStart(function () {
   console.log('zeroSection.onStart');
   if (!heightMap.ready) {
     return false;
   }
-
+  logAnalytics();
   heightMap.start();
 });
 
@@ -183,6 +185,7 @@ heightMap.setOnCompleteFunction(zeroSection.textIn);
 
 zeroSection.startUpFirstTime = function (mainFunction) {
   heightMap.startItUp(mainFunction);
+  logAnalytics();
   this.playing = true;
 };
 

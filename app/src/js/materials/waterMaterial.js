@@ -14,7 +14,7 @@ var waterShader = new THREE.ShaderMaterial({
       value: 1000.005
     },
     fogColor: {
-      value: 0x000000
+      value:new THREE.Color(0x000000)
     },
     tintDensity: {
       value: 0.85

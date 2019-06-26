@@ -145,7 +145,7 @@ SCENE.on('section:changeBegin', function () {
 
   switch (from) {
     case 'zero':
-      zeroSection.out();
+     zeroSection.out();
       break;
     case 'one':
       oneSection.out();

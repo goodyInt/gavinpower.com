@@ -17,7 +17,7 @@ var customLines = new THREE.ShaderMaterial({
       value:  0.0
     },
     fogColor: {
-      value: 0x00ff00
+      value: new THREE.Color(0x000000)
     }
   },
 

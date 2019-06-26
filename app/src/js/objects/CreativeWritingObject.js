@@ -82,6 +82,7 @@ function CreativeWriting() {
       onComplete: _this.rotateRight
     });
   }
+
   this.rotateRight = function () {
     _this.rotateHorTween = tweenMax.to(_this.thisRotation, 10, {
       ease: Power2.easeInOut,
@@ -89,6 +90,7 @@ function CreativeWriting() {
       onComplete: _this.rotateLeft
     });
   }
+
   this.rotateRightStart = function () {
     _this.rotateHorTween = tweenMax.to(_this.thisRotation, 5, {
       ease: Power2.easeInOut,
@@ -104,6 +106,7 @@ function CreativeWriting() {
       onComplete: _this.rotateDown
     });
   }
+
   this.rotateUpStart = function () {
     _this.rotateVertTween = tweenMax.to(_this.thisRotation, 5, {
       ease: Power2.easeInOut,
@@ -111,7 +114,6 @@ function CreativeWriting() {
       onComplete: _this.rotateDown
     });
   }
-
 
   this.rotateDown = function () {
     _this.rotateVertTween = tweenMax.to(_this.thisRotation, 12, {
@@ -173,8 +175,6 @@ CreativeWriting.prototype.start = function () {
   this.events.trigger('sectionFullyLoaded', {
     message: 'Creative Writing is Loaded'
   });
- 
-
 };
 CreativeWriting.prototype.onOut = function () {
 
@@ -187,8 +187,6 @@ CreativeWriting.prototype.onOut = function () {
     onUpdate: this.animateTextOut,
     onComplete: this.unloadIsComplete
   });
-
-
   this.rotateHorTween.pause();
   this.rotateVertTween.pause();
   /*
@@ -199,12 +197,10 @@ CreativeWriting.prototype.onOut = function () {
       x:0
     });
     */
-
 };
 
 CreativeWriting.prototype.stop = function () {
   console.log('CreativeWriting.prototype.stop');
-
 };
 CreativeWriting.prototype.show = function () {
   console.log('CreativeWriting.prototype.show');

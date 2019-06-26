@@ -4,6 +4,7 @@ var jQuery = require('jquery');
 var THREE = require('three');
 var tweenMax = require('tweenMax');
 var SPRITE3D = require('../libs/sprite3DLib');
+var HASH = require('../modules/hashModule');
 var SOUNDS = require('../modules/soundsModule');
 var Events = require('../classes/EventsClass');
 var MapObj = require('../objects/mapObject');
@@ -72,7 +73,7 @@ var SCENE = (function () {
         y: 0,
         z: -200,
         zCameraOffset: 60,
-        fogDensity: 0.01,
+        fogDensity: 0.0125,
         forward: 20,
         backward: 150,
         cameraShake: true,
@@ -233,13 +234,46 @@ var SCENE = (function () {
       }
 
       function onDocumentMouseUp(event) {
-        if (currentIndex == 4 && spinningDownStarted) {
-          if (controls.getPolarAngle() < sectionData[currentIndex].maxPolarAngleFinish) {
-            spinCameraDownInt = setInterval(spinCameraDown, 40);
-          }
-        }
         console.log('');
         console.log('onDocumentMouseUp');
+        /*
+        console.log('renderer.context');
+        console.table(renderer.context);
+        console.log('renderer.capabilities');
+        console.table(renderer.capabilities);
+        console.log('renderer.extensions');
+        console.table(renderer.extensions);
+        console.log('renderer.properties');
+        console.table(renderer.properties);
+        console.log('renderer.renderLists');
+        console.table(renderer.renderLists);
+        console.log('renderer.state');
+        console.table(renderer.state);
+        console.log('renderer.info');
+        console.table(renderer.info);
+        console.log('renderer.vr');
+        console.table(renderer.vr);
+        console.log('renderer.shadowMap');
+        console.table(renderer.shadowMap);
+        console.log('renderer.getContext');
+        console.table(renderer.getContext());
+        
+        console.log('renderer.getContextAttributes');
+        console.table(renderer.getContextAttributes());
+        */
+        console.log('renderer.info');
+        console.table(renderer.info);
+        console.log('renderer.info.memory.textures');
+        console.table(renderer.info.memory.textures);
+
+        if (currentIndex == 4 && spinningDownStarted) {
+          if (controls.getPolarAngle() < sectionData[currentIndex].maxPolarAngleFinish) {
+           console.log('onDocumentMouseUp spinCameraDownInt:');
+           clearInterval(spinCameraDownInt); 
+           spinCameraDownInt = setInterval(spinCameraDown, 40);
+          }
+        }
+      
         mouseDown = false;
         event.preventDefault();
         mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2 - 1;
@@ -263,9 +297,28 @@ var SCENE = (function () {
 
       renderer = new THREE.WebGLRenderer({
         alpha: false,
-        antialias: false
+        antialias: false,
+        precision: 'highp'
+
       });
 
+      renderer.debug.checkShaderErrors = true;
+
+      console.log('renderer.context');
+      console.table(renderer.context);
+      console.log('renderer.capabilities');
+      console.table(renderer.capabilities);
+      console.log('renderer.extensions');
+      console.table(renderer.extensions);
+      console.log('renderer.properties');
+      console.table(renderer.properties);
+      console.log('renderer.renderLists');
+      console.table(renderer.renderLists);
+      console.log('renderer.state');
+      console.table(renderer.state);
+      console.log('renderer.info');
+      console.table(renderer.info);
+     
       renderer.shadowMap.enabled = true;
       renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
@@ -278,7 +331,7 @@ var SCENE = (function () {
       //scene.fog = new THREE.FogExp2(parameters.fogColor, 0.0055);
       //  scene.fog = new THREE.FogExp2(parameters.fogColor, 0.000001);
 
-      ambientLight = new THREE.AmbientLight(0x404040); // 
+      ambientLight = new THREE.AmbientLight(0x404040,1.5); // 
       scene.add(ambientLight);
 
       moonLight = new THREE.SpotLight(0xcccccc, 0.00, 0, Math.PI / 2);
@@ -350,6 +403,7 @@ var SCENE = (function () {
       stats.update();
     }
 
+  //  var count = 0 ;
     function render() {
       if (cameraShake) {
         cameraShakeY += 0.005;
@@ -360,6 +414,8 @@ var SCENE = (function () {
       controls.target = cameraTarget;
       controls.update();
       renderer.render(scene, camera);
+     // count++;
+    //  if(count>500){   count = 0 ;  console.table(renderer.info);}
     }
 
     function onResize() {
@@ -374,7 +430,6 @@ var SCENE = (function () {
     var rotateDownSpeed = .01;
 
     function cityCameraDownInt() {
-      console.log('cityCameraDownInt');
       rotateDownSpeed = .01;
       spinningDownStarted = true;
       tweenMax.to(scene.fog, 10, {
@@ -386,7 +441,9 @@ var SCENE = (function () {
     }
 
     function spinCameraDown() {
-      console.log('spinCameraDown');
+      if (currentIndex !== 4) {
+        clearInterval(spinCameraDownInt);
+      }
       if (!mouseDown) {
         if (rotateDownSpeed < .35) {
           rotateDownSpeed *= 1.01;
@@ -442,8 +499,9 @@ var SCENE = (function () {
           func: contAnimateCamera
         }
       };
-      events.trigger('section:changeBegin', toFromCallbackData);
       console.log('Wait Here for unload!');
+      events.trigger('section:changeBegin', toFromCallbackData);
+  
     }
     function contAnimateCamera() {
       console.log('contAnimateCamera');
@@ -466,6 +524,7 @@ var SCENE = (function () {
           ease: Power1.easeInOut
         });
       }
+    
       tweenMax.to(scene.fog, tweenTime, {
         delay: theDelay,
         density: sectionData[currentIndex].fogDensity,
@@ -528,6 +587,7 @@ var SCENE = (function () {
         totalSections = sections.length - 1;
         for (var i = 0, j = sections.length; i < j; i++) {
           var section = sections[i];
+          section.sceneRenderer = renderer;
           sectionsMap[i] = section.name;
           section.el.position.x = sectionData[i].x;
           section.el.position.y = sectionData[i].y;
@@ -551,8 +611,18 @@ var SCENE = (function () {
           sections[i].on('sectionIsIn', function () {
             events.trigger('sectionIsIn', this);
           });
+          sections[i].on('logAnalytics', function () {
+            var visitor = HASH.hash;
+            if(visitor==undefined){
+              visitor = "friend";
+            }
+            visitor =  visitor+= ("_" + this.section);
+            visitor =  visitor+="_dev";
+            gtag('event', visitor); 
+          });
         }
-        // special listening
+        // special listening and init
+        sections[4].finalInit();
         sections[4].on('sectionFullyLoaded', function () {
           controls.autoRotateSpeed = 0;
           controls.autoRotate = true;
@@ -562,6 +632,7 @@ var SCENE = (function () {
             onComplete: cityCameraDownInt
           });
         });
+      
 
         theAtmosphereParticles = new BackgroundParticles({
           rangeX: [-200, 200],

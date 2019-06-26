@@ -69,8 +69,7 @@ function CampScene() {
 
 
   this.animateFire = function () {
-    console.log('animateFire');
-
+   
     //fire 
     fireYCounter += .65;
     fireXCounter += .15;
@@ -149,14 +148,12 @@ function CampScene() {
   threeCampFire.el.position.z = fireXYZ.fireZ;
 
   function lightFire() {
-    console.log('lightFire');
     threeCampFire.el.visible = true;
     threeCampFire.start();
     _this.animateTheFireInt = setInterval(_this.animateFire, 100);
   }
 
   function extinguishFire() {
-    console.log('extinguishFire');
     threeCampFire.el.visible = false;
     threeCampFire.stop();
     clearInterval(_this.animateTheFireInt);

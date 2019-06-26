@@ -39,7 +39,6 @@ function HeightMap(options) {
   this.on = function () {
     _this.events.on.apply(_this.events, arguments);
   }
-  
 
   if (this.firstRun) {
     for (var i = 0; i < this.totalVerts; i++) {

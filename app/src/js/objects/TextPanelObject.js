@@ -8,7 +8,6 @@ function TextPanel(text, options) {
   var parameters = jQuery.extend(TextPanel.defaultOptions, options);
 
   text = text || '';
-
   var words = text.split('\n');
   var wordsCount = words.length;
   for (var i = 0; i < wordsCount; i++) {
@@ -16,7 +15,13 @@ function TextPanel(text, options) {
   }
 
   var canvas = document.createElement('canvas');
+
   var context = canvas.getContext('2d');
+
+  var canvas2 = document.createElement('canvas');
+
+  var context2 = canvas2.getContext('2d');
+
   var font = parameters.style + ' ' + parameters.size + 'px' + ' ' + parameters.font;
 
   context.font = font;
@@ -30,21 +35,25 @@ function TextPanel(text, options) {
       maxWidth = tempWidth;
     }
   }
-
+  width = floorPowerOfTwo(maxWidth);
   width = maxWidth;
-
   var lineHeight = parameters.size + parameters.lineSpacing;
   var height = lineHeight * wordsCount;
-
-  canvas.width = width + 20;
-  canvas.height = height + 20;
-  //console.log('canvas.width: ' + canvas.width);
+  canvas.width = width;
+  canvas.height = height;
+  canvas2.width = floorPowerOfTwo(width);;
+  canvas2.height = floorPowerOfTwo(height);;
+  console.log('');
+  console.log(text);
+  console.log('canvas.width: ' + canvas.width);
+  console.log('canvas.height: ' + canvas.height);
+  console.log('canvas2.width: ' + canvas2.width);
+  console.log('canvas2.height: ' + canvas2.height);
 
   context.font = font;
   context.fillStyle = parameters.color;
   context.textAlign = parameters.align;
   context.textBaseline = 'top';
-
 
   for (var k = 0; k < wordsCount; k++) {
     var word = words[k];
@@ -56,11 +65,14 @@ function TextPanel(text, options) {
     } else {
       left = canvas.width;
     }
-    //console.log('k: ' + k);
-    context.fillText(word, left, lineHeight * k);
+  context.fillText(word, left, lineHeight * k);
   }
+  var textureOrig = new THREE.Texture(canvas);
+  textureOrig.needsUpdate = true;
 
-  var texture = new THREE.Texture(canvas);
+  var texture = new THREE.Texture(canvas2);
+  context2.clearRect(0, 0, canvas2.width, canvas2.height);
+  context2.drawImage(textureOrig.image, 0, 0, canvas2.width, canvas2.height);
   texture.needsUpdate = true;
 
   var material = new THREE.MeshBasicMaterial({
@@ -86,39 +98,43 @@ function TextPanel(text, options) {
     opacity: mesh.material.opacity
   };
 
+  function floorPowerOfTwo(value) {
+
+    return Math.pow(2, Math.floor(Math.log(value) / Math.LN2));
+
+  }
+
   function update() {
     mesh.position.y = cache.y;
     mesh.material.opacity = cache.opacity;
   }
-  
+
   this.updateCopy = function (text) {
-   // console.log('updateCopy text: ' + text);
+     console.log('updateCopy text: ' + text);
     text = text || '';
-  var words = text.split('\n');
-  var wordsCount = words.length;
-  for (var i = 0; i < wordsCount; i++) {
-    words[i] = words[i].replace(/^\s+|\s+$/g, '');
-  }
-  context.clearRect(
-    0,
-    0,
-    canvas.width,
-    canvas.height
-  );
-  for (var k = 0; k < wordsCount; k++) {
-    var word = words[k];
-    var left;
-    if (parameters.align === 'left') {
-      left = 0;
-    } else if (parameters.align === 'center') {
-      left = canvas.width / 2;
-    } else {
-      left = canvas.width;
+    var words = text.split('\n');
+    var wordsCount = words.length;
+    for (var i = 0; i < wordsCount; i++) {
+      words[i] = words[i].replace(/^\s+|\s+$/g, '');
     }
-    context.fillText(word, left, lineHeight * k);
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    for (var k = 0; k < wordsCount; k++) {
+      var word = words[k];
+      var left;
+      if (parameters.align === 'left') {
+        left = 0;
+      } else if (parameters.align === 'center') {
+        left = canvas.width / 2;
+      } else {
+        left = canvas.width;
+      }
+      context.fillText(word, left, lineHeight * k);
+    }
+    textureOrig.needsUpdate = true
+    context2.clearRect(0, 0, canvas2.width, canvas2.height);
+    context2.drawImage(textureOrig.image, 0, 0, canvas2.width, canvas2.height);
+    texture.needsUpdate = true;
   }
-  texture.needsUpdate = true;
-}
 
   this.in = function () {
     tweenMax.to(cache, 2.35, {
@@ -145,42 +161,34 @@ function TextPanel(text, options) {
   };
 
   this.over = function () {
-    //console.log('TextPanel.over white');
     context.fillStyle = '#ffffff';
-    context.clearRect(
-      0,
-      0,
-      canvas.width,
-      canvas.height
-    );
+    context.clearRect(0, 0, canvas.width, canvas.height);
     context.fillText(word, left, 0);
+    textureOrig.needsUpdate = true
+    context2.clearRect(0, 0, canvas2.width, canvas2.height);
+    context2.drawImage(textureOrig.image, 0, 0, canvas2.width, canvas2.height);
     texture.needsUpdate = true;
   }
   this.overOut = function () {
-    //console.log('TextPanel.overOut');
     context.fillStyle = '#999999';
-    context.clearRect(
-      0,
-      0,
-      canvas.width,
-      canvas.height
-    );
+    context.clearRect(0, 0, canvas.width, canvas.height);
     context.fillText(word, left, 0);
+    textureOrig.needsUpdate = true
+    context2.clearRect(0, 0, canvas2.width, canvas2.height);
+    context2.drawImage(textureOrig.image, 0, 0, canvas2.width, canvas2.height);
     texture.needsUpdate = true;
   }
   this.down = function (fillColour) {
-    //console.log('TextPanel.down');
     context.fillStyle = fillColour;
-    context.clearRect(
-      0,
-      0,
-      canvas.width,
-      canvas.height
-    );
+    context.clearRect(0, 0, canvas.width, canvas.height);
     context.fillText(word, left, 0);
+    textureOrig.needsUpdate = true
+    context2.clearRect(0, 0, canvas2.width, canvas2.height);
+    context2.drawImage(textureOrig.image, 0, 0, canvas2.width, canvas2.height);
     texture.needsUpdate = true;
   }
 }
+
 
 TextPanel.defaultOptions = {
   size: 100,

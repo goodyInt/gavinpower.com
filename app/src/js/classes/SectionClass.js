@@ -19,6 +19,8 @@ function Section (name) {
   this._start = fn;
   this._stop = fn;
   this.el = new THREE.Object3D();
+  this.sceneRenderer;
+   // renderer.capabilities.maxTextures
 }
 /**
  * Add a new object
