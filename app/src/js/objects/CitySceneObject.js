@@ -224,7 +224,7 @@ function CitySceneObject() {
     car.material.color.set(ranColor);
     car.material.specular.set(ranColor);
     light.color.set(ranColor);
-    var tweenTime = Math.random() * 2 + .25;
+    var tweenTime = Math.random() * 2 + .5;
     TweenMax.to(light.position, tweenTime, {
       x: -car.position.x,
       delay: 0,
@@ -298,7 +298,7 @@ function CitySceneObject() {
     car.material.color.set(ranColor);
     car.material.specular.set(ranColor);
     light.color.set(ranColor);
-    var tweenTime = Math.random() * 2 + .25;
+    var tweenTime = Math.random() * 2 + .5;
     TweenMax.to(light.position, tweenTime, {
       z: -car.position.z,
       delay: 0,
