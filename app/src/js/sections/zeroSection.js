@@ -151,7 +151,10 @@ zeroSection.onStop(function () {
     return false;
   }
   heightMap.stop();
+  heightMap.reset();
+  
   nextBtn.overOut();
+  nextBtn.out('up');
   zeroSection.nextBtnIsOver = false;
   zeroSection.nextBtnIsDown = false;
   zeroSection.hide();
@@ -160,7 +163,6 @@ zeroSection.onStop(function () {
 zeroSection.show = function () {
   heightMap.el.visible = true;
   theSectionParticles0.el.visible = true;
-  nextBtn.el.visible = true;
   sectionLines0.el.visible = true;
 };
 zeroSection.hide = function () {
@@ -171,6 +173,7 @@ zeroSection.hide = function () {
 };
 
 zeroSection.textIn = function () {
+  nextBtn.el.visible = true;
   nextBtn.in();
   zeroSection.nextBtnIsIn = true;
 };

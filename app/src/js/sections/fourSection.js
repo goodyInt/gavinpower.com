@@ -57,24 +57,29 @@ fourSection.nextBtnIsIn = false;
 fourSection.nextBtnIsOver = false;
 fourSection.nextBtnIsDown = false;
 
-var nextBtnTextString = '<<<...';
+var nextBtnTextString = "Make Something Amazing";
 var nextBtn = new TextPanel(
   nextBtnTextString, {
     align: 'center',
     style: '',
-    size: 25,
+    size: 24,
     lineSpacing: 40,
     color: '#999999'
   }
 );
 nextBtn.el.position.x = 0;
-nextBtn.el.position.y = 6;
+nextBtn.el.position.y = 7;
 nextBtn.el.position.z = 0;
+nextBtn.el.rotation.y = -180 * (Math.PI / 180);
 fourSection.add(nextBtn.el);
+
 
 this.bringInTheBtn = function () {
   clearInterval(_this.bringInTheNextBtnInterval);
+  nextBtn.el.visible = true;
+
   nextBtn.in();
+
   fourSection.nextBtnIsIn = true;
 }
 fourSection.getTheNextBtn = function () {
@@ -104,6 +109,7 @@ fourSection.onIn(function () {
 });
 
 fourSection.onOut(function () {
+  nextBtn.fadeOut(0);
   ourCityScene.onOut();
   clearInterval(_this.bringInTheNextBtnInterval);
 });
@@ -126,12 +132,13 @@ fourSection.onStop(function () {
 fourSection.show = function () {
   theSectionParticles4.el.visible = true;
   ourCityScene.el.visible = true;
-  nextBtn.el.visible = true;
+
 };
 fourSection.hide = function () {
   theSectionParticles4.el.visible = false;
   ourCityScene.el.visible = false;
   nextBtn.el.visible = false;
+
 };
 
 fourSection.theSunlight = function () {

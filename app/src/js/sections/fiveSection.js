@@ -59,6 +59,7 @@ fiveSection.onIn(function () {
 });
 
 fiveSection.onOut(function () {
+  nextBtn.fadeOut(.5);
   fiveAnimatedText.out();
   fiveEvents.trigger('sectionUnloaded', {section: 5 , message: 'Section Five is UnLoaded'});
 });

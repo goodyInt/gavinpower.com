@@ -45,7 +45,7 @@ ourCampScene.on('sectionUnloaded', function () {
   threeEvents.trigger('sectionUnloaded', {section: 3 , message: 'Section Three is UnLoaded'});
 });
 
-var nextBtnTextString = '<<< I like code. I like details. I love...';
+var nextBtnTextString = "...Let's work together as a team >>>";
 var nextBtn = new TextPanel(
   nextBtnTextString, {
     align: 'center',
@@ -78,6 +78,7 @@ threeSection.onIn(function () {
 
 threeSection.onOut(function () {
   ourCampScene.onOut();
+  nextBtn.fadeOut(0);
 });
 
 function logAnalytics(){

@@ -66,7 +66,7 @@ writingText.el.position.y = -10;
 writingText.el.position.z = 0;
 writingText.el.rotation.y = 20 * (Math.PI / 180);
 
-var passionTextString = '<<< And a passion for...';
+var passionTextString = '<<< and a passion for...';
 var nextBtn = new TextPanel(
   passionTextString, {
     align: 'center',
@@ -94,6 +94,7 @@ this.typeTheCopy = function () {
   }
 }
 this.bringInTheBtn = function () {
+  nextBtn.el.visible = true;
   clearInterval(_this.bringInTheNextBtnInterval);
   nextBtn.in();
   oneSection.nextBtnIsIn = true;
@@ -101,7 +102,7 @@ this.bringInTheBtn = function () {
 
 this.startTheTyping = function () {
   clearInterval(_this.startTheTypeingInterval);
-  _this.typeTheCopyInterval = setInterval(_this.typeTheCopy, 350);
+  _this.typeTheCopyInterval = setInterval(_this.typeTheCopy, 250);
 }
 
 oneSection.add(writingText.el);
@@ -117,14 +118,19 @@ oneSection.onIn(function () {
 });
 
 oneSection.onOut(function () {
+
+ 
   creativeWriting.onOut();
+  nextBtn.fadeOut(.5);
+  writingText.fadeOut(1);
+
 });
 
 function logAnalytics(){
   oneEvents.trigger('logAnalytics', {section: "1"}); 
 }
 oneSection.onStart(function () {
- _this.startTheTypeingInterval = setInterval(_this.startTheTyping, 4000);
+ _this.startTheTypeingInterval = setInterval(_this.startTheTyping, 2000);
  logAnalytics();
   writingText.in();
 });
@@ -140,7 +146,7 @@ oneSection.show = function () {
   theSectionParticles1.el.visible = true;
   sectionLines1.el.visible = true;
   writingText.el.visible = true;
-  nextBtn.el.visible = true;
+ 
 };
 oneSection.hide = function () {
   creativeWriting.hide();

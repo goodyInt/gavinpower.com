@@ -72,7 +72,7 @@ ourStoryScene.on('sectionIsIn', function () {
 });
 
 
-var nectBtnTextString = "<<< let's tell one together";
+var nectBtnTextString = "^ And ^";
 var nextBtn = new TextPanel(
   nectBtnTextString, {
     align: 'center',
@@ -82,14 +82,15 @@ var nextBtn = new TextPanel(
     color: '#999999'
   }
 );
-nextBtn.el.position.x = 20;
+
+nextBtn.el.position.x = 0;
 nextBtn.el.position.y = 20;
-nextBtn.el.position.z = -30;
-nextBtn.el.rotation.y = -40 * (Math.PI / 180);
-nextBtn.el.rotation.z = -20 * (Math.PI / 180);
+nextBtn.el.position.z = 300;
+
 
 
 this.bringInTheBtn = function () {
+  nextBtn.el.visible = true;
   clearInterval(_this.bringInTheNextBtnInterval);
   nextBtn.in();
   twoSection.nextBtnIsIn = true;
@@ -101,12 +102,13 @@ twoSection.onIn(function () {
   theSectionParticles2.el.visible = true;
   theSectionParticlesWhite2.el.visible = true;
   sectionLines2.el.visible = true;
-  nextBtn.el.visible = true;
   ourStoryScene.onIn();  
 });
 
 twoSection.onOut(function () {
   ourStoryScene.onOut();
+  nextBtn.fadeOut(0);
+  clearInterval(_this.bringInTheNextBtnInterval);
 });
 
 function logAnalytics(){
@@ -114,13 +116,13 @@ function logAnalytics(){
 }
 twoSection.onStart(function () {
   logAnalytics();
+  _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 3000);
   ourStoryScene.start();
 });
 
 twoSection.onStop(function () {
   twoSection.hide();
   ourStoryScene.stop();
-  clearInterval(_this.bringInTheNextBtnInterval);
   nextBtn.overOut();
   nextBtn.out('up');
 });

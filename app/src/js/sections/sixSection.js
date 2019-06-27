@@ -63,7 +63,7 @@ sixSection.onIn(function () {
 });
 
 sixSection.onOut(function () {
-
+  nextBtn.fadeOut(.5);
   sixAnimatedText.out();
   sixEvents.trigger('sectionUnloaded', {section: 6 , message: 'Section Six is UnLoaded'});
 });
@@ -82,7 +82,6 @@ sixSection.onStart(function () {
 });
 
 sixSection.onStop(function () {
-
   sixAnimatedText.stop();
   sixSection.smokeStop();
   sixSection.hide();

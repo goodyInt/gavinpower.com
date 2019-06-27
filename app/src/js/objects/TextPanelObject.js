@@ -80,6 +80,7 @@ function TextPanel(text, options) {
   var geometry = new THREE.PlaneGeometry(canvas.width / 20, canvas.height / 20);
   var group = new THREE.Object3D();
   var mesh = new THREE.Mesh(geometry, material);
+  mesh.material.fog = false;
   mesh.position.y = -20;
   group.add(mesh);
   group.visible = false;
@@ -149,6 +150,15 @@ function TextPanel(text, options) {
       onComplete: function () {
         group.visible = false;
       }
+    });
+  };
+
+  this.fadeOut = function (theDelay) {
+   tweenMax.to(cache, 1, {
+      delay: theDelay,
+      opacity: 0,
+      onUpdate: update,
+      ease: Power1.easeIn
     });
   };
 
