@@ -80,6 +80,7 @@ fiveSection.onStop(function () {
   fiveSection.smokeStop();
   clearInterval(_this.bringInTheNextBtnInterval);
   fiveSection.hide();
+  fiveSection.nextBtnIsIn = false;
 });
 
 fiveSection.show = function () {
@@ -126,7 +127,7 @@ fiveSection.nextBtnIsOver = false;
 fiveSection.nextBtnIsDown = false;
 
 fiveSection.getTheNextBtn = function () {
-  return nextBtn;
+  return nextBtn.el;
 };
 fiveSection.theNextBtnIsOver = function () {
   nextBtn.over();

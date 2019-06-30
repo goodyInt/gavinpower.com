@@ -93,9 +93,7 @@ function TextPanel(text, options) {
   };
 
   function floorPowerOfTwo(value) {
-
     return Math.pow(2, Math.floor(Math.log(value) / Math.LN2));
-
   }
 
   function update() {
@@ -129,6 +127,14 @@ function TextPanel(text, options) {
     texture.needsUpdate = true;
   }
 
+  this.resetValues = function () {
+    mesh.position.y = 0;
+    mesh.material.opacity = 0;
+    cache.y =  mesh.position.y;
+    cache.opacity = mesh.material.opacity;
+
+  };
+
   this.in = function () {
     tweenMax.to(cache, 2.35, {
       y: 0,
@@ -137,6 +143,16 @@ function TextPanel(text, options) {
         group.visible = true;
       },
       ease: Power1.easeOut,
+      onUpdate: update
+    });
+  };
+  this.fadeIn = function (speed) {
+    tweenMax.to(cache, speed, {
+      opacity: 1,
+      onStart: function () {
+        group.visible = true;
+      },
+      ease: Power1.easeInOut,
       onUpdate: update
     });
   };

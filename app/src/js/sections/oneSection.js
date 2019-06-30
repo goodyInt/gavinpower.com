@@ -140,6 +140,7 @@ oneSection.onStop(function () {
   nextBtn.overOut();
   nextBtn.out('up');
   oneSection.hide();
+  oneSection.nextBtnIsIn = false;
 });
 oneSection.show = function () {
   creativeWriting.show();
@@ -161,7 +162,7 @@ oneSection.nextBtnIsOver = false;
 oneSection.nextBtnIsDown = false;
 
 oneSection.getTheNextBtn = function () {
-  return nextBtn;
+  return nextBtn.el;
 };
 oneSection.theNextBtnIsOver = function () {
   nextBtn.over();

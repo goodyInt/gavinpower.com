@@ -41,7 +41,7 @@ var SCENE = (function () {
     var isLocked = false;
     var isActive = false;
     var isStarted = false;
- 
+
     var navFrozen = false;
     var theAtmosphereParticles;
     var theAtmosphereParticlesCity;
@@ -127,7 +127,7 @@ var SCENE = (function () {
         zCameraOffset: 30,
         fogDensity: 0.025,
         forward: 10,
-      //  backward: 2000,
+        //  backward: 2000,
         backward: 20,
         // backward: 420,
         cameraShake: false,
@@ -136,7 +136,7 @@ var SCENE = (function () {
         maxAzimuthAngle: Math.PI * 2,
         minPolarAngle: 0,
         maxPolarAngle: 0,
-       // maxPolarAngleFinish: Math.PI *2
+        // maxPolarAngleFinish: Math.PI *2
         maxPolarAngleFinish: Math.PI * .45
       },
       {
@@ -222,7 +222,7 @@ var SCENE = (function () {
         mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2 - 1;
         mouse.y = -(event.clientY / renderer.domElement.clientHeight) * 2 + 1;
         raycaster.setFromCamera(mouse, camera);
-        var sectionNextBtn = raycaster.intersectObject(sections[currentIndex].getTheNextBtn().el, true);
+        var sectionNextBtn = raycaster.intersectObject(sections[currentIndex].getTheNextBtn(), true);
         if (sectionNextBtn.length > 0) {
           sections[currentIndex].theNextBtnIsDown();
         }
@@ -231,19 +231,21 @@ var SCENE = (function () {
       function onDocumentMouseUp(event) {
         if (currentIndex == 4 && spinningDownStarted) {
           if (controls.getPolarAngle() < sectionData[currentIndex].maxPolarAngleFinish) {
-           clearInterval(spinCameraDownInt); 
-           spinCameraDownInt = setInterval(spinCameraDown, 40);
+            clearInterval(spinCameraDownInt);
+            spinCameraDownInt = setInterval(spinCameraDown, 40);
           }
         }
-      
+
         mouseDown = false;
         event.preventDefault();
         mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2 - 1;
         mouse.y = -(event.clientY / renderer.domElement.clientHeight) * 2 + 1;
         raycaster.setFromCamera(mouse, camera);
-        var sectionNextBtn = raycaster.intersectObject(sections[currentIndex].getTheNextBtn().el, true);
+        var sectionNextBtn = raycaster.intersectObject(sections[currentIndex].getTheNextBtn(), true);
         if (sectionNextBtn.length > 0) {
-          next();
+          if (sections[currentIndex].nextBtnIsIn) {
+            next();
+          }
         }
       }
 
@@ -270,7 +272,7 @@ var SCENE = (function () {
       console.table(renderer.capabilities);
       console.log('renderer.info');
       console.table(renderer.info);
-     
+
       renderer.shadowMap.enabled = true;
       renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
@@ -280,8 +282,8 @@ var SCENE = (function () {
 
       scene = new THREE.Scene();
       scene.fog = new THREE.FogExp2(parameters.fogColor, 0.01);
-      
-      ambientLight = new THREE.AmbientLight(0x404040,1.5); // 
+
+      ambientLight = new THREE.AmbientLight(0x404040, 1.5); // 
       scene.add(ambientLight);
 
       moonLight = new THREE.SpotLight(0xcccccc, 0.00, 0, Math.PI / 2);
@@ -317,7 +319,7 @@ var SCENE = (function () {
         mouse.y = -(event.clientY / renderer.domElement.clientHeight) * 2 + 1;
         raycaster.setFromCamera(mouse, camera);
 
-        var sectionNextBtn = raycaster.intersectObject(sections[currentIndex].getTheNextBtn().el, true);
+        var sectionNextBtn = raycaster.intersectObject(sections[currentIndex].getTheNextBtn(), true);
         if (sectionNextBtn.length > 0) {
           jQuery('html,body').css('cursor', 'pointer');
           if (!sections[currentIndex].nextBtnIsDown) {
@@ -404,23 +406,9 @@ var SCENE = (function () {
 
     var nextPosition;
     var toFromCallbackData;
+
     function animateCamera(index) {
       navFrozen = true;
-      if (currentIndex == 4) {
-        clearInterval(spinCameraDownInt);
-        spinningDownStarted = false;
-        controls.autoRotate = false;
-        tweenMax.killTweensOf(controls);
-        tweenMax.killTweensOf(scene.fog);
-
-        tweenMax.to(controls, 2, {
-          ease: Power2.easeOut,
-          minAzimuthAngle: 0,
-          maxAzimuthAngle: 0,
-          minPolarAngle: Math.PI * .45,
-          maxPolarAngle: Math.PI * .45
-        });
-      }
 
       controls.autoRotateSpeed = 0;
       currentIndex = index;
@@ -446,8 +434,33 @@ var SCENE = (function () {
           func: contAnimateCamera
         }
       };
-      events.trigger('section:changeBegin', toFromCallbackData);
+      console.log('previousIndex: ' + previousIndex);
+      console.log('currentIndex: ' + currentIndex);
+      if (previousIndex == 0 || previousIndex == 1 || previousIndex == 4 || previousIndex == 5 || previousIndex == 6) {
+        clearInterval(spinCameraDownInt);
+        spinningDownStarted = false;
+        controls.autoRotate = false;
+        tweenMax.killTweensOf(controls);
+        tweenMax.killTweensOf(scene.fog);
+
+        tweenMax.to(controls, 2, {
+          ease: Power2.easeInOut,
+          minAzimuthAngle: 0,
+          maxAzimuthAngle: 0,
+          minPolarAngle: Math.PI * .45,
+          maxPolarAngle: Math.PI * .45,
+          onUpdate: function () {
+            // console.log(controls.getAzimuthalAngle())
+          },
+          onComplete: function () {
+            events.trigger('section:changeBegin', toFromCallbackData);
+          }
+        });
+      } else {
+        events.trigger('section:changeBegin', toFromCallbackData);
+      }
     }
+
     function contAnimateCamera() {
       var tweenTime = 3.0;
       var index = currentIndex;
@@ -539,9 +552,9 @@ var SCENE = (function () {
           if (i > 0) {
             section.hide();
           }
-        }       
+        }
         if (cityDevMode) {
-           // set cityDevMode to true to add helper to sunlight shadow cam in city scene
+          // set cityDevMode to true to add helper to sunlight shadow cam in city scene
           scene.add(new THREE.CameraHelper(sections[4].theSunlight().shadow.camera));
         }
         for (var i = 0; i < sections.length; i++) {
@@ -556,12 +569,12 @@ var SCENE = (function () {
           });
           sections[i].on('logAnalytics', function () {
             var visitor = HASH.hash;
-            if(visitor==undefined){
+            if (visitor == undefined) {
               visitor = "friend";
             }
-            visitor =  visitor+= ("_" + this.section);
-            visitor =  visitor+="_dev";
-            gtag('event', visitor); 
+            visitor = visitor += ("_" + this.section);
+            visitor = visitor += "_dev";
+            gtag('event', visitor);
           });
         }
         // special listening and init
@@ -575,7 +588,7 @@ var SCENE = (function () {
             onComplete: cityCameraDownInt
           });
         });
-      
+
 
         theAtmosphereParticles = new BackgroundParticles({
           rangeX: [-200, 200],
@@ -587,7 +600,7 @@ var SCENE = (function () {
           color2: '#ffffff'
         });
         scene.add(theAtmosphereParticles.el);
-    
+
         theAtmosphereParticlesCity = new BackgroundParticles({
           rangeX: [-100, 200],
           rangeY: [-50, -185],
@@ -633,7 +646,7 @@ var SCENE = (function () {
             },
             callback: {
               func: function () {
-               // placeholder function 
+                // placeholder function 
               }
             }
           };

@@ -157,6 +157,7 @@ zeroSection.onStop(function () {
   nextBtn.out('up');
   zeroSection.nextBtnIsOver = false;
   zeroSection.nextBtnIsDown = false;
+  zeroSection.nextBtnIsIn = false;
   zeroSection.hide();
 });
 
@@ -187,7 +188,7 @@ zeroSection.startUpFirstTime = function (mainFunction) {
 };
 
 zeroSection.getTheNextBtn = function () {
-  return nextBtn;
+  return nextBtn.el;
 };
 zeroSection.theNextBtnIsOver = function () {
   nextBtn.over();

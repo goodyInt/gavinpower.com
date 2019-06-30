@@ -97,6 +97,7 @@ threeSection.onStop(function () {
   nextBtn.overOut();
   nextBtn.out('up');
   threeSection.hide();
+  threeSection.nextBtnIsIn = false;
 });
 
 threeSection.hide = function () {
@@ -110,7 +111,7 @@ threeSection.nextBtnIsOver = false;
 threeSection.nextBtnIsDown = false;
 
 threeSection.getTheNextBtn = function () {
-  return nextBtn;
+  return nextBtn.el;
 };
 threeSection.theNextBtnIsOver = function () {
   nextBtn.over();

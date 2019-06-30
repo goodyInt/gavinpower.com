@@ -123,6 +123,7 @@ twoSection.onStart(function () {
 twoSection.onStop(function () {
   twoSection.hide();
   ourStoryScene.stop();
+  twoSection.nextBtnIsIn = false;
   nextBtn.overOut();
   nextBtn.out('up');
 });
@@ -144,7 +145,7 @@ twoSection.nextBtnIsOver = false;
 twoSection.nextBtnIsDown = false;
 
 twoSection.getTheNextBtn = function () {
-  return nextBtn;
+  return nextBtn.el;
 };
 twoSection.theNextBtnIsOver = function () {
   nextBtn.over();

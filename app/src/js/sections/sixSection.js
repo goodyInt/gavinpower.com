@@ -86,6 +86,7 @@ sixSection.onStop(function () {
   sixSection.smokeStop();
   sixSection.hide();
   clearInterval(_this.bringInTheNextBtnInterval);
+  sixSection.nextBtnIsIn = false;
 });
 sixSection.show = function () {
 
@@ -133,7 +134,7 @@ sixSection.nextBtnIsOver = false;
 sixSection.nextBtnIsDown = false;
 
 sixSection.getTheNextBtn = function () {
-  return nextBtn;
+  return nextBtn.el;
 };
 sixSection.theNextBtnIsOver = function () {
   nextBtn.over();
