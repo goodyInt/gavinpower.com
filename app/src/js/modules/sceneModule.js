@@ -9,7 +9,7 @@ var SOUNDS = require('../modules/soundsModule');
 var Events = require('../classes/EventsClass');
 var MapObj = require('../objects/mapObject');
 var BackgroundParticles = require('../objects/backgroundParticlesObject');
-var controls = require('../objects/GoodyOrbitControls');
+var controls = require('../utils/GoodyOrbitControls');
 
 var SCENE = (function () {
   var instance;
@@ -140,23 +140,24 @@ var SCENE = (function () {
         maxPolarAngleFinish: Math.PI * .45
       },
       {
-        //scene5
-        x: 0,
-        y: 50,
-        z: -1200,
+        //scene5 birds
+        x: 150,
+        y: -200,
+        z: -620,
         zCameraOffset: 60,
         fogDensity: 0.01,
-        forward: 10,
-        backward: 100,
-        cameraShake: true,
-
-        rotateToPolarAngle: 1.5,
-        fogDensity: 0.01,
-        minAzimuthAngle: -Math.PI * .5,
-        maxAzimuthAngle: Math.PI * .5,
-        minPolarAngle: Math.PI * .1,
-        maxPolarAngle: Math.PI * .9,
-        maxPolarAngleFinish: Math.PI * .9
+        forward: 0,
+        //  backward: 2000,
+        backward: 500,
+        // backward: 420,
+        cameraShake: false,
+        rotateToPolarAngle: 0,
+        minAzimuthAngle: -Math.PI * 2,
+        maxAzimuthAngle: Math.PI * 2,
+        minPolarAngle: 0,
+        maxPolarAngle: Math.PI ,
+        // maxPolarAngleFinish: Math.PI *2
+        maxPolarAngleFinish: Math.PI
 
       },
       {
@@ -589,6 +590,13 @@ var SCENE = (function () {
           });
         });
 
+        sections[5].finalInit();
+        
+        sections[5].on('sectionFullyLoaded', function () {
+          console.log('sectionFullyLoaded');
+        });
+
+        sections[5].finalInit();
 
         theAtmosphereParticles = new BackgroundParticles({
           rangeX: [-200, 200],

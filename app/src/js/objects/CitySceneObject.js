@@ -459,6 +459,7 @@ function CitySceneObject() {
   var sunrise = function () {
     sunInclination -= .00004
     theta = Math.PI * (sunInclination - 0.5);
+    console.log('sunInclination:' + sunInclination);
 
     sunObjectPos.position.x = distance * Math.cos(phi);
     sunObjectPos.position.y = distance * Math.sin(phi) * Math.sin(theta);
