@@ -106,7 +106,7 @@ function createCircle(radius, color) {
   geom.vertices.shift();
   let mat = new THREE.LineBasicMaterial({
     color: color,
-    linewidth:2.0
+    linewidth: 2.0
   });
   return new THREE.LineLoop(geom, mat);
 }
@@ -147,10 +147,6 @@ sign.rotation.x = -180 * (Math.PI / 180);
 sign.position.y = 2;
 sign.position.z = -5;
 sign.material.opacity = 0.25;
-
-
-
-
 
 signHolder.add(sign);
 signHolder.add(nextBtn.el);
@@ -231,6 +227,28 @@ fourSection.onOut(function () {
   ourCityScene.onOut();
 });
 
+fourSection.outToFive = function () {
+  TweenMax.killTweensOf(sign.material);
+  TweenMax.killTweensOf(signHolder.position);
+  clearInterval(_this.bringInTheNextBtnInterval);
+  ourCityScene.outToFive();
+  fourSection.nextBtnIsIn = false;
+  TweenMax.to(signHolder.position, 1, {
+    delay: 0,
+    ease: Power1.easeOut,
+    y: -20,
+    onComplete: function () {
+      console.log('signHolder: ' + signHolder)
+      signHolder.visible = false;
+    }
+  });
+ 
+
+  
+};
+
+
+
 function logAnalytics() {
   fourEvents.trigger('logAnalytics', {
     section: "4"
@@ -251,14 +269,22 @@ fourSection.onStop(function () {
 });
 
 fourSection.show = function () {
+
   theSectionParticles4.el.visible = true;
+  ourCityScene.show();
   ourCityScene.el.visible = true;
+
 };
 
 fourSection.hide = function () {
   theSectionParticles4.el.visible = false;
   ourCityScene.el.visible = false;
   signHolder.visible = false;
+};
+fourSection.prepForSectionFive = function () {
+  console.log('fourSection.prepForSectionFive');
+  ourCityScene.el.visible = true;
+  ourCityScene.prepForSectionFive();
 };
 
 fourSection.theSunlight = function () {

@@ -46,6 +46,11 @@ var nextBtn = new TextPanel(
   }
 );
 
+
+nextBtn.el.position.x = 0;
+nextBtn.el.position.y = 200;
+nextBtn.el.position.z = 0;
+
 fiveSection.add(nextBtn.el);
 
 this.bringInTheBtn = function () {

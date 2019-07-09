@@ -1,6 +1,5 @@
 @import '../../../node_modules/normalize-scss/sass/_normalize.scss';
 
-
 @include normalize();
 $bgcolor: #000000;
 $arista:z_aristaregular;
@@ -33,12 +32,10 @@ body {
 
 .textCenter {
   text-align: center;
-
 }
 
 .textWhite {
   color: #ffffff;
- 
 }
 
 .loaderTitle {
@@ -46,11 +43,12 @@ body {
   display: table-cell;
   vertical-align: middle;
   font-family: Helvetica, Verdana, Futura, 'Trebuchet MS', Arial, sans-serif;
-  
 }
+
 .loadCopy {
   letter-spacing: $loadLetterSize;
 }
+
 .loadCopyG {
   letter-spacing: 0px;
 }
@@ -107,18 +105,18 @@ body {
   background-clip: padding-box;
 }
 
-// map
-
 .map {
   position: absolute;
   z-index: 999;
   bottom: 20px;
-  opacity: 1;
+  height: $nodeSize*1.5;
   // @include transition(opacity .3s ease-in-out);
 }
 
-.map:hover {
-  opacity: 1;
+.mapBackground {
+  position: absolute;
+  opacity: .15;
+  background-color: #000000;
 }
 
 .mapNode:hover {
@@ -130,18 +128,17 @@ body {
   float: left;
   cursor: pointer;
   opacity: 0;
-  background-color: #aaaaaa;
+  background-color: #ffffff;
   @include border-radius(3px);
   @include transition(background-color .3s ease-in-out);
 }
 
 .mapNode.isActive {
   background-color: #ffffff;
-  opacity: .85 !important;
+  opacity: .95 !important;
 }
 
 // menu
-
 .appHolder {
   position: absolute;
   z-index: 4;
@@ -156,7 +153,6 @@ body {
   top: 0px !important;
   right: 80px;
   z-index: 444;
-
 }
 
 .menu {
@@ -166,7 +162,6 @@ body {
   left: -30px;
   height: 60px;
   opacity: 0;
-
   font-family: Helvetica, Verdana, Futura, 'Trebuchet MS', Arial, sans-serif;
   font-size: 14px;
   font-weight: 10;
@@ -181,7 +176,6 @@ body {
   height: 30px;
   margin-top: -10px;
   opacity: .5;
-
 }
 
 .menuButtonLine {
@@ -218,11 +212,9 @@ body {
   text-decoration: none;
   opacity: 0;
   color: #999999;
-
 }
 
 .menuItem:hover {
-
   color: #ffffff;
 
 }
@@ -233,6 +225,12 @@ body {
   $nodeSize: 30px;
   $mapWidth: $nodeSize * 10.5;
 
+  .mapBackground {
+    width: $mapWidth +  $nodeSize* .5;
+    height: $nodeSize*2.0;
+    bottom: 0;
+  }
+
   .mapNode {
     width: $nodeSize;
     height: $nodeSize;
@@ -243,16 +241,20 @@ body {
     width: $mapWidth;
     left: 50%;
     margin-left: floor($mapWidth / 2) * -1;
+    height: $nodeSize*1.5;
   }
+
   $loadLetterSize: 20px;
+
   .loaderTitle {
     font-size: $loadLetterSize;
     font-weight: $loadLetterSize;
   }
+
   .loadCopy {
     letter-spacing: $loadLetterSize;
   }
-  
+
 }
 
 /*  SMALL SCREEN  END  */
@@ -261,6 +263,14 @@ body {
   $nodeSize: 20px;
   $mapWidth: $nodeSize * 10.5;
 
+
+  .mapBackground {
+
+    width: $mapWidth +  $nodeSize* .5;
+    height: $nodeSize*2.0;
+    bottom: 0;
+  }
+
   .mapNode {
     width: $nodeSize;
     height: $nodeSize;
@@ -271,12 +281,16 @@ body {
     width: $mapWidth;
     left: 50%;
     margin-left: floor($mapWidth / 2) * -1;
+    height: $nodeSize*1.5;
   }
+
   $loadLetterSize: 30px;
+
   .loaderTitle {
     font-size: $loadLetterSize;
     font-weight: $loadLetterSize;
   }
+
   .loadCopy {
     letter-spacing: $loadLetterSize;
   }

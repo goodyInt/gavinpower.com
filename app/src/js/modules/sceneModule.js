@@ -142,22 +142,22 @@ var SCENE = (function () {
       {
         //scene5 birds
         x: 150,
-        y: -200,
+        y: -180,
         z: -620,
-        zCameraOffset: 60,
+        zCameraOffset: 10,
         fogDensity: 0.01,
-        forward: 0,
+        forward: 20,
         //  backward: 2000,
-        backward: 500,
+        backward: 1200,
         // backward: 420,
         cameraShake: false,
         rotateToPolarAngle: 0,
         minAzimuthAngle: -Math.PI * 2,
         maxAzimuthAngle: Math.PI * 2,
         minPolarAngle: 0,
-        maxPolarAngle: Math.PI ,
+        maxPolarAngle: 0,
         // maxPolarAngleFinish: Math.PI *2
-        maxPolarAngleFinish: Math.PI
+        maxPolarAngleFinish: Math.PI * .45
 
       },
       {
@@ -405,6 +405,33 @@ var SCENE = (function () {
       }
     }
 
+    function flyCameraBirdSection() {
+
+      tweenMax.to(camera.position, 10, {
+        delay: 2,
+        // x: nextPosition.x,
+        y: nextPosition.y + 1000,
+        z: nextPosition.z + 50,
+        ease: Power2.easeInOut,
+
+        onComplete: function () {
+          console.log('bird fly done');
+          controls.minDistance = 50;
+
+
+        }
+      });
+
+      tweenMax.to(cameraTarget, 10, {
+        delay: 2,
+        x: nextPosition.x,
+        y: nextPosition.y +500,
+        z: nextPosition.z,
+        ease: Power2.easeInOut
+      });
+
+    }
+
     var nextPosition;
     var toFromCallbackData;
 
@@ -463,6 +490,8 @@ var SCENE = (function () {
     }
 
     function contAnimateCamera() {
+      console.log('contAnimateCamera');
+      var cameraTargetYOffset = 0;
       var tweenTime = 3.0;
       var index = currentIndex;
       var theDelay = 0;
@@ -481,6 +510,9 @@ var SCENE = (function () {
           distance: 1450,
           ease: Power1.easeInOut
         });
+      }
+      if (currentIndex == 5) {
+        cameraTargetYOffset = -20;
       }
       tweenMax.to(scene.fog, tweenTime, {
         delay: theDelay,
@@ -504,13 +536,17 @@ var SCENE = (function () {
           cameraShake = sectionData[currentIndex].cameraShake;
           previousIndex = index;
           navFrozen = false;
+          if (index == 5) {
+            flyCameraBirdSection();
+          }
+
         }
       });
 
       tweenMax.to(cameraTarget, tweenTime, {
         delay: theDelay,
         x: nextPosition.x,
-        y: nextPosition.y,
+        y: nextPosition.y + cameraTargetYOffset,
         z: nextPosition.z,
         ease: Power2.easeInOut
       });
@@ -591,7 +627,7 @@ var SCENE = (function () {
         });
 
         sections[5].finalInit();
-        
+
         sections[5].on('sectionFullyLoaded', function () {
           console.log('sectionFullyLoaded');
         });

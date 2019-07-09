@@ -28,7 +28,7 @@ function BirdSceneObject() {
   var BOUNDS = 800;
 
   var last = performance.now();
-  
+
   var velocityVariable;
   var positionVariable;
   var positionUniforms;
@@ -111,7 +111,7 @@ function BirdSceneObject() {
   THREE.BirdGeometry.prototype = Object.create(THREE.BufferGeometry.prototype);
 
   function init(sceneRenderer) {
-  
+
     var grountMat = new THREE.MeshPhongMaterial({
       color: 0x111111,
       specular: 0xffffff,
@@ -124,7 +124,7 @@ function BirdSceneObject() {
     ground.position.y = -0.001;
     ground.receiveShadow = true;
     ground.both = true;
-   // _this.el.add(ground);
+    // _this.el.add(ground);
 
     initComputeRenderer(sceneRenderer);
 
@@ -168,12 +168,11 @@ function BirdSceneObject() {
       setSunValues();
     }
 
-    initSky();
+    // initSky();
     initBirds();
   }
 
   function initComputeRenderer(sceneRenderer) {
-    console.log('initComputeRenderer');
 
     gpuCompute = new gpuComputeUtil(WIDTH, WIDTH, sceneRenderer);
 
@@ -184,9 +183,6 @@ function BirdSceneObject() {
 
     var ourBirdPostion = birdPosition;
     var ourBirdVelocity = birdVelocity;
-
-    console.log('ourBirdPostion');
-    console.log(ourBirdPostion);
 
     velocityVariable = gpuCompute.addVariable("textureVelocity", ourBirdVelocity.fragmentShader, dtVelocity);
 
@@ -214,7 +210,6 @@ function BirdSceneObject() {
     }
   }
 
-
   function initBirds() {
     console.log('initBirds');
     var ourBirdMaterial = birdMaterial;
@@ -239,13 +234,13 @@ function BirdSceneObject() {
   function fillPositionTexture(texture) {
 
     var theArray = texture.image.data;
-    var startPos = 1; //was 800
+    var startPos = .1; //was 800
     var startPosHalf = startPos / 2;
     for (var k = 0, kl = theArray.length; k < kl; k += 4) {
-
-      var x = Math.random() * startPos - startPosHalf + 150 ;
-      var y = Math.random() * startPos - startPosHalf - 200;
-      var z = Math.random() * startPos - startPosHalf -620;
+      // these are global values
+      var x = (Math.random() * startPos - startPosHalf) + 150;
+      var y = (Math.random() * startPos - startPosHalf) - 200;
+      var z = (Math.random() * startPos - startPosHalf) - 620;
 
       theArray[k + 0] = x;
       theArray[k + 1] = y;
@@ -303,25 +298,26 @@ function BirdSceneObject() {
   //	changeColor();
 
   function cameraUp() {
-/*
-    TweenMax.to(camera.position, 5, {
-      delay: 0,
-      y: 600,
-      z: 500,
-      ease: Power1.easeOut,
-      onStart: function () {
-        console.log('cameraUp onStart');
-        controls.enabled = false;
-      },
-      onComplete: function () {
-        console.log('cameraUp onComplete');
-        controls.enabled = true;
-      }
-    });
-    */
+    /*
+        TweenMax.to(camera.position, 5, {
+          delay: 0,
+          y: 600,
+          z: 500,
+          ease: Power1.easeOut,
+          onStart: function () {
+            console.log('cameraUp onStart');
+            controls.enabled = false;
+          },
+          onComplete: function () {
+            console.log('cameraUp onComplete');
+            controls.enabled = true;
+          }
+        });
+        */
   }
 
   function setNewBirdTarget(x, y, z) {
+    // x,y,z are global values 
     console.log('setNewBirdTarget');
     console.log(velocityUniforms);
     velocityUniforms["birdTarget"].value.set(x, y, z)
@@ -356,10 +352,10 @@ function BirdSceneObject() {
   }
 
   this.finalInit = function (sceneRenderer) {
-    console.log('this.finalInit');
+    console.log('BirdSceneObject  finalInit');
     init(sceneRenderer);
-   
-   setNewBirdTarget(150, -200, -620);
+
+    setNewBirdTarget(150, 180, -620);
   }
 
   this.on = function () {
@@ -370,8 +366,14 @@ function BirdSceneObject() {
     _this.events.trigger('sectionFullyLoaded', {
       message: 'Birds are Loaded'
     });
-   var moveTheBirdsInt = setInterval(moveTheBirds, 25);
 
+    var moveTheBirdsTimeOut = setTimeout(startMovingBirds, 5000);
+
+  }
+
+  function startMovingBirds() {
+    console.log('startMovingBirds');
+    var moveTheBirdsInt = setInterval(moveTheBirds, 25);
   }
 
   this.onOut = function () {

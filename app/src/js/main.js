@@ -101,6 +101,7 @@ SCENE.on('sectionUnloaded', function () {
       fourSection.in();
       break;
     case 'five':
+      fourSection.prepForSectionFive();
       fiveSection.in();
       break;
     case 'six':
@@ -151,7 +152,12 @@ SCENE.on('section:changeBegin', function () {
       }
       break;
     case 'four':
-      fourSection.out();
+      if (to == 'five') {
+        fourSection.outToFive();
+      } else {
+        fourSection.out();
+      }
+
       break;
     case 'five':
       fiveSection.out();
@@ -190,7 +196,10 @@ SCENE.on('section:changeComplete', function () {
 
       break;
     case 'four':
-      fourSection.stop();
+      if (to == 'five') {} else {
+        fourSection.stop();
+      }
+
       break;
     case 'five':
       fiveSection.stop();
@@ -209,8 +218,7 @@ SCENE.on('section:changeComplete', function () {
       oneSection.start();
       break;
     case 'two':
-      if (from == 'three') {
-      } else {
+      if (from == 'three') {} else {
         twoSection.start();
         threeSection.start();
       }

@@ -18,7 +18,6 @@ var birdPosition = new THREE.ShaderMaterial({
   fragmentShader: [
     'uniform float time;',
     'uniform float delta;',
-    
     'void main() {',
    ' vec2 uv = gl_FragCoord.xy / resolution.xy;',
    ' vec4 tmpPos = texture2D( texturePosition, uv );',

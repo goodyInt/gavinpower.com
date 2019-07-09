@@ -39,12 +39,22 @@ function CitySceneObject() {
       createCar();
     };
   }
+  this.prepForSectionFive = function () {
+    console.log('CityScene.prepForSectionFive');
+    sunriseForPrep();
+  }
+  this.show = function () {
+    theParticles.visible = true;
+  theParticles.position.y = 0;
+  }
+
 
   var grountMat = new THREE.MeshPhongMaterial({
     color: 0x111111,
     specular: 0xffffff,
     shininess: 20,
-    side: THREE.DoubleSide
+    side: THREE.DoubleSide,
+    fog: false
   });
 
   var ground = new THREE.Mesh(new THREE.PlaneGeometry(120, 120), grountMat);
@@ -357,6 +367,7 @@ function CitySceneObject() {
       onCompleteParams: [car, light]
     });
   }
+
   function landCar(car, light) {
     var carY = 0;
     var tweenTime = 1;
@@ -377,7 +388,10 @@ function CitySceneObject() {
     TweenMax.to(car.position, tweenTime, {
       y: carY,
       delay: theDelay,
-      ease: Power2.easeOut
+      ease: Power2.easeOut,
+      onComplete: function () {
+        car.visible = false;
+      }
     });
   }
   var warmUpSunlight = function () {
@@ -459,7 +473,6 @@ function CitySceneObject() {
   var sunrise = function () {
     sunInclination -= .00004
     theta = Math.PI * (sunInclination - 0.5);
-    console.log('sunInclination:' + sunInclination);
 
     sunObjectPos.position.x = distance * Math.cos(phi);
     sunObjectPos.position.y = distance * Math.sin(phi) * Math.sin(theta);
@@ -483,6 +496,60 @@ function CitySceneObject() {
       clearInterval(sunriseInt);
     }
   }
+  var sunriseForPrep = function () {
+    console.log('sunriseForPrep');
+    var riseTime = 10;
+    var delayTime = 2;
+    sunObject.sunInc = sunInclination;
+    TweenMax.to(sunObject, riseTime, {
+      delay: delayTime,
+      sunInc: 0.33832000000003776,
+      ease: Power2.easeInOut,
+      onUpdate: function () {
+        sunInclination = sunObject.sunInc;
+        theta = Math.PI * (sunInclination - 0.5);
+        sunObjectPos.position.x = distance * Math.cos(phi);
+        sunObjectPos.position.y = distance * Math.sin(phi) * Math.sin(theta);
+        sunObjectPos.position.z = distance * Math.sin(phi) * Math.cos(theta);
+        sunSphere.position.x = sunDistance * Math.cos(phi);
+        sunSphere.position.y = sunDistance * Math.sin(phi) * Math.sin(theta) - sunYOffset;
+        sunSphere.position.z = sunDistance * Math.sin(phi) * Math.cos(theta);
+        uniforms["sunPosition"].value.copy(sunObjectPos.position);
+      },
+      onStart: function () {
+        _this.el.add(_this.sunLight);
+        _this.el.add(sky);
+        _this.el.add(sunSphere);
+      }
+    });
+    TweenMax.to(_this.sunLight.position, riseTime, {
+      delay: delayTime,
+      y: 70,
+      ease: Power2.easeInOut
+    });
+    TweenMax.to(_this.sunLight, riseTime, {
+      delay: delayTime,
+      intensity: 1.5,
+      ease: Power2.easeInOut
+    });
+
+    TweenMax.to(sunColorObject, riseTime * .5, {
+      delay: delayTime,
+      sunlightColor: '#ecbe9e',
+      sunColor: '#fdfdf5',
+      ease: Power0.easeOut,
+      onUpdate: function () {
+        _this.sunLight.color.set(sunColorObject.sunlightColor);
+        sunSphere.material.color.set(sunColorObject.sunColor);
+      },
+      onComplete: function () {
+        console.log('sunColorObject complete');
+        //  sunColorObject.sunColor = '#000000';
+        // sunSphere.material.color.set(sunColorObject.sunColor);
+      }
+    });
+
+  }
   var nightIsOver = function () {
     warmUpSunlight();
     sunriseInt = setInterval(sunrise, 40);
@@ -502,6 +569,7 @@ function CitySceneObject() {
     var lightDelay = 0;
     city.add(carlights);
     for (var i = 0; i < xCars.length; i++) {
+      xCars[i].visible = true;
       xLights[i].color.set(0xffffff);
       xCars[i].position.z = xLights[i].position.z = 0;
       xCars[i].position.y = .25;
@@ -517,6 +585,7 @@ function CitySceneObject() {
       lightDelay += .3
 
       zLights[i].color.set(0xffffff);
+      zCars[i].visible = true;
       zCars[i].position.x = zLights[i].position.x = 0;
       zCars[i].position.y = .25;
       zLights[i].position.y = .5;
@@ -541,16 +610,30 @@ function CitySceneObject() {
     sunSphere.position.y = 0;
     sunSphere.position.z = -10000;
     nightOverTimer = setTimeout(nightIsOver, 1000);
+
+  
     rotateParticlesInt = setInterval(rotateParticles, 40);
     _this.events.trigger('sectionFullyLoaded', {
       message: 'City is Loaded'
     });
   }
 
+  var clearParticles = function () {
+    clearInterval(rotateParticlesInt);
+    TweenMax.to(theParticles.position, 1, {
+      ease: Power1.easeOut,
+      y: -20,
+      onComplete: function () {
+        console.log('theParticles: ' + theParticles)
+        theParticles.visible = false;
+      }
+    });
+  }
+
   this.onOut = function () {
     clearTimeout(nightOverTimer);
     clearInterval(sunriseInt);
-    clearInterval(rotateParticlesInt);
+    clearParticles();
     TweenMax.killTweensOf(sunColorObject);
     TweenMax.killTweensOf(_this.sunLight.position);
     TweenMax.killTweensOf(_this.sunLight);
@@ -562,6 +645,31 @@ function CitySceneObject() {
     }
     sunset();
   }
+  this.outToFive = function () {
+    clearTimeout(nightOverTimer);
+    clearInterval(sunriseInt);
+
+    clearParticles();
+    TweenMax.killTweensOf(sunColorObject);
+    TweenMax.killTweensOf(_this.sunLight.position);
+    TweenMax.killTweensOf(_this.sunLight);
+    for (var i = 0; i < xCars.length; i++) {
+      landCar(xCars[i], xLights[i])
+    }
+    for (var i = 0; i < zCars.length; i++) {
+      landCar(zCars[i], zLights[i])
+    }
+    //  sunset();
+    setTimeout(function () {
+      city.remove(carlights);
+      _this.events.trigger('sectionUnloaded', {
+        message: 'CityScene is Unloaded'
+      });
+    }, 3000);
+
+  }
+
+
   this.onStop = function () {
     _this.sunLight.color.set(sunColorObject.sunlightColor);
     sunSphere.material.color.set(sunColorObject.sunColor);

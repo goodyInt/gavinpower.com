@@ -342,7 +342,7 @@ function GPUComputationRenderer( sizeX, sizeY, renderer ) {
 		renderer.setRenderTarget( output );
 		renderer.render( scene, camera );
 		mesh.material = passThruShader;
-
+	
 		renderer.setRenderTarget( currentRenderTarget );
 
 	};

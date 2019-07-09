@@ -9,6 +9,8 @@ var jQuery = require('jquery');
  */
 function Map () {
   this.$el = jQuery('<div class="map"></div>');
+  this.mapBackground = jQuery('<div class="mapBackground"></div>');
+  this.$el.append( this.mapBackground);
   this.$nodes = null;
   this.callback = function () {};
 }
@@ -29,6 +31,7 @@ Map.prototype.addNode = function (index) {
   $node.attr('data-index', index);
 
  
+
   this.$el.append($node);
 };
 
