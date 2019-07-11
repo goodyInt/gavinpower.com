@@ -233,7 +233,7 @@ fourSection.outToFive = function () {
   clearInterval(_this.bringInTheNextBtnInterval);
   ourCityScene.outToFive();
   fourSection.nextBtnIsIn = false;
-  TweenMax.to(signHolder.position, 1, {
+  TweenMax.to(signHolder.position, .5, {
     delay: 0,
     ease: Power1.easeOut,
     y: -20,
@@ -242,12 +242,7 @@ fourSection.outToFive = function () {
       signHolder.visible = false;
     }
   });
- 
-
-  
 };
-
-
 
 function logAnalytics() {
   fourEvents.trigger('logAnalytics', {
@@ -256,10 +251,25 @@ function logAnalytics() {
 }
 
 fourSection.onStart(function () {
+  console.log('fourSection start onStart');
   ourCityScene.start();
   logAnalytics();
   _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 25000);
 });
+
+fourSection.startFromFive = function(){
+  console.log('fourSection.startFromFive startFromFive');
+  ourCityScene.start();
+  logAnalytics();
+  _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 25000);
+ };
+
+ fourSection.outFromFive = function(){
+  console.log('fourSection.outFromFive outFromFive');
+  ourCityScene.onOutFromFive();
+ };
+
+ 
 
 fourSection.onStop(function () {
   signHolder.position.y = -20;
@@ -269,11 +279,9 @@ fourSection.onStop(function () {
 });
 
 fourSection.show = function () {
-
   theSectionParticles4.el.visible = true;
   ourCityScene.show();
   ourCityScene.el.visible = true;
-
 };
 
 fourSection.hide = function () {
@@ -281,10 +289,11 @@ fourSection.hide = function () {
   ourCityScene.el.visible = false;
   signHolder.visible = false;
 };
-fourSection.prepForSectionFive = function () {
+
+fourSection.prepForSectionFive = function (from) {
   console.log('fourSection.prepForSectionFive');
   ourCityScene.el.visible = true;
-  ourCityScene.prepForSectionFive();
+  ourCityScene.prepForSectionFive(from);
 };
 
 fourSection.theSunlight = function () {

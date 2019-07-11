@@ -3,7 +3,6 @@ var THREE = require('three');
 var birdPosition = require('../materials/birdPosition');
 var birdVelocity = require('../materials/birdVelocity');
 var birdMaterial = require('../materials/birdMaterial');
-var skyMaterial = require('../materials/skyMaterial');
 var gpuComputeUtil = require('../utils/GPUComputationRenderer');
 var Events = require('../classes/EventsClass');
 
@@ -34,6 +33,14 @@ function BirdSceneObject() {
   var positionUniforms;
   var velocityUniforms;
   var birdUniforms;
+  var moveTheBirdsTimeOut;
+  var moveTheBirdsInt;
+
+  function onDocumentMouseMove(event) {
+    console.log('onDocumentMouseMove');
+    mouseX = event.clientX - windowHalfX;
+    mouseY = event.clientY - windowHalfY;
+  }
 
   THREE.BirdGeometry = function () {
 
@@ -53,7 +60,6 @@ function BirdSceneObject() {
     this.addAttribute('birdVertex', birdVertex);
 
     var v = 0;
-
     function verts_push() {
       for (var i = 0; i < arguments.length; i++) {
         vertices.array[v++] = arguments[i];
@@ -103,7 +109,6 @@ function BirdSceneObject() {
 
       birdVertex.array[v] = v % 9;
     }
-
     this.scale(0.2, 0.2, 0.2);
 
   };
@@ -111,64 +116,7 @@ function BirdSceneObject() {
   THREE.BirdGeometry.prototype = Object.create(THREE.BufferGeometry.prototype);
 
   function init(sceneRenderer) {
-
-    var grountMat = new THREE.MeshPhongMaterial({
-      color: 0x111111,
-      specular: 0xffffff,
-      shininess: 20,
-      side: THREE.DoubleSide
-    });
-
-    var ground = new THREE.Mesh(new THREE.PlaneGeometry(120, 120), grountMat);
-    ground.rotation.x = -90 * Math.PI / 180;
-    ground.position.y = -0.001;
-    ground.receiveShadow = true;
-    ground.both = true;
-    // _this.el.add(ground);
-
     initComputeRenderer(sceneRenderer);
-
-    var sky, sunSphere;
-
-    function initSky() {
-      console.log('initSky');
-      // Add Sky
-      sky = new THREE.Sky();
-      sky.scale.setScalar(450000);
-      _this.el.add(sky);
-
-      // Add Sun Helper
-      sunSphere = new THREE.Mesh(
-        new THREE.SphereBufferGeometry(20000, 16, 8),
-        new THREE.MeshBasicMaterial({
-          color: 0xffffff
-        })
-      );
-
-      function setSunValues() {
-        var distance = 400000;
-        var uniforms = sky.material.uniforms;
-        uniforms["turbidity"].value = 10;
-        uniforms["rayleigh"].value = 2;
-        uniforms["luminance"].value = 1;
-        uniforms["mieCoefficient"].value = 0.005;
-        uniforms["mieDirectionalG"].value = 0.8;
-
-        var theta = Math.PI * (0.33832000000003776 - 0.5);
-        var phi = 2 * Math.PI * (0.25 - 0.5);
-
-        sunSphere.position.x = distance * Math.cos(phi);
-        sunSphere.position.y = distance * Math.sin(phi) * Math.sin(theta);
-        sunSphere.position.z = distance * Math.sin(phi) * Math.cos(theta);
-
-        sunSphere.visible = !true;
-
-        uniforms["sunPosition"].value.copy(sunSphere.position);
-      }
-      setSunValues();
-    }
-
-    // initSky();
     initBirds();
   }
 
@@ -246,7 +194,6 @@ function BirdSceneObject() {
       theArray[k + 1] = y;
       theArray[k + 2] = z;
       theArray[k + 3] = 1;
-
     }
   }
 
@@ -266,65 +213,9 @@ function BirdSceneObject() {
       theArray[k + 3] = 1;
     }
   }
-
-  var outlineColorObject = {
-    oColor: '#000000'
-  };
-
-  var outlineColour = new THREE.Color(outlineColorObject.oColor);
-  var c = new THREE.Color();
-  var newColor;
-
-  function changeColor() {
-    c.set(Math.random() * 0xffffff);
-    newColor = '#' + c.getHexString();
-    console.log('newColor: ' + newColor);
-    if (newColor > '#666666') {
-      console.log('Too Light!');
-      changeColor();
-      return;
-    }
-    TweenMax.to(outlineColorObject, 10, {
-      delay: 0,
-      oColor: newColor,
-      ease: Power1.easeOut,
-      onUpdate: function () {
-        outlineColour.set(outlineColorObject.oColor);
-        birdMaterial.uniforms["color"].value = outlineColour;
-      },
-      onComplete: changeColor
-    });
-  }
-  //	changeColor();
-
-  function cameraUp() {
-    /*
-        TweenMax.to(camera.position, 5, {
-          delay: 0,
-          y: 600,
-          z: 500,
-          ease: Power1.easeOut,
-          onStart: function () {
-            console.log('cameraUp onStart');
-            controls.enabled = false;
-          },
-          onComplete: function () {
-            console.log('cameraUp onComplete');
-            controls.enabled = true;
-          }
-        });
-        */
-  }
-
-  function setNewBirdTarget(x, y, z) {
-    // x,y,z are global values 
-    console.log('setNewBirdTarget');
-    console.log(velocityUniforms);
-    velocityUniforms["birdTarget"].value.set(x, y, z)
-  }
-
+ 
   var moveTheBirds = function () {
-    console.log('moveTheBirds');
+  
     var now = performance.now();
     var delta = (now - last) / 1000;
 
@@ -340,7 +231,7 @@ function BirdSceneObject() {
     birdUniforms["time"].value = now;
     birdUniforms["delta"].value = delta;
 
-    velocityUniforms["predator"].value.set(0.5 * mouseX / windowHalfX, -0.5 * mouseY / windowHalfY, 0);
+    velocityUniforms["predator"].value.set(0.5 * mouseX / windowHalfX,-0.5 * mouseY / windowHalfY, 0);
 
     mouseX = 10000;
     mouseY = 10000;
@@ -354,8 +245,6 @@ function BirdSceneObject() {
   this.finalInit = function (sceneRenderer) {
     console.log('BirdSceneObject  finalInit');
     init(sceneRenderer);
-
-    setNewBirdTarget(150, 180, -620);
   }
 
   this.on = function () {
@@ -363,27 +252,31 @@ function BirdSceneObject() {
   }
 
   this.start = function () {
+    console.log('Birds Start');
     _this.events.trigger('sectionFullyLoaded', {
       message: 'Birds are Loaded'
     });
+    document.addEventListener('mousemove', onDocumentMouseMove, false);
 
-    var moveTheBirdsTimeOut = setTimeout(startMovingBirds, 5000);
-
+    moveTheBirdsTimeOut = setTimeout(startMovingBirds, 4500);
   }
 
   function startMovingBirds() {
-    console.log('startMovingBirds');
-    var moveTheBirdsInt = setInterval(moveTheBirds, 25);
+   // console.log('startMovingBirds');
+    moveTheBirdsInt = setInterval(moveTheBirds, 25);
   }
 
   this.onOut = function () {
-
+     console.log('Birds Out');
+     document.removeEventListener('mousemove', onDocumentMouseMove, false);
+     
   }
 
   this.onStop = function () {
-
+    console.log('Birds Stop');
+    clearTimeout(moveTheBirdsTimeOut);
+     clearInterval(moveTheBirdsInt);
   }
-
 }
 
 module.exports = BirdSceneObject;

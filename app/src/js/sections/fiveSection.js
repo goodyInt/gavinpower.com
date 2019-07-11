@@ -15,7 +15,6 @@ fiveSection.on = function () {
   fiveEvents.on.apply(fiveEvents, arguments);
 }
 
-
 fiveSection.finalInit = function () {
   ourBirdScene.finalInit(this.sceneRenderer)
 };
@@ -45,8 +44,6 @@ var nextBtn = new TextPanel(
     color: '#999999'
   }
 );
-
-
 nextBtn.el.position.x = 0;
 nextBtn.el.position.y = 200;
 nextBtn.el.position.z = 0;
@@ -67,6 +64,7 @@ fiveSection.onIn(function () {
 });
 
 fiveSection.onOut(function () {
+  ourBirdScene.onOut();
   nextBtn.fadeOut(.5);
   fiveEvents.trigger('sectionUnloaded', {
     section: 5,
@@ -82,12 +80,13 @@ function logAnalytics() {
 
 fiveSection.onStart(function () {
   logAnalytics();
-  _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 4500);
   fiveSection.show();
   ourBirdScene.start();
+  _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 4500);
 });
 
 fiveSection.onStop(function () {
+  ourBirdScene.onStop();
   clearInterval(_this.bringInTheNextBtnInterval);
   fiveSection.hide();
   fiveSection.nextBtnIsIn = false;
@@ -95,10 +94,12 @@ fiveSection.onStop(function () {
 
 fiveSection.show = function () {
   nextBtn.el.visible = true;
+  ourBirdScene.el.visible = true;
 
 };
 fiveSection.hide = function () {
   nextBtn.el.visible = false;
+  ourBirdScene.el.visible = false;
 };
 
 fiveSection.nextBtnIsIn = false;

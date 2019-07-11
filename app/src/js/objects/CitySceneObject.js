@@ -39,9 +39,9 @@ function CitySceneObject() {
       createCar();
     };
   }
-  this.prepForSectionFive = function () {
+  this.prepForSectionFive = function (from) {
     console.log('CityScene.prepForSectionFive');
-    sunriseForPrep();
+    sunriseForPrep(from);
   }
   this.show = function () {
     theParticles.visible = true;
@@ -170,7 +170,7 @@ function CitySceneObject() {
   sky.scale.setScalar(450000);
 
   sunSphere = new THREE.Mesh(
-    new THREE.SphereBufferGeometry(165, 16, 8),
+    new THREE.SphereBufferGeometry(660, 16, 8),
     new THREE.MeshBasicMaterial({
       color: 0xffffff,
       fog: false
@@ -179,7 +179,7 @@ function CitySceneObject() {
 
   sunSphere.castShadow = false;
   sunSphere.receiveShadow = false;
-  var sunYOffset = 100;
+  var sunYOffset = 0;
   sunObjectPos = new THREE.Object3D();
   sunObjectPos.position.y = -700000;
   sunObject = {
@@ -370,7 +370,7 @@ function CitySceneObject() {
 
   function landCar(car, light) {
     var carY = 0;
-    var tweenTime = 1;
+    var tweenTime = .5;
     var theDelay = 0;
     TweenMax.killTweensOf(light.position);
     TweenMax.killTweensOf(car.position);
@@ -420,7 +420,7 @@ function CitySceneObject() {
   var sunInclination = .525;
   var theta = Math.PI * (sunInclination - 0.5);
   var distance = 400000;
-  var sunDistance = 6400;
+  var sunDistance = 25600;
   var sunset = function () {
     sunObject.sunInc = sunInclination;
     TweenMax.to(sunObject, 1, {
@@ -428,14 +428,18 @@ function CitySceneObject() {
       ease: Power2.easeInOut,
       onUpdate: function () {
         sunInclination = sunObject.sunInc;
+
         theta = Math.PI * (sunInclination - 0.5);
         sunObjectPos.position.x = distance * Math.cos(phi);
         sunObjectPos.position.y = distance * Math.sin(phi) * Math.sin(theta);
         sunObjectPos.position.z = distance * Math.sin(phi) * Math.cos(theta);
+        uniforms["sunPosition"].value.copy(sunObjectPos.position);
+        //
+
         sunSphere.position.x = sunDistance * Math.cos(phi);
         sunSphere.position.y = sunDistance * Math.sin(phi) * Math.sin(theta) - sunYOffset;
         sunSphere.position.z = sunDistance * Math.sin(phi) * Math.cos(theta);
-        uniforms["sunPosition"].value.copy(sunObjectPos.position);
+   
       },
       onComplete: function () {
         _this.el.remove(_this.sunLight);
@@ -496,10 +500,16 @@ function CitySceneObject() {
       clearInterval(sunriseInt);
     }
   }
-  var sunriseForPrep = function () {
-    console.log('sunriseForPrep');
-    var riseTime = 10;
-    var delayTime = 2;
+  var sunriseForPrep = function (from) {
+
+    console.log('sunriseForPrep from: ' + from);
+    sunYOffset = -250;
+    var riseTime = 5;
+    var delayTime = 3;
+    if(from=="four"){
+      delayTime = 0;
+
+    }
     sunObject.sunInc = sunInclination;
     TweenMax.to(sunObject, riseTime, {
       delay: delayTime,
@@ -552,6 +562,7 @@ function CitySceneObject() {
   }
   var nightIsOver = function () {
     warmUpSunlight();
+    sunYOffset = 0;
     sunriseInt = setInterval(sunrise, 40);
   }
   var rotateParticles = function () {
@@ -564,6 +575,7 @@ function CitySceneObject() {
   var nightOverTimer;
 
   this.start = function () {
+    console.log('CitySceneObject start');
     sunColorObject.sunlightColor = '#000000';
     sunColorObject.sunColor = '#fb3203';
     var lightDelay = 0;
@@ -630,6 +642,11 @@ function CitySceneObject() {
     });
   }
 
+  this.onOutFromFive = function () {
+    console.log('this.onOutFromFive');
+    sunset();
+  }
+
   this.onOut = function () {
     clearTimeout(nightOverTimer);
     clearInterval(sunriseInt);
@@ -648,7 +665,6 @@ function CitySceneObject() {
   this.outToFive = function () {
     clearTimeout(nightOverTimer);
     clearInterval(sunriseInt);
-
     clearParticles();
     TweenMax.killTweensOf(sunColorObject);
     TweenMax.killTweensOf(_this.sunLight.position);
@@ -659,13 +675,12 @@ function CitySceneObject() {
     for (var i = 0; i < zCars.length; i++) {
       landCar(zCars[i], zLights[i])
     }
-    //  sunset();
-    setTimeout(function () {
+     setTimeout(function () {
       city.remove(carlights);
       _this.events.trigger('sectionUnloaded', {
         message: 'CityScene is Unloaded'
       });
-    }, 3000);
+    }, 1000);
 
   }
 

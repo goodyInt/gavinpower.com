@@ -141,23 +141,21 @@ var SCENE = (function () {
       },
       {
         //scene5 birds
-        x: 150,
-        y: -180,
-        z: -620,
-        zCameraOffset: 10,
+
+        x: 0,
+        y: 0,
+        z: 0,
+        zCameraOffset: 200,
         fogDensity: 0.01,
         forward: 20,
-        //  backward: 2000,
-        backward: 1200,
-        // backward: 420,
+        backward: 2000,
         cameraShake: false,
-        rotateToPolarAngle: 0,
-        minAzimuthAngle: -Math.PI * 2,
-        maxAzimuthAngle: Math.PI * 2,
-        minPolarAngle: 0,
-        maxPolarAngle: 0,
-        // maxPolarAngleFinish: Math.PI *2
-        maxPolarAngleFinish: Math.PI * .45
+        rotateToPolarAngle: 1.5,
+        minAzimuthAngle: -Math.PI * .25,
+        maxAzimuthAngle: Math.PI * .25,
+        minPolarAngle: Math.PI * .25,
+        maxPolarAngle: Math.PI * .75,
+        maxPolarAngleFinish: Math.PI * .75
 
       },
       {
@@ -299,7 +297,7 @@ var SCENE = (function () {
       moonLight.shadow = new THREE.LightShadow(moonShadowCamera);
       moonLight.shadow.bias = 0.0001;
 
-      camera = new THREE.PerspectiveCamera(190, $viewport.width() / $viewport.height(), 1, 8000);
+      camera = new THREE.PerspectiveCamera(190, $viewport.width() / $viewport.height(), 1, 32000);
       camera.position.set(0, 0, 60);
 
       controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -405,37 +403,56 @@ var SCENE = (function () {
       }
     }
 
-    function flyCameraBirdSection() {
-
-      tweenMax.to(camera.position, 10, {
-        delay: 2,
-        // x: nextPosition.x,
-        y: nextPosition.y + 1000,
-        z: nextPosition.z + 50,
+    function flyCityForBirdSection() {
+      console.log('flyCityForBirdSection');
+      nextPosition = {
+        x: sectionData[currentIndex].x,
+        y: sectionData[currentIndex].y,
+        z: sectionData[currentIndex].z,
+        zCameraOffset: sectionData[currentIndex].zCameraOffset
+      }
+      var tweenTime = 7.0;
+      var theDelay = 1;
+      tweenMax.to(camera.position, tweenTime, {
+        delay: theDelay,
+        x: nextPosition.x,
+        y: nextPosition.y,
+        z: nextPosition.z + nextPosition.zCameraOffset,
         ease: Power2.easeInOut,
-
+        onStart: function () {
+          console.log('onStart flyCityForBirdSection');
+        },
         onComplete: function () {
-          console.log('bird fly done');
-          controls.minDistance = 50;
-
-
+          console.log('onComplete flyCityForBirdSection');
         }
       });
 
-      tweenMax.to(cameraTarget, 10, {
-        delay: 2,
-        x: nextPosition.x,
-        y: nextPosition.y +500,
-        z: nextPosition.z,
+
+      tweenMax.to(controls, tweenTime, {
+        delay: theDelay,
+        minAzimuthAngle: 0,
+        maxAzimuthAngle: 0,
+        minAzimuthAngle: -Math.PI * .25,
+        maxAzimuthAngle: Math.PI * .2,
+        minDistance: 100,
+        maxDistance: 500,
         ease: Power2.easeInOut
       });
 
+      tweenMax.to(cameraTarget, tweenTime, {
+        delay: theDelay,
+        x: nextPosition.x,
+        y: nextPosition.y + 30,
+        z: nextPosition.z,
+        ease: Power2.easeInOut
+      });
     }
 
     var nextPosition;
     var toFromCallbackData;
 
     function animateCamera(index) {
+      console.log('animateCamera');
       navFrozen = true;
 
       controls.autoRotateSpeed = 0;
@@ -449,6 +466,7 @@ var SCENE = (function () {
         z: sectionData[currentIndex].z,
         zCameraOffset: sectionData[currentIndex].zCameraOffset
       }
+
       toFromCallbackData = {
         from: {
           name: sectionsMap[previousIndex],
@@ -470,16 +488,12 @@ var SCENE = (function () {
         controls.autoRotate = false;
         tweenMax.killTweensOf(controls);
         tweenMax.killTweensOf(scene.fog);
-
-        tweenMax.to(controls, 2, {
+        tweenMax.to(controls, 1, {
           ease: Power2.easeInOut,
           minAzimuthAngle: 0,
           maxAzimuthAngle: 0,
           minPolarAngle: Math.PI * .45,
           maxPolarAngle: Math.PI * .45,
-          onUpdate: function () {
-            // console.log(controls.getAzimuthalAngle())
-          },
           onComplete: function () {
             events.trigger('section:changeBegin', toFromCallbackData);
           }
@@ -491,10 +505,13 @@ var SCENE = (function () {
 
     function contAnimateCamera() {
       console.log('contAnimateCamera');
+
       var cameraTargetYOffset = 0;
       var tweenTime = 3.0;
       var index = currentIndex;
       var theDelay = 0;
+      var tweenControls = true;
+
       if (currentIndex == 0 || currentIndex == 1 || currentIndex == 4 || currentIndex == 5 || currentIndex == 6) {
         TweenMax.to(moonLight, tweenTime, {
           delay: theDelay,
@@ -503,6 +520,7 @@ var SCENE = (function () {
           ease: Power1.easeInOut
         });
       }
+
       if (currentIndex == 2 || currentIndex == 3) {
         TweenMax.to(moonLight, tweenTime, {
           delay: 0,
@@ -511,14 +529,40 @@ var SCENE = (function () {
           ease: Power1.easeInOut
         });
       }
+
+      console.log('previousIndex: ' + previousIndex);
+      console.log('previousIndex: ' + previousIndex);
+      console.log('previousIndex: ' + previousIndex);
+      console.log('currentIndex: ' + currentIndex);
+      console.log('currentIndex: ' + currentIndex);
+      console.log('currentIndex: ' + currentIndex);
+
       if (currentIndex == 5) {
-        cameraTargetYOffset = -20;
+        cameraTargetYOffset = -30;
+        nextPosition = {
+          x: sectionData[4].x,
+          y: sectionData[4].y + 30,
+          z: sectionData[4].z,
+          zCameraOffset: 30
+        }
+        if (previousIndex == 4) {
+          tweenTime = .35;
+          tweenControls = false;
+          nextPosition = {
+            x: camera.position.x,
+            y: camera.position.y,
+            z: camera.position.z,
+            zCameraOffset: 0
+          }
+        }
       }
+
       tweenMax.to(scene.fog, tweenTime, {
         delay: theDelay,
         density: sectionData[currentIndex].fogDensity,
         ease: Power2.easeInOut
       });
+
       tweenMax.to(camera.position, tweenTime, {
         delay: theDelay,
         x: nextPosition.x,
@@ -529,6 +573,8 @@ var SCENE = (function () {
           // SOUNDS.wind.play();
         },
         onComplete: function () {
+          console.log('onComplete previousIndex: ' + previousIndex);
+          console.log('onComplete index: ' + index);
           if (previousIndex === index) {
             return false;
           }
@@ -537,36 +583,44 @@ var SCENE = (function () {
           previousIndex = index;
           navFrozen = false;
           if (index == 5) {
-            flyCameraBirdSection();
+            // flyCameraBirdSection();
+            flyCityForBirdSection();
           }
 
         }
       });
 
-      tweenMax.to(cameraTarget, tweenTime, {
-        delay: theDelay,
-        x: nextPosition.x,
-        y: nextPosition.y + cameraTargetYOffset,
-        z: nextPosition.z,
-        ease: Power2.easeInOut
-      });
+      console.log('tweenControls');
+      console.log(tweenControls);
 
-      tweenMax.to(controls, tweenTime, {
-        delay: theDelay,
-        minAzimuthAngle: sectionData[currentIndex].minAzimuthAngle,
-        maxAzimuthAngle: sectionData[currentIndex].maxAzimuthAngle,
-        minPolarAngle: sectionData[currentIndex].minPolarAngle,
-        maxPolarAngle: sectionData[currentIndex].maxPolarAngle,
-        minDistance: sectionData[currentIndex].forward,
-        maxDistance: sectionData[currentIndex].backward,
-        ease: Power2.easeInOut
-      });
-      tweenMax.to(controls, .1, {
-        delay: theDelay + tweenTime + .1,
-        maxPolarAngle: sectionData[currentIndex].maxPolarAngleFinish,
-        ease: Power2.easeInOut
-      });
+      if (tweenControls) {
+        tweenMax.to(cameraTarget, tweenTime, {
+          delay: theDelay,
+          x: nextPosition.x,
+          y: nextPosition.y + cameraTargetYOffset,
+          z: nextPosition.z,
+          ease: Power2.easeInOut
+        });
+
+        tweenMax.to(controls, tweenTime, {
+          delay: theDelay,
+          minAzimuthAngle: sectionData[currentIndex].minAzimuthAngle,
+          maxAzimuthAngle: sectionData[currentIndex].maxAzimuthAngle,
+          minPolarAngle: sectionData[currentIndex].minPolarAngle,
+          maxPolarAngle: sectionData[currentIndex].maxPolarAngle,
+          minDistance: sectionData[currentIndex].forward,
+          maxDistance: sectionData[currentIndex].backward,
+          ease: Power2.easeInOut
+        });
+
+        tweenMax.to(controls, .1, {
+          delay: theDelay + tweenTime + .1,
+          maxPolarAngle: sectionData[currentIndex].maxPolarAngleFinish,
+          ease: Power2.easeInOut
+        });
+      }
     }
+
     return {
       setViewport: function ($el) {
         $viewport = $el;
