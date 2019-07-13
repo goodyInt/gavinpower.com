@@ -45,8 +45,8 @@ var nextBtn = new TextPanel(
   }
 );
 nextBtn.el.position.x = 0;
-nextBtn.el.position.y = 200;
-nextBtn.el.position.z = 0;
+nextBtn.el.position.y = 20;
+nextBtn.el.position.z = 150;
 
 fiveSection.add(nextBtn.el);
 
@@ -82,7 +82,7 @@ fiveSection.onStart(function () {
   logAnalytics();
   fiveSection.show();
   ourBirdScene.start();
-  _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 4500);
+  _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 6500);
 });
 
 fiveSection.onStop(function () {
@@ -95,7 +95,6 @@ fiveSection.onStop(function () {
 fiveSection.show = function () {
   nextBtn.el.visible = true;
   ourBirdScene.el.visible = true;
-
 };
 fiveSection.hide = function () {
   nextBtn.el.visible = false;

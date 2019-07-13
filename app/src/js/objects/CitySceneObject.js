@@ -40,14 +40,12 @@ function CitySceneObject() {
     };
   }
   this.prepForSectionFive = function (from) {
-    console.log('CityScene.prepForSectionFive');
+
     sunriseForPrep(from);
   }
   this.show = function () {
-    theParticles.visible = true;
-  theParticles.position.y = 0;
+ //   theParticles.visible = true;
   }
-
 
   var grountMat = new THREE.MeshPhongMaterial({
     color: 0x111111,
@@ -65,7 +63,6 @@ function CitySceneObject() {
   city.add(ground);
 
   //----------------------------------------------------------------- Buildings
-
   var segments = 2;
 
   var buildingMatArray = [
@@ -150,7 +147,9 @@ function CitySceneObject() {
   }
   _this.thePoints = new THREE.Points(particleGeography, particleMaterial);
   theParticles.add(_this.thePoints);
+  theParticles.position.y = -20;
   city.add(theParticles);
+  theParticles.visible = false;
 
   //----------------------------------------------------------------- Sky and Light
   _this.sunLight = new THREE.DirectionalLight(0x000000, 0.5);
@@ -413,7 +412,6 @@ function CitySceneObject() {
       sunlightColor: '#ecbe9e',
       ease: Power0.easeNone
     });
-
   }
   var phi = 2 * Math.PI * (-.25);
   var uniforms = sky.material.uniforms;
@@ -421,6 +419,7 @@ function CitySceneObject() {
   var theta = Math.PI * (sunInclination - 0.5);
   var distance = 400000;
   var sunDistance = 25600;
+
   var sunset = function () {
     sunObject.sunInc = sunInclination;
     TweenMax.to(sunObject, 1, {
@@ -439,7 +438,7 @@ function CitySceneObject() {
         sunSphere.position.x = sunDistance * Math.cos(phi);
         sunSphere.position.y = sunDistance * Math.sin(phi) * Math.sin(theta) - sunYOffset;
         sunSphere.position.z = sunDistance * Math.sin(phi) * Math.cos(theta);
-   
+
       },
       onComplete: function () {
         _this.el.remove(_this.sunLight);
@@ -464,6 +463,65 @@ function CitySceneObject() {
       sunlightColor: '#000000',
       sunColor: '#fb3203',
       ease: Power0.easeOut,
+      onUpdate: function () {
+        _this.sunLight.color.set(sunColorObject.sunlightColor);
+        sunSphere.material.color.set(sunColorObject.sunColor);
+      },
+      onComplete: function () {
+        sunColorObject.sunColor = '#000000';
+        sunSphere.material.color.set(sunColorObject.sunColor);
+      }
+    });
+  }
+  var sunsetFromFive = function (currentIndex) {
+
+    sunObject.sunInc = sunInclination;
+    var sunsetTime = 2;
+    var theDelay = 1;
+    TweenMax.to(sunObject, sunsetTime, {
+      delay: theDelay,
+      sunInc: .525,
+      ease: Power2.easeInOut,
+      onUpdate: function () {
+        sunInclination = sunObject.sunInc;
+
+        theta = Math.PI * (sunInclination - 0.5);
+        sunObjectPos.position.x = distance * Math.cos(phi);
+        sunObjectPos.position.y = distance * Math.sin(phi) * Math.sin(theta);
+        sunObjectPos.position.z = distance * Math.sin(phi) * Math.cos(theta);
+        uniforms["sunPosition"].value.copy(sunObjectPos.position);
+        //
+
+        sunSphere.position.x = sunDistance * Math.cos(phi);
+        sunSphere.position.y = sunDistance * Math.sin(phi) * Math.sin(theta) - sunYOffset;
+        sunSphere.position.z = sunDistance * Math.sin(phi) * Math.cos(theta);
+
+      },
+      onComplete: function () {
+    
+        if (currentIndex !== 4) {
+          _this.el.remove(_this.sunLight);
+          _this.el.remove(sky);
+          _this.el.remove(sunSphere);
+        }
+      }
+    });
+    TweenMax.to(_this.sunLight.position, sunsetTime, {
+      delay: theDelay,
+      y: 0,
+      ease: Power2.easeInOut
+    });
+    TweenMax.to(_this.sunLight, sunsetTime, {
+      delay: theDelay,
+      intensity: 0,
+      ease: Power2.easeInOut
+    });
+    TweenMax.to(sunColorObject, sunsetTime, {
+      delay: theDelay,
+
+      sunlightColor: '#000000',
+      sunColor: '#fb3203',
+      ease: Power2.easeInOut,
       onUpdate: function () {
         _this.sunLight.color.set(sunColorObject.sunlightColor);
         sunSphere.material.color.set(sunColorObject.sunColor);
@@ -501,14 +559,11 @@ function CitySceneObject() {
     }
   }
   var sunriseForPrep = function (from) {
-
-    console.log('sunriseForPrep from: ' + from);
     sunYOffset = -250;
     var riseTime = 5;
     var delayTime = 3;
-    if(from=="four"){
+    if (from == "four") {
       delayTime = 0;
-
     }
     sunObject.sunInc = sunInclination;
     TweenMax.to(sunObject, riseTime, {
@@ -551,11 +606,6 @@ function CitySceneObject() {
       onUpdate: function () {
         _this.sunLight.color.set(sunColorObject.sunlightColor);
         sunSphere.material.color.set(sunColorObject.sunColor);
-      },
-      onComplete: function () {
-        console.log('sunColorObject complete');
-        //  sunColorObject.sunColor = '#000000';
-        // sunSphere.material.color.set(sunColorObject.sunColor);
       }
     });
 
@@ -574,8 +624,13 @@ function CitySceneObject() {
 
   var nightOverTimer;
 
-  this.start = function () {
-    console.log('CitySceneObject start');
+  this.startFromFive = function () {
+    this.start(true)
+  }
+
+
+  this.start = function (fromFive) {
+
     sunColorObject.sunlightColor = '#000000';
     sunColorObject.sunColor = '#fb3203';
     var lightDelay = 0;
@@ -615,15 +670,26 @@ function CitySceneObject() {
     }
     lightDelay += .5
 
-    _this.el.add(_this.sunLight);
-    _this.el.add(sky);
-    _this.el.add(sunSphere);
+    if (!fromFive) {
+      _this.el.add(_this.sunLight);
+      _this.el.add(sky);
+      _this.el.add(sunSphere);
+    }
     sunSphere.position.x = 0;
     sunSphere.position.y = 0;
     sunSphere.position.z = -10000;
     nightOverTimer = setTimeout(nightIsOver, 1000);
 
-  
+    theParticles.position.y = -20;
+    theParticles.visible = true;
+
+    TweenMax.to(theParticles.position, 2, {
+      delay: 1,
+      ease: Power1.easeOut,
+      y: 0
+    });
+
+
     rotateParticlesInt = setInterval(rotateParticles, 40);
     _this.events.trigger('sectionFullyLoaded', {
       message: 'City is Loaded'
@@ -636,15 +702,14 @@ function CitySceneObject() {
       ease: Power1.easeOut,
       y: -20,
       onComplete: function () {
-        console.log('theParticles: ' + theParticles)
         theParticles.visible = false;
       }
     });
   }
 
-  this.onOutFromFive = function () {
-    console.log('this.onOutFromFive');
-    sunset();
+  this.onOutFromFive = function (currentIndex) {
+  
+    sunsetFromFive(currentIndex);
   }
 
   this.onOut = function () {
@@ -662,6 +727,7 @@ function CitySceneObject() {
     }
     sunset();
   }
+
   this.outToFive = function () {
     clearTimeout(nightOverTimer);
     clearInterval(sunriseInt);
@@ -675,15 +741,13 @@ function CitySceneObject() {
     for (var i = 0; i < zCars.length; i++) {
       landCar(zCars[i], zLights[i])
     }
-     setTimeout(function () {
+    setTimeout(function () {
       city.remove(carlights);
       _this.events.trigger('sectionUnloaded', {
         message: 'CityScene is Unloaded'
       });
     }, 1000);
-
   }
-
 
   this.onStop = function () {
     _this.sunLight.color.set(sunColorObject.sunlightColor);

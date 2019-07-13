@@ -136,7 +136,6 @@ var SCENE = (function () {
         maxAzimuthAngle: Math.PI * 2,
         minPolarAngle: 0,
         maxPolarAngle: 0,
-        // maxPolarAngleFinish: Math.PI *2
         maxPolarAngleFinish: Math.PI * .45
       },
       {
@@ -266,11 +265,6 @@ var SCENE = (function () {
       });
 
       renderer.debug.checkShaderErrors = true;
-
-      console.log('renderer.capabilities');
-      console.table(renderer.capabilities);
-      console.log('renderer.info');
-      console.table(renderer.info);
 
       renderer.shadowMap.enabled = true;
       renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -403,8 +397,7 @@ var SCENE = (function () {
       }
     }
 
-    function flyCityForBirdSection() {
-      console.log('flyCityForBirdSection');
+    function flyToBirdSectionFromCity() {
       nextPosition = {
         x: sectionData[currentIndex].x,
         y: sectionData[currentIndex].y,
@@ -419,21 +412,18 @@ var SCENE = (function () {
         y: nextPosition.y,
         z: nextPosition.z + nextPosition.zCameraOffset,
         ease: Power2.easeInOut,
-        onStart: function () {
-          console.log('onStart flyCityForBirdSection');
-        },
         onComplete: function () {
-          console.log('onComplete flyCityForBirdSection');
+          controls.enabled = true;
         }
       });
 
-
       tweenMax.to(controls, tweenTime, {
         delay: theDelay,
-        minAzimuthAngle: 0,
-        maxAzimuthAngle: 0,
         minAzimuthAngle: -Math.PI * .25,
         maxAzimuthAngle: Math.PI * .2,
+        minPolarAngle: Math.PI * .25,
+        maxPolarAngle: Math.PI * .75,
+        maxPolarAngleFinish: Math.PI * .75,
         minDistance: 100,
         maxDistance: 500,
         ease: Power2.easeInOut
@@ -452,7 +442,6 @@ var SCENE = (function () {
     var toFromCallbackData;
 
     function animateCamera(index) {
-      console.log('animateCamera');
       navFrozen = true;
 
       controls.autoRotateSpeed = 0;
@@ -480,9 +469,8 @@ var SCENE = (function () {
           func: contAnimateCamera
         }
       };
-      console.log('previousIndex: ' + previousIndex);
-      console.log('currentIndex: ' + currentIndex);
-      if (previousIndex == 0 || previousIndex == 1 || previousIndex == 4 || previousIndex == 5 || previousIndex == 6) {
+
+      if (previousIndex == 0 || previousIndex == 1 || previousIndex == 4 || previousIndex == 6) {
         clearInterval(spinCameraDownInt);
         spinningDownStarted = false;
         controls.autoRotate = false;
@@ -495,47 +483,95 @@ var SCENE = (function () {
           minPolarAngle: Math.PI * .45,
           maxPolarAngle: Math.PI * .45,
           onComplete: function () {
+              events.trigger('section:changeBegin', toFromCallbackData);
+          }
+        });
+      }
+
+      if (previousIndex == 5) {
+        sections[4].outFromFive(currentIndex);
+        clearInterval(spinCameraDownInt);
+        spinningDownStarted = false;
+        controls.autoRotate = false;
+        tweenMax.killTweensOf(controls);
+        tweenMax.killTweensOf(scene.fog);
+
+        var tweenTime = 3.0;
+        var theDelay = 0;
+     
+        if (index == 4) {
+          tweenMax.to(camera.position, tweenTime, {
+            delay: theDelay,
+            x: nextPosition.x,
+            y: nextPosition.y,
+            z: nextPosition.z + nextPosition.zCameraOffset,
+            ease: Power2.easeInOut,
+            onStart: function () {
+              controls.enabled = false;
+            }
+          });
+
+          tweenMax.to(controls, tweenTime, {
+            delay: theDelay,
+            minAzimuthAngle: sectionData[4].minAzimuthAngle,
+            maxAzimuthAngle: sectionData[4].maxAzimuthAngle,
+            minPolarAngle: sectionData[4].minPolarAngle,
+            maxPolarAngle: sectionData[4].maxPolarAngle,
+            minDistance: sectionData[4].forward,
+            maxDistance: sectionData[4].backward,
+            ease: Power2.easeInOut
+          });
+
+        } else {
+
+          tweenMax.to(camera.position, tweenTime, {
+            delay: theDelay,
+            x: sectionData[4].x,
+            y: sectionData[4].y + 30,
+            z: sectionData[4].z + 30,
+            ease: Power2.easeInOut,
+            onStart: function () {
+              controls.enabled = false;
+            }
+          });
+
+          tweenMax.to(controls, tweenTime, {
+            delay: theDelay,
+            minAzimuthAngle: sectionData[5].minAzimuthAngle,
+            maxAzimuthAngle: sectionData[5].maxAzimuthAngle,
+            minPolarAngle: sectionData[5].minPolarAngle,
+            maxPolarAngle: sectionData[5].maxPolarAngle,
+            minDistance: sectionData[5].forward,
+            maxDistance: sectionData[5].backward,
+            ease: Power2.easeInOut
+          });
+        }
+
+        tweenMax.to(cameraTarget, tweenTime, {
+          delay: theDelay,
+          x: sectionData[4].x,
+          y: sectionData[4].y,
+          z: sectionData[4].z,
+          ease: Power2.easeInOut,
+          onComplete: function () {
             events.trigger('section:changeBegin', toFromCallbackData);
           }
         });
-      } else {
+      }
+
+      if (previousIndex == 2 || previousIndex == 3) {
+       
         events.trigger('section:changeBegin', toFromCallbackData);
       }
     }
 
     function contAnimateCamera() {
-      console.log('contAnimateCamera');
-
+    
       var cameraTargetYOffset = 0;
       var tweenTime = 3.0;
       var index = currentIndex;
       var theDelay = 0;
       var tweenControls = true;
-
-      if (currentIndex == 0 || currentIndex == 1 || currentIndex == 4 || currentIndex == 5 || currentIndex == 6) {
-        TweenMax.to(moonLight, tweenTime, {
-          delay: theDelay,
-          distance: 0,
-          intensity: 0,
-          ease: Power1.easeInOut
-        });
-      }
-
-      if (currentIndex == 2 || currentIndex == 3) {
-        TweenMax.to(moonLight, tweenTime, {
-          delay: 0,
-          intensity: 5,
-          distance: 1450,
-          ease: Power1.easeInOut
-        });
-      }
-
-      console.log('previousIndex: ' + previousIndex);
-      console.log('previousIndex: ' + previousIndex);
-      console.log('previousIndex: ' + previousIndex);
-      console.log('currentIndex: ' + currentIndex);
-      console.log('currentIndex: ' + currentIndex);
-      console.log('currentIndex: ' + currentIndex);
 
       if (currentIndex == 5) {
         cameraTargetYOffset = -30;
@@ -557,12 +593,36 @@ var SCENE = (function () {
         }
       }
 
+      if (currentIndex == 4) {
+        if (previousIndex == 5) {
+          tweenTime = 0.0;
+        }
+      }
+
+      if (currentIndex == 0 || currentIndex == 1 || currentIndex == 4 || currentIndex == 5 || currentIndex == 6) {
+        TweenMax.to(moonLight, tweenTime, {
+          delay: theDelay,
+          distance: 0,
+          intensity: 0,
+          ease: Power1.easeInOut
+        });
+      }
+
+      if (currentIndex == 2 || currentIndex == 3) {
+        TweenMax.to(moonLight, tweenTime, {
+          delay: 0,
+          intensity: 5,
+          distance: 1450,
+          ease: Power1.easeInOut
+        });
+      }
+
       tweenMax.to(scene.fog, tweenTime, {
         delay: theDelay,
         density: sectionData[currentIndex].fogDensity,
         ease: Power2.easeInOut
       });
-
+    
       tweenMax.to(camera.position, tweenTime, {
         delay: theDelay,
         x: nextPosition.x,
@@ -571,27 +631,24 @@ var SCENE = (function () {
         ease: Power2.easeInOut,
         onStart: function () {
           // SOUNDS.wind.play();
+          controls.enabled = false;
         },
         onComplete: function () {
-          console.log('onComplete previousIndex: ' + previousIndex);
-          console.log('onComplete index: ' + index);
+          if (index !== 5) {
+            controls.enabled = true;
+          }
           if (previousIndex === index) {
             return false;
           }
-          events.trigger('section:changeComplete', toFromCallbackData);
           cameraShake = sectionData[currentIndex].cameraShake;
           previousIndex = index;
           navFrozen = false;
           if (index == 5) {
-            // flyCameraBirdSection();
-            flyCityForBirdSection();
+            flyToBirdSectionFromCity();
           }
-
+          events.trigger('section:changeComplete', toFromCallbackData);
         }
       });
-
-      console.log('tweenControls');
-      console.log(tweenControls);
 
       if (tweenControls) {
         tweenMax.to(cameraTarget, tweenTime, {
@@ -601,6 +658,7 @@ var SCENE = (function () {
           z: nextPosition.z,
           ease: Power2.easeInOut
         });
+
 
         tweenMax.to(controls, tweenTime, {
           delay: theDelay,
@@ -620,7 +678,6 @@ var SCENE = (function () {
         });
       }
     }
-
     return {
       setViewport: function ($el) {
         $viewport = $el;
@@ -678,12 +735,6 @@ var SCENE = (function () {
             ease: Power2.easeInOut,
             onComplete: cityCameraDownInt
           });
-        });
-
-        sections[5].finalInit();
-
-        sections[5].on('sectionFullyLoaded', function () {
-          console.log('sectionFullyLoaded');
         });
 
         sections[5].finalInit();

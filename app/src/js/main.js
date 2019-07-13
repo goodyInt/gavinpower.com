@@ -157,10 +157,8 @@ SCENE.on('section:changeBegin', function () {
       } else {
         fourSection.out();
       }
-
       break;
     case 'five':
-        fourSection.outFromFive();
       fiveSection.out();
       break;
     case 'six':
@@ -172,14 +170,10 @@ SCENE.on('section:changeBegin', function () {
 });
 
 SCENE.on('section:changeComplete', function () {
-  console.log('SCENE.on(section:changeComplete');
   console.table(this);
   var to = this.to.name;
   var from = this.from.name;
-
-  console.log('to: ' + to);
-  console.log('from: ' + from);
-
+ 
   switch (from) {
     case 'zero':
       zeroSection.stop();
@@ -201,11 +195,16 @@ SCENE.on('section:changeComplete', function () {
 
       break;
     case 'four':
-      if (to == 'five') {} else {
+      if (to == 'five') {
+        fourSection.stopForFive();
+      } else {
         fourSection.stop();
       }
       break;
     case 'five':
+        if (to !== 'four') {
+        fourSection.stop();
+        }
       fiveSection.stop();
       break;
     case 'six':
@@ -236,13 +235,13 @@ SCENE.on('section:changeComplete', function () {
       }
       break;
     case 'four':
-      console.log('calling four start');
-      console.log('fourSection: ');
-      if (from == 'five') {
-        fourSection.startFromFive();
-      } else {
-        fourSection.start();
-      }
+        if (from == 'five') {
+          fourSection.startFromFive();
+        } else {
+          fourSection.start();
+        }
+        
+        
       break;
     case 'five':
       fiveSection.start();

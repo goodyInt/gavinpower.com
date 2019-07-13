@@ -37,7 +37,6 @@ function BirdSceneObject() {
   var moveTheBirdsInt;
 
   function onDocumentMouseMove(event) {
-    console.log('onDocumentMouseMove');
     mouseX = event.clientX - windowHalfX;
     mouseY = event.clientY - windowHalfY;
   }
@@ -159,7 +158,6 @@ function BirdSceneObject() {
   }
 
   function initBirds() {
-    console.log('initBirds');
     var ourBirdMaterial = birdMaterial;
     var geometry = new THREE.BirdGeometry();
     birdUniforms = ourBirdMaterial.uniforms;
@@ -182,7 +180,7 @@ function BirdSceneObject() {
   function fillPositionTexture(texture) {
 
     var theArray = texture.image.data;
-    var startPos = .1; //was 800
+    var startPos = .01; //was 800
     var startPosHalf = startPos / 2;
     for (var k = 0, kl = theArray.length; k < kl; k += 4) {
       // these are global values
@@ -196,6 +194,7 @@ function BirdSceneObject() {
       theArray[k + 3] = 1;
     }
   }
+  
 
   function fillVelocityTexture(texture) {
 
@@ -207,9 +206,9 @@ function BirdSceneObject() {
       var y = Math.random() - 0.5;
       var z = Math.random() - 0.5;
 
-      theArray[k + 0] = x * 10;
-      theArray[k + 1] = y * 10;
-      theArray[k + 2] = z * 10;
+      theArray[k + 0] = x * 1;
+      theArray[k + 1] = y * 1;
+      theArray[k + 2] = z * 1;
       theArray[k + 3] = 1;
     }
   }
@@ -236,15 +235,14 @@ function BirdSceneObject() {
     mouseX = 10000;
     mouseY = 10000;
 
-    gpuCompute.compute();
+    gpuCompute.compute();    
 
     birdUniforms["texturePosition"].value = gpuCompute.getCurrentRenderTarget(positionVariable).texture;
     birdUniforms["textureVelocity"].value = gpuCompute.getCurrentRenderTarget(velocityVariable).texture;
   }
 
   this.finalInit = function (sceneRenderer) {
-    console.log('BirdSceneObject  finalInit');
-    init(sceneRenderer);
+       init(sceneRenderer);
   }
 
   this.on = function () {
@@ -252,7 +250,7 @@ function BirdSceneObject() {
   }
 
   this.start = function () {
-    console.log('Birds Start');
+  
     _this.events.trigger('sectionFullyLoaded', {
       message: 'Birds are Loaded'
     });
@@ -262,20 +260,24 @@ function BirdSceneObject() {
   }
 
   function startMovingBirds() {
-   // console.log('startMovingBirds');
     moveTheBirdsInt = setInterval(moveTheBirds, 25);
   }
 
   this.onOut = function () {
-     console.log('Birds Out');
      document.removeEventListener('mousemove', onDocumentMouseMove, false);
-     
+     setTimeout(clearBirds, 1000);
+  }
+  function clearBirds(){
+  
+    clearTimeout(moveTheBirdsTimeOut);
+    clearInterval(moveTheBirdsInt);
+    gpuCompute.resetToStart();
+
   }
 
   this.onStop = function () {
-    console.log('Birds Stop');
-    clearTimeout(moveTheBirdsTimeOut);
-     clearInterval(moveTheBirdsInt);
+
+   
   }
 }
 

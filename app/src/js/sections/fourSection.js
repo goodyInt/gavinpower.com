@@ -112,8 +112,6 @@ function createCircle(radius, color) {
 }
 
 var tempCircle = createCircle(14, '#ffffff');
-
-//tempCircle.scale.set(0.0001, 0.0001, 1);
 signHolder.add(tempCircle);
 tempCircle.position.z = -5;
 tempCircle.position.y = 2;
@@ -238,7 +236,6 @@ fourSection.outToFive = function () {
     ease: Power1.easeOut,
     y: -20,
     onComplete: function () {
-      console.log('signHolder: ' + signHolder)
       signHolder.visible = false;
     }
   });
@@ -251,25 +248,22 @@ function logAnalytics() {
 }
 
 fourSection.onStart(function () {
-  console.log('fourSection start onStart');
+
   ourCityScene.start();
   logAnalytics();
   _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 25000);
 });
 
-fourSection.startFromFive = function(){
-  console.log('fourSection.startFromFive startFromFive');
-  ourCityScene.start();
+fourSection.startFromFive = function() {
+  ourCityScene.startFromFive();
   logAnalytics();
   _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 25000);
- };
+};
 
- fourSection.outFromFive = function(){
-  console.log('fourSection.outFromFive outFromFive');
-  ourCityScene.onOutFromFive();
- };
 
- 
+ fourSection.outFromFive = function(currentIndex){
+  ourCityScene.onOutFromFive(currentIndex);
+ };
 
 fourSection.onStop(function () {
   signHolder.position.y = -20;
@@ -277,6 +271,16 @@ fourSection.onStop(function () {
   fourSection.hide();
   fourSection.nextBtnIsIn = false;
 });
+
+fourSection.stopForFive = function () {
+  signHolder.position.y = -20;
+  ourCityScene.onStop();
+  theSectionParticles4.el.visible = false;
+ // ourCityScene.el.visible = false;
+  signHolder.visible = false;
+  fourSection.nextBtnIsIn = false;
+  this.playing = false;
+};
 
 fourSection.show = function () {
   theSectionParticles4.el.visible = true;
@@ -291,7 +295,6 @@ fourSection.hide = function () {
 };
 
 fourSection.prepForSectionFive = function (from) {
-  console.log('fourSection.prepForSectionFive');
   ourCityScene.el.visible = true;
   ourCityScene.prepForSectionFive(from);
 };
