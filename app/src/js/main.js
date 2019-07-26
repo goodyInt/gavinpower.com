@@ -173,7 +173,7 @@ SCENE.on('section:changeComplete', function () {
   console.table(this);
   var to = this.to.name;
   var from = this.from.name;
- 
+    
   switch (from) {
     case 'zero':
       zeroSection.stop();

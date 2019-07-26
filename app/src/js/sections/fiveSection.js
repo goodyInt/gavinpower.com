@@ -5,9 +5,27 @@ var BirdScene = require('../objects/BirdSceneObject');
 var fiveSection = new Section('five');
 var Events = require('../classes/EventsClass');
 var fiveEvents = new Events();
+var BackgroundParticles = require('../objects/backgroundParticlesObject');
 
 var TextPanel = require('../objects/TextPanelObject');
 var _this = this;
+
+/* 
+x: 150,
+        y: -200,
+        z: -620,
+        */
+var theSectionParticles5 = new BackgroundParticles({
+  rangeX: [-50, 200],
+  rangeY: [-200, 100],
+  rangeZ: [100, -620],
+  count: 1000,
+  particleSize: .35,
+  color1: '#ffffff',
+  color2: '#5D5D5D'
+});
+fiveSection.add(theSectionParticles5.el);
+
 
 var ourBirdScene = new BirdScene();
 
@@ -82,6 +100,7 @@ fiveSection.onStart(function () {
   logAnalytics();
   fiveSection.show();
   ourBirdScene.start();
+  theSectionParticles5.el.visible = true;
   _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 6500);
 });
 
@@ -90,6 +109,7 @@ fiveSection.onStop(function () {
   clearInterval(_this.bringInTheNextBtnInterval);
   fiveSection.hide();
   fiveSection.nextBtnIsIn = false;
+  theSectionParticles5.el.visible = false;
 });
 
 fiveSection.show = function () {

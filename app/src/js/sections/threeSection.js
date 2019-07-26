@@ -45,7 +45,7 @@ ourCampScene.on('sectionUnloaded', function () {
   threeEvents.trigger('sectionUnloaded', {section: 3 , message: 'Section Three is UnLoaded'});
 });
 
-var nextBtnTextString = "...Let's work together as a team >>>";
+var nextBtnTextString = "Let's work as a team and >>>";
 var nextBtn = new TextPanel(
   nextBtnTextString, {
     align: 'center',

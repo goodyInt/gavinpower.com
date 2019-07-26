@@ -390,6 +390,7 @@ function StoryTellingScene() {
       ease: Power1.easeOut,
       onUpdate: function () {
         waterShaderMaterial.uniforms["tintDensity"].value = waterTintObject.tintDensity;
+        
       },
       onComplete: this.CompleteUnload
     });

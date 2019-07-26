@@ -214,7 +214,7 @@ function BirdSceneObject() {
   }
  
   var moveTheBirds = function () {
-  
+
     var now = performance.now();
     var delta = (now - last) / 1000;
 

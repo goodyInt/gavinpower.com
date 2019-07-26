@@ -72,7 +72,7 @@ ourStoryScene.on('sectionIsIn', function () {
 });
 
 
-var nectBtnTextString = "^ And ^";
+var nectBtnTextString = "^ And A Love Of ^";
 var nextBtn = new TextPanel(
   nectBtnTextString, {
     align: 'center',

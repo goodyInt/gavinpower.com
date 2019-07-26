@@ -53,15 +53,21 @@ function CreativeWriting() {
 
     var displacement = new THREE.Float32BufferAttribute(count * 3, 3);
     geometry.addAttribute('displacement', displacement);
+
     var customColor = new THREE.Float32BufferAttribute(count * 3, 3);
     geometry.addAttribute('customColor', customColor);
+
     var color = new THREE.Color(0xffffff);
+
     for (var i = 0, l = customColor.count; i < l; i++) {
       color.setHSL(i / l, 0.5, 0.5);
       color.toArray(customColor.array, i * customColor.itemSize);
     }
+
     _this.creativeObject = new THREE.Line(geometry, shaderMaterial);
+
     _this.el.add(_this.creativeObject);
+    
     _this.creativeObject.visible = false;
 
     var gArray = geometry.attributes.position;
