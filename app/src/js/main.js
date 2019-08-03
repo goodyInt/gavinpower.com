@@ -1,6 +1,7 @@
 var ImagesLoader = require('./classes/LoaderClass');
 var Loader = require('./objects/LoaderObject');
 var Menu = require('./objects/MenuObject');
+var Credits = require('./objects/CreditsObject');
 var tweenMax = require('tweenMax');
 var SCENE = require('./modules/sceneModule');
 var jQuery = require('jquery');
@@ -12,12 +13,15 @@ var fourSection = require('./sections/fourSection');
 var fiveSection = require('./sections/fiveSection');
 var sixSection = require('./sections/sixSection');
 var menu = new Menu();
+var credits = new Credits();
 var loader = new Loader();
 var toFromCallbackData;
 
 var imagesLoader = new ImagesLoader([
   './img/heightMap/heightMap-white.jpg'
 ]);
+
+
 
 imagesLoader.start();
 imagesLoader.onProgress(function (percent) {
@@ -42,14 +46,22 @@ menu.onClick(function () {
   var name = $el.attr('data-button');
   switch (name) {
     case ('sounds'):
+        console.log('sounds');
       break;
-    case ('help'):
+    case ('credits'):
+        console.log('credits: ' + credits);
+        console.log( credits);
+        credits.addToStage();
       break;
     case ('resume'):
+        console.log('resume');
       break;
-    case ('email'):
+    case ('contact'):
+        console.log('contact');
       break;
     case ('close'):
+        console.log('close');
+        credits.removeFromStage();
       menu.out();
       break;
   };
@@ -63,6 +75,7 @@ SCENE.config({
   quality: 1
 });
 SCENE.setViewport($viewport);
+
 SCENE.addSections([
   zeroSection,
   oneSection,
@@ -105,6 +118,7 @@ SCENE.on('sectionUnloaded', function () {
       fiveSection.in();
       break;
     case 'six':
+      fourSection.prepForSectionFive(toFromCallbackData.from.name);
       sixSection.in();
       break;
     default:
@@ -118,11 +132,13 @@ SCENE.on('sectionIsIn', function () {
     // sectioon 2 and 3 load at the same time
     return;
   }
-
   toFromCallbackData.callback.func();
 });
 
 SCENE.on('section:changeBegin', function () {
+  console.log('');
+  console.log('changeBegin');
+ 
   console.table(this);
   map.setActive(this.to.index);
   toFromCallbackData = this;
@@ -152,7 +168,7 @@ SCENE.on('section:changeBegin', function () {
       }
       break;
     case 'four':
-      if (to == 'five') {
+      if (to == 'five'|| to == 'six') {
         fourSection.outToFive();
       } else {
         fourSection.out();
@@ -173,7 +189,7 @@ SCENE.on('section:changeComplete', function () {
   console.table(this);
   var to = this.to.name;
   var from = this.from.name;
-    
+
   switch (from) {
     case 'zero':
       zeroSection.stop();
@@ -181,30 +197,33 @@ SCENE.on('section:changeComplete', function () {
     case 'one':
       oneSection.stop();
       break;
+
     case 'two':
       if (to == 'three') {} else {
         twoSection.stop();
         threeSection.stop();
       }
       break;
+
     case 'three':
       if (to == 'two') {} else {
         twoSection.stop();
         threeSection.stop();
       }
-
       break;
+
     case 'four':
-      if (to == 'five') {
-        fourSection.stopForFive();
+      if (to == 'five'|| to == 'six') {
+        fourSection.stopForFiveSix();
       } else {
         fourSection.stop();
       }
       break;
+
     case 'five':
-        if (to !== 'four') {
+      if (to !== 'four') {
         fourSection.stop();
-        }
+      }
       fiveSection.stop();
       break;
     case 'six':
@@ -221,7 +240,9 @@ SCENE.on('section:changeComplete', function () {
       oneSection.start();
       break;
     case 'two':
-      if (from == 'three') {} else {
+      if (from == 'three') {
+
+      } else {
         twoSection.start();
         threeSection.start();
       }
@@ -235,13 +256,11 @@ SCENE.on('section:changeComplete', function () {
       }
       break;
     case 'four':
-        if (from == 'five') {
-          fourSection.startFromFive();
-        } else {
-          fourSection.start();
-        }
-        
-        
+      if (from == 'five') {
+        fourSection.startFromFive();
+      } else {
+        fourSection.start();
+      }
       break;
     case 'five':
       fiveSection.start();

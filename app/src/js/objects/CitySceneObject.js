@@ -44,7 +44,7 @@ function CitySceneObject() {
     sunriseForPrep(from);
   }
   this.show = function () {
- //   theParticles.visible = true;
+    //   theParticles.visible = true;
   }
 
   var grountMat = new THREE.MeshPhongMaterial({
@@ -498,8 +498,8 @@ function CitySceneObject() {
 
       },
       onComplete: function () {
-    
-        if (currentIndex !== 4) {
+
+        if (currentIndex !== 4 ) {
           _this.el.remove(_this.sunLight);
           _this.el.remove(sky);
           _this.el.remove(sunSphere);
@@ -708,7 +708,7 @@ function CitySceneObject() {
   }
 
   this.onOutFromFive = function (currentIndex) {
-  
+
     sunsetFromFive(currentIndex);
   }
 

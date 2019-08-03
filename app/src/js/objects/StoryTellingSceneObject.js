@@ -354,7 +354,6 @@ function StoryTellingScene() {
     });
   }
   StoryTellingScene.prototype.onIn = function () {
-  
     _this.moveTheWaterInterval = setInterval(_this.moveTheWater, 40);
     _this.events.trigger('sectionIsIn', {
       message: 'StoryTelling sectionIsIn'

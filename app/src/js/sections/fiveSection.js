@@ -2,6 +2,7 @@
 
 var Section = require('../classes/SectionClass');
 var BirdScene = require('../objects/BirdSceneObject');
+
 var fiveSection = new Section('five');
 var Events = require('../classes/EventsClass');
 var fiveEvents = new Events();

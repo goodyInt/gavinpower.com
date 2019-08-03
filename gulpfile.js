@@ -69,6 +69,12 @@ gulp.task("moveFonts", function () {
   .pipe(gulp.dest('app/dist/fonts'))
 });
 
+// moveDownloads
+gulp.task("moveDownloads", function () {
+  return gulp.src('app/src/downloads/*')
+  .pipe(gulp.dest('app/dist/downloads'))
+});
+
 // moveSounds
 gulp.task("moveSounds", function () {
   return gulp.src('app/src/sounds/*')
@@ -102,10 +108,10 @@ gulp.task('preProJs', function(done) {
 gulp.task("buildDev", gulp.series('preProCss','copyHtml','moveStats','postProCss','preProJs'));
 
 // build for production
-gulp.task("buildProd", gulp.series('preProJs','preProCss','copyHtml', 'postProCss', 'minImg','moveFonts','moveSounds','bableJs','uglifyCss','uglifyJs'));
+gulp.task("buildProd", gulp.series('preProJs','preProCss','copyHtml', 'postProCss', 'minImg','moveFonts','moveSounds','moveDownloads','bableJs','uglifyCss','uglifyJs'));
 
 // build for production
-gulp.task("buildPreProd", gulp.series('preProJs','preProCss','copyHtml', 'postProCss', 'minImg','moveFonts','moveStats','moveSounds','bableJs','uglifyCss','uglifyJs'));
+gulp.task("buildPreProd", gulp.series('preProJs','preProCss','copyHtml', 'postProCss', 'minImg','moveFonts','moveStats','moveSounds', 'moveDownloads', 'bableJs','uglifyCss','uglifyJs'));
 
 // watch and reload
 gulp.task("watch", function () {

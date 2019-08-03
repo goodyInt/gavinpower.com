@@ -248,7 +248,6 @@ function logAnalytics() {
 }
 
 fourSection.onStart(function () {
-
   ourCityScene.start();
   logAnalytics();
   _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 25000);
@@ -259,7 +258,6 @@ fourSection.startFromFive = function() {
   logAnalytics();
   _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 25000);
 };
-
 
  fourSection.outFromFive = function(currentIndex){
   ourCityScene.onOutFromFive(currentIndex);
@@ -272,7 +270,7 @@ fourSection.onStop(function () {
   fourSection.nextBtnIsIn = false;
 });
 
-fourSection.stopForFive = function () {
+fourSection.stopForFiveSix = function () {
   signHolder.position.y = -20;
   ourCityScene.onStop();
   theSectionParticles4.el.visible = false;
