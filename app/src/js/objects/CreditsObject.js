@@ -1,6 +1,6 @@
 'use strict';
 
-var jQuery = require('jquery');
+var $ = require('jquery');
 
 function Credits() {
 
@@ -63,9 +63,30 @@ function Credits() {
 
   this.addToStage = function () {
     console.log('this.addToStage');
-    document.body.appendChild(screenHolderBackgroundDiv);
-    document.body.appendChild(screenHolderDiv);
-    document.body.appendChild(closeButtonDiv);
+    if (!document.getElementById(screenHolderBackgroundDiv.id)) {
+      document.body.appendChild(screenHolderBackgroundDiv);
+      document.body.appendChild(screenHolderDiv);
+      document.body.appendChild(closeButtonDiv);
+
+      $("#closeButtonDiv").css("opacity", 0.0);
+      $("#screenHolderDiv").css("opacity", 0.0);
+      $("#screenHolderBackgroundDiv").css("opacity", 0.0);
+
+      var tSpeed = .35;
+      TweenMax.to($("#closeButtonDiv"), tSpeed, {
+        opacity: 1,
+        ease: Quad.easeOut
+      });
+      TweenMax.to($("#screenHolderDiv"), tSpeed, {
+        opacity: 1,
+        ease: Quad.easeOut
+      });
+      TweenMax.to($("#screenHolderBackgroundDiv"), tSpeed, {
+        delay: 0,
+        opacity: 1,
+        ease: Quad.easeOut
+      });
+    }
   }
 
   this.removeFromStage = function () {

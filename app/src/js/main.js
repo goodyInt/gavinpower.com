@@ -55,9 +55,11 @@ menu.onClick(function () {
       break;
     case ('resume'):
         console.log('resume');
+        credits.removeFromStage();
       break;
     case ('contact'):
         console.log('contact');
+        credits.removeFromStage();
       break;
     case ('close'):
         console.log('close');

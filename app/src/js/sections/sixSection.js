@@ -130,4 +130,10 @@ sixSection.theNextBtnIsOut = function () {
   sixSection.nextBtnIsOver = false;
 };
 
+sixSection.handleResize = function () {
+  console.log('sixSection.handleResize');
+  ourThankYouScene.handleResize ();
+  
+}
+
 module.exports = sixSection;

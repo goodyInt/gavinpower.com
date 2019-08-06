@@ -17,7 +17,9 @@ function ThankYouObject() {
   var watchingSign;
   var fullScreenRibbon;
   var fullScreenGeo;
+  var watchOffset;
   
+
   var shaderUniformObject = {
     shaderOpacity: 0.0
   };
@@ -48,15 +50,14 @@ function ThankYouObject() {
       bevelEnabled: true
     });
     thankYouGeo.computeBoundingBox();
-
-    fullScreenGeo = new THREE.BoxBufferGeometry(window.innerWidth * .25, window.innerHeight * .25, 1);
+  
+    fullScreenGeo = new THREE.BoxBufferGeometry(window.screen.width,window.screen.height, 1);
     fullScreenRibbon = new THREE.Mesh(fullScreenGeo, theShaderMaterial);
     _this.el.add(fullScreenRibbon);
     fullScreenGeo.computeBoundingBox();
-    fullScreenRibbon.position.z = 0;
-    fullScreenRibbon.position.x = fullScreenGeo.boundingBox.max.x;
+    fullScreenRibbon.position.z = 59;
+    fullScreenRibbon.position.x = window.screen.width*.5  ;
     fullScreenRibbon.visible = false;
-
     var centerOffset = -0.5 * (thankYouGeo.boundingBox.max.x - thankYouGeo.boundingBox.min.x);
     thankSign = new THREE.Mesh(thankYouGeo, theShaderMaterial);
     thankSign.position.x = centerOffset + 1;
@@ -90,6 +91,7 @@ function ThankYouObject() {
     watchingGeo.computeBoundingBox();
 
     centerOffset = -0.5 * (watchingGeo.boundingBox.max.x - watchingGeo.boundingBox.min.x);
+    watchOffset = centerOffset;
     watchingSign = new THREE.Mesh(watchingGeo, theShaderMaterial);
     watchingSign.position.x = centerOffset + 2.5;
     theSign.add(watchingSign);
@@ -101,7 +103,7 @@ function ThankYouObject() {
 
     theSign.position.z = -window.innerWidth * 2;
 
-    theSign.visible =false;
+    theSign.visible = false;
 
     theShaderMaterial.uniforms.iResolution.value = new THREE.Vector2(window.innerWidth, window.innerHeight);
     theShaderMaterial.uniforms.iMouse.value = new THREE.Vector4(window.innerWidth * .5, window.innerHeight * .5, 0.0, 0.0);
@@ -139,13 +141,13 @@ function ThankYouObject() {
       z: 20,
       ease: Power2.easeInOut,
       delay: theDelay,
-      onStart: function (){
-        theSign.visible =true;
+      onStart: function () {
+        theSign.visible = true;
       }
     });
 
-    TweenMax.to(shaderUniformObject,1, {
-      delay: theDelay,
+    TweenMax.to(shaderUniformObject, 1, {
+      delay: theDelay+2,
       shaderOpacity: 1.0,
       ease: Power2.easeIn,
       onUpdate: function () {
@@ -159,18 +161,27 @@ function ThankYouObject() {
       delay: theDelay + finalSpeed
     });
 
-    TweenMax.to(fullScreenRibbon.position, .75, {
+    fullScreenRibbon.position.z = 59;
+    fullScreenRibbon.position.x = window.screen.width*.5;
+    var destX  =  window.screen.width*.5+ watchOffset;
+  
+    TweenMax.to(fullScreenRibbon.position, 1.75, {
       onStart: function () {
+       
         fullScreenRibbon.visible = true;
       },
-      x: fullScreenGeo.boundingBox.max.x * .5,
-      ease: Power1.easeOut,
-      delay: theDelay + finalSpeed + 4.25,
+      onComplete: function () {
+         fullScreenRibbon.position.x = 0;
+     
+      },
+      x: destX,
+     
+      ease: Power1.easeIn,
+      delay: theDelay + finalSpeed + 4.25
     });
   }
 
   this.onOut = function () {
-    console.log('ThankYouObject onOut');
 
     TweenMax.killTweensOf(theSign.position);
     TweenMax.killTweensOf(fullScreenRibbon.position);
@@ -180,14 +191,14 @@ function ThankYouObject() {
       onComplete: function () {
         fullScreenRibbon.visible = false;
       },
-      x: fullScreenGeo.boundingBox.max.x,
+      x: window.screen.width*.5,
       ease: Power2.easeInOut
     });
 
     TweenMax.to(theSign.position, 5, {
       z: 20,
       ease: Power2.easeInOut,
-      delay: 0.0
+      delay: 0.0 
     });
 
     TweenMax.to(theSign.position, 2, {
@@ -198,24 +209,34 @@ function ThankYouObject() {
           message: 'ThankYou is Unloaded'
         });
       },
-      z:-window.innerWidth * 2,
+      z: -window.innerWidth * 2,
       ease: Power2.easeInOut,
       delay: 5.0
     });
 
     TweenMax.to(shaderUniformObject, 2, {
-      delay:  5.0,
+      delay: 5.0,
       shaderOpacity: 0.0,
       ease: Power2.easeOut,
       onUpdate: function () {
         theShaderMaterial.uniforms["opacity"].value = shaderUniformObject.shaderOpacity;
       }
     });
-    
+
   }
   this.onStop = function () {
-    console.log('ThankYouObject onStop'); 
+    console.log('ThankYouObject onStop');
     document.removeEventListener('mousemove', mouseISMoving, false);
+  }
+
+  this.handleResize = function () {
+    console.log('ThankYouObject.handleResize');
+    theShaderMaterial.uniforms.iResolution.value = new THREE.Vector2(window.innerWidth, window.innerHeight);
+    if(fullScreenRibbon.visible == true){
+      fullScreenRibbon.position.x = 0 ;
+    }else{
+      fullScreenRibbon.position.x = fullScreenGeo.boundingBox.max.x;
+    }
   }
 }
 

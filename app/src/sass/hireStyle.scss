@@ -115,7 +115,7 @@ body {
 
 .mapBackground {
   position: absolute;
-  opacity: .15;
+  opacity: .25;
   background-color: #000000;
 }
 
@@ -154,20 +154,6 @@ body {
   z-index: 444;
 }
 
-.menu {
-  position: absolute;
-  z-index: 100;
-  top: 0px;
-  left: -30px;
-  height: 60px;
-  opacity: 0;
-  font-family: Helvetica, Verdana, Futura, 'Trebuchet MS', Arial, sans-serif;
-  font-size: 14px;
-  font-weight: 10;
-  letter-spacing: 5px;
-  cursor: pointer;
-}
-
 .screenHolderDiv {
   position: absolute;
   z-index: 100;
@@ -179,6 +165,7 @@ body {
   padding: 0;
   overflow-y: scroll;
 }
+
 .screenHolderBackgroundDiv {
   position: fixed;
   z-index: 10;
@@ -190,7 +177,6 @@ body {
   padding: 0;
   background-color: rgba(0, 0, 0, 0.75);
 }
-
 
 .titleDiv {
   position: absolute;
@@ -205,7 +191,6 @@ body {
   left: 20px;
   right: 20px;
 }
-
 
 .bodyDiv {
   position: absolute;
@@ -228,11 +213,24 @@ body {
   cursor: pointer;
 }
 
-.divCloseBtn {  
+.divCloseBtn {
   width: 30px;
   height: 30px;
 }
 
+.menu {
+  position: absolute;
+  z-index: 100;
+  top: 0px;
+  left: -30px;
+  height: 60px;
+  opacity: 0;
+  font-family: Helvetica, Verdana, Futura, 'Trebuchet MS', Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 10;
+  letter-spacing: 5px;
+  cursor: pointer;
+}
 
 .menuButton {
   position: absolute;
@@ -241,8 +239,6 @@ body {
   height: 30px;
   margin-top: -10px;
   opacity: .5;
-
-
 }
 
 .menuButtonLine {
@@ -269,7 +265,7 @@ body {
 .menuItems {
   display: none;
   margin-left: 25px;
-  background-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(0, 0, 0, 0.25);
 
 }
 
@@ -280,11 +276,11 @@ body {
   text-decoration: none;
   opacity: 0;
   color: #999999;
- 
+
 }
 
 .menuItem:hover {
-  color: #ffffff;
+  color: #ffffff; 
 
 }
 
@@ -295,7 +291,7 @@ body {
   $mapWidth: $nodeSize * 10.5;
 
   .mapBackground {
-    width: $mapWidth +  $nodeSize* .5;
+    width: $mapWidth + $nodeSize* .5;
     height: $nodeSize*2.0;
     bottom: 0;
   }
@@ -323,6 +319,25 @@ body {
   .loadCopy {
     letter-spacing: $loadLetterSize;
   }
+
+  .screenHolderDiv {
+    top: 100px;
+    left: 10%;
+    width: 80%;
+    height: 75%;
+  }
+
+  .screenHolderBackgroundDiv {
+    top: 95px;
+    left: 10%;
+    width: 80%;
+    height: 75%;
+  }
+
+  .closeButtonDiv {
+    right: 5%;
+  }
+
 }
 
 /*  SMALL SCREEN  END  */
@@ -332,7 +347,7 @@ body {
   $mapWidth: $nodeSize * 10.5;
 
   .mapBackground {
-    width: $mapWidth +  $nodeSize* .5;
+    width: $mapWidth + $nodeSize* .5;
     height: $nodeSize*2.0;
     bottom: 0;
   }
@@ -359,6 +374,24 @@ body {
 
   .loadCopy {
     letter-spacing: $loadLetterSize;
+  }
+
+  .screenHolderDiv {
+    top: 100px;
+    left: 25%;
+    width: 50%;
+    height: 75%;
+  }
+
+  .screenHolderBackgroundDiv {
+    top: 95px;
+    left: 25%;
+    width: 50%;
+    height: 75%;
+  }
+
+  .closeButtonDiv {
+    right: 20%;
   }
 }
 

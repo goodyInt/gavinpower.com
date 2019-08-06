@@ -374,6 +374,7 @@ var SCENE = (function () {
       camera.aspect = $viewport.width() / $viewport.height();
       camera.updateProjectionMatrix();
       sections[2].handleResize();
+      sections[6].handleResize();
       renderer.setSize($viewport.width(), $viewport.height());
     }
 
@@ -618,7 +619,7 @@ var SCENE = (function () {
           triggerDone = true;
         }
       }
-       
+
       if (currentIndex == 5) {
         cameraTargetYOffset = -30;
         nextPosition = {
