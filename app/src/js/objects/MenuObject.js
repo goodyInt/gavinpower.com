@@ -15,6 +15,10 @@ function Menu() {
     $itemsContainer.css('display', 'block');
     $el.stop().animate( { left: 0 } , 350  , 'swing');
     $button.stop().animate({ opacity: 0 }, 350);
+
+    $itemsContainer.stop().animate({
+      opacity: 1.0
+    }, 350);
  
     $items.each(function (i) {
       var $el = jQuery(this);
@@ -34,14 +38,22 @@ function Menu() {
       }
       timeouts = [];
     }
+
     $el.stop().animate({
       left: 30
     }, 350, 'swing');
+
     $button.stop().animate({
       opacity: 0.5
     }, 350);
+
+
+    $itemsContainer.stop().animate({
+      opacity: 0.0
+    }, 350);
+
     $items.stop().animate({
-      opacity: 0
+      opacity: 0.0
     }, 350, function () {
       $itemsContainer.css('display', 'none');
       $items.off('click', _callback);

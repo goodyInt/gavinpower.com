@@ -29,9 +29,6 @@ Map.prototype.$node = jQuery('<div class="mapNode"></div>');
 Map.prototype.addNode = function (index) {
   var $node = this.$node.clone();
   $node.attr('data-index', index);
-
- 
-
   this.$el.append($node);
 };
 

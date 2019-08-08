@@ -2,6 +2,7 @@ var ImagesLoader = require('./classes/LoaderClass');
 var Loader = require('./objects/LoaderObject');
 var Menu = require('./objects/MenuObject');
 var Credits = require('./objects/CreditsObject');
+var ScreenBackground = require('./objects/MainScreenBackground');
 var tweenMax = require('tweenMax');
 var SCENE = require('./modules/sceneModule');
 var jQuery = require('jquery');
@@ -13,15 +14,15 @@ var fourSection = require('./sections/fourSection');
 var fiveSection = require('./sections/fiveSection');
 var sixSection = require('./sections/sixSection');
 var menu = new Menu();
+var ourScreenBackground = new ScreenBackground();
 var credits = new Credits();
+credits.setCallBack(ourScreenBackground.removeFromStage)
+
 var loader = new Loader();
 var toFromCallbackData;
-
 var imagesLoader = new ImagesLoader([
   './img/heightMap/heightMap-white.jpg'
 ]);
-
-
 
 imagesLoader.start();
 imagesLoader.onProgress(function (percent) {
@@ -41,6 +42,8 @@ imagesLoader.onComplete(function () {
   });
 });
 
+
+
 menu.onClick(function () {
   var $el = jQuery(this);
   var name = $el.attr('data-button');
@@ -51,31 +54,38 @@ menu.onClick(function () {
     case ('credits'):
         console.log('credits: ' + credits);
         console.log( credits);
+        ourScreenBackground.addToStage();
         credits.addToStage();
+      
       break;
     case ('resume'):
         console.log('resume');
         credits.removeFromStage();
+        ourScreenBackground.addToStage();
       break;
     case ('contact'):
         console.log('contact');
         credits.removeFromStage();
+        ourScreenBackground.addToStage();
       break;
     case ('close'):
         console.log('close');
         credits.removeFromStage();
+        ourScreenBackground.removeFromStage();
       menu.out();
       break;
   };
 });
 // scene
 var $app = jQuery('.app');
+var $map = jQuery('.mapApp');
 
 var $viewport = $app.find('.appViewport');
 
 SCENE.config({
   quality: 1
 });
+
 SCENE.setViewport($viewport);
 
 SCENE.addSections([
@@ -277,7 +287,9 @@ SCENE.on('section:changeComplete', function () {
 
 // map
 var map = SCENE.getMap();
-$app.prepend(map.$el);
+//$app.prepend(map.$el);
+$map.prepend(map.$el);
+
 map.init();
 map.visible = false;
 map.$el.hide();

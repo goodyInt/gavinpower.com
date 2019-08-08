@@ -219,17 +219,19 @@ fourSection.onIn(function () {
 });
 
 fourSection.onOut(function () {
-  TweenMax.killTweensOf(sign.material);
-  TweenMax.killTweensOf(signHolder.position);
-  clearInterval(_this.bringInTheNextBtnInterval);
+  sectionOut();
   ourCityScene.onOut();
 });
 
 fourSection.outToFive = function () {
+  sectionOut();
+  ourCityScene.outToFive(); 
+};
+
+function sectionOut(){
   TweenMax.killTweensOf(sign.material);
   TweenMax.killTweensOf(signHolder.position);
   clearInterval(_this.bringInTheNextBtnInterval);
-  ourCityScene.outToFive();
   fourSection.nextBtnIsIn = false;
   TweenMax.to(signHolder.position, .5, {
     delay: 0,
@@ -239,7 +241,7 @@ fourSection.outToFive = function () {
       signHolder.visible = false;
     }
   });
-};
+}
 
 function logAnalytics() {
   fourEvents.trigger('logAnalytics', {

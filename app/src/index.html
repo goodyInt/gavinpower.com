@@ -2,16 +2,17 @@
 <html>
 
 <head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-7674470-2"></script>
-		<script>
-		  window.dataLayer = window.dataLayer || [];
-		  function gtag(){
-        dataLayer.push(arguments);
-    
-      };
-		  gtag('js', new Date());
-		  gtag('config', 'UA-7674470-2');
-		</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-7674470-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+
+    };
+    gtag('js', new Date());
+    gtag('config', 'UA-7674470-2');
+  </script>
   <meta charset="UTF-8">
   <title> Hire Me! </title>
   <meta name="description" content="A Creative Front End Developer" />
@@ -22,35 +23,38 @@
 
 <body>
   <div class="loader">
-    <div class="textCenter textWhite loaderTitle"><span class="loadCopy">LOADIN</span><span class="loadCopyG">G</span></div>
+    <div class="textCenter textWhite loaderTitle"><span class="loadCopy">LOADIN</span><span class="loadCopyG">G</span>
+    </div>
     <div class="loaderProgress"></div>
   </div>
+  <div id="container" class="stats"></div>
 
- 
-  <div class="appHolder">
-    <div id="container" class="stats"></div>
+
     <div class="menu">
       <div class="menuButton">
-    <div class="menuButtonLine menuButtonLineTop"></div>
+        <div class="menuButtonLine menuButtonLineTop"></div>
         <div class="menuButtonLine menuButtonLineMiddle"></div>
         <div class="menuButtonLine menuButtonLineBottom"></div>
       </div>
       <div class="menuItems">
-       
-         <a  href="/downloads/gavinBryanPower.pdf" download class="menuItem menuItems3D" data-button="resume"> résumé </a>
-
-       <!--  <a href="/downloads/gavinBryanPower.pdf" download></a>-->
+        <a class="menuItem fakeButtonSpaceholderHack" data-button=" "> </a>
+        <a href="/downloads/gavinBryanPower.pdf" download class="menuItem menuItems3D" data-button="resume"> résumé </a>
+        <!--  <a href="/downloads/gavinBryanPower.pdf" download></a>-->
         <a class="menuItem placeholderEmail" data-button="contact"> contact </a>
         <a class="menuItem menuItems3D" data-button="sounds"> sound </a>
         <a class="menuItem placeholderEmail" data-button="credits"> credits </a>
         <a class="menuItem menuItems3D" data-button="close"> X </a>
-       
       </div>
     </div>
-    <div class="app">
-      <div class="appViewport"></div>
-    </div>
+
+  <div class="app">
+    <div class="appViewport"></div>
   </div>
+
+  <div class="mapApp"></div>
+
+
+  <!-- </div> -->
   <script src="js/libs/stats.min.js"></script>
 
   <script type="text/javascript">
@@ -65,11 +69,11 @@
         console[methods[i]] = function () {};
     }
     */
-   //For deployment - comment out or remove stats here and in Scene Module. You can remove the extra div too, if you like
+    //For deployment - comment out or remove stats here and in Scene Module. You can remove the extra div too, if you like
     var stats;
     stats = new Stats();
-    var container = document.getElementById( 'container' );
-			container.appendChild(stats.dom );
+    var container = document.getElementById('container');
+    container.appendChild(stats.dom);
   </script>
   <script type="text/javascript" src="js/bundle.js"></script>
 
