@@ -63,7 +63,6 @@ sixSection.onIn(function () {
 });
 
 sixSection.onOut(function () {
-  console.log('sixSection.onOut');
   ourThankYouScene.onOut();
   nextBtn.fadeOut(.5);
 
@@ -131,7 +130,6 @@ sixSection.theNextBtnIsOut = function () {
 };
 
 sixSection.handleResize = function () {
-  console.log('sixSection.handleResize');
   ourThankYouScene.handleResize ();
   
 }

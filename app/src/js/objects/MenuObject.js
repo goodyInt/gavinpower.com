@@ -10,23 +10,26 @@ function Menu() {
   var _callback = function () {};
   var timeouts = [];
   var isOpen = false;
+  var previousInnerWidth = window.innerWidth;
 
   jQuery(window).on('resize', onResize);
 
 
   function onResize() {
-    console.log('Menu onResize');
-    console.log('$el: ');
-    console.log($el);
-    //jQuery($el).css("left", 0.0);
-    var menuLeft = parseInt(jQuery($el).css("left"));
-    console.log('menuLeft');
-    console.log(menuLeft);
+    console.log('isOpen: ' + isOpen);
+    console.log('previousInnerWidth: ' + previousInnerWidth);
 
     if (window.innerWidth < 600) {
       if (isOpen) {
-        jQuery($el).css("left", 0.0);
+        if (previousInnerWidth >= 600) {
+          console.log('close menu here!')
+          onCloseClickFast();
+          jQuery($el).css("left", -100.0);
+        } else {
+          jQuery($el).css("left", 0.0);
+        }
       } else {
+
         jQuery($el).css("left", -100.0);
       }
 
@@ -36,10 +39,8 @@ function Menu() {
       } else {
         jQuery($el).css("left", 30.0);
       }
-
-
     }
-    console.log('isOpen: ' + isOpen);
+    previousInnerWidth = window.innerWidth;
 
   }
 
@@ -69,7 +70,7 @@ function Menu() {
       timeouts.push(timeout);
     });
     isOpen = true;
-    console.log('isOpen: ' + isOpen);
+
   }
 
   $el.on('click', '.menuButton', onButtonClick);
@@ -79,8 +80,25 @@ function Menu() {
 
   }
 
-  function onCloseClick() {
+  function onCloseClickFast() {
+
+    if (timeouts) {
+      for (var i = 0, j = timeouts.length; i < j; i++) {
+        window.clearTimeout(timeouts[i]);
+      }
+      timeouts = [];
+    }
+    jQuery($button).css("opacity", 1.0);
+    jQuery($itemsContainer).css("opacity", 0.0);
+    jQuery($items).css("opacity", 0.0);
+    $itemsContainer.css('display', 'none');
+    $items.off('click', _callback);
     isOpen = false;
+
+  }
+
+  function onCloseClick() {
+
     if (timeouts) {
       for (var i = 0, j = timeouts.length; i < j; i++) {
         window.clearTimeout(timeouts[i]);
@@ -112,6 +130,7 @@ function Menu() {
       $itemsContainer.css('display', 'none');
       $items.off('click', _callback);
     });
+    isOpen = false;
 
   }
   return {

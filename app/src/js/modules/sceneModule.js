@@ -481,8 +481,6 @@ var SCENE = (function () {
         }
       };
 
-      console.log('previousIndex: ' + previousIndex);
-
       if (previousIndex == 0 || previousIndex == 1 || previousIndex == 4) {
         clearInterval(spinCameraDownInt);
         spinningDownStarted = false;

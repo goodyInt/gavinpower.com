@@ -225,12 +225,10 @@ function ThankYouObject() {
 
   }
   this.onStop = function () {
-    console.log('ThankYouObject onStop');
     document.removeEventListener('mousemove', mouseISMoving, false);
   }
 
   this.handleResize = function () {
-    console.log('ThankYouObject.handleResize');
     theShaderMaterial.uniforms.iResolution.value = new THREE.Vector2(window.innerWidth, window.innerHeight);
     if(fullScreenRibbon.visible == true){
       fullScreenRibbon.position.x = 0 ;

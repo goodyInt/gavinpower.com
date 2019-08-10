@@ -65,8 +65,6 @@ menu.onClick(function () {
   var $el = jQuery(this);
   $el.addClass('isActive');
   var name = $el.attr('data-button');
-  console.log('window.innerWidth');
-  console.log(window.innerWidth);
   switch (name) {
     case ('sounds'):
       about.removeFromStage();
@@ -192,9 +190,6 @@ SCENE.on('sectionIsIn', function () {
 });
 
 SCENE.on('section:changeBegin', function () {
-  console.log('');
-  console.log('changeBegin');
-
   console.table(this);
   map.setActive(this.to.index);
   toFromCallbackData = this;
