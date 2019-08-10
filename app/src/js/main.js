@@ -2,6 +2,9 @@ var ImagesLoader = require('./classes/LoaderClass');
 var Loader = require('./objects/LoaderObject');
 var Menu = require('./objects/MenuObject');
 var Credits = require('./objects/CreditsObject');
+var Contacts = require('./objects/ContactsObject');
+var About = require('./objects/AboutObject');
+var Sound = require('./objects/SoundScreenObject');
 var ScreenBackground = require('./objects/MainScreenBackground');
 var tweenMax = require('tweenMax');
 var SCENE = require('./modules/sceneModule');
@@ -15,11 +18,26 @@ var fiveSection = require('./sections/fiveSection');
 var sixSection = require('./sections/sixSection');
 var menu = new Menu();
 var ourScreenBackground = new ScreenBackground();
+
+var contacts = new Contacts();
+contacts.setCallBack(removeBack);
+
 var credits = new Credits();
-credits.setCallBack(ourScreenBackground.removeFromStage)
+credits.setCallBack(removeBack);
+
+var about = new About();
+about.setCallBack(removeBack);
+
+var sound = new Sound();
+sound.setCallBack(removeBack);
 
 var loader = new Loader();
 var toFromCallbackData;
+
+function removeBack() {
+  menu.removeTheActive();
+  ourScreenBackground.removeFromStage();
+}
 var imagesLoader = new ImagesLoader([
   './img/heightMap/heightMap-white.jpg'
 ]);
@@ -42,40 +60,66 @@ imagesLoader.onComplete(function () {
   });
 });
 
-
-
 menu.onClick(function () {
+  menu.removeTheActive();
   var $el = jQuery(this);
+  $el.addClass('isActive');
   var name = $el.attr('data-button');
+  console.log('window.innerWidth');
+  console.log(window.innerWidth);
   switch (name) {
     case ('sounds'):
-        console.log('sounds');
+      about.removeFromStage();
+      credits.removeFromStage();
+      contacts.removeFromStage();
+      sound.addToStage();
+      ourScreenBackground.addToStage();
+      if (window.innerWidth < 600) {
+        menu.outPhone();
+      }
       break;
     case ('credits'):
-        console.log('credits: ' + credits);
-        console.log( credits);
-        ourScreenBackground.addToStage();
-        credits.addToStage();
-      
+      sound.removeFromStage();
+      about.removeFromStage();
+      contacts.removeFromStage();
+      credits.addToStage();
+      ourScreenBackground.addToStage();
+      if (window.innerWidth < 600) {
+        menu.outPhone();
+      }
       break;
-    case ('resume'):
-        console.log('resume');
-        credits.removeFromStage();
-        ourScreenBackground.addToStage();
+    case ('about'):
+      sound.removeFromStage();
+      credits.removeFromStage();
+      contacts.removeFromStage();
+      ourScreenBackground.addToStage();
+      about.addToStage();
+      //href="/downloads/gavinBryanPower.pdf" download
+      if (window.innerWidth < 600) {
+        menu.outPhone();
+      }
       break;
     case ('contact'):
-        console.log('contact');
-        credits.removeFromStage();
-        ourScreenBackground.addToStage();
+      sound.removeFromStage();
+      about.removeFromStage();
+      credits.removeFromStage();
+      contacts.addToStage();
+      ourScreenBackground.addToStage();
+      if (window.innerWidth < 600) {
+        menu.outPhone();
+      }
       break;
     case ('close'):
-        console.log('close');
-        credits.removeFromStage();
-        ourScreenBackground.removeFromStage();
+      sound.removeFromStage();
+      about.removeFromStage();
+      credits.removeFromStage();
+      contacts.removeFromStage();
+      ourScreenBackground.removeFromStage();
       menu.out();
       break;
   };
 });
+
 // scene
 var $app = jQuery('.app');
 var $map = jQuery('.mapApp');
@@ -150,7 +194,7 @@ SCENE.on('sectionIsIn', function () {
 SCENE.on('section:changeBegin', function () {
   console.log('');
   console.log('changeBegin');
- 
+
   console.table(this);
   map.setActive(this.to.index);
   toFromCallbackData = this;
@@ -180,7 +224,7 @@ SCENE.on('section:changeBegin', function () {
       }
       break;
     case 'four':
-      if (to == 'five'|| to == 'six') {
+      if (to == 'five' || to == 'six') {
         fourSection.outToFive();
       } else {
         fourSection.out();
@@ -225,7 +269,7 @@ SCENE.on('section:changeComplete', function () {
       break;
 
     case 'four':
-      if (to == 'five'|| to == 'six') {
+      if (to == 'five' || to == 'six') {
         fourSection.stopForFiveSix();
       } else {
         fourSection.stop();

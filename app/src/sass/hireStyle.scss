@@ -13,7 +13,7 @@ Verdana,
 Futura,
 'Trebuchet MS',
 sans-serif;
-$creditsCopyFont: Helvetica Neue,
+$infoCopyFont: Helvetica Neue,
 Arial,
 Verdana,
 Futura,
@@ -33,6 +33,17 @@ sans-serif;
 
 body {
   background: $bgcolor;
+}
+
+a {
+  color: #999999;
+  text-decoration: none;
+}
+
+
+a:hover {
+  color: #ffffff;
+  text-decoration: none;
 }
 
 
@@ -132,7 +143,6 @@ body {
   position: absolute;
   opacity: .25;
   background-color: #000000;
-
 }
 
 .mapNode:hover {
@@ -174,7 +184,7 @@ body {
   z-index: 4;
 }
 
-.creditsHolderDiv {
+.infoHolderDiv {
   position: absolute;
   top: 100px;
   left: 10%;
@@ -187,27 +197,27 @@ body {
   z-index: 5;
 }
 
-.creditsCopy {
-  font-family: $creditsCopyFont;
+.infoCopy {
+  font-family: $infoCopyFont;
   color: #ffffff;
   letter-spacing: 1px;
 }
 
 .introDiv {
-  display: inline-block;
+  display: block;
   position: relative;
   //border: 1px solid green;
 }
 
 .introTitle {
-  display: inline-block;
+  display: block;
   position: relative;
   font-size: 46px;
   //border: 1px solid yellowgreen;
 }
 
 .introBody {
-  display: inline-block;
+  display: block;
   position: relative;
   font-size: 14px;
   line-height: 20px;
@@ -215,8 +225,8 @@ body {
   //border: 1px solid rebeccapurple;
 }
 
-.thanksDiv {
-  display: inline-block;
+.infoDiv {
+  display: block;
   position: relative;
   // border: 1px solid orange;
   height: auto;
@@ -224,16 +234,16 @@ body {
   line-height: 20px;
 }
 
-.thanksTitle {
-  display: inline-block;
+.infoTitle {
+  display: block;
   position: relative;
   font-size: 16px;
-  display: inline-block;
+
   // border: 1px solid blueviolet;
 }
 
-.thanksBody {
-  display: inline-block;
+.infoBody {
+  display: block;
   position: relative;
   //border: 1px solid goldenrod;
   font-size: 14px;
@@ -255,9 +265,8 @@ body {
 
 .menu {
   position: absolute;
-
   top: 0px;
-  left: -30px;
+  left: -130px;
   height: 60px;
   opacity: 0;
   font-family: $mainCopyFont;
@@ -265,22 +274,23 @@ body {
   font-weight: 10;
   letter-spacing: 5px;
   z-index: 66;
-  
+
 }
 
 .menuButton {
   position: absolute;
-  display:block;
-  top: 50%;
-  left: 0px;
+  display: block;
+  top: 22px;
+  left: -10px;
   width: 35px;
   height: 30px;
-  opacity: 1.0 ;
+  opacity: 1.0;
   z-index: 66;
   visibility: visible;
 
   cursor: pointer;
 }
+
 
 .menuButtonLine {
   position: absolute;
@@ -305,30 +315,28 @@ body {
 
 .menuItems {
   display: none;
-  margin-left: -30px;
-  background-color: rgba(0, 0, 0, 0.35);
+  background-color: rgba(0, 0, 0, 0.55);
 }
 
 .menuItem {
   line-height: 60px;
-  margin: 0 20px;
+  margin: 0px 0px 0px 40px;
   cursor: pointer;
   text-decoration: none;
   opacity: 0;
-  color: #cccccc;
-}
-
-.fakeButtonSpaceholderHack {
-  cursor: none !important;
-  z-index: 5;
+  color: #aaaaaa;
 }
 
 .menuItem:hover {
   color: #ffffff;
 }
 
+.menuItem.isActive {
+  color: #ffffff;
+}
+
 /*  SMALL SCREEN  START  */
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 600px) {
   $nodeSize: 30px;
   $mapWidth: $nodeSize * 10.5;
 
@@ -362,7 +370,7 @@ body {
     letter-spacing: $loadLetterSize;
   }
 
-  .creditsHolderDiv {
+  .infoHolderDiv {
     top: 100px;
     left: 10%;
     width: 70%;
@@ -373,11 +381,24 @@ body {
     right: 5%;
   }
 
+  .menu {
+    width: 160px;
+  }
+
+  .menuItems {
+    display: none;
+    background-color: rgba(0, 0, 0, 0.85);
+  }
+  .menuButton {
+    left: 120px;
+   }
+
 }
 
 /*  SMALL SCREEN  END  */
+
 /*   LARGE SCREEN START */
-@media screen and (min-width: 751px) {
+@media screen and (min-width: 600px) {
   $nodeSize: 20px;
   $mapWidth: $nodeSize * 10.5;
 
@@ -411,17 +432,52 @@ body {
     letter-spacing: $loadLetterSize;
   }
 
-  .creditsHolderDiv {
+  .infoHolderDiv {
     top: 100px;
     left: 100px;
-    width: 500px;
+    width: 400px;
     height: 75%;
   }
 
   .closeButtonDiv {
-    left: 625px;
+    left: 525px;
+  }
+
+  .menu {
+    width: 565px;
+  }
+
+  .menuItems {
+    display: none;
+    background-color: rgba(0, 0, 0, 0.35);
+  }
+
+  .menuButton {
+   left: -10px;
   }
 }
 
-
 /*   LARGE SCREEN  END */
+
+
+/*   HUGE SCREEN START */
+@media screen and (min-width: 800px) {
+
+
+
+  .infoHolderDiv {
+   
+    width: 550px;
+ 
+  }
+
+  .closeButtonDiv {
+    left: 675px;
+  }
+
+  
+}
+
+/*   HUGE SCREEN  END */
+
+
