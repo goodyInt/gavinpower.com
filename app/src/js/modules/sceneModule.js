@@ -11,6 +11,7 @@ var MapObj = require('../objects/mapObject');
 var BackgroundParticles = require('../objects/backgroundParticlesObject');
 var controls = require('../utils/GoodyOrbitControls');
 
+
 var SCENE = (function () {
   var instance;
   var map;
@@ -318,6 +319,7 @@ var SCENE = (function () {
       controls.minPolarAngle = Math.PI * .1;
 
       function onMouseMove(event) {
+
         mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2 - 1;
         mouse.y = -(event.clientY / renderer.domElement.clientHeight) * 2 + 1;
         raycaster.setFromCamera(mouse, camera);
@@ -496,6 +498,7 @@ var SCENE = (function () {
           onComplete: function () {
             events.trigger('section:changeBegin', toFromCallbackData);
           }
+
         });
       }
 
@@ -512,7 +515,7 @@ var SCENE = (function () {
           minPolarAngle: Math.PI * .5,
           maxPolarAngle: Math.PI * .5,
           onComplete: function () {
-            if (index == 0 || index == 1  || index == 2  || index == 3  || index == 4 ) {
+            if (index == 0 || index == 1 || index == 2 || index == 3 || index == 4) {
               sections[4].outFromFive(currentIndex);
             }
             events.trigger('section:changeBegin', toFromCallbackData);
@@ -611,8 +614,131 @@ var SCENE = (function () {
       var tweenControls = true;
       var triggerDone = false;
 
+      switch (previousIndex) {
+        case 0:
+          // SOUNDS.background0.stop();
+          if (currentIndex !== 1) {
+            SOUNDS.fadeOut(SOUNDS.background0);
+            setTimeout(function () {
+              SOUNDS.background0.stop();
+            }, 1200);
+          }
+
+          break;
+        case 1:
+          if (currentIndex !== 0) {
+            SOUNDS.fadeOut(SOUNDS.background0);
+            setTimeout(function () {
+              SOUNDS.background0.stop();
+            }, 1200);
+          }
+          break;
+        case 2:
+          if (currentIndex !== 3) {
+            SOUNDS.fadeOut(SOUNDS.background2);
+            setTimeout(function () {
+              SOUNDS.background2.stop();
+            }, 1200);
+          }
+          break;
+        case 3:
+          if (currentIndex !== 2) {
+            SOUNDS.fadeOut(SOUNDS.background2);
+            setTimeout(function () {
+              SOUNDS.background2.stop();
+            }, 1200);
+          }
+          break;
+        case 4:
+
+          SOUNDS.fadeOut(SOUNDS.background4);
+          setTimeout(function () {
+            SOUNDS.background4.stop();
+          }, 1200);
+
+          break;
+        case 5:
+          if (currentIndex !== 6) {
+            SOUNDS.fadeOut(SOUNDS.background5);
+            setTimeout(function () {
+              SOUNDS.background5.stop();
+            }, 1200);
+          }
+          break;
+        case 6:
+          if (currentIndex !== 5) {
+            SOUNDS.fadeOut(SOUNDS.background5);
+            setTimeout(function () {
+              SOUNDS.background5.stop();
+            }, 1200);
+          }
+          break;
+
+      }
+
+      switch (currentIndex) {
+        case 0:
+          if (previousIndex !== 1) {
+            setTimeout(function () {
+              SOUNDS.fadeIn(SOUNDS.background0,0.7);
+              SOUNDS.background0.play();
+            }, 1200);
+          }
+
+          break;
+        case 1:
+          if (previousIndex !== 0) {
+            setTimeout(function () {
+              SOUNDS.fadeIn(SOUNDS.background0,0.7);
+              SOUNDS.background0.play();
+            }, 1200);
+          }
+          break;
+        case 2:
+          if (previousIndex !== 3) {
+            setTimeout(function () {
+              SOUNDS.fadeIn(SOUNDS.background2,0.5);
+              SOUNDS.background2.play();
+            }, 1200);
+          }
+          break;
+        case 3:
+          if (previousIndex !== 2) {
+            setTimeout(function () {
+              SOUNDS.fadeIn(SOUNDS.background2,0.5);
+              SOUNDS.background2.play();
+            }, 1200);
+          }
+
+          break;
+        case 4:
+          setTimeout(function () {
+            SOUNDS.fadeIn(SOUNDS.background4,0.25);
+            SOUNDS.background4.play();
+          }, 2500);
+
+          break;
+        case 5:
+          if (previousIndex !== 6) {
+            setTimeout(function () {
+              SOUNDS.fadeIn(SOUNDS.background5,0.5);
+              SOUNDS.background5.play();
+            }, 1200);
+          }
+          break;
+        case 6:
+          if (previousIndex !== 5) {
+            setTimeout(function () {
+              SOUNDS.fadeIn(SOUNDS.background5,0.5);
+              SOUNDS.background5.play();
+            }, 1200);
+          }
+          break;
+
+      }
+
       if (currentIndex == 6) {
-        if (previousIndex == 5|| previousIndex == 4) {
+        if (previousIndex == 5 || previousIndex == 4) {
           events.trigger('section:changeComplete', toFromCallbackData);
           triggerDone = true;
         }
@@ -676,6 +802,8 @@ var SCENE = (function () {
         ease: Power2.easeInOut,
         onStart: function () {
           // SOUNDS.wind.play();
+          // SOUNDS.background.play();
+
           controls.enabled = false;
         },
         onComplete: function () {
@@ -870,6 +998,12 @@ var SCENE = (function () {
       unlock: function () {
         isLocked = false;
       },
+      audioIn: function () {
+        SOUNDS.in();
+
+      },
+
+
       in: function () {
         tweenMax.to({
           fov: 190,
@@ -889,7 +1023,18 @@ var SCENE = (function () {
           onUpdate: function () {
             camera.fov = this.target.fov;
             camera.updateProjectionMatrix();
-          }
+          },
+          onStart: function () {
+            console.log('in onStart');
+          //  SOUNDS.background0.play();
+          
+              setTimeout(function () {
+                SOUNDS.fadeIn(SOUNDS.background0,0.7);
+                SOUNDS.background0.play();
+              }, 1200);
+            }
+        
+
         });
       }
     };

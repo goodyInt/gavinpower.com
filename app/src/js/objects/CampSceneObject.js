@@ -165,7 +165,7 @@ function CampScene() {
       shininess: 20
     });
 
-    var platform = new THREE.Mesh(new THREE.BoxBufferGeometry(200, 2, 60), platformMaterial);
+    var platform = new THREE.Mesh(new THREE.BoxBufferGeometry(100, 2, 60), platformMaterial);
     platform.position.y = -27;
     platform.position.z = 5;
     platform.castShadow = false;

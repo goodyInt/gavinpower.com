@@ -1,4 +1,6 @@
 var Howler = require('howler');
+var jQuery = require('jquery');
+var tweenMax = require('tweenMax');
 /**
  * Sounds module
  *
@@ -6,12 +8,58 @@ var Howler = require('howler');
  * @requires Howler
  */
 var SOUNDS = (function () {
- 
-  var instance;
 
-  function init () {
+  var instance;
+  
+  var toggleSwitchDiv;
+  toggleSwitchDiv = document.createElement('div');
+  toggleSwitchDiv.id = "toggleSwitchDiv";
+  toggleSwitchDiv.className = "toggleSwitchDiv";
+
+  function init() {
 
     var isMuted = false;
+
+    var divToggleBtnOn = document.createElement('img');
+    divToggleBtnOn.src = "./img/sound-on-outline_on_stroke_40.png";
+    divToggleBtnOn.id = "divToggleBtnOn";
+    divToggleBtnOn.className = "divToggleBtnOn";
+    toggleSwitchDiv.appendChild(divToggleBtnOn);
+
+    var divToggleBtnOff = document.createElement('img');
+    divToggleBtnOff.src = "./img/sound-on-outline_off_stroke_40.png";
+    divToggleBtnOff.id = "divToggleBtnOff";
+    divToggleBtnOff.className = "divToggleBtnOff";
+    toggleSwitchDiv.appendChild(divToggleBtnOff);
+
+    toggleSwitchDiv.onclick = function () {
+
+      instance.toggle();
+      instance.background0.mute(isMuted)
+
+      instance.background2.mute(isMuted)
+
+      instance.background4.mute(isMuted)
+      instance.background5.mute(isMuted)
+ 
+
+
+      if (isMuted) {
+
+        divToggleBtnOn.style.visibility = 'hidden';
+        divToggleBtnOff.style.visibility = 'visible';
+
+      } else {
+        divToggleBtnOn.style.visibility = 'visible';
+        divToggleBtnOff.style.visibility = 'hidden';
+
+      }
+
+
+    };
+
+    document.body.appendChild(toggleSwitchDiv);
+
 
     return {
       /**
@@ -19,15 +67,37 @@ var SOUNDS = (function () {
        *
        * @method toogle
        */
+      in: function () {
+        console.log('soubndButtonIn: ' + toggleSwitchDiv);
+        jQuery(toggleSwitchDiv).animate({
+          right: 60,
+          opacity: 1
+        }, 500);
+
+      },
+
       toggle: function () {
         if (isMuted) {
+          console.log('unmuting!');
           Howler.mute = false;
+          //  Howler.mute(false);
         } else {
-          Howler.mute=true;
+          console.log('muting!');
+          Howler.mute = true;
+          //  Howler.mute(true);
         }
-
+        console.log('toggle isMuted: ' + isMuted);
         isMuted = !isMuted;
       },
+      fadeOut: function (theHowl) {
+      
+        theHowl.fade(.5,0,1000);//: function(from, to, len, id) {
+      },
+      fadeIn: function (theHowl, newVol) {
+      console.log('newVol: ' + newVol);
+        theHowl.fade(0,newVol,1000);//: function(from, to, len, id) {
+      },
+
 
       /**
        * Is muted
@@ -38,30 +108,58 @@ var SOUNDS = (function () {
         return Howler.mute;
       },
 
-      background: new Howl({
+      background0: new Howl({
         src: [
-          './sounds/background.mp3',
-          './sounds/background.ogg',
-          './sounds/background.wav'
+          './sounds/walking_in_depreston.mp3',
+          './sounds/walking_in_depreston.ogg',
+          './sounds/walking_in_depreston.wav'
         ],
         loop: true,
         volume: 0.5
       }),
-      wind: new Howl({
+     
+
+      background2: new Howl({
+        src: [
+          './sounds/Waking_Up_to_the_Sun.mp3',
+          './sounds/Waking_Up_to_the_Sun.ogg',
+          './sounds/Waking_Up_to_the_Sun.wav'
+        ],
+        loop: true,
+        volume: 0.5
+      }),
+
+      background4: new Howl({
+        src: [
+          './sounds/Forgive_Me_Bells.mp3',
+          './sounds/Forgive_Me_Bells.ogg',
+          './sounds/Forgive_Me_Bells.wav'
+        ],
+        loop: true,
+        volume: 0.5
+      }),
+
+      background5: new Howl({
+        src: [
+          './sounds/Surge_and_Swell.mp3',
+          './sounds/Surge_and_Swell.ogg',
+          './sounds/Surge_and_Swell.wav'
+
+        ],
+        loop: true,
+        volume: 0.5
+      }),
+
+     
+
+      click: new Howl({
         src: [
           './sounds/wind.mp3',
           './sounds/wind.ogg',
           './sounds/wind.wav'
         ]
       }),
-      whitenoise: new Howl({
-        src: [
-          './sounds/whitenoise.mp3',
-          './sounds/whitenoise.ogg',
-          './sounds/whitenoise.wav'
-        ],
-        volume: 0.05
-      }),
+
       neon: new Howl({
         src: [
           './sounds/neon.mp3',
@@ -71,10 +169,10 @@ var SOUNDS = (function () {
         volume: 0.05
       })
     };
-    
+
   }
 
-  return  {
+  return {
     /**
      * Return SOUNDS instance
      *
@@ -82,12 +180,25 @@ var SOUNDS = (function () {
      * @return {SOUNDS}
      */
     getInstance: function () {
-     
+
       if (!instance) {
         instance = init();
 
         // THIS LINE TURNS SOUND OFF FOR DEV
+        isMuted = true;
         Howler.mute = true;
+        instance.background0.mute(isMuted)
+
+        if (isMuted) {
+
+          divToggleBtnOn.style.visibility = 'hidden';
+          divToggleBtnOff.style.visibility = 'visible';
+
+        } else {
+          divToggleBtnOn.style.visibility = 'visible';
+          divToggleBtnOff.style.visibility = 'hidden';
+
+        }
       }
 
       return instance;

@@ -1,11 +1,12 @@
 var ImagesLoader = require('./classes/LoaderClass');
 var Loader = require('./objects/LoaderObject');
 var Menu = require('./objects/MenuObject');
-var Credits = require('./objects/CreditsObject');
-var Contacts = require('./objects/ContactsObject');
-var About = require('./objects/AboutObject');
-var Sound = require('./objects/SoundScreenObject');
 var ScreenBackground = require('./objects/MainScreenBackground');
+var HelloScreen = require('./objects/HelloScreenObject');
+var SoundScreen = require('./objects/SoundScreenObject');
+var CodeScreen = require('./objects/CodeScreenObject');
+var ConnectScreen = require('./objects/ConnectScreenObject');
+
 var tweenMax = require('tweenMax');
 var SCENE = require('./modules/sceneModule');
 var jQuery = require('jquery');
@@ -19,17 +20,17 @@ var sixSection = require('./sections/sixSection');
 var menu = new Menu();
 var ourScreenBackground = new ScreenBackground();
 
-var contacts = new Contacts();
-contacts.setCallBack(removeBack);
+var connectScreen = new ConnectScreen();
+connectScreen.setCallBack(removeBack);
 
-var credits = new Credits();
-credits.setCallBack(removeBack);
+var codeScreen = new CodeScreen();
+codeScreen.setCallBack(removeBack);
 
-var about = new About();
-about.setCallBack(removeBack);
+var helloScreen = new HelloScreen();
+helloScreen.setCallBack(removeBack);
 
-var sound = new Sound();
-sound.setCallBack(removeBack);
+var soundScreen = new SoundScreen();
+soundScreen.setCallBack(removeBack);
 
 var loader = new Loader();
 var toFromCallbackData;
@@ -56,6 +57,8 @@ imagesLoader.onComplete(function () {
       map.$el.show();
       map.in();
       menu.in();
+      SCENE.audioIn();
+ 
     });
   });
 });
@@ -67,51 +70,51 @@ menu.onClick(function () {
   var name = $el.attr('data-button');
   switch (name) {
     case ('sounds'):
-      about.removeFromStage();
-      credits.removeFromStage();
-      contacts.removeFromStage();
-      sound.addToStage();
+      helloScreen.removeFromStage();
+      codeScreen.removeFromStage();
+      connectScreen.removeFromStage();
+      soundScreen.addToStage();
       ourScreenBackground.addToStage();
       if (window.innerWidth < 600) {
         menu.outPhone();
       }
       break;
-    case ('credits'):
-      sound.removeFromStage();
-      about.removeFromStage();
-      contacts.removeFromStage();
-      credits.addToStage();
+    case ('code'):
+      soundScreen.removeFromStage();
+      helloScreen.removeFromStage();
+      connectScreen.removeFromStage();
+      codeScreen.addToStage();
       ourScreenBackground.addToStage();
       if (window.innerWidth < 600) {
         menu.outPhone();
       }
       break;
-    case ('about'):
-      sound.removeFromStage();
-      credits.removeFromStage();
-      contacts.removeFromStage();
+    case ('hello'):
+      soundScreen.removeFromStage();
+      codeScreen.removeFromStage();
+      connectScreen.removeFromStage();
       ourScreenBackground.addToStage();
-      about.addToStage();
+      helloScreen.addToStage();
       //href="/downloads/gavinBryanPower.pdf" download
       if (window.innerWidth < 600) {
         menu.outPhone();
       }
       break;
-    case ('contact'):
-      sound.removeFromStage();
-      about.removeFromStage();
-      credits.removeFromStage();
-      contacts.addToStage();
+    case ('connect'):
+      soundScreen.removeFromStage();
+      helloScreen.removeFromStage();
+      codeScreen.removeFromStage();
+      connectScreen.addToStage();
       ourScreenBackground.addToStage();
       if (window.innerWidth < 600) {
         menu.outPhone();
       }
       break;
     case ('close'):
-      sound.removeFromStage();
-      about.removeFromStage();
-      credits.removeFromStage();
-      contacts.removeFromStage();
+      soundScreen.removeFromStage();
+      helloScreen.removeFromStage();
+      codeScreen.removeFromStage();
+      connectScreen.removeFromStage();
       ourScreenBackground.removeFromStage();
       menu.out();
       break;

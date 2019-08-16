@@ -20,8 +20,6 @@ Futura,
 'Trebuchet MS',
 sans-serif;
 
-
-
 //fonts to load
 @font-face {
   font-family: 'z_aristaregular';
@@ -38,14 +36,19 @@ body {
 a {
   color: #999999;
   text-decoration: none;
+  font-family: $mainCopyFont;
+  cursor: pointer;
 }
-
 
 a:hover {
   color: #ffffff;
   text-decoration: none;
+  cursor: pointer;
 }
 
+span.nobreak {
+  white-space: nowrap;
+}
 
 // viewport
 .appViewport {
@@ -135,7 +138,6 @@ a:hover {
   position: absolute;
   bottom: 20px;
   height: $nodeSize*1.5;
-  // @include transition(opacity .3s ease-in-out);
   z-index: 55;
 }
 
@@ -167,8 +169,33 @@ a:hover {
 // menu
 .stats {
   position: absolute;
-  top: 0px !important;
+  top: 180px !important;
   right: 80px !important;
+  z-index: 6;
+}
+
+.toggleSwitchDiv {
+  position: absolute;
+  top: 20px !important;
+  right: -60px;
+  z-index: 6;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.divToggleBtnOff {
+  position: absolute;
+  visibility: hidden;
+  width: 30px;
+  height: 30px;
+  z-index: 6;
+}
+
+.divToggleBtnOn {
+  position: absolute;
+  visibility: visible;
+  width: 30px;
+  height: 30px;
   z-index: 6;
 }
 
@@ -193,7 +220,6 @@ a:hover {
   margin: 0;
   padding: 0;
   overflow-y: scroll;
-  //border: 1px solid pink;
   z-index: 5;
 }
 
@@ -204,51 +230,101 @@ a:hover {
 }
 
 .introDiv {
+
+  font-family: $mainCopyFont;
   display: block;
   position: relative;
-  //border: 1px solid green;
 }
 
 .introTitle {
+
+  font-family: $mainCopyFont;
   display: block;
   position: relative;
   font-size: 46px;
-  //border: 1px solid yellowgreen;
 }
 
 .introBody {
+  font-family: $infoCopyFont;
+
   display: block;
   position: relative;
   font-size: 14px;
   line-height: 20px;
-  margin-top: 10px;
-  //border: 1px solid rebeccapurple;
+  margin-top: 5px;
 }
 
 .infoDiv {
+  font-family: $mainCopyFont;
   display: block;
   position: relative;
-  // border: 1px solid orange;
   height: auto;
   margin-top: 20px;
   line-height: 20px;
 }
 
 .infoTitle {
+  font-family: $mainCopyFont;
   display: block;
   position: relative;
   font-size: 16px;
-
-  // border: 1px solid blueviolet;
 }
 
-.infoBody {
+.songTitle {
+  font-family: $mainCopyFont;
   display: block;
   position: relative;
-  //border: 1px solid goldenrod;
+  font-size: 16px;
+}
+
+.artistLink {
+  font-family: $mainCopyFont;
+  color: #dddddd !important;
+
+}
+
+.artistLink:hover {
+  color: #ffffff !important;
+}
+
+
+.infoBody {
+  font-family: $infoCopyFont;
+  line-height: 20px;
+  position: relative;
+  font-size: 13px;
+  color: #aaaaaa;
+
+}
+.infoLegal {
+  font-family: $infoCopyFont;
+
+  position: relative;
+  font-size: 10px;
+  color: #999999;
+
+}
+
+
+.legalLink {
+  font-family: $mainCopyFont;
+  color: #bbbbbb !important;
+
+}
+
+.legalLink:hover {
+  font-family: $mainCopyFont;
+  color: #ffffff !important;
+
+}
+
+
+
+.songArtist {
+  font-family: $mainCopyFont;
+  position: relative;
   font-size: 14px;
-  color: #bbbbbb;
-  margin-top: 5px;
+  color: #ffffff;
 }
 
 .closeButtonDiv {
@@ -274,7 +350,6 @@ a:hover {
   font-weight: 10;
   letter-spacing: 5px;
   z-index: 66;
-
 }
 
 .menuButton {
@@ -287,11 +362,8 @@ a:hover {
   opacity: 1.0;
   z-index: 66;
   visibility: visible;
- 
-
   cursor: pointer;
 }
-
 
 .menuButtonLine {
   position: absolute;
@@ -384,16 +456,23 @@ a:hover {
   }
 
   .menu {
-    width: 160px;
+    width: 122px;
   }
 
   .menuItems {
     display: none;
     background-color: rgba(0, 0, 0, 0.85);
   }
+
+  .menuItem {
+    line-height: 60px;
+    margin: 0px 0px 0px 20px;
+
+  }
+
   .menuButton {
     left: 120px;
-   }
+  }
 
 }
 
@@ -446,16 +525,16 @@ a:hover {
   }
 
   .menu {
-    width: 565px;
+    width: 540px;
   }
 
   .menuItems {
     display: none;
-    background-color: rgba(0, 0, 0, 0.35);
+    background-color: rgba(0, 0, 0, 0.55);
   }
 
   .menuButton {
-   left: -10px;
+    left: 50px;
   }
 }
 
@@ -465,21 +544,13 @@ a:hover {
 /*   HUGE SCREEN START */
 @media screen and (min-width: 800px) {
 
-
-
   .infoHolderDiv {
-   
     width: 550px;
- 
   }
 
   .closeButtonDiv {
     left: 675px;
   }
-
-  
 }
 
 /*   HUGE SCREEN  END */
-
-

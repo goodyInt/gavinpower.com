@@ -10,10 +10,10 @@ var Events = require('../classes/EventsClass');
 var threeEvents = new Events();
 
 var theSectionParticles3 = new BackgroundParticles({
-  rangeX: [-115, 115],
-  rangeY: [-30, 100],
+  rangeX: [-185, 185],
+  rangeY: [-100, 100],
   rangeZ: [-90, -30],
-  count: 500,
+  count: 400,
   particleSize: .5,
   strips: false,
   color1: '#ffffff',

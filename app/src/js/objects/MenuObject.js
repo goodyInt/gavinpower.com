@@ -37,7 +37,7 @@ function Menu() {
       if (isOpen) {
         jQuery($el).css("left", 0.0);
       } else {
-        jQuery($el).css("left", 30.0);
+        jQuery($el).css("left", -30.0);
       }
     }
     previousInnerWidth = window.innerWidth;
@@ -54,7 +54,12 @@ function Menu() {
 
     $button.stop().animate({
       opacity: 0
-    }, 350);
+    }, 350, 'swing', function () {
+      console.log('buttonOut');
+      jQuery($button).css("visibility", 'hidden');
+    });
+
+    // .animate( properties [, duration ] [, easing ] [, complete ] )Returns: jQuery
 
     $itemsContainer.stop().animate({
       opacity: 1.0
@@ -88,6 +93,7 @@ function Menu() {
       }
       timeouts = [];
     }
+    jQuery($button).css("visibility", 'visible');
     jQuery($button).css("opacity", 1.0);
     jQuery($itemsContainer).css("opacity", 0.0);
     jQuery($items).css("opacity", 0.0);
@@ -98,7 +104,7 @@ function Menu() {
   }
 
   function onCloseClick() {
-
+    jQuery($button).css("visibility", 'visible');
     if (timeouts) {
       for (var i = 0, j = timeouts.length; i < j; i++) {
         window.clearTimeout(timeouts[i]);
@@ -112,7 +118,7 @@ function Menu() {
       }, 350, 'swing');
     } else {
       $el.stop().animate({
-        left: 30
+        left: -30
       }, 350, 'swing');
     }
 
@@ -144,7 +150,7 @@ function Menu() {
       } else {
         $el.animate({
           top: 0,
-          left: 30,
+          left: -30,
           opacity: 1
         }, 500);
       }
