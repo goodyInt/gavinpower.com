@@ -15,28 +15,31 @@ function CodeScreen() {
   var introDiv = document.createElement('div');
   introDiv.id = "introDiv";
   introDiv.className = "introDiv";
-  introDiv.innerHTML = "<span class = 'introTitle'>Code</span><span class ='introBody'>Thanks a lot to the vast number of people who made this happen from afar. I made this site myself but was only able to do it because of the open source work provided by all these people:</span> ";
+  introDiv.innerHTML = "<span class = 'introTitle'>Code</span><span class ='introBody'>This project exists thanks to a lot of people. I owe a huge debt of gratitude to: </span> ";
   codeScreenHolderDiv.appendChild(introDiv);
   codeScreenDivs.push(introDiv);
 
   var thankYouDiv = document.createElement('div');
   thankYouDiv.id = "thankYouDiv";
   thankYouDiv.className = "infoDiv";
-  thankYouDiv.innerHTML = "<span class='infoTitle'>Mr Doob! </span><span class='infoBody'>Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you. Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you. Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you. Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you.</span>";
+  thankYouDiv.innerHTML = "<span class='infoTitle'>Mr.doob</span><span class='infoBody'>Mr.doob is an award losing non creative junior developer, who is also known as Ricardo Cabello, from Barcelona, Spain and he created three.js - the 3D JavaScript library that is taking over the web - and has been generously sharing his code and knowledge for a long, long, time (since back in the flash PaperVision3D days).</span>"+
+  "<br><span class='infoBody'>If you are not familiar, please check out his library<a href= https://threejs.org/ target='blank'> <span class='artistLink'>threejs</span></a> and his <a href= https://mrdoob.com target='blank'> <span class='artistLink'>website</span></a> and his <a href= https://twitter.com/mrdoob target='blank'> <span class='artistLink'>twitter.</span></a></span>";
   codeScreenHolderDiv.appendChild(thankYouDiv);
   codeScreenDivs.push(thankYouDiv);
 
   var thankYouDiv_b = document.createElement('div');
   thankYouDiv_b.id = "thankYouDiv_b";
   thankYouDiv_b.className = "infoDiv";
-  thankYouDiv_b.innerHTML = "<span class='infoTitle'>AlteredQualia </span><span class='infoBody'>@alteredq alteredqualia.com Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you. Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you. Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you. Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you.</span>";
-  codeScreenHolderDiv.appendChild(thankYouDiv_b);
+  thankYouDiv_b.innerHTML = "<span class='infoTitle'>AlteredQualia</span><span class='infoBody'>AlteredQualia is a brilliant graphics programmer and has been a major contributor to threes.js - generally involving materials, shaders and post-processing. His examples are extraordinary. His real name is Branislav Ulicny. He is from Slovakia and he holds a PHD in computer science from EPFL.</span>"+
+  "<br><span class='infoBody'>Please check out his <a href= https://alteredqualia.com/ target='blank'> <span class='artistLink'>website</span></a> and his <a href= https://twitter.com/alteredq target='blank'> <span class='artistLink'>twitter.</span></a></span>";
+ codeScreenHolderDiv.appendChild(thankYouDiv_b);
   codeScreenDivs.push(thankYouDiv_b);
 
   var thankYouDiv2 = document.createElement('div');
   thankYouDiv2.id = "thankYouDiv2";
   thankYouDiv2.className = "infoDiv";
-  thankYouDiv2.innerHTML = "<span class='infoTitle'>Valentin Marmonier </span><span class='infoBody'>Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you. Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you. Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you. Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you.Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you. Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you.</span>";
+  thankYouDiv2.innerHTML = "<span class='infoTitle'>Valentin Marmonier</span><span class='infoBody'>Valentin Marmonier, also known as V, is a world travelling developer who has worked for B-Reel and Media Monks and also created the WebGL website through which I created this one. I borrowed much of his structure, some of his ideas and some of his code because he was kind enough to post his source code on github. Thank you. I learned so much studying your project.</span>"+
+  "<br><span class='infoBody'>Please check out his<a href= https://github.com/vaalentin target='blank'> <span class='artistLink'>github</span></a> his <a href= https://www.linkedin.com/in/valentin-marmonier-42955867/ target='blank'> <span class='artistLink'>linkedIn</span></a> and his original <a href= http://vaalentin.github.io/2015/ target='blank'> <span class='artistLink'>website.</span></a></span>";
   codeScreenHolderDiv.appendChild(thankYouDiv2);
   codeScreenDivs.push(thankYouDiv2);
 
