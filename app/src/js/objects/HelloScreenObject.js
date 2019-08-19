@@ -15,58 +15,20 @@ function HelloScreen() {
   var introDiv = document.createElement('div');
   introDiv.id = "introDiv";
   introDiv.className = "introDiv ";
-  introDiv.innerHTML = "<span class = 'introTitle'>Hello</span><span class ='introBody'>Thanks a lot to the vast number of people who made this happen from afar. I made this site myself but was only able to do it because of the open source work provided by all these people:</span> ";
+  introDiv.innerHTML = "<span class = 'introTitle'>Hello</span><span class ='introBody'>Thanks for checking this out. </span> ";
   aboutHolderDiv.appendChild(introDiv);
   creditDivs.push(introDiv);
 
   var aboutDiv = document.createElement('div');
   aboutDiv.id = "aboutDiv";
   aboutDiv.className = "infoDiv";
-  aboutDiv.innerHTML = "<span class='infoTitle'>Mr Doob! </span><span class='infoBody'>Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you. Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you. Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you. Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you.</span>";
+  aboutDiv.innerHTML = "<span class='infoTitle'>Gavin Power</span><span class='infoBody'>is my name. I designed and developed this bad boy because I wanted to learn three.js and WebGL and take a deep dive into what the web is capable of today. </span>" +
+  "<br><br><span class='infoBody'>Now that I have completed it, I gotta tell ya, I'm pretty impressed, optimistic and inspired. I feel like we are on the cusp of a real revolution in content again. GPUs are getting faster which means that the sky is the limit for this type of thing. It is great news for Art Directors. Let's blow off the shackles. Are we ready now? It appears so.</span>" +
+  "<br><br><span class='infoBody'>If you like what you see here, are inspired, and want to blow some socks off, get in touch and we will do something amazing together - G. </span>";
+  
   aboutHolderDiv.appendChild(aboutDiv);
   creditDivs.push(aboutDiv);
 
-  var aboutDiv2 = document.createElement('div');
-  aboutDiv2.id = "aboutDiv2";
-  aboutDiv2.className = "infoDiv";
-  aboutDiv2.innerHTML = "<span class='infoTitle'>Valentin Marmonier </span><span class='infoBody'>Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you. Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you. Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you. Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you.Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you. Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you.</span>";
-  aboutHolderDiv.appendChild(aboutDiv2);
-  creditDivs.push(aboutDiv2);
-
-  var aboutDiv3 = document.createElement('div');
-  aboutDiv3.id = "aboutDiv3";
-  aboutDiv3.className = "infoDiv";
-  aboutDiv3.innerHTML = "<span class='infoTitle'>Khangeldy </span><span class='infoBody'>Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you. Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you.</span>";
-  aboutHolderDiv.appendChild(aboutDiv3);
-  creditDivs.push(aboutDiv3);
-
-  var aboutDiv4 = document.createElement('div');
-  aboutDiv4.id = "aboutDiv4";
-  aboutDiv4.className = "infoDiv";
-  aboutDiv4.innerHTML = "<span class='infoTitle'>Joshua Koo </span><span class='infoBody'>Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you. </span>";
-  aboutHolderDiv.appendChild(aboutDiv4);
-  creditDivs.push(aboutDiv4);
-
-  var aboutDiv5 = document.createElement('div');
-  aboutDiv5.id = "aboutDiv5";
-  aboutDiv5.className = "infoDiv";
-  aboutDiv5.innerHTML = "<span class='infoTitle'>Conner Luzier </span><span class='infoBody'>Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you. Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you. Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you. Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you. Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you. Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you.</span>";
-  aboutHolderDiv.appendChild(aboutDiv5);
-  creditDivs.push(aboutDiv5);
-
-  var aboutDiv6 = document.createElement('div');
-  aboutDiv6.id = "aboutDiv6";
-  aboutDiv6.className = "infoDiv";
-  aboutDiv6.innerHTML = "<span class='infoTitle'>Victor Vergara </span><span class='infoBody'>Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you. Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you. Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you. Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you. Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you. Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you.</span>";
-  aboutHolderDiv.appendChild(aboutDiv6);
-  creditDivs.push(aboutDiv6);
-
-  var aboutDiv7 = document.createElement('div');
-  aboutDiv7.id = "aboutDiv7";
-  aboutDiv7.className = "infoDiv";
-  aboutDiv7.innerHTML = "<span class='infoTitle'>David Hoskins </span><span class='infoBody'>Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you. Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you. Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you. Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you. Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you. Thanks man. You are amazing and Three.js is amazing. Thank you. Thank you.</span>";
-  aboutHolderDiv.appendChild(aboutDiv7);
-  creditDivs.push(aboutDiv7);
 
   var closeButtonDiv = document.createElement('div');
   closeButtonDiv.id = "closeButtonDivAbout";

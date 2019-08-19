@@ -46,8 +46,8 @@ function CodeScreen() {
   var thankYouDiv3 = document.createElement('div');
   thankYouDiv3.id = "thankYouDiv3";
   thankYouDiv3.className = "infoDiv";
-  thankYouDiv3.innerHTML = "<span class='infoTitle'>Khangeldy </span><span class='infoBody'>I don't know a lot about Khangeldy except that he lives in Almaty, Kazakhstan and he wrote the water shader that I manipulated in the StoryTelling section and graciiously shared it.</span>"+
-  "<br><span class='infoBody'>You can it out on <a href= https://codepen.io/Khangeldy/pen/pgXNMZ target='blank'> <span class='artistLink'>codepen</span></a> and his <a href= https://github.com/khangeldy target='blank'> <span class='artistLink'>github</span></a></span>";
+  thankYouDiv3.innerHTML = "<span class='infoTitle'>Khangeldy </span><span class='infoBody'>I don't know a lot about Khangeldy except that he lives in Almaty, Kazakhstan and he wrote the water shader that I manipulated in the Story Telling section and graciously shared it.</span>"+
+  "<br><span class='infoBody'>You can out his<a href= https://codepen.io/Khangeldy/pen/pgXNMZ target='blank'> <span class='artistLink'>codepen</span></a> and his <a href= https://github.com/khangeldy target='blank'> <span class='artistLink'>github</span></a></span>";
  
   
   codeScreenHolderDiv.appendChild(thankYouDiv3);
@@ -56,7 +56,7 @@ function CodeScreen() {
   var thankYouDiv4 = document.createElement('div');
   thankYouDiv4.id = "thankYouDiv4";
   thankYouDiv4.className = "infoDiv";
-  thankYouDiv4.innerHTML = "<span class='infoTitle'>Joshua Koo </span><span class='infoBody'>Joshua is an occasional three.js contributor and perpetuator of random crazy ideas. Organizes creative coding meetups in Singapore. He implimented the awesome sky shader (first implimented by Martin Upitis and improved by Simon Wallner) used in the last three sections.</span>"+
+  thankYouDiv4.innerHTML = "<span class='infoTitle'>Joshua Koo </span><span class='infoBody'>Joshua is an occasional three.js contributor and perpetuator of random crazy ideas. He organizes creative coding meetups in Singapore. He implimented the awesome sky shader (first implimented by Martin Upitis and improved by Simon Wallner) used in the last three sections.</span>"+
   "<br><span class='infoBody'>Check out his <a href= https://www.linkedin.com/in/joshua-koo-8889b89/ target='blank'> <span class='artistLink'>linkedIn</span></a> and his <a href= https://twitter.com/blurspline target='blank'> <span class='artistLink'>twitter.</span></a></span>";
  
   codeScreenHolderDiv.appendChild(thankYouDiv4);

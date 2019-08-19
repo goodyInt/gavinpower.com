@@ -169,35 +169,10 @@ var SOUNDS = (function () {
 
       if (!instance) {
         instance = init();
-
-        console.log('myHowler.Howler.state');
-        console.log(myHowler.Howler.state);
-
+        // work around for default audio off 
         instance.background0.once('play', function () {
           instance.toggle();
-          console.log('background0 play');
         })
-
-
-        // instance.toggle();
-        /*
-                // THIS LINE TURNS SOUND OFF FOR DEV
-                isMuted = true;
-                myHowler.mute = true;
-                instance.background0.mute(isMuted)
-                instance.background0.mute(isMuted)
-                instance.background2.mute(isMuted)
-                instance.background4.mute(isMuted)
-                instance.background5.mute(isMuted)
-
-                if (isMuted) {
-                  divToggleBtnOn.style.visibility = 'hidden';
-                  divToggleBtnOff.style.visibility = 'visible';
-                } else {
-                  divToggleBtnOn.style.visibility = 'visible';
-                  divToggleBtnOff.style.visibility = 'hidden';
-                }
-                */
       }
 
 
