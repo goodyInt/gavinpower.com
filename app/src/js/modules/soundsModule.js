@@ -134,25 +134,6 @@ var SOUNDS = (function () {
         ],
         loop: true,
         volume: 0.5
-      }),
-
-
-
-      click: new Howl({
-        src: [
-          './sounds/wind.mp3',
-          './sounds/wind.ogg',
-          './sounds/wind.wav'
-        ]
-      }),
-
-      neon: new Howl({
-        src: [
-          './sounds/neon.mp3',
-          './sounds/neon.ogg',
-          './sounds/neon.wav'
-        ],
-        volume: 0.05
       })
     };
 
