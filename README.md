@@ -33,5 +33,3 @@ $ gulp go
 ##### If you have any questions feel free to email me:
 
 gavin@goodyint.com
-
-##### Happy Deving!!!!
