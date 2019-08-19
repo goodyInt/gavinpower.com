@@ -1,4 +1,4 @@
-var Howler = require('howler');
+var myHowler = require('howler');
 var jQuery = require('jquery');
 var tweenMax = require('tweenMax');
 /**
@@ -10,7 +10,7 @@ var tweenMax = require('tweenMax');
 var SOUNDS = (function () {
 
   var instance;
-  
+
   var toggleSwitchDiv;
   toggleSwitchDiv = document.createElement('div');
   toggleSwitchDiv.id = "toggleSwitchDiv";
@@ -18,7 +18,8 @@ var SOUNDS = (function () {
 
   function init() {
 
-    var isMuted = false;
+    var isMuted = true;
+    myHowler.Howler.mute(isMuted);
 
     var divToggleBtnOn = document.createElement('img');
     divToggleBtnOn.src = "./img/sound-on-outline_on_stroke_40.png";
@@ -35,25 +36,6 @@ var SOUNDS = (function () {
     toggleSwitchDiv.onclick = function () {
 
       instance.toggle();
-      instance.background0.mute(isMuted)
-
-      instance.background2.mute(isMuted)
-
-      instance.background4.mute(isMuted)
-      instance.background5.mute(isMuted)
- 
-
-
-      if (isMuted) {
-
-        divToggleBtnOn.style.visibility = 'hidden';
-        divToggleBtnOff.style.visibility = 'visible';
-
-      } else {
-        divToggleBtnOn.style.visibility = 'visible';
-        divToggleBtnOff.style.visibility = 'hidden';
-
-      }
 
 
     };
@@ -77,25 +59,29 @@ var SOUNDS = (function () {
       },
 
       toggle: function () {
-        if (isMuted) {
-          console.log('unmuting!');
-          Howler.mute = false;
-          //  Howler.mute(false);
-        } else {
-          console.log('muting!');
-          Howler.mute = true;
-          //  Howler.mute(true);
-        }
-        console.log('toggle isMuted: ' + isMuted);
+
         isMuted = !isMuted;
+
+        myHowler.Howler.mute(isMuted);
+
+        if (isMuted) {
+          divToggleBtnOn.style.visibility = 'hidden';
+          divToggleBtnOff.style.visibility = 'visible';
+        } else {
+          divToggleBtnOn.style.visibility = 'visible';
+          divToggleBtnOff.style.visibility = 'hidden';
+        }
+
+        console.log('toggle END isMuted: ' + isMuted);
+
       },
       fadeOut: function (theHowl) {
-      
-        theHowl.fade(.5,0,1000);//: function(from, to, len, id) {
+
+        theHowl.fade(.5, 0, 1000); //: function(from, to, len, id) {
       },
       fadeIn: function (theHowl, newVol) {
-      console.log('newVol: ' + newVol);
-        theHowl.fade(0,newVol,1000);//: function(from, to, len, id) {
+        console.log('newVol: ' + newVol);
+        theHowl.fade(0, newVol, 1000); //: function(from, to, len, id) {
       },
 
 
@@ -105,7 +91,7 @@ var SOUNDS = (function () {
        * @return {Boolean}
        */
       isMuted: function () {
-        return Howler.mute;
+        return myHowler.Howler.mute;
       },
 
       background0: new Howl({
@@ -117,7 +103,7 @@ var SOUNDS = (function () {
         loop: true,
         volume: 0.5
       }),
-     
+
 
       background2: new Howl({
         src: [
@@ -150,7 +136,7 @@ var SOUNDS = (function () {
         volume: 0.5
       }),
 
-     
+
 
       click: new Howl({
         src: [
@@ -184,22 +170,36 @@ var SOUNDS = (function () {
       if (!instance) {
         instance = init();
 
-        // THIS LINE TURNS SOUND OFF FOR DEV
-        isMuted = true;
-        Howler.mute = true;
-        instance.background0.mute(isMuted)
+        console.log('myHowler.Howler.state');
+        console.log(myHowler.Howler.state);
 
-        if (isMuted) {
+        instance.background0.once('play', function () {
+          instance.toggle();
+          console.log('background0 play');
+        })
 
-          divToggleBtnOn.style.visibility = 'hidden';
-          divToggleBtnOff.style.visibility = 'visible';
 
-        } else {
-          divToggleBtnOn.style.visibility = 'visible';
-          divToggleBtnOff.style.visibility = 'hidden';
+        // instance.toggle();
+        /*
+                // THIS LINE TURNS SOUND OFF FOR DEV
+                isMuted = true;
+                myHowler.mute = true;
+                instance.background0.mute(isMuted)
+                instance.background0.mute(isMuted)
+                instance.background2.mute(isMuted)
+                instance.background4.mute(isMuted)
+                instance.background5.mute(isMuted)
 
-        }
+                if (isMuted) {
+                  divToggleBtnOn.style.visibility = 'hidden';
+                  divToggleBtnOff.style.visibility = 'visible';
+                } else {
+                  divToggleBtnOn.style.visibility = 'visible';
+                  divToggleBtnOff.style.visibility = 'hidden';
+                }
+                */
       }
+
 
       return instance;
     }

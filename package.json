@@ -33,7 +33,7 @@
     "three": "./app/src/vendor/threejs/build/three.js",
     "tweenMax": "./app/src/vendor/gsap/src/uncompressed/TweenMax.js",
     "tweenMax.jquery": "./app/src/vendor/gsap/src/uncompressed/jquery.gsap.js",
-    "howler": "./app/src/vendor/howler.js/dist/howler.js"
+    "howler": "./app/src/vendor/howler/dist/howler.js"
   },
   "dependencies": {
     "normalize-scss": "^7.0.1",

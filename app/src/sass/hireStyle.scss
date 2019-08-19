@@ -185,7 +185,7 @@ span.nobreak {
 
 .divToggleBtnOff {
   position: absolute;
-  visibility: hidden;
+  visibility: visible;
   width: 30px;
   height: 30px;
   z-index: 6;
@@ -193,7 +193,7 @@ span.nobreak {
 
 .divToggleBtnOn {
   position: absolute;
-  visibility: visible;
+  visibility: hidden;
   width: 30px;
   height: 30px;
   z-index: 6;

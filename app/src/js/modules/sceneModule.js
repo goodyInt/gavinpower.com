@@ -1029,6 +1029,7 @@ var SCENE = (function () {
           //  SOUNDS.background0.play();
           
               setTimeout(function () {
+                
                 SOUNDS.fadeIn(SOUNDS.background0,0.7);
                 SOUNDS.background0.play();
               }, 1200);
