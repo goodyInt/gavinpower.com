@@ -1,8 +1,8 @@
-# 2019, goodyInt resume -- Hire Me!!!
+# 2019, gavinpower.com
 
-# Checkout my website: www.goodyint.com
+# Checkout my portfolio website: www.goodyint.com
 
-####  Hi, thanks for checking out the source code. This project is built with vs code, with gulp and browserify. To set up the project type the following into terminal (assuming you have npm and bower installed):
+#  Hi, thanks for checking out the source code. This project is built with vs code, with gulp and browserify. To set up the project type the following into terminal (assuming you have npm and bower installed):
 
 ```
 $ npm install
