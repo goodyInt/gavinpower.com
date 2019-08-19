@@ -29,7 +29,8 @@ $ gulp go
 
 ###### To go live on the web:  post the dist folder to your server
 
-
 ##### If you have any questions feel free to email me:
 
 gavin@goodyint.com
+
+@goodyGav on Twitter
