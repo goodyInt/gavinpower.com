@@ -122,11 +122,16 @@ menu.onClick(function () {
 });
 
 menu.onHover(function (whichButton) {
-
-
   console.log('whichButton: ');
   console.log(whichButton);
   SCENE.playMenuSound(whichButton);
+
+});
+
+menu.onMainHover(function (whichButton) {
+  console.log('onMainHover whichButton: ');
+  console.log(whichButton);
+  SCENE.playonMainMenuSound();
 
 });
 

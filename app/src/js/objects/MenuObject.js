@@ -9,6 +9,7 @@ function Menu() {
   var $items = $el.find('.menuItem');
   var _callback = function () {};
   var hoverCallback = function () {};
+  var mainHoverCallback = function () {};
   var timeouts = [];
   var isOpen = false;
   var previousInnerWidth = window.innerWidth;
@@ -82,6 +83,7 @@ function Menu() {
 
   $el.on('mouseenter', '.menuButton', function () {
     console.log('main button');
+    mainHoverCallback();
   });
 
   jQuery($items).hover(function () {
@@ -91,6 +93,7 @@ function Menu() {
 
   function removeTheActive() {
     $items.removeClass('isActive');
+ 
 
   }
 
@@ -177,6 +180,10 @@ function Menu() {
     onHover: function (callback) {
       console.log('onHoverCallback');
       hoverCallback = callback;
+    },
+    onMainHover: function (callback) {
+      console.log('onHoverMainCallback');
+      mainHoverCallback = callback;
     },
 
     removeTheActive: function () {

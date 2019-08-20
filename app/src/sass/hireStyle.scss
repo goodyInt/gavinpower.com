@@ -3,7 +3,7 @@
 @include normalize();
 $bgcolor: #000000;
 $arista:z_aristaregular;
-$copyColour: #ffffff;
+
 $nodeSize: 25px;
 $mapWidth: $nodeSize * 10.5;
 $loadLetterSize: 30px;
@@ -81,9 +81,6 @@ span.nobreak {
   text-align: center;
 }
 
-.textWhite {
-  color: #ffffff;
-}
 
 .loaderTitle {
   position: relative;
@@ -252,6 +249,7 @@ span.nobreak {
   font-size: 14px;
   line-height: 20px;
   margin-top: 5px;
+  color: #dddddd;
 }
 
 .infoDiv {
@@ -268,6 +266,7 @@ span.nobreak {
   display: block;
   position: relative;
   font-size: 16px;
+  color: #eeeeee;
 }
 
 .songTitle {

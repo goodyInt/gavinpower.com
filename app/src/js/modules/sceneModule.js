@@ -964,6 +964,11 @@ var SCENE = (function () {
       
         SOUNDS.playMenuButton(name);
       },
+      playonMainMenuSound: function () {
+      
+        SOUNDS.playonMainMenuSound();
+      },
+      
       
       
       getMap: function () {

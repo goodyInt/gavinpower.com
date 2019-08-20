@@ -22,10 +22,9 @@ function HelloScreen() {
   var aboutDiv = document.createElement('div');
   aboutDiv.id = "aboutDiv";
   aboutDiv.className = "infoDiv";
-  aboutDiv.innerHTML = "<span class='infoTitle'>Gavin Power</span><span class='infoBody'>is my name. I designed and developed this bad boy because I wanted to learn three.js and WebGL and take a deep dive into what the web is capable of today. </span>" +
-  "<br><br><span class='infoBody'>Now that I have completed it, I gotta tell ya, I'm pretty impressed, optimistic and inspired. I feel like we are on the cusp of a real revolution in content again. GPUs are getting faster which means that the sky is the limit for this type of thing. It is great news for Art Directors. Let's blow off the shackles. Are we ready now? It appears so.</span>" +
-  "<br><br><span class='infoBody'>If you like what you see here, are inspired, and want to blow some socks off, get in touch and we will do something amazing together - G. </span>";
-  
+  aboutDiv.innerHTML = "<span class='infoTitle'></span><span class='infoBody'> This is my deep dive into three.js and WebGL. Heading in I knew how to maniputale vertex buffers in real time but not alot about materials, specular highlights, specular diffusion, or about lighting, shaders and GLSL. </span>" +
+  "<br><br><span class='infoBody'>Now that I have completed it, I gotta tell ya, I'm pretty impressed, optimistic and inspired about the web and what we can do with it. A large peice of me died when flash died but a new day is on the horizon and we are now (praise the lord) further along than we were when we 'transitioned'. I am super happy and optimistic and inspired by the modern web and it's possibilities. I am on the look out for like minded agencies, Art Directors and Clients. Amazing starts now. Get on board. -G  </span>" 
+ 
   aboutHolderDiv.appendChild(aboutDiv);
   creditDivs.push(aboutDiv);
 
