@@ -77,7 +77,7 @@ gulp.task("moveDownloads", function () {
 
 // moveSounds
 gulp.task("moveSounds", function () {
-  return gulp.src('app/src/sounds/*')
+  return gulp.src('app/src/sounds/**/*')
   .pipe(gulp.dest('app/dist/sounds'))
 });
 

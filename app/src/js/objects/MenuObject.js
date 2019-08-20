@@ -8,6 +8,7 @@ function Menu() {
   var $itemsContainer = $el.find('.menuItems');
   var $items = $el.find('.menuItem');
   var _callback = function () {};
+  var hoverCallback = function () {};
   var timeouts = [];
   var isOpen = false;
   var previousInnerWidth = window.innerWidth;
@@ -75,10 +76,18 @@ function Menu() {
       timeouts.push(timeout);
     });
     isOpen = true;
-
   }
 
   $el.on('click', '.menuButton', onButtonClick);
+
+  $el.on('mouseenter', '.menuButton', function () {
+    console.log('main button');
+  });
+
+  jQuery($items).hover(function () {
+  //console.log(this.getAttribute("data-button"));
+    hoverCallback(this.getAttribute('data-button'));
+  });
 
   function removeTheActive() {
     $items.removeClass('isActive');
@@ -165,6 +174,11 @@ function Menu() {
     onClick: function (callback) {
       _callback = callback;
     },
+    onHover: function (callback) {
+      console.log('onHoverCallback');
+      hoverCallback = callback;
+    },
+
     removeTheActive: function () {
       removeTheActive();
     }

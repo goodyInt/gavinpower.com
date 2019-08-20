@@ -691,8 +691,14 @@ var SCENE = (function () {
             setTimeout(function () {
               SOUNDS.fadeIn(SOUNDS.background0,0.7);
               SOUNDS.background0.play();
+       
             }, 1200);
           }
+          setTimeout(function () {
+           
+            SOUNDS.openCreative.play();
+          }, 2000);
+        
           break;
         case 2:
           if (previousIndex !== 3) {
@@ -949,7 +955,19 @@ var SCENE = (function () {
         }
         animateCamera(index);
       },
+
+      playMapSound: function (index) {
+       
+        SOUNDS.playMapButton(index);
+      },
+      playMenuSound: function (name) {
+      
+        SOUNDS.playMenuButton(name);
+      },
+      
+      
       getMap: function () {
+
         map = new MapObj();
         for (var i = 0, j = sections.length; i < j; i++) {
           map.addNode(i);

@@ -13,6 +13,7 @@ function Map () {
   this.$el.append( this.mapBackground);
   this.$nodes = null;
   this.callback = function () {};
+  this.hoverCallback = function () {};
 }
 /**
  * Default node
@@ -46,11 +47,21 @@ Map.prototype.init = function () {
     _this.callback(index);
   });
 
+
+  this.$el.on('mouseenter', '.mapNode', function () {
+    var index = jQuery(this).data('index');
+    _this.hoverCallback(index);
+  });
+
+  
   // center
   this.$el.css('margin-top', - this.$el.height() / 2);
 
   // nodes
   this.$nodes = this.$el.find('.mapNode');
+
+ // jQuery( this.$nodes).hover(function(){   _this.hoverCallback(index);;console.log('hover hover');});
+ 
 };
 
 /**
@@ -61,6 +72,10 @@ Map.prototype.init = function () {
  */
 Map.prototype.onClick = function (callback) {
   this.callback = callback;
+};
+
+Map.prototype.onHover = function (hoverCallback) {
+  this.hoverCallback = hoverCallback;
 };
   
 /**

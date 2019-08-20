@@ -58,7 +58,7 @@ imagesLoader.onComplete(function () {
       map.in();
       menu.in();
       SCENE.audioIn();
- 
+
     });
   });
 });
@@ -119,6 +119,15 @@ menu.onClick(function () {
       menu.out();
       break;
   };
+});
+
+menu.onHover(function (whichButton) {
+
+
+  console.log('whichButton: ');
+  console.log(whichButton);
+  SCENE.playMenuSound(whichButton);
+
 });
 
 // scene
@@ -186,7 +195,7 @@ SCENE.on('sectionUnloaded', function () {
 SCENE.on('sectionIsIn', function () {
   console.table(this);
   if (this.section == 2) {
-    // sectioon 2 and 3 load at the same time
+    // section 2 and 3 load at the same time
     return;
   }
   toFromCallbackData.callback.func();
@@ -339,6 +348,12 @@ map.$el.hide();
 map.onClick(function (index) {
   SCENE.goTo(index);
 });
+
+map.onHover(function (index) {
+  console.log('map.onHover: ' + index);
+  SCENE.playMapSound(index);
+});
+
 SCENE.on('section:changeBegin', function () {
   map.setActive(this.to.index);
 });

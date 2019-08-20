@@ -58,6 +58,60 @@ var SOUNDS = (function () {
 
       },
 
+      playMapButton: function (index) {
+        console.log('SOUNDS playMapButton: ' + index);
+        switch (index) {
+          case 0:
+            instance.map0.play();
+            break;
+          case 1:
+            instance.map1.play();
+            break;
+          case 2:
+            instance.map2.play();
+            break;
+          case 3:
+            instance.map3.play();
+            break;
+          case 4:
+            instance.map4.play();
+            break;
+          case 5:
+            instance.map5.play();
+            break;
+          case 6:
+            instance.map6.play();
+            break;
+          case 7:
+            instance.map7.play();
+            break;
+        }
+      },
+      playMenuButton: function (name) {
+        console.log('SOUNDS playMenuButton: ' + name);
+        switch (name) {
+          case 'hello':
+            instance.menu0.play();
+            break;
+          case 'sounds':
+            instance.menu1.play();
+            break;
+          case 'code':
+            instance.menu2.play();
+            break;
+          case 'connect':
+            instance.menu3.play();
+            break;
+          case 'close':
+            instance.menu4.play();
+            break;
+        }
+      },
+      playMainMenuButton: function () {
+        console.log('SOUNDS playMainMenuButton: ');
+        instance.menu0.play();
+      },
+
       toggle: function () {
 
         isMuted = !isMuted;
@@ -134,6 +188,152 @@ var SOUNDS = (function () {
         ],
         loop: true,
         volume: 0.5
+      }),
+
+      map0: new Howl({
+        src: [
+          './sounds/effects/map0.mp3',
+          './sounds/effects/map0.ogg',
+          './sounds/effects/map0.wav'
+        ],
+        loop: false,
+        volume: 0.20
+      }),
+      map1: new Howl({
+        src: [
+          './sounds/effects/map1.mp3',
+          './sounds/effects/map1.ogg',
+          './sounds/effects/map1.wav'
+        ],
+        loop: false,
+        volume: 0.20
+      }),
+      map2: new Howl({
+        src: [
+          './sounds/effects/map2.mp3',
+          './sounds/effects/map2.ogg',
+          './sounds/effects/map2.wav'
+        ],
+        loop: false,
+        volume: 0.20
+      }),
+      map3: new Howl({
+        src: [
+          './sounds/effects/map3.mp3',
+          './sounds/effects/map3.ogg',
+          './sounds/effects/map3.wav'
+        ],
+        loop: false,
+        volume: 0.20
+      }),
+      map4: new Howl({
+        src: [
+          './sounds/effects/map4.mp3',
+          './sounds/effects/map4.ogg',
+          './sounds/effects/map4.wav'
+        ],
+        loop: false,
+        volume: 0.20
+      }),
+      map5: new Howl({
+        src: [
+          './sounds/effects/map5.mp3',
+          './sounds/effects/map5.ogg',
+          './sounds/effects/map5.wav'
+        ],
+        loop: false,
+        volume: 0.20
+      }),
+      map6: new Howl({
+        src: [
+          './sounds/effects/map6.mp3',
+          './sounds/effects/map6.ogg',
+          './sounds/effects/map6.wav'
+        ],
+        loop: false,
+        volume: 0.20
+      }),
+      map7: new Howl({
+        src: [
+          './sounds/effects/map7.mp3',
+          './sounds/effects/map7.ogg',
+          './sounds/effects/map7.wav'
+        ],
+        loop: false,
+        volume: 0.20
+      }),
+
+      menu0: new Howl({
+        src: [
+          './sounds/effects/menu0.mp3',
+          './sounds/effects/menu0.ogg',
+          './sounds/effects/menu0.wav'
+        ],
+        loop: false,
+        volume: 0.20
+      }),
+      menu1: new Howl({
+        src: [
+          './sounds/effects/menu1.mp3',
+          './sounds/effects/menu1.ogg',
+          './sounds/effects/menu1.wav'
+        ],
+        loop: false,
+        volume: 0.20
+      }),
+      menu2: new Howl({
+        src: [
+          './sounds/effects/menu2.mp3',
+          './sounds/effects/menu2.ogg',
+          './sounds/effects/menu2.wav'
+        ],
+        loop: false,
+        volume: 0.20
+      }),
+      menu3: new Howl({
+        src: [
+          './sounds/effects/menu3.mp3',
+          './sounds/effects/menu3.ogg',
+          './sounds/effects/menu3.wav'
+        ],
+        loop: false,
+        volume: 0.20
+      }),
+      menu4: new Howl({
+        src: [
+          './sounds/effects/menu4.mp3',
+          './sounds/effects/menu4.ogg',
+          './sounds/effects/menu4.wav'
+        ],
+        loop: false,
+        volume: 0.20
+      }),
+      menu5: new Howl({
+        src: [
+          './sounds/effects/menu5.mp3',
+          './sounds/effects/menu5.ogg',
+          './sounds/effects/menu5.wav'
+        ],
+        loop: false,
+        volume: 0.20
+      }),
+      menu6: new Howl({
+        src: [
+          './sounds/effects/menu6.mp3',
+          './sounds/effects/menu6.ogg',
+          './sounds/effects/menu6.wav'
+        ],
+        loop: false,
+        volume: 0.20
+      }),
+      menu7: new Howl({
+        src: [
+          './sounds/effects/menu7.mp3',
+          './sounds/effects/menu7.ogg',
+          './sounds/effects/menu7.wav'
+        ],
+        loop: false,
+        volume: 0.20
       })
     };
 
