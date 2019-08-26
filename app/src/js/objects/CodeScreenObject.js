@@ -22,7 +22,7 @@ function CodeScreen() {
   var thankYouDiv = document.createElement('div');
   thankYouDiv.id = "thankYouDiv";
   thankYouDiv.className = "infoDiv";
-  thankYouDiv.innerHTML = "<span class='infoTitle'>Mr.doob</span><span class='infoBody'>Mr.doob is an award losing non creative junior developer, who is also known as Ricardo Cabello, from Barcelona, Spain and he created three.js - the 3D JavaScript library that is taking over the web - and has been generously sharing his code and knowledge for a long, long, time (since back in the flash PaperVision3D days).</span>"+
+  thankYouDiv.innerHTML = "<span class='infoTitle'>Mr.doob</span><span class='infoBody'>Mr.doob is an award losing non creative junior developer, who is also known as Ricardo Cabello, from Barcelona, Spain and he created three.js and has been generously sharing his code and knowledge for a long, time (since back in the flash PaperVision3D days).</span>"+
   "<br><span class='infoBody'>If you are not familiar, please check out his library<a href= https://threejs.org/ target='blank'> <span class='artistLink'>threejs</span></a> and his <a href= https://mrdoob.com target='blank'> <span class='artistLink'>website</span></a> and his <a href= https://twitter.com/mrdoob target='blank'> <span class='artistLink'>twitter.</span></a></span>";
   codeScreenHolderDiv.appendChild(thankYouDiv);
   codeScreenDivs.push(thankYouDiv);
@@ -30,7 +30,7 @@ function CodeScreen() {
   var thankYouDiv_b = document.createElement('div');
   thankYouDiv_b.id = "thankYouDiv_b";
   thankYouDiv_b.className = "infoDiv";
-  thankYouDiv_b.innerHTML = "<span class='infoTitle'>AlteredQualia</span><span class='infoBody'>AlteredQualia is a brilliant graphics programmer and has been a major contributor to threes.js - generally involving materials, shaders and post-processing. His examples are extraordinary. His real name is Branislav Ulicny. He is from Slovakia and he holds a PHD in computer science from EPFL.</span>"+
+  thankYouDiv_b.innerHTML = "<span class='infoTitle'>AlteredQualia</span><span class='infoBody'>AlteredQualia is a brilliant graphics programmer and has been a major contributor to threes.js - generally involving materials, shaders and post-processing. His examples are extraordinary. His real name is Branislav Ulicny, he is from Slovakia and he holds a PHD in computer science from EPFL.</span>"+
   "<br><span class='infoBody'>Please check out his <a href= https://alteredqualia.com/ target='blank'> <span class='artistLink'>website</span></a> and his <a href= https://twitter.com/alteredq target='blank'> <span class='artistLink'>twitter.</span></a></span>";
  codeScreenHolderDiv.appendChild(thankYouDiv_b);
   codeScreenDivs.push(thankYouDiv_b);

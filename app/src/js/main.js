@@ -68,6 +68,7 @@ menu.onClick(function () {
   var $el = jQuery(this);
   $el.addClass('isActive');
   var name = $el.attr('data-button');
+
   switch (name) {
     case ('sounds'):
       helloScreen.removeFromStage();
@@ -117,6 +118,7 @@ menu.onClick(function () {
       connectScreen.removeFromStage();
       ourScreenBackground.removeFromStage();
       menu.out();
+      SCENE.playonMenuCloseSound();
       break;
   };
 });
@@ -128,12 +130,15 @@ menu.onHover(function (whichButton) {
 
 });
 
-menu.onMainHover(function (whichButton) {
-  console.log('onMainHover whichButton: ');
-  console.log(whichButton);
-  SCENE.playonMainMenuSound();
+menu.onBurgerHover(function () {
+  SCENE.playonBurgerButtonSound();
 
 });
+menu.onOpen(function () {
+  SCENE.playonMenuOpenSound();
+
+});
+
 
 // scene
 var $app = jQuery('.app');

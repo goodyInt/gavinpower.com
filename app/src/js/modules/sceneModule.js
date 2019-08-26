@@ -964,12 +964,22 @@ var SCENE = (function () {
       
         SOUNDS.playMenuButton(name);
       },
-      playonMainMenuSound: function () {
+
+      playonBurgerButtonSound: function () {
       
-        SOUNDS.playonMainMenuSound();
+        SOUNDS.playonBurgerButtonSound();
       },
-      
-      
+ 
+      playonMenuOpenSound: function () {
+       
+         SOUNDS.playonMenuOpenSound();
+        
+      },
+      playonMenuCloseSound: function () {
+       
+        SOUNDS.playonMenuCloseSound();
+        
+      },
       
       getMap: function () {
 

@@ -15,7 +15,7 @@ function SoundScreen() {
   var introDiv = document.createElement('div');
   introDiv.id = "introDiv";
   introDiv.className = "introDiv ";
-  introDiv.innerHTML = "<span class = 'introTitle'>Music</span><span class ='introBody'>Huge thanks to these artists for making their work available for this project. These tracks are listed in the order that they appear.</span> ";
+  introDiv.innerHTML = "<span class = 'introTitle'>Music</span><span class ='introBody'>Thank you to the artists who made their work available for this project.</span> ";
   soundScreenHolderDiv.appendChild(introDiv);
   soundScreenDivs.push(introDiv);
 
@@ -26,8 +26,8 @@ function SoundScreen() {
   "<span class='songTitle'>Walking in Depreston</span>"+
   "<span class='infoBody '>This beautiful song was created by </span>"+
   "<span class='songArtist'>Ai Yamamoto, </span>"+
-  "<span class='infoBody'> an artist living in Melbourne, Australia. Her music is electronic, abstract and melodic and she has collaborated with Lawrence English, Adam Gaucci (AKA Curse of Daialect), Steve Law, Ben Sharman, Ben Frost, Pretty Boy Cross Over and more.</span>" +
-  "<br><span class='infoBody'>Please checkout out her<a href= https://soundcloud.com/ai-yamamoto2 target='blank'> <span class='artistLink'>soundcloud</span></a> and <a href= https://www.instagram.com/ai_yamamoto_mel/ target='blank'> <span class='artistLink'>instagram.</span></a></span>";
+  "<span class='infoBody'> an artist living in Melbourne, Australia. Her music is electronic, abstract and melodic.</span>" +
+  "<br><span class='infoBody'>Check out out her<a href= https://soundcloud.com/ai-yamamoto2 target='blank'> <span class='artistLink'>soundcloud</span></a> and <a href= https://www.instagram.com/ai_yamamoto_mel/ target='blank'> <span class='artistLink'>instagram.</span></a></span>";
   soundScreenHolderDiv.appendChild(soundScreenDiv);
   soundScreenDivs.push(soundScreenDiv);
 
@@ -36,10 +36,10 @@ function SoundScreen() {
   soundScreenDiv1.className = "infoDiv";
   soundScreenDiv1.innerHTML = 
   "<span class='songTitle'>Surge and Swell</span>"+
-  "<span class='infoBody '>I love this song and all the amazaing tracks created by </span>"+
+  "<span class='infoBody '>This amazaing track was created by </span>"+
   "<span class='songArtist'>Pictures of the Floating World, </span>"+
-  "<span class='infoBody'>the alter ego of Eric & Magill who are Ryan Weber and Eric Osterman, two rather accomplished musicians, long time friends, and travelers. Together they create cosmic soundscapes from separate corners of the world, often enlisting a supporting cast of notable contemporaries and friends. With little more than Wi-Fi and laptops, they’ve developed a collaborative relationship across time zones and continents. There was a time however, when they weren’t so far apart.</span>" +
-  "<br><span class='infoBody'>Please checkout out their<a href= https://www.ericandmagill.com/ target='blank'> <span class='artistLink'>website</span></a> and <a href= https://www.instagram.com/ericandmagill/ target='blank'> <span class='artistLink'>instagram.</span></a></span>";
+  "<span class='infoBody'>the alter ego of Eric & Magill who are Ryan Weber and Eric Osterman, accomplished musicians, long time friends, and travelers. Together they create cosmic soundscapes.</span>" +
+  "<br><span class='infoBody'>Check out their<a href= https://www.ericandmagill.com/ target='blank'> <span class='artistLink'>website</span></a> and <a href= https://www.instagram.com/ericandmagill/ target='blank'> <span class='artistLink'>instagram.</span></a></span>";
   soundScreenHolderDiv.appendChild(soundScreenDiv1);
   soundScreenDivs.push(soundScreenDiv1);
 
@@ -61,7 +61,7 @@ function SoundScreen() {
   soundScreenDiv3.className = "infoDiv";
   soundScreenDiv3.innerHTML = 
   "<span class='songTitle'>Waking Up To The Sun</span>"+
-  "<span class='infoBody '>This is another awesome song by </span>"+
+  "<span class='infoBody '>Another awesome song by </span>"+
   "<span class='songArtist'>Pictures of the Floating World.</span>"+
   "<span class='infoBody'> They are super talented.</span>" +
   "<br><span class='infoBody'>Check out Eric & Magill's <a href= https://ericandmagill.bandcamp.com/ target='blank'> <span class='artistLink'>bandcamp</span></a> and <a href= https://soundcloud.com/ericmagill target='blank'> <span class='artistLink'>soundcloud</span></a></span>";

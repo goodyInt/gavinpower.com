@@ -9,13 +9,13 @@ function Menu() {
   var $items = $el.find('.menuItem');
   var _callback = function () {};
   var hoverCallback = function () {};
-  var mainHoverCallback = function () {};
+  var onBurgerHoverCallback = function () {};
+  var onMenuOpenCallback = function () {};
   var timeouts = [];
   var isOpen = false;
   var previousInnerWidth = window.innerWidth;
 
   jQuery(window).on('resize', onResize);
-
 
   function onResize() {
     console.log('isOpen: ' + isOpen);
@@ -49,6 +49,7 @@ function Menu() {
   function onButtonClick() {
     $items.on('click', _callback);
     $itemsContainer.css('display', 'block');
+    onMenuOpenCallback();
 
     $el.stop().animate({
       left: 0
@@ -82,9 +83,11 @@ function Menu() {
   $el.on('click', '.menuButton', onButtonClick);
 
   $el.on('mouseenter', '.menuButton', function () {
-    console.log('main button');
-    mainHoverCallback();
+   
+    onBurgerHoverCallback();
   });
+
+  
 
   jQuery($items).hover(function () {
   //console.log(this.getAttribute("data-button"));
@@ -177,13 +180,17 @@ function Menu() {
     onClick: function (callback) {
       _callback = callback;
     },
+    onOpen: function (callback) {
+      onMenuOpenCallback = callback;
+    },
+    
     onHover: function (callback) {
       console.log('onHoverCallback');
       hoverCallback = callback;
     },
-    onMainHover: function (callback) {
+    onBurgerHover: function (callback) {
       console.log('onHoverMainCallback');
-      mainHoverCallback = callback;
+      onBurgerHoverCallback = callback;
     },
 
     removeTheActive: function () {

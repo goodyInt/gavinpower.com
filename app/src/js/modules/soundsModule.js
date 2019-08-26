@@ -10,15 +10,18 @@ var tweenMax = require('tweenMax');
 var SOUNDS = (function () {
 
   var instance;
+  var isMuted = true;
 
   var toggleSwitchDiv;
   toggleSwitchDiv = document.createElement('div');
   toggleSwitchDiv.id = "toggleSwitchDiv";
   toggleSwitchDiv.className = "toggleSwitchDiv";
 
+  
+
   function init() {
 
-    var isMuted = true;
+   
     myHowler.Howler.mute(isMuted);
 
     var divToggleBtnOn = document.createElement('img');
@@ -33,12 +36,22 @@ var SOUNDS = (function () {
     divToggleBtnOff.className = "divToggleBtnOff";
     toggleSwitchDiv.appendChild(divToggleBtnOff);
 
+  
+    
+
     toggleSwitchDiv.onclick = function () {
 
       instance.toggle();
 
 
     };
+    jQuery(toggleSwitchDiv).mouseover(function () {
+      console.log('mute mouseover')
+      if (!isMuted) {
+         instance.muteButton.play();
+      }
+       });
+   
 
     document.body.appendChild(toggleSwitchDiv);
 
@@ -50,9 +63,9 @@ var SOUNDS = (function () {
        * @method toogle
        */
       in: function () {
-        console.log('soubndButtonIn: ' + toggleSwitchDiv);
+        
         jQuery(toggleSwitchDiv).animate({
-          right: 60,
+          right: 20,
           opacity: 1
         }, 500);
 
@@ -60,6 +73,7 @@ var SOUNDS = (function () {
 
       playMapButton: function (index) {
         console.log('SOUNDS playMapButton: ' + index);
+        if (!isMuted) {
         switch (index) {
           case 0:
             instance.map0.play();
@@ -86,31 +100,45 @@ var SOUNDS = (function () {
             instance.map7.play();
             break;
         }
+      }
       },
       playMenuButton: function (name) {
         console.log('SOUNDS playMenuButton: ' + name);
+        if (!isMuted) {
         switch (name) {
           case 'hello':
-            instance.menu0.play();
-            break;
-          case 'sounds':
             instance.menu1.play();
             break;
-          case 'code':
+          case 'sounds':
             instance.menu2.play();
             break;
-          case 'connect':
+          case 'code':
             instance.menu3.play();
             break;
-          case 'close':
+          case 'connect':
             instance.menu4.play();
             break;
+          case 'close':
+            instance.menu5.play();
+            break;
+        }
+      }
+      },
+      playonBurgerButtonSound: function () {
+        if (!isMuted) {
+        instance.menu0.play();
         }
       },
-      playonMainMenuSound: function () {
-        console.log('SOUNDS playonMainMenuSound: ');
-        instance.burgerButton.play();
-        
+     
+      playonMenuCloseSound: function () {
+        if (!isMuted) {
+        instance.downSwoosh.play();
+        }
+      },
+      playonMenuOpenSound: function () {
+        if (!isMuted) {
+        instance.upSwoosh.play();
+        }
       },
 
       toggle: function () {
@@ -198,7 +226,7 @@ var SOUNDS = (function () {
           './sounds/effects/map0.wav'
         ],
         loop: false,
-        volume: 0.10
+        volume: 0.05
       }),
       map1: new Howl({
         src: [
@@ -207,7 +235,7 @@ var SOUNDS = (function () {
           './sounds/effects/map1.wav'
         ],
         loop: false,
-        volume: 0.10
+        volume: 0.05
       }),
       map2: new Howl({
         src: [
@@ -216,7 +244,7 @@ var SOUNDS = (function () {
           './sounds/effects/map2.wav'
         ],
         loop: false,
-        volume: 0.10
+        volume: 0.05
       }),
       map3: new Howl({
         src: [
@@ -225,7 +253,7 @@ var SOUNDS = (function () {
           './sounds/effects/map3.wav'
         ],
         loop: false,
-        volume: 0.10
+        volume: 0.05
       }),
       map4: new Howl({
         src: [
@@ -234,7 +262,7 @@ var SOUNDS = (function () {
           './sounds/effects/map4.wav'
         ],
         loop: false,
-        volume: 0.10
+        volume: 0.05
       }),
       map5: new Howl({
         src: [
@@ -243,7 +271,7 @@ var SOUNDS = (function () {
           './sounds/effects/map5.wav'
         ],
         loop: false,
-        volume: 0.10
+        volume: 0.05
       }),
       map6: new Howl({
         src: [
@@ -252,7 +280,7 @@ var SOUNDS = (function () {
           './sounds/effects/map6.wav'
         ],
         loop: false,
-        volume: 0.10
+        volume: 0.05
       }),
       map7: new Howl({
         src: [
@@ -261,7 +289,7 @@ var SOUNDS = (function () {
           './sounds/effects/map7.wav'
         ],
         loop: false,
-        volume: 0.10
+        volume: 0.05
       }),
 
       menu0: new Howl({
@@ -271,7 +299,7 @@ var SOUNDS = (function () {
           './sounds/effects/menu0.wav'
         ],
         loop: false,
-        volume: 0.10
+        volume: 0.05
       }),
       menu1: new Howl({
         src: [
@@ -280,7 +308,7 @@ var SOUNDS = (function () {
           './sounds/effects/menu1.wav'
         ],
         loop: false,
-        volume: 0.10
+        volume: 0.05
       }),
       menu2: new Howl({
         src: [
@@ -289,7 +317,7 @@ var SOUNDS = (function () {
           './sounds/effects/menu2.wav'
         ],
         loop: false,
-        volume: 0.10
+        volume: 0.05
       }),
       menu3: new Howl({
         src: [
@@ -298,7 +326,7 @@ var SOUNDS = (function () {
           './sounds/effects/menu3.wav'
         ],
         loop: false,
-        volume: 0.10
+        volume: 0.05
       }),
       menu4: new Howl({
         src: [
@@ -307,7 +335,7 @@ var SOUNDS = (function () {
           './sounds/effects/menu4.wav'
         ],
         loop: false,
-        volume: 0.10
+        volume: 0.05
       }),
       menu5: new Howl({
         src: [
@@ -316,7 +344,7 @@ var SOUNDS = (function () {
           './sounds/effects/menu5.wav'
         ],
         loop: false,
-        volume: 0.10
+        volume: 0.05
       }),
       menu6: new Howl({
         src: [
@@ -325,7 +353,7 @@ var SOUNDS = (function () {
           './sounds/effects/menu6.wav'
         ],
         loop: false,
-        volume: 0.10
+        volume: 0.05
       }),
       menu7: new Howl({
         src: [
@@ -334,16 +362,35 @@ var SOUNDS = (function () {
           './sounds/effects/menu7.wav'
         ],
         loop: false,
-        volume: 0.10
+        volume: 0.05
       }),
-      burgerButton: new Howl({
+      upSwoosh: new Howl({
+        src: [
+          './sounds/effects/upSwoosh.mp3',
+          './sounds/effects/upSwoosh.ogg',
+          './sounds/effects/upSwoosh.wav'
+        ],
+        loop: false,
+        volume: 0.25
+      }),
+      downSwoosh: new Howl({
+        src: [
+          './sounds/effects/downSwoosh.mp3',
+          './sounds/effects/downSwoosh.ogg',
+          './sounds/effects/downSwoosh.wav'
+        ],
+        loop: false,
+        volume: 0.25
+      }),
+     
+      muteButton: new Howl({
         src: [
           './sounds/effects/mainButton.mp3',
           './sounds/effects/mainButton.ogg',
           './sounds/effects/mainButton.wav'
         ],
         loop: false,
-        volume: 0.10
+        volume: 0.05
       })
     };
 

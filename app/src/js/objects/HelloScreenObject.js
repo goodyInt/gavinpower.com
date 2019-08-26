@@ -22,8 +22,8 @@ function HelloScreen() {
   var aboutDiv = document.createElement('div');
   aboutDiv.id = "aboutDiv";
   aboutDiv.className = "infoDiv";
-  aboutDiv.innerHTML = "<span class='infoTitle'></span><span class='infoBody'> This is my deep dive into three.js and WebGL. Heading in I knew how to maniputale vertex buffers in real time but not alot about materials, specular highlights, specular diffusion, or about lighting, shaders and GLSL. </span>" +
-  "<br><br><span class='infoBody'>Now that I have completed it, I gotta tell ya, I'm pretty impressed, optimistic and inspired about the web and what we can do with it. A large peice of me died when flash died but a new day is on the horizon and we are now (praise the lord) further along than we were when we 'transitioned'. I am super happy and optimistic and inspired by the modern web and it's possibilities. I am on the look out for like minded agencies, Art Directors and Clients. Amazing starts now. Get on board. -G  </span>" 
+  aboutDiv.innerHTML = "<span class='infoTitle'></span><span class='infoBody'> This is my deep dive into three.js and WebGL - heading in I knew how to maniputale vertex buffers in real time but not alot about heightmaps, materials (specular highlights, diffusion etc.), or about lighting, shaders or GLSL. </span>" +
+  "<br><br><span class='infoBody'>It all seems amazing to me now and I'm optimistic and inspired and on the look out for like-minded agencies, Art Directors and Clients. If you are interested, please get in touch. - Gavin  </span>" 
  
   aboutHolderDiv.appendChild(aboutDiv);
   creditDivs.push(aboutDiv);

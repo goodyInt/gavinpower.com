@@ -175,9 +175,12 @@ span.nobreak {
   position: absolute;
   top: 20px !important;
   right: -60px;
-  z-index: 6;
+  z-index: 8;
   opacity: 0;
   cursor: pointer;
+  width: 30px;
+  height: 30px;
+  //background-color: #ff0000;
 }
 
 .divToggleBtnOff {
