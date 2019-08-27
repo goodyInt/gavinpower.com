@@ -11,6 +11,7 @@ var SOUNDS = (function () {
 
   var instance;
   var isMuted = true;
+  var silence4Dev = true;
 
   var toggleSwitchDiv;
   toggleSwitchDiv = document.createElement('div');
@@ -46,7 +47,7 @@ var SOUNDS = (function () {
 
     };
     jQuery(toggleSwitchDiv).mouseover(function () {
-      console.log('mute mouseover')
+    
       if (!isMuted) {
          instance.muteButton.play();
       }
@@ -143,8 +144,9 @@ var SOUNDS = (function () {
 
       toggle: function () {
 
+       
         isMuted = !isMuted;
-
+        if(silence4Dev){isMuted=true};
         myHowler.Howler.mute(isMuted);
 
         if (isMuted) {
@@ -155,7 +157,7 @@ var SOUNDS = (function () {
           divToggleBtnOff.style.visibility = 'hidden';
         }
 
-        console.log('toggle END isMuted: ' + isMuted);
+       
 
       },
       fadeOut: function (theHowl) {

@@ -38,7 +38,7 @@ function TextPanel(text, options) {
   width = floorPowerOfTwo(maxWidth);
   width = maxWidth;
   var lineHeight = parameters.size + parameters.lineSpacing;
-  var height = lineHeight * wordsCount;
+  var height = lineHeight * wordsCount +25;
   canvas.width = width;
   canvas.height = height;
   canvas2.width = floorPowerOfTwo(width);;
@@ -58,7 +58,10 @@ function TextPanel(text, options) {
     } else {
       left = canvas.width;
     }
-  context.fillText(word, left, lineHeight * k);
+   // context.fillStyle = '#99f500'
+   // context.fillRect(0,0,canvas.width,canvas.height);
+    context.fillStyle = parameters.color;
+    context.fillText(word, left, lineHeight * k+20);
   }
   var textureOrig = new THREE.Texture(canvas);
   textureOrig.needsUpdate = true;
@@ -119,11 +122,14 @@ function TextPanel(text, options) {
       } else {
         left = canvas.width;
       }
-      context.fillText(word, left, lineHeight * k);
+      context.fillText(word, left, lineHeight * k+20);
     }
     textureOrig.needsUpdate = true
+
     context2.clearRect(0, 0, canvas2.width, canvas2.height);
+
     context2.drawImage(textureOrig.image, 0, 0, canvas2.width, canvas2.height);
+
     texture.needsUpdate = true;
   }
 
@@ -146,6 +152,7 @@ function TextPanel(text, options) {
       onUpdate: update
     });
   };
+
   this.fadeIn = function (speed) {
     tweenMax.to(cache, speed, {
       opacity: 1,
@@ -180,8 +187,8 @@ function TextPanel(text, options) {
 
   this.over = function () {
     context.fillStyle = '#ffffff';
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    context.fillText(word, left, 0);
+    //context.clearRect(0, 0, canvas.width, canvas.height);
+    context.fillText(word, left, 20);
     textureOrig.needsUpdate = true
     context2.clearRect(0, 0, canvas2.width, canvas2.height);
     context2.drawImage(textureOrig.image, 0, 0, canvas2.width, canvas2.height);
@@ -189,19 +196,19 @@ function TextPanel(text, options) {
   }
   this.overOut = function () {
     context.fillStyle = '#999999';
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    context.fillText(word, left, 0);
+   // context.clearRect(0, 0, canvas.width, canvas.height);
+    context.fillText(word, left, 20);
     textureOrig.needsUpdate = true
-    context2.clearRect(0, 0, canvas2.width, canvas2.height);
+   // context2.clearRect(0, 0, canvas2.width, canvas2.height);
     context2.drawImage(textureOrig.image, 0, 0, canvas2.width, canvas2.height);
     texture.needsUpdate = true;
   }
   this.down = function (fillColour) {
     context.fillStyle = fillColour;
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    context.fillText(word, left, 0);
+   // context.clearRect(0, 0, canvas.width, canvas.height);
+    context.fillText(word, left, 20);
     textureOrig.needsUpdate = true
-    context2.clearRect(0, 0, canvas2.width, canvas2.height);
+  //  context2.clearRect(0, 0, canvas2.width, canvas2.height);
     context2.drawImage(textureOrig.image, 0, 0, canvas2.width, canvas2.height);
     texture.needsUpdate = true;
   }

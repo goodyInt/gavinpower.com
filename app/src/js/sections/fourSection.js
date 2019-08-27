@@ -130,15 +130,15 @@ var signBackgroundMat = new THREE.MeshLambertMaterial({
 var sign = new THREE.Mesh(signCirc, signBackgroundMat);
 
 nextBtn.el.position.x = 0;
-nextBtn.el.position.y = 5;
+nextBtn.el.position.y = 6;
 nextBtn.el.position.z = 0;
 
 nextBtn2.el.position.x = 0;
-nextBtn2.el.position.y = 0;
+nextBtn2.el.position.y = 1;
 nextBtn2.el.position.z = 0;
 
 nextBtn3.el.position.x = 0;
-nextBtn3.el.position.y = -5;
+nextBtn3.el.position.y = -4;
 nextBtn3.el.position.z = 0;
 
 sign.rotation.x = -180 * (Math.PI / 180);

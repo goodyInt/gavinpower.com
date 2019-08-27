@@ -2,33 +2,16 @@
 
 var Section = require('../classes/SectionClass');
 var BirdScene = require('../objects/BirdSceneObject');
-
+var Skills = require('../objects/SkillsObject');
 var fiveSection = new Section('five');
 var Events = require('../classes/EventsClass');
 var fiveEvents = new Events();
-var BackgroundParticles = require('../objects/backgroundParticlesObject');
-
 var TextPanel = require('../objects/TextPanelObject');
 var _this = this;
-
-/* 
-x: 150,
-        y: -200,
-        z: -620,
-        */
-var theSectionParticles5 = new BackgroundParticles({
-  rangeX: [-50, 200],
-  rangeY: [-200, 100],
-  rangeZ: [100, -620],
-  count: 1000,
-  particleSize: .35,
-  color1: '#ffffff',
-  color2: '#5D5D5D'
-});
-fiveSection.add(theSectionParticles5.el);
-
-
 var ourBirdScene = new BirdScene();
+var ourSkills = new Skills();
+
+
 
 fiveSection.on = function () {
   fiveEvents.on.apply(fiveEvents, arguments);
@@ -45,15 +28,24 @@ ourBirdScene.on('sectionFullyLoaded', function () {
     message: 'Section Five is Loaded'
   });
 });
-
-ourBirdScene.el.position.x = 0;
-ourBirdScene.el.position.y = 0;
-ourBirdScene.el.position.z = 0;
-
 fiveSection.add(ourBirdScene.el);
 
-var nextBtnTextString = '<<< Section 5 Lets go to 6...';
 
+ourSkills.on('sectionFullyLoaded', function () {
+  console.table(this);
+  console.table('our skills is loaded yo!!!!');
+  /*
+  fiveEvents.trigger('sectionFullyLoaded', {
+    section: 5,
+    message: 'Section Five is Loaded'
+  });
+  */
+});
+fiveSection.add(ourSkills.el);
+
+
+
+var nextBtnTextString = '^^^ Experience ^^^';
 var nextBtn = new TextPanel(
   nextBtnTextString, {
     align: 'center',
@@ -66,8 +58,7 @@ var nextBtn = new TextPanel(
 nextBtn.el.position.x = 0;
 nextBtn.el.position.y = 20;
 nextBtn.el.position.z = 150;
-
-fiveSection.add(nextBtn.el);
+//fiveSection.add(nextBtn.el);
 
 this.bringInTheBtn = function () {
   clearInterval(_this.bringInTheNextBtnInterval);
@@ -84,6 +75,7 @@ fiveSection.onIn(function () {
 
 fiveSection.onOut(function () {
   ourBirdScene.onOut();
+  ourSkills.onOut();
   nextBtn.fadeOut(.5);
   fiveEvents.trigger('sectionUnloaded', {
     section: 5,
@@ -101,25 +93,32 @@ fiveSection.onStart(function () {
   logAnalytics();
   fiveSection.show();
   ourBirdScene.start();
-  theSectionParticles5.el.visible = true;
+  ourSkills.start();
+  
+
   _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 6500);
 });
 
 fiveSection.onStop(function () {
   ourBirdScene.onStop();
+  ourSkills.stop();
+
   clearInterval(_this.bringInTheNextBtnInterval);
   fiveSection.hide();
   fiveSection.nextBtnIsIn = false;
-  theSectionParticles5.el.visible = false;
+
 });
 
 fiveSection.show = function () {
   nextBtn.el.visible = true;
   ourBirdScene.el.visible = true;
+  ourSkills.el.visible = true;
 };
+
 fiveSection.hide = function () {
   nextBtn.el.visible = false;
   ourBirdScene.el.visible = false;
+  ourSkills.el.visible = false;
 };
 
 fiveSection.nextBtnIsIn = false;
