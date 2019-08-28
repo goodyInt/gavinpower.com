@@ -208,6 +208,18 @@ span.nobreak {
   margin: 0;
   padding: 0;
   background-color: rgba(0, 0, 0, 0.65);
+  z-index: 5;
+}
+
+.experienceScreenHolderBackground {
+  position: fixed;
+  top: 0px;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: rgba(0, 0, 0, 0.65);
   z-index: 4;
 }
 
@@ -220,7 +232,7 @@ span.nobreak {
   margin: 0;
   padding: 0;
   overflow-y: scroll;
-  z-index: 5;
+  z-index: 6;
 }
 
 .infoCopy {
@@ -279,11 +291,21 @@ span.nobreak {
   font-size: 16px;
 }
 
+
+.resumeTitle {
+  font-family: $mainCopyFont;
+  color: #dedede !important;
+  font-size: 14px;
+
+}
+
 .artistLink {
   font-family: $mainCopyFont;
   color: #dddddd !important;
 
 }
+
+
 
 .artistLink:hover {
   color: #ffffff !important;
@@ -320,8 +342,6 @@ span.nobreak {
 
 }
 
-
-
 .songArtist {
   font-family: $mainCopyFont;
   position: relative;
@@ -331,7 +351,7 @@ span.nobreak {
 
 .closeButtonDiv {
   position: absolute;
-  z-index: 5;
+  z-index: 6;
   top: 75px;
   cursor: pointer;
 }

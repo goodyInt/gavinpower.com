@@ -11,7 +11,6 @@ var MapObj = require('../objects/mapObject');
 var BackgroundParticles = require('../objects/backgroundParticlesObject');
 var controls = require('../utils/GoodyOrbitControls');
 
-
 var SCENE = (function () {
   var instance;
   var map;
@@ -42,7 +41,6 @@ var SCENE = (function () {
     var isLocked = false;
     var isActive = false;
     var isStarted = false;
-
     var navFrozen = false;
     var theAtmosphereParticles;
     var theAtmosphereParticlesCity;
@@ -145,7 +143,7 @@ var SCENE = (function () {
         y: 0,
         z: 0,
         zCameraOffset: 200,
-      //  fogDensity: 0.01,
+        //  fogDensity: 0.01,
         fogDensity: 0.009,
         forward: 20,
         backward: 2000,
@@ -452,6 +450,38 @@ var SCENE = (function () {
       });
     }
 
+    function menuClicked(name) {
+      console.log('menuClicked: ' + currentIndex);
+      console.log('name: ' + name);
+      switch (currentIndex) {
+        case 0:
+          console.log('menuClicked 0');
+          break;
+        case 1:
+          console.log('menuClicked 1');
+          break;
+        case 2:
+          console.log('menuClicked 2');
+          break;
+        case 3:
+          console.log('menuClicked 3');
+          break;
+        case 4:
+          console.log('menuClicked 4');
+          break;
+        case 5:
+          console.log('menuClicked 5');
+          break;
+        case 6:
+          console.log('menuClicked 6');
+          sections[6].menuIsClicked(name);
+          break;
+        default:
+          break;
+      }
+
+    }
+
     var nextPosition;
     var toFromCallbackData;
 
@@ -499,7 +529,6 @@ var SCENE = (function () {
           onComplete: function () {
             events.trigger('section:changeBegin', toFromCallbackData);
           }
-
         });
       }
 
@@ -606,6 +635,11 @@ var SCENE = (function () {
       }
     }
 
+    function getTheCurrentIndex() {
+
+      return currentIndex;
+    }
+
     function contAnimateCamera() {
 
       var cameraTargetYOffset = 0;
@@ -681,7 +715,7 @@ var SCENE = (function () {
         case 0:
           if (previousIndex !== 1) {
             setTimeout(function () {
-              SOUNDS.fadeIn(SOUNDS.background0,0.7);
+              SOUNDS.fadeIn(SOUNDS.background0, 0.7);
               SOUNDS.background0.play();
             }, 1200);
           }
@@ -690,21 +724,16 @@ var SCENE = (function () {
         case 1:
           if (previousIndex !== 0) {
             setTimeout(function () {
-              SOUNDS.fadeIn(SOUNDS.background0,0.7);
+              SOUNDS.fadeIn(SOUNDS.background0, 0.7);
               SOUNDS.background0.play();
-       
+
             }, 1200);
           }
-          setTimeout(function () {
-           
-            SOUNDS.openCreative.play();
-          }, 2000);
-        
           break;
         case 2:
           if (previousIndex !== 3) {
             setTimeout(function () {
-              SOUNDS.fadeIn(SOUNDS.background2,0.5);
+              SOUNDS.fadeIn(SOUNDS.background2, 0.5);
               SOUNDS.background2.play();
             }, 1200);
           }
@@ -712,7 +741,7 @@ var SCENE = (function () {
         case 3:
           if (previousIndex !== 2) {
             setTimeout(function () {
-              SOUNDS.fadeIn(SOUNDS.background2,0.5);
+              SOUNDS.fadeIn(SOUNDS.background2, 0.5);
               SOUNDS.background2.play();
             }, 1200);
           }
@@ -720,7 +749,7 @@ var SCENE = (function () {
           break;
         case 4:
           setTimeout(function () {
-            SOUNDS.fadeIn(SOUNDS.background4,0.25);
+            SOUNDS.fadeIn(SOUNDS.background4, 0.25);
             SOUNDS.background4.play();
           }, 2500);
 
@@ -728,7 +757,7 @@ var SCENE = (function () {
         case 5:
           if (previousIndex !== 6) {
             setTimeout(function () {
-              SOUNDS.fadeIn(SOUNDS.background5,0.5);
+              SOUNDS.fadeIn(SOUNDS.background5, 0.5);
               SOUNDS.background5.play();
             }, 1200);
           }
@@ -736,12 +765,11 @@ var SCENE = (function () {
         case 6:
           if (previousIndex !== 5) {
             setTimeout(function () {
-              SOUNDS.fadeIn(SOUNDS.background5,0.5);
+              SOUNDS.fadeIn(SOUNDS.background5, 0.5);
               SOUNDS.background5.play();
             }, 1200);
           }
           break;
-
       }
 
       if (currentIndex == 6) {
@@ -840,7 +868,6 @@ var SCENE = (function () {
           z: nextPosition.z,
           ease: Power2.easeInOut
         });
-
 
         tweenMax.to(controls, tweenTime, {
           delay: theDelay,
@@ -958,30 +985,35 @@ var SCENE = (function () {
       },
 
       playMapSound: function (index) {
-       
+
         SOUNDS.playMapButton(index);
       },
       playMenuSound: function (name) {
-      
+
         SOUNDS.playMenuButton(name);
       },
 
       playonBurgerButtonSound: function () {
-      
+
         SOUNDS.playonBurgerButtonSound();
       },
- 
+
       playonMenuOpenSound: function () {
-       
-         SOUNDS.playonMenuOpenSound();
-        
+
+        SOUNDS.playonMenuOpenSound();
+
       },
       playonMenuCloseSound: function () {
-       
+
         SOUNDS.playonMenuCloseSound();
-        
+
       },
-      
+      menuIsClicked: function (name) {
+        console.log('menuIsClicked name');
+        console.log(name);
+        menuClicked(name);
+      },
+
       getMap: function () {
 
         map = new MapObj();
@@ -1034,10 +1066,7 @@ var SCENE = (function () {
       },
       audioIn: function () {
         SOUNDS.in();
-
       },
-
-
       in: function () {
         tweenMax.to({
           fov: 190,
@@ -1060,15 +1089,13 @@ var SCENE = (function () {
           },
           onStart: function () {
             console.log('in onStart');
-          //  SOUNDS.background0.play();
-          
-              setTimeout(function () {
-                
-                SOUNDS.fadeIn(SOUNDS.background0,0.7);
-                SOUNDS.background0.play();
-              }, 1200);
-            }
-        
+            //  SOUNDS.background0.play();
+            setTimeout(function () {
+              SOUNDS.fadeIn(SOUNDS.background0, 0.7);
+              SOUNDS.background0.play();
+            }, 1200);
+          }
+
 
         });
       }

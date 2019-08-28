@@ -1,6 +1,5 @@
 'use strict';
 var THREE = require('three');
-var tweenMax = require('tweenMax');
 var TextPanel = require('../objects/TextPanelObject');
 var Events = require('../classes/EventsClass');
 

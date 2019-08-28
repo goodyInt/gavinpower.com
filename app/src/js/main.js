@@ -18,7 +18,7 @@ var fourSection = require('./sections/fourSection');
 var fiveSection = require('./sections/fiveSection');
 var sixSection = require('./sections/sixSection');
 var menu = new Menu();
-var ourScreenBackground = new ScreenBackground();
+var ourScreenBackground = new ScreenBackground('ourScreenBackground');
 
 var connectScreen = new ConnectScreen();
 connectScreen.setCallBack(removeBack);
@@ -38,6 +38,7 @@ var toFromCallbackData;
 function removeBack() {
   menu.removeTheActive();
   ourScreenBackground.removeFromStage();
+  SCENE.menuIsClicked('close');
 }
 var imagesLoader = new ImagesLoader([
   './img/heightMap/heightMap-white.jpg'
@@ -68,6 +69,9 @@ menu.onClick(function () {
   var $el = jQuery(this);
   $el.addClass('isActive');
   var name = $el.attr('data-button');
+
+  SCENE.menuIsClicked(name)
+
 
   switch (name) {
     case ('sounds'):
@@ -347,6 +351,8 @@ SCENE.on('section:changeComplete', function () {
 });
 
 // map
+
+
 var map = SCENE.getMap();
 //$app.prepend(map.$el);
 $map.prepend(map.$el);
@@ -356,6 +362,12 @@ map.visible = false;
 map.$el.hide();
 
 map.onClick(function (index) {
+  soundScreen.removeFromStage();
+  helloScreen.removeFromStage();
+  codeScreen.removeFromStage();
+  connectScreen.removeFromStage();
+  ourScreenBackground.removeFromStage();
+  menu.out();
   SCENE.goTo(index);
 });
 

@@ -18,13 +18,8 @@ var SOUNDS = (function () {
   toggleSwitchDiv.id = "toggleSwitchDiv";
   toggleSwitchDiv.className = "toggleSwitchDiv";
 
-  
-
   function init() {
-
-   
     myHowler.Howler.mute(isMuted);
-
     var divToggleBtnOn = document.createElement('img');
     divToggleBtnOn.src = "./img/sound-on-outline_on_stroke_40.png";
     divToggleBtnOn.id = "divToggleBtnOn";

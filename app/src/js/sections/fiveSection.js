@@ -11,8 +11,6 @@ var _this = this;
 var ourBirdScene = new BirdScene();
 var ourSkills = new Skills();
 
-
-
 fiveSection.on = function () {
   fiveEvents.on.apply(fiveEvents, arguments);
 }
@@ -43,8 +41,6 @@ ourSkills.on('sectionFullyLoaded', function () {
 });
 fiveSection.add(ourSkills.el);
 
-
-
 var nextBtnTextString = '^^^ Experience ^^^';
 var nextBtn = new TextPanel(
   nextBtnTextString, {
@@ -56,9 +52,9 @@ var nextBtn = new TextPanel(
   }
 );
 nextBtn.el.position.x = 0;
-nextBtn.el.position.y = 20;
-nextBtn.el.position.z = 150;
-//fiveSection.add(nextBtn.el);
+nextBtn.el.position.y = 80;
+nextBtn.el.position.z = 0;
+fiveSection.add(nextBtn.el);
 
 this.bringInTheBtn = function () {
   clearInterval(_this.bringInTheNextBtnInterval);
@@ -106,7 +102,6 @@ fiveSection.onStop(function () {
   clearInterval(_this.bringInTheNextBtnInterval);
   fiveSection.hide();
   fiveSection.nextBtnIsIn = false;
-
 });
 
 fiveSection.show = function () {

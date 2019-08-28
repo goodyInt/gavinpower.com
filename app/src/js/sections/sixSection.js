@@ -1,12 +1,15 @@
 'use strict';
 
 var Section = require('../classes/SectionClass');
+var Experience = require('../objects/ExperienceObject');
 var sixSection = new Section('six');
 var Events = require('../classes/EventsClass');
 var sixEvents = new Events();
 var ThankYouScene = require('../objects/ThankYouObject');
 var TextPanel = require('../objects/TextPanelObject');
 var _this = this;
+var ourExperience = new Experience();
+
 
 var ourThankYouScene = new ThankYouScene();
 
@@ -25,6 +28,14 @@ ourThankYouScene.on('sectionFullyLoaded', function () {
     message: 'Section Six is Loaded'
   });
 });
+
+
+ourExperience.on('sectionFullyLoaded', function () {
+  console.table(this);
+  console.table('our experience is loaded yo!!!!');
+  
+});
+sixSection.add(ourExperience.el);
 
 ourThankYouScene.el.position.x = 0;
 ourThankYouScene.el.position.y = 0;
@@ -64,8 +75,8 @@ sixSection.onIn(function () {
 
 sixSection.onOut(function () {
   ourThankYouScene.onOut();
+  ourExperience.onOut();
   nextBtn.fadeOut(.5);
-
 });
 
 ourThankYouScene.on('sectionUnloaded', function () {
@@ -77,8 +88,10 @@ function logAnalytics(){
   sixEvents.trigger('logAnalytics', {section: "6"}); 
 }
 
+
 sixSection.onStart(function () {
   ourThankYouScene.start();
+  ourExperience.start();
   logAnalytics();
   sixSection.show();
 //  _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 4500);
@@ -131,6 +144,12 @@ sixSection.theNextBtnIsOut = function () {
 
 sixSection.handleResize = function () {
   ourThankYouScene.handleResize ();
+  
+}
+
+sixSection.menuIsClicked = function (name) {
+ console.log('sixSection.menuIsClicked: ' + name);
+ ourExperience.menuIsClicked(name);
   
 }
 

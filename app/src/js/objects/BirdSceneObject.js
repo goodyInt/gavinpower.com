@@ -195,7 +195,6 @@ function BirdSceneObject() {
     }
   }
   
-
   function fillVelocityTexture(texture) {
 
     var theArray = texture.image.data;
@@ -268,16 +267,12 @@ function BirdSceneObject() {
      setTimeout(clearBirds, 1000);
   }
   function clearBirds(){
-  
     clearTimeout(moveTheBirdsTimeOut);
     clearInterval(moveTheBirdsInt);
     gpuCompute.resetToStart();
-
   }
 
   this.onStop = function () {
-
-   
   }
 }
 

@@ -2,12 +2,12 @@
 
 var $ = require('jquery');
 
-function mainScreenBackground(screenId) {
+function ExperienceScreenBackground(screenId) {
   var thisScreenId = screenId;
   var mainScreenHolderBackgroundDiv;
   mainScreenHolderBackgroundDiv = document.createElement('div');
   mainScreenHolderBackgroundDiv.id = thisScreenId;
-  mainScreenHolderBackgroundDiv.className = "mainScreenHolderBackground";
+  mainScreenHolderBackgroundDiv.className = "experienceScreenHolderBackground";
 
   this.addToStage = function () {
     if (!document.getElementById(mainScreenHolderBackgroundDiv.id)) {
@@ -29,4 +29,4 @@ function mainScreenBackground(screenId) {
   }
 }
 
-module.exports = mainScreenBackground;
+module.exports = ExperienceScreenBackground;
