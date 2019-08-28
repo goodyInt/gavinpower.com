@@ -29,7 +29,7 @@ function ConnectScreen() {
   var contactDiv2 = document.createElement('div');
   contactDiv2.id = "contactDiv2";
   contactDiv2.className = "infoDiv";
-  contactDiv2.innerHTML = "<span class='infoTitle'>Email: </span><span class='infoBody'><a href='mailto:gavin@goodyInt.com?Subject=Hi%20from%20gavinpower.com'target='_top'>gavin@goodyInt.com</a></span>";
+  contactDiv2.innerHTML = "<span class='infoTitle'>Email: </span><span class='infoBody'><a href='mailto:gavin@goodyInt.com?Subject=Hi%20from%20gavinpower.com'target='blank'>gavin@goodyInt.com</a></span>";
   contactsHolderDiv.appendChild(contactDiv2);
   contactDivs.push(contactDiv2);
 

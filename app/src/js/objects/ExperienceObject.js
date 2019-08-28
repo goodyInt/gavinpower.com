@@ -37,7 +37,7 @@ function Experience() {
     "<br><span class='infoBody'><a href= http://www.goodyint.com target='blank'> <span class='artistLink'>@goodyInt</span></a></span>" +
     "<span class='infoBody'>, developing client projects onsite and offsite - often subcontracting ; recently designed and developed the cross-platform mobile game, "+ 
     "<span class='songArtist'> super goody gogo</span>" +
-    "<span class='infoBody'> in 26 languages. It is available on <a href= https://itunes.apple.com/app/id1446777848 target='blank'> <span class='artistLink'>iOS</span></a>, <a href= https://play.google.com/store/apps/details?id=air.com.goodyint.supergoodygogo target='blank'> <span class='artistLink'>Android</span></a> & <a href= https://www.amazon.com/goodyInt-super-goody-gogo/dp/B07LGZ2MK4 target='blank'> <span class='artistLink'>Amazon.</span></a></span>";
+    "<span class='infoBody'>, in 26 languages. It is available on <a href= https://itunes.apple.com/app/id1446777848 target='blank'> <span class='artistLink'>iOS</span></a>, <a href= https://play.google.com/store/apps/details?id=air.com.goodyint.supergoodygogo target='blank'> <span class='artistLink'>Android</span></a> & <a href= https://www.amazon.com/goodyInt-super-goody-gogo/dp/B07LGZ2MK4 target='blank'> <span class='artistLink'>Amazon.</span></a></span>";
   experienceScreenHolderDiv.appendChild(experienceScreenDiv);
   experienceScreenDivs.push(experienceScreenDiv);
 

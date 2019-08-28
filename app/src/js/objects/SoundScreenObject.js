@@ -64,7 +64,7 @@ function SoundScreen() {
   "<span class='infoBody '>Another awesome song by </span>"+
   "<span class='songArtist'>Pictures of the Floating World.</span>"+
   "<span class='infoBody'> They are super talented.</span>" +
-  "<br><span class='infoBody'>Check out Eric & Magill's <a href= https://ericandmagill.bandcamp.com/ target='blank'> <span class='artistLink'>bandcamp</span></a> and <a href= https://soundcloud.com/ericmagill target='blank'> <span class='artistLink'>soundcloud</span></a></span>";
+  "<br><span class='infoBody'>Check out Eric & Magill's <a href= https://ericandmagill.bandcamp.com/ target='blank'> <span class='artistLink'>bandcamp</span></a> and <a href= https://soundcloud.com/ericmagill target='blank'> <span class='artistLink'>soundcloud.</span></a></span>";
   soundScreenHolderDiv.appendChild(soundScreenDiv3);
   soundScreenDivs.push(soundScreenDiv3);
 
