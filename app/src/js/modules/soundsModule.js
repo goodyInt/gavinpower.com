@@ -1,12 +1,6 @@
 var myHowler = require('howler');
 var jQuery = require('jquery');
-var tweenMax = require('tweenMax');
-/**
- * Sounds module
- *
- * @module SOUNDS
- * @requires Howler
- */
+
 var SOUNDS = (function () {
 
   var instance;
@@ -32,14 +26,9 @@ var SOUNDS = (function () {
     divToggleBtnOff.className = "divToggleBtnOff";
     toggleSwitchDiv.appendChild(divToggleBtnOff);
 
-  
-    
-
     toggleSwitchDiv.onclick = function () {
 
       instance.toggle();
-
-
     };
     jQuery(toggleSwitchDiv).mouseover(function () {
     
@@ -47,19 +36,12 @@ var SOUNDS = (function () {
          instance.muteButton.play();
       }
        });
-   
 
     document.body.appendChild(toggleSwitchDiv);
 
-
     return {
-      /**
-       * Toggle on/off sounds
-       *
-       * @method toogle
-       */
+     
       in: function () {
-        
         jQuery(toggleSwitchDiv).animate({
           right: 20,
           opacity: 1
@@ -68,7 +50,6 @@ var SOUNDS = (function () {
       },
 
       playMapButton: function (index) {
-        console.log('SOUNDS playMapButton: ' + index);
         if (!isMuted) {
         switch (index) {
           case 0:
@@ -99,7 +80,7 @@ var SOUNDS = (function () {
       }
       },
       playMenuButton: function (name) {
-        console.log('SOUNDS playMenuButton: ' + name);
+
         if (!isMuted) {
         switch (name) {
           case 'hello':
@@ -137,9 +118,7 @@ var SOUNDS = (function () {
         }
       },
 
-      toggle: function () {
-
-       
+      toggle: function () { 
         isMuted = !isMuted;
         if(silence4Dev){isMuted=true};
         myHowler.Howler.mute(isMuted);
@@ -151,25 +130,16 @@ var SOUNDS = (function () {
           divToggleBtnOn.style.visibility = 'visible';
           divToggleBtnOff.style.visibility = 'hidden';
         }
-
-       
-
       },
       fadeOut: function (theHowl) {
 
-        theHowl.fade(.5, 0, 1000); //: function(from, to, len, id) {
+        theHowl.fade(.5, 0, 1000); 
       },
       fadeIn: function (theHowl, newVol) {
-        console.log('newVol: ' + newVol);
-        theHowl.fade(0, newVol, 1000); //: function(from, to, len, id) {
+      
+        theHowl.fade(0, newVol, 1000);
       },
 
-
-      /**
-       * Is muted
-       * @method isMuted
-       * @return {Boolean}
-       */
       isMuted: function () {
         return myHowler.Howler.mute;
       },
@@ -394,12 +364,7 @@ var SOUNDS = (function () {
   }
 
   return {
-    /**
-     * Return SOUNDS instance
-     *
-     * @method getInstance
-     * @return {SOUNDS}
-     */
+   
     getInstance: function () {
 
       if (!instance) {

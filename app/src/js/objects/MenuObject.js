@@ -1,5 +1,4 @@
 'use strict';
-
 var jQuery = require('jquery');
 
 function Menu() {
@@ -18,23 +17,17 @@ function Menu() {
   jQuery(window).on('resize', onResize);
 
   function onResize() {
-    console.log('isOpen: ' + isOpen);
-    console.log('previousInnerWidth: ' + previousInnerWidth);
-
     if (window.innerWidth < 600) {
       if (isOpen) {
         if (previousInnerWidth >= 600) {
-          console.log('close menu here!')
           onCloseClickFast();
           jQuery($el).css("left", -100.0);
         } else {
           jQuery($el).css("left", 0.0);
         }
       } else {
-
         jQuery($el).css("left", -100.0);
       }
-
     } else {
       if (isOpen) {
         jQuery($el).css("left", 0.0);
@@ -43,9 +36,7 @@ function Menu() {
       }
     }
     previousInnerWidth = window.innerWidth;
-
   }
-
   function onButtonClick() {
     $items.on('click', _callback);
     $itemsContainer.css('display', 'block');
@@ -58,11 +49,8 @@ function Menu() {
     $button.stop().animate({
       opacity: 0
     }, 350, 'swing', function () {
-      console.log('buttonOut');
       jQuery($button).css("visibility", 'hidden');
     });
-
-    // .animate( properties [, duration ] [, easing ] [, complete ] )Returns: jQuery
 
     $itemsContainer.stop().animate({
       opacity: 1.0
@@ -79,29 +67,17 @@ function Menu() {
     });
     isOpen = true;
   }
-
   $el.on('click', '.menuButton', onButtonClick);
-
   $el.on('mouseenter', '.menuButton', function () {
-   
     onBurgerHoverCallback();
   });
-
-  
-
   jQuery($items).hover(function () {
-  //console.log(this.getAttribute("data-button"));
     hoverCallback(this.getAttribute('data-button'));
   });
-
   function removeTheActive() {
     $items.removeClass('isActive');
- 
-
   }
-
   function onCloseClickFast() {
-
     if (timeouts) {
       for (var i = 0, j = timeouts.length; i < j; i++) {
         window.clearTimeout(timeouts[i]);
@@ -115,7 +91,6 @@ function Menu() {
     $itemsContainer.css('display', 'none');
     $items.off('click', _callback);
     isOpen = false;
-
   }
 
   function onCloseClick() {
@@ -183,16 +158,12 @@ function Menu() {
     onOpen: function (callback) {
       onMenuOpenCallback = callback;
     },
-    
     onHover: function (callback) {
-      console.log('onHoverCallback');
       hoverCallback = callback;
     },
     onBurgerHover: function (callback) {
-      console.log('onHoverMainCallback');
       onBurgerHoverCallback = callback;
     },
-
     removeTheActive: function () {
       removeTheActive();
     }

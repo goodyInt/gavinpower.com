@@ -451,35 +451,9 @@ var SCENE = (function () {
     }
 
     function menuClicked(name) {
-      console.log('menuClicked: ' + currentIndex);
-      console.log('name: ' + name);
-      switch (currentIndex) {
-        case 0:
-          console.log('menuClicked 0');
-          break;
-        case 1:
-          console.log('menuClicked 1');
-          break;
-        case 2:
-          console.log('menuClicked 2');
-          break;
-        case 3:
-          console.log('menuClicked 3');
-          break;
-        case 4:
-          console.log('menuClicked 4');
-          break;
-        case 5:
-          console.log('menuClicked 5');
-          break;
-        case 6:
-          console.log('menuClicked 6');
-          sections[6].menuIsClicked(name);
-          break;
-        default:
-          break;
+      if (currentIndex == 6) {
+        sections[6].menuIsClicked(name);
       }
-
     }
 
     var nextPosition;
@@ -1009,9 +983,7 @@ var SCENE = (function () {
 
       },
       menuIsClicked: function (name) {
-        console.log('menuIsClicked name');
-        console.log(name);
-        menuClicked(name);
+       menuClicked(name);
       },
 
       getMap: function () {
@@ -1088,9 +1060,7 @@ var SCENE = (function () {
             camera.updateProjectionMatrix();
           },
           onStart: function () {
-            console.log('in onStart');
-            //  SOUNDS.background0.play();
-            setTimeout(function () {
+              setTimeout(function () {
               SOUNDS.fadeIn(SOUNDS.background0, 0.7);
               SOUNDS.background0.play();
             }, 1200);

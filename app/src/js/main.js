@@ -128,8 +128,6 @@ menu.onClick(function () {
 });
 
 menu.onHover(function (whichButton) {
-  console.log('whichButton: ');
-  console.log(whichButton);
   SCENE.playMenuSound(whichButton);
 
 });
@@ -372,7 +370,6 @@ map.onClick(function (index) {
 });
 
 map.onHover(function (index) {
-  console.log('map.onHover: ' + index);
   SCENE.playMapSound(index);
 });
 

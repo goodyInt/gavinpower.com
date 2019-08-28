@@ -101,13 +101,9 @@ Experience.prototype.onOut = function () {
   });
   clearTimeout(this.delayTimeout);
   this.removeFromStage();
-
-
 };
 
 Experience.prototype.menuIsClicked = function (name) {
-  console.log('Experience.menuIsClicked: ' + name);
-
   switch (name) {
     case ('sounds'):
       clearTimeout(this.delayTimeout);
@@ -134,9 +130,6 @@ Experience.prototype.menuIsClicked = function (name) {
       this.addToStage();
       break;
   };
-
-
-
 }
 
 Experience.prototype.stop = function () {};

@@ -282,7 +282,6 @@ HeightMap.prototype.getIdleTween = function () {
   });
 };
 HeightMap.prototype.loadMaps = function () {
-  // console.log('loadMaps');
   var totalData = (this.parameters.divisionsX + 1) * (this.parameters.divisionsY + 1);
   this.data = {
     default: new Float32Array(totalData)
@@ -314,13 +313,13 @@ HeightMap.prototype.loadMaps = function () {
   var _this = this;
 
   function loadMap(map, index) {
-    //console.log('loadMap: ' + index);
+ 
     loader.load(map.url, function (image) {
       addMap(map.name, image);
       loaded++;
       if (loaded === 1) {
         _this.current = 0;
-        //console.log('loadMap');
+     
         _this.applyMap();
       }
       if (loaded === total) {
@@ -380,7 +379,6 @@ HeightMap.prototype.applyMap = function () {
   };
 
   var updateFirstInt = function () {
-    //console.log('updateFirstInt');
     _this.loops += 25;
     _this.tweenSpeed *= 1.02;
     for (var i = 0, j = _this.totalVerts; i < j; i++) {
@@ -431,7 +429,6 @@ HeightMap.prototype.applyMap = function () {
         ease: Elastic.easeInOut,
         onUpdate: updateStretchy,
         onComplete: function () {
-          //console.log('this is the end of stretchy: time for maps and menu');
           _this.start();
           _this.firstRun = false;
           _this.theIdleTween = _this.getIdleTween();

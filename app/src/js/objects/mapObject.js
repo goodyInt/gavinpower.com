@@ -1,12 +1,6 @@
 'use strict';
 var jQuery = require('jquery');
-/**
- * Navigation Map
- *
- * @class Map
- * @constructor
- * @requires jQuery
- */
+
 function Map () {
   this.$el = jQuery('<div class="map"></div>');
   this.mapBackground = jQuery('<div class="mapBackground"></div>');
@@ -15,61 +9,31 @@ function Map () {
   this.callback = function () {};
   this.hoverCallback = function () {};
 }
-/**
- * Default node
- * 
- * @property $node
- */
+
 Map.prototype.$node = jQuery('<div class="mapNode"></div>');
-/**
- * Add a new node
- *
- * @method addNode
- * @param {Number} [index]
- */
+
 Map.prototype.addNode = function (index) {
   var $node = this.$node.clone();
   $node.attr('data-index', index);
   this.$el.append($node);
 };
 
-/**
- * Initialize
- *
- * @method init
- */
 Map.prototype.init = function () {
   var _this = this;
 
-  // event
   this.$el.on('click', '.mapNode', function () {
     var index = jQuery(this).data('index');
     _this.callback(index);
   });
 
-
   this.$el.on('mouseenter', '.mapNode', function () {
     var index = jQuery(this).data('index');
     _this.hoverCallback(index);
   });
-
-  
-  // center
   this.$el.css('margin-top', - this.$el.height() / 2);
-
-  // nodes
-  this.$nodes = this.$el.find('.mapNode');
-
- // jQuery( this.$nodes).hover(function(){   _this.hoverCallback(index);;console.log('hover hover');});
- 
+  this.$nodes = this.$el.find('.mapNode'); 
 };
 
-/**
- * Set onClick callback
- *
- * @method onClick
- * @param {Function} [callback]
- */
 Map.prototype.onClick = function (callback) {
   this.callback = callback;
 };
@@ -77,23 +41,12 @@ Map.prototype.onClick = function (callback) {
 Map.prototype.onHover = function (hoverCallback) {
   this.hoverCallback = hoverCallback;
 };
-  
-/**
- * Set active node (.isActive)
- *
- * @method setActive
- * @param {Number} [index]
- */
+
 Map.prototype.setActive = function (index) {
   this.$nodes.removeClass('isActive');
   jQuery(this.$nodes[index]).addClass('isActive');
 };
 
-/**
- * In animation
- *
- * @method in
- */
 Map.prototype.in = function () {
   this.$nodes.each(function (i) {
     jQuery(this).delay(i * 100).animate({ right: 0, opacity: .25 }, 500);
