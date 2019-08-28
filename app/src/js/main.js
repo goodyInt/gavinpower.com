@@ -100,7 +100,7 @@ menu.onClick(function () {
       connectScreen.removeFromStage();
       ourScreenBackground.addToStage();
       helloScreen.addToStage();
-      //href="/downloads/gavinBryanPower.pdf" download
+     
       if (window.innerWidth < 600) {
         menu.outPhone();
       }

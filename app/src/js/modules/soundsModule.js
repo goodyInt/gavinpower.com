@@ -5,7 +5,7 @@ var SOUNDS = (function () {
 
   var instance;
   var isMuted = true;
-  var silence4Dev = false;
+  var silence4Dev = true;
 
   var toggleSwitchDiv;
   toggleSwitchDiv = document.createElement('div');

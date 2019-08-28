@@ -31,13 +31,6 @@ fiveSection.add(ourBirdScene.el);
 
 ourSkills.on('sectionFullyLoaded', function () {
   console.table(this);
-  console.table('our skills is loaded yo!!!!');
-  /*
-  fiveEvents.trigger('sectionFullyLoaded', {
-    section: 5,
-    message: 'Section Five is Loaded'
-  });
-  */
 });
 fiveSection.add(ourSkills.el);
 

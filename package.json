@@ -1,7 +1,7 @@
 {
-  "name": "hireme",
+  "name": "gavinpower",
   "version": "1.0.0",
-  "description": "hire me",
+  "description": "resume site",
   "main": "y",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

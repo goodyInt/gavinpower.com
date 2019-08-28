@@ -27,14 +27,14 @@ gulp.task('bableJs', function() {
 
 // preprocess scss
  gulp.task("preProCss", function () {
-   return gulp.src('app/src/sass/hireStyle.scss')
+   return gulp.src('app/src/sass/gavinpowerStyle.scss')
    .pipe(sass({style: 'compressed'}).on('error', sass.logError))
    .pipe(gulp.dest('app/dist/css'))
  });
 
 // minCss 
  gulp.task('uglifyCss', function() {
-  return gulp.src('app/dist/css/hireStyle.css')
+  return gulp.src('app/dist/css/gavinpowerStyle.css')
       .pipe(cssnano())
       .pipe(gulp.dest('app/dist/css'));
 });
@@ -44,7 +44,7 @@ gulp.task('postProCss', function () {
   var plugins = [
       autoprefixer({browsers: ['last 1 version']}),
   ];
-  return gulp.src('app/dist/css/hireStyle.css')
+  return gulp.src('app/dist/css/gavinpowerStyle.css')
       .pipe(postcss(plugins))
       .pipe(gulp.dest('app/dist/css'));
 });

@@ -23,8 +23,9 @@ function HelloScreen() {
   aboutDiv.id = "aboutDiv";
   aboutDiv.className = "infoDiv";
   aboutDiv.innerHTML = "<span class='infoTitle'></span><span class='infoBody'> This is my deep dive into three.js and WebGL - heading in I knew how to maniputale vertex buffers in real time but not alot about heightmaps, materials (specular highlights, diffusion etc.), or about lighting, shaders or GLSL. </span>" +
-  "<br><br><span class='infoBody'>It all seems amazing to me now and I'm optimistic and inspired and on the look out for like-minded agencies, Art Directors and Clients. If you are interested, please get in touch. - Gavin  </span>" 
- 
+  "<br><br><span class='infoBody'>It all seems amazing to me now and I'm optimistic and inspired and on the look out for like-minded agencies, Art Directors and Clients. If you are interested, please get in touch.</span>" +
+  "<span class='infoBody'><br><br>Download a PDF of my <a href='/downloads/gavinBryanPower.pdf' download> <span class='artistLink'>resume</span></a><span class='infoBody'>.</span></span>";
+
   aboutHolderDiv.appendChild(aboutDiv);
   creditDivs.push(aboutDiv);
 
