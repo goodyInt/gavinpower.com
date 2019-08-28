@@ -490,6 +490,8 @@ THREE.OrbitControls = function (object, domElement) {
 
 	function handleMouseDownRotate(event) {
 
+		//console.log( 'handleMouseDownRotate' );
+
 		rotateStart.set(event.clientX, event.clientY);
 
 	}
@@ -503,11 +505,15 @@ THREE.OrbitControls = function (object, domElement) {
 
 	function handleMouseDownPan(event) {
 
+		//console.log( 'handleMouseDownPan' );
+
 		panStart.set(event.clientX, event.clientY);
 
 	}
 
 	function handleMouseMoveRotate(event) {
+
+		//console.log( 'handleMouseMoveRotate' );
 
 		rotateEnd.set(event.clientX, event.clientY);
 
@@ -526,6 +532,8 @@ THREE.OrbitControls = function (object, domElement) {
 	}
 
 	function handleMouseMoveDolly(event) {
+
+		//console.log( 'handleMouseMoveDolly' );
 
 		dollyEnd.set(event.clientX, event.clientY);
 
@@ -549,6 +557,8 @@ THREE.OrbitControls = function (object, domElement) {
 
 	function handleMouseMovePan(event) {
 
+		//console.log( 'handleMouseMovePan' );
+
 		panEnd.set(event.clientX, event.clientY);
 
 		panDelta.subVectors(panEnd, panStart).multiplyScalar(scope.panSpeed);
@@ -558,6 +568,12 @@ THREE.OrbitControls = function (object, domElement) {
 		panStart.copy(panEnd);
 
 		scope.update();
+
+	}
+
+	function handleMouseUp(event) {
+
+	
 
 	}
 
@@ -608,6 +624,7 @@ THREE.OrbitControls = function (object, domElement) {
 
 		if (needsUpdate) {
 
+			// prevent the browser from scrolling on cursor keys
 			event.preventDefault();
 
 			scope.update();
@@ -618,7 +635,6 @@ THREE.OrbitControls = function (object, domElement) {
 	}
 
 	function handleTouchStartRotate(event) {
-
 
 		rotateStart.set(event.touches[0].pageX, event.touches[0].pageY);
 
