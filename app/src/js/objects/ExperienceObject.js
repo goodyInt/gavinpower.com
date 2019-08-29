@@ -37,7 +37,7 @@ function Experience() {
     "<br><span class='infoBody'><a href= 'http://www.goodyint.com' target='blank'> <span class='artistLink'>@goodyInt</span></a></span>" +
     "<span class='infoBody'>, developing client projects onsite and offsite - often subcontracting ; recently designed and developed the cross-platform mobile game, "+ 
     "<span class='songArtist'> super goody gogo</span>" +
-    "<span class='infoBody'>, in 26 languages. It is available on <a href= 'https://itunes.apple.com/app/id1446777848' target='blank'> <span class='artistLink'>iOS</span></a>, <a href= 'https://play.google.com/store/apps/details?id=air.com.goodyint.supergoodygogo' target='blank'> <span class='artistLink'>Android</span></a> & <a href= 'https://www.amazon.com/goodyInt-super-goody-gogo/dp/B07LGZ2MK4' target='blank'> <span class='artistLink'>Amazon.</span></a></span>";
+    "<span class='infoBody'>, in 26 languages - available on <a href= 'https://itunes.apple.com/app/id1446777848' target='blank'> <span class='artistLink'>iOS</span></a>, <a href= 'https://play.google.com/store/apps/details?id=air.com.goodyint.supergoodygogo' target='blank'> <span class='artistLink'>Android</span></a> & <a href= 'https://www.amazon.com/goodyInt-super-goody-gogo/dp/B07LGZ2MK4' target='blank'> <span class='artistLink'>Amazon.</span></a></span>";
   experienceScreenHolderDiv.appendChild(experienceScreenDiv);
   experienceScreenDivs.push(experienceScreenDiv);
 
@@ -57,7 +57,7 @@ function Experience() {
   experienceScreenDiv2.innerHTML =
     "<span class='songTitle'>1998 - 2003 </span>" +
     "<span class='resumeTitle'>Freelance Writer </span>" +
-    "<span class='infoBody'><br>Regularly wrote stories for The National Post, Outpost Magazine, Rosco Magazine, The Fishing News and Vice - these were often artist profiles which included interviews with Coldplay, Snow, Bruce McDonald, Janeane Garofalo, among others. Vice once named me employee of the month.</span>" 
+    "<span class='infoBody'><br>Regularly wrote stories for The National Post, Outpost Magazine, Rosco Magazine, The Fishing News and Vice - that were usually profiles that included interviews with Coldplay, Evan Solomon, Snow, Bruce McDonald, Janeane Garofalo, a one-armed fisherman, and many others. Vice once named me employee of the month.</span>" 
   experienceScreenHolderDiv.appendChild(experienceScreenDiv2);
   experienceScreenDivs.push(experienceScreenDiv2);
 
