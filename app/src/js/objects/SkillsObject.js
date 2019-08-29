@@ -162,9 +162,11 @@ function Skills() {
       'VSCode',
       'npm',
       'Bower',
-      'Browserfiy',
       'Grunt',
-      'Gulp'
+      'Gulp',
+      'Browserfiy',
+      'Babel',
+      'Howler'
     ];
 
     var posY = 75;
@@ -224,19 +226,20 @@ function Skills() {
     cssSign.position.z = 95;
 
     var cssSkillStringArray = [
-      'GLSL',
+      
       'HTML5',
       'CSS',
       'LESS',
       'SASS',
       'Materialize',
-      'AS2/AS3',
+      'GLSL',
       'XML',
       'JSON',
       'Firebase',
       'MongoDB',
       'Analytics',
       'Blender',
+      'AS2/AS3',
       'Photoshop',
       'Illustrator',
       'AfterEffects',
@@ -273,17 +276,6 @@ function Skills() {
       _this.cssHolder.add(skill.el);
     }
 
-    for (var i = 0; i < _this.skillsArray.length; i++) {
-      _this.skillsArray[i].fadeIn();
-    }
-
-    for (var i = 0; i < _this.toolsArray.length; i++) {
-      _this.toolsArray[i].fadeIn();
-    }
-
-    for (var i = 0; i < _this.cssArray.length; i++) {
-      _this.cssArray[i].fadeIn();
-    }
 
     _this.skillSignHolder.position.set(0, 0, 0);
 
@@ -302,12 +294,35 @@ function Skills() {
 }
 
 Skills.prototype.start = function () {
+
+  for (var i = 0; i < this.skillsArray.length; i++) {
+    this.skillsArray[i].fadeIn();
+  }
+
+  for (var i = 0; i < this.toolsArray.length; i++) {
+    this.toolsArray[i].fadeIn();
+  }
+
+  for (var i = 0; i < this.cssArray.length; i++) {
+    this.cssArray[i].fadeIn();
+  }
   this.events.trigger('sectionFullyLoaded', {
     message: 'Skills is Loaded'
   });
 };
 
 Skills.prototype.onOut = function () {
+  for (var i = 0; i < this.skillsArray.length; i++) {
+    this.skillsArray[i].fadeOut();
+  }
+
+  for (var i = 0; i < this.toolsArray.length; i++) {
+    this.toolsArray[i].fadeOut();
+  }
+
+  for (var i = 0; i < this.cssArray.length; i++) {
+    this.cssArray[i].fadeOut();
+  }
   this.events.trigger('sectionUnloaded', {
     message: 'Skills is UnLoaded'
   });

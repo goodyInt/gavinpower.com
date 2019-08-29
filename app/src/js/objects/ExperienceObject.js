@@ -100,6 +100,7 @@ Experience.prototype.onOut = function () {
     message: 'Experience is UnLoaded'
   });
   clearTimeout(this.delayTimeout);
+  
   this.removeFromStage();
 };
 

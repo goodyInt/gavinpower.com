@@ -316,19 +316,21 @@ SCENE.on('section:changeComplete', function () {
       break;
     case 'two':
       if (from == 'three') {
-
+       
       } else {
         twoSection.start();
         threeSection.start();
       }
+      twoSection.onStartNotShared();
       break;
     case 'three':
       if (from == 'two') {
-
+     
       } else {
         twoSection.start();
         threeSection.start();
       }
+      threeSection.onStartNotShared();
       break;
     case 'four':
       if (from == 'five') {

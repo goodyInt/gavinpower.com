@@ -88,8 +88,11 @@ function logAnalytics(){
 threeSection.onStart(function () {
   logAnalytics();
   ourCampScene.start();
-  _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 4500);
 });
+
+threeSection.onStartNotShared = function () {
+  _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 3000);
+};
 
 threeSection.onStop(function () {
   ourCampScene.stop();

@@ -116,9 +116,12 @@ function logAnalytics(){
 }
 twoSection.onStart(function () {
   logAnalytics();
-  _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 3000);
   ourStoryScene.start();
 });
+
+  twoSection.onStartNotShared = function () {
+  _this.bringInTheNextBtnInterval = setInterval(_this.bringInTheBtn, 3000);
+};
 
 twoSection.onStop(function () {
   twoSection.hide();

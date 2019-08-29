@@ -26,9 +26,7 @@
     </div>
     <div class="loaderProgress"></div>
   </div>
-  <div id="container" class="stats"></div>
-
-
+  <div id="container" ></div>
     <div class="menu">
       <div class="menuButton">
         <div class="menuButtonLine menuButtonLineTop"></div>
@@ -36,9 +34,7 @@
         <div class="menuButtonLine menuButtonLineBottom"></div>
       </div>
       <div class="menuItems">
-       
         <a class="menuItem menuItems3D" data-button="hello"> hello </a>
-      
         <a class="menuItem menuItems3D" data-button="sounds"> music </a>
         <a class="menuItem " data-button="code"> code </a>
         <a class="menuItem " data-button="connect"> connect </a>
@@ -49,19 +45,16 @@
   <div class="app">
     <div class="appViewport"></div>
   </div>
-
   <div class="mapApp"></div>
 
-
-  <!-- </div> -->
+  <!--
   <script src="js/libs/stats.min.js"></script>
-
+  -->
   <script type="text/javascript">
-    // disable console
-    console.log('Check Out: http://www.goodyint.com');
-    console.log('Source Code: https://github.com/goodyInt');
-    
-   // /*
+  console.log('%c%s','color: #00ff00; font-face: Futura; font-weight: Bold; font-size: 65px;','Go!');
+  console.log('%c%s','font-size: 14px; font-face: Futura;','Source Code: https://github.com/goodyInt');
+
+   // /* disable console
     if (!window.console) {
         window.console = {};
     }
@@ -69,9 +62,10 @@
     for (var i = 0; i < methods.length; i++) {
         console[methods[i]] = function () {};
     }
+   
    /*
     //For deployment - comment out or remove stats here and ' stats.update();' in sceneModule.js 
-    // You can remove the extra div too, if you like
+    
     var stats;
     stats = new Stats();
     var container = document.getElementById('container');

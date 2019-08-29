@@ -28,7 +28,6 @@ ourBirdScene.on('sectionFullyLoaded', function () {
 });
 fiveSection.add(ourBirdScene.el);
 
-
 ourSkills.on('sectionFullyLoaded', function () {
   console.table(this);
 });
@@ -45,7 +44,7 @@ var nextBtn = new TextPanel(
   }
 );
 nextBtn.el.position.x = 0;
-nextBtn.el.position.y = 80;
+nextBtn.el.position.y = 70;
 nextBtn.el.position.z = 0;
 fiveSection.add(nextBtn.el);
 
@@ -91,7 +90,6 @@ fiveSection.onStart(function () {
 fiveSection.onStop(function () {
   ourBirdScene.onStop();
   ourSkills.stop();
-
   clearInterval(_this.bringInTheNextBtnInterval);
   fiveSection.hide();
   fiveSection.nextBtnIsIn = false;

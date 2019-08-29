@@ -144,7 +144,7 @@ var SCENE = (function () {
         z: 0,
         zCameraOffset: 200,
         //  fogDensity: 0.01,
-        fogDensity: 0.009,
+        fogDensity: 0.0085,
         forward: 20,
         backward: 2000,
         cameraShake: false,
@@ -436,8 +436,8 @@ var SCENE = (function () {
         minPolarAngle: Math.PI * .25,
         maxPolarAngle: Math.PI * .75,
         maxPolarAngleFinish: Math.PI * .75,
-        minDistance: 100,
-        maxDistance: 500,
+        minDistance: 75,
+        maxDistance: 300,
         ease: Power2.easeInOut
       });
 
@@ -542,7 +542,6 @@ var SCENE = (function () {
         var theDelay = 0;
 
         if (index == 4) {
-
           tweenMax.to(camera.position, tweenTime, {
             delay: theDelay,
             x: nextPosition.x,
@@ -607,11 +606,6 @@ var SCENE = (function () {
       if (previousIndex == 2 || previousIndex == 3) {
         events.trigger('section:changeBegin', toFromCallbackData);
       }
-    }
-
-    function getTheCurrentIndex() {
-
-      return currentIndex;
     }
 
     function contAnimateCamera() {
