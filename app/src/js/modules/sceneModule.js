@@ -898,7 +898,7 @@ var SCENE = (function () {
               visitor = "friend";
             }
             visitor = visitor += ("_" + this.section);
-            visitor = visitor += "_dev";
+           // visitor = visitor += "_dev";
             gtag('event', visitor);
           });
         }
