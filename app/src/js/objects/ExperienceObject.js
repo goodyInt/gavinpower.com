@@ -57,7 +57,7 @@ function Experience() {
   experienceScreenDiv2.innerHTML =
     "<span class='songTitle'>1998 - 2003 </span>" +
     "<span class='resumeTitle'>Freelance Writer </span>" +
-    "<span class='infoBody'><br>Regularly wrote stories for The National Post, Outpost Magazine, Rosco Magazine, The Fishing News and Vice - that were usually profiles that included interviews with Coldplay, Evan Solomon, Snow, Bruce McDonald, Janeane Garofalo, a one-armed fisherman, and many others. Vice once named me employee of the month.</span>" 
+    "<span class='infoBody'><br>Regularly wrote stories for The National Post, Outpost Magazine, Rosco Magazine, The Fishing News and Vice - usually profiles - that included interviews with Coldplay, Evan Solomon, Snow, Bruce McDonald, Robert Lantos, Janeane Garofalo, a one-armed fisherman, and many others. Vice once named me employee of the month.</span>" 
   experienceScreenHolderDiv.appendChild(experienceScreenDiv2);
   experienceScreenDivs.push(experienceScreenDiv2);
 
