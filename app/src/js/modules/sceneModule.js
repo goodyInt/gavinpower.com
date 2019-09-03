@@ -16,6 +16,13 @@ var SCENE = (function () {
   var map;
 
   function init() {
+    visitor = HASH.hash;
+    if (visitor == undefined) {
+      visitor = "friend";
+    };
+
+    //visitor += "_dev";
+
     var parameters = {
       fogColor: '#000000',
       quality: 1,
@@ -893,13 +900,10 @@ var SCENE = (function () {
             events.trigger('sectionIsIn', this);
           });
           sections[i].on('logAnalytics', function () {
-            var visitor = HASH.hash;
-            if (visitor == undefined) {
-              visitor = "friend";
-            }
-            visitor = visitor += ("_" + this.section);
-           // visitor = visitor += "_dev";
-            gtag('event', visitor);
+           
+            var visitorAndSection = visitor + ("_" + this.section);
+           
+            gtag('event', visitorAndSection);
           });
         }
         // special listening and init
@@ -1059,11 +1063,11 @@ var SCENE = (function () {
               SOUNDS.background0.play();
             }, 1200);
           }
-
-
         });
       }
+     
     };
+   
   }
   return {
     getInstance: function () {

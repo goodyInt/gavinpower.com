@@ -93,7 +93,7 @@ function CodeScreen() {
   thankYouDiv8.id = "thankYouDiv8";
   thankYouDiv8.className = "infoDiv";
   thankYouDiv8.innerHTML = "<span class='infoTitle'>thisCode</span><span class='infoBody'>is available to download under an MIT License.</span>"+
-  "<br><span class='infoBody'>Check it out on <a href='https://github.com/goodyInt' target='blank'> <span class='artistLink'>GitHub.</span></a></span><br><br><br>";
+  "<br><span class='infoBody'>Check it out on <a href='https://github.com/goodyInt' onclick='gtag(&quot;event&quot;, visitor+&quot;_githubClick&quot;)' target='blank'> <span class='artistLink'>GitHub.</span></a></span><br><br><br>";
  
   codeScreenHolderDiv.appendChild(thankYouDiv8);
   codeScreenDivs.push(thankYouDiv8);

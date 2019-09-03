@@ -2,7 +2,6 @@
  var babel = require('gulp-babel');
  var sass = require('gulp-sass');
  var imagemin = require('gulp-imagemin');
-
  var uglify = require('gulp-uglify');
  var cssnano = require('gulp-cssnano');
  var postcss = require('gulp-postcss');

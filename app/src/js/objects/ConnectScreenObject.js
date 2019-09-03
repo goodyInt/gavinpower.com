@@ -22,28 +22,28 @@ function ConnectScreen() {
   var contactDiv = document.createElement('div');
   contactDiv.id = "contactDiv";
   contactDiv.className = "infoDiv";
-  contactDiv.innerHTML = "<span class='infoTitle'>Website: </span><span class='infoBody'>  <a href='http://www.goodyint.com' target='blank'> www.goodyint.com</a></span>";
+  contactDiv.innerHTML = "<span class='infoTitle'>Website: </span><span class='infoBody'>  <a href='http://www.goodyint.com' onclick='gtag(&quot;event&quot;, visitor+&quot;_goodyIntClick&quot;)' target='blank'> www.goodyint.com</a></span>";
   contactsHolderDiv.appendChild(contactDiv);
   contactDivs.push(contactDiv);
 
   var contactDiv2 = document.createElement('div');
   contactDiv2.id = "contactDiv2";
   contactDiv2.className = "infoDiv";
-  contactDiv2.innerHTML = "<span class='infoTitle'>Email: </span><span class='infoBody'><a href='mailto:gavin@goodyInt.com?Subject=Hi%20from%20gavinpower.com'target='blank'>gavin@goodyInt.com</a></span>";
+  contactDiv2.innerHTML = "<span class='infoTitle'>Email: </span><span class='infoBody'><a href='mailto:gavin@goodyInt.com?Subject=Hi%20from%20gavinpower.com'onclick='gtag(&quot;event&quot;, visitor+&quot;_emailClick&quot;)' target='blank'>gavin@goodyInt.com</a></span>";
   contactsHolderDiv.appendChild(contactDiv2);
   contactDivs.push(contactDiv2);
 
   var contactDiv3 = document.createElement('div');
   contactDiv3.id = "contactDiv3";
   contactDiv3.className = "infoDiv ";
-  contactDiv3.innerHTML = "<span class='infoTitle'>Twitter: </span><span class='infoBody'>  <a href='https://www.twitter.com/goodyInt' target='blank'> @goodyInt</a></span>";
+  contactDiv3.innerHTML = "<span class='infoTitle'>Twitter: </span><span class='infoBody'>  <a href='https://www.twitter.com/goodyInt' onclick='gtag(&quot;event&quot;, visitor+&quot;_twitterClick&quot;)' target='blank'> @goodyInt</a></span>";
   contactsHolderDiv.appendChild(contactDiv3);
   contactDivs.push(contactDiv3);
 
   var contactDiv4 = document.createElement('div');
   contactDiv4.id = "contactDiv4";
   contactDiv4.className = "infoDiv ";
-  contactDiv4.innerHTML = "<span class='infoTitle'>Facebook: </span><span class='infoBody'>  <a href='https://www.facebook.com/goodyInt/' target='blank'> @goodyInt</a></span>";
+  contactDiv4.innerHTML = "<span class='infoTitle'>Facebook: </span><span class='infoBody'>  <a href='https://www.facebook.com/goodyInt/' onclick='gtag(&quot;event&quot;, visitor+&quot;_facebookClick&quot;)' target='blank'> @goodyInt</a></span>";
   contactsHolderDiv.appendChild(contactDiv4);
   contactDivs.push(contactDiv4);
 
@@ -51,7 +51,7 @@ function ConnectScreen() {
   var contactDiv5 = document.createElement('div');
   contactDiv5.id = "contactDiv5";
   contactDiv5.className = "infoDiv";
-  contactDiv5.innerHTML = "<span class='infoTitle'>LinkedIn: </span><span class='infoBody'>  <a href='https://www.linkedin.com/in/gavin-power-a9057b3/' target='blank'> Gavin Power</a></span>";
+  contactDiv5.innerHTML = "<span class='infoTitle'>LinkedIn: </span><span class='infoBody'>  <a href='https://www.linkedin.com/in/gavin-power-a9057b3/' onclick='gtag(&quot;event&quot;, visitor+&quot;_linkedInClick&quot;)' target='blank'> Gavin Power</a></span>";
   contactsHolderDiv.appendChild(contactDiv5);
   contactDivs.push(contactDiv5);
 

@@ -6,7 +6,6 @@ var HelloScreen = require('./objects/HelloScreenObject');
 var SoundScreen = require('./objects/SoundScreenObject');
 var CodeScreen = require('./objects/CodeScreenObject');
 var ConnectScreen = require('./objects/ConnectScreenObject');
-
 var tweenMax = require('tweenMax');
 var SCENE = require('./modules/sceneModule');
 var jQuery = require('jquery');
@@ -72,7 +71,7 @@ menu.onClick(function () {
 
   SCENE.menuIsClicked(name)
 
-
+  gtag('event', visitor+'_'+name);
   switch (name) {
     case ('sounds'):
       helloScreen.removeFromStage();

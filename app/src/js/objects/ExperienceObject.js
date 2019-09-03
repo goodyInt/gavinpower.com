@@ -34,7 +34,7 @@ function Experience() {
   experienceScreenDiv.innerHTML =
     "<span class='songTitle'> 2007 - Current </span>" +
     "<span class='resumeTitle'>Owner/ Lead Developer</span>" +
-    "<br><span class='infoBody'><a href= 'http://www.goodyint.com' target='blank'> <span class='artistLink'>@goodyInt</span></a></span>" +
+    "<br><span class='infoBody'><a href= 'http://www.goodyint.com' onclick='gtag(&quot;event&quot;, visitor+&quot;_goodyIntClick&quot;)' target='blank'> <span class='artistLink'>@goodyInt</span></a></span>" +
     "<span class='infoBody'>, developing client projects onsite and offsite - often subcontracting ; recently designed and developed the cross-platform mobile game, "+ 
     "<span class='songArtist'> super goody gogo</span>" +
     "<span class='infoBody'>, in 26 languages - available on <a href= 'https://itunes.apple.com/app/id1446777848' target='blank'> <span class='artistLink'>iOS</span></a>, <a href= 'https://play.google.com/store/apps/details?id=air.com.goodyint.supergoodygogo' target='blank'> <span class='artistLink'>Android</span></a> & <a href= 'https://www.amazon.com/goodyInt-super-goody-gogo/dp/B07LGZ2MK4' target='blank'> <span class='artistLink'>Amazon.</span></a></span>";
@@ -105,6 +105,7 @@ Experience.prototype.onOut = function () {
 };
 
 Experience.prototype.menuIsClicked = function (name) {
+
   switch (name) {
     case ('sounds'):
       clearTimeout(this.delayTimeout);
