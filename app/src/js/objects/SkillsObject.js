@@ -99,7 +99,8 @@ function Skills() {
       'three.js',
       'GSAP',
       'createJS',
-      'React'
+      'React',
+      'Redux'
     ];
 
     var posY = 75;
