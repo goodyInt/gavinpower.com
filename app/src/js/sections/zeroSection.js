@@ -39,6 +39,14 @@ var sprites = {
   ubisoft: './img/heightMap/heightMap-helloUbisoft.jpg',
   tbwa: './img/heightMap/heightMap-helloTBWA.jpg',
   churchandstate: './img/heightMap/heightMap-helloC+S.jpg',
+  publicis: './img/heightMap/heightMap-helloPublicis.jpg',
+  criticalMass: './img/heightMap/heightMap-helloCriticalMass.jpg',
+  wundermanThompson: './img/heightMap/heightMap-helloWundermanThompson.jpg',
+  havas: './img/heightMap/heightMap-helloHavas.jpg',
+  grey: './img/heightMap/heightMap-helloGrey.jpg',
+  lg2: './img/heightMap/heightMap-helloLG2.jpg',
+  cossette: './img/heightMap/heightMap-helloCossette.jpg',
+  
   tacu: './img/heightMap/heightMap-tacu.jpg'
 };
 

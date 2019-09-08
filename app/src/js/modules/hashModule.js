@@ -19,7 +19,18 @@ var HASH = HASH || (function () {
       ubisoft: 'Ubisoft',
       tbwa: 'tbwa',
       churchandstate: 'Church & State',
+      publicis: 'publicis',
+      criticalMass: 'criticalMass',
+      wundermanThompson: 'wundermanThompson',
+      havas: 'havas',
+      grey: 'grey',
+      lg2: 'lg2',
+      cossette: 'cossette',
+      
       tacu: 'tacu',
+
+      
+      
      
     };
 
