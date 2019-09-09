@@ -241,6 +241,7 @@ function Skills() {
       'Analytics',
       'Blender',
       'AS2/AS3',
+      'Adobe Animate',
       'Photoshop',
       'Illustrator',
       'AfterEffects',
