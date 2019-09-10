@@ -26,12 +26,8 @@ var HASH = HASH || (function () {
       grey: 'grey',
       lg2: 'lg2',
       cossette: 'cossette',
-      
-      tacu: 'tacu',
-
-      
-      
-     
+      blastRadius: 'blastRadius',
+      tacu: 'tacu'
     };
 
     function getHash () {

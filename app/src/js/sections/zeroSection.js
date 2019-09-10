@@ -46,7 +46,7 @@ var sprites = {
   grey: './img/heightMap/heightMap-helloGrey.jpg',
   lg2: './img/heightMap/heightMap-helloLG2.jpg',
   cossette: './img/heightMap/heightMap-helloCossette.jpg',
-  
+  blastRadius: './img/heightMap/heightMap-helloBlastRadius.jpg',
   tacu: './img/heightMap/heightMap-tacu.jpg'
 };
 
