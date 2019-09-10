@@ -47,6 +47,13 @@ var sprites = {
   lg2: './img/heightMap/heightMap-helloLG2.jpg',
   cossette: './img/heightMap/heightMap-helloCossette.jpg',
   blastRadius: './img/heightMap/heightMap-helloBlastRadius.jpg',
+  artAndScience: './img/heightMap/heightMap-helloArtAndScience.jpg',
+  concrete: './img/heightMap/heightMap-helloConcrete.jpg',
+  fcb: './img/heightMap/heightMap-helloFCB.jpg',
+  threeJS: './img/heightMap/heightMap-helloThreeJSFriend.jpg',
+  linkedIn: './img/heightMap/heightMap-helloLinkedInFriend.jpg',
+  
+
   tacu: './img/heightMap/heightMap-tacu.jpg'
 };
 
