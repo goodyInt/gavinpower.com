@@ -165,10 +165,12 @@ function Skills() {
       'Bower',
       'Grunt',
       'Gulp',
+      'Git',
       'Browserfiy',
       'Babel',
       'Howler'
     ];
+   
 
     var posY = 75;
     var posX = -25;

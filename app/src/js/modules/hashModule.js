@@ -32,8 +32,7 @@ var HASH = HASH || (function () {
       fcb: 'fcb',
       threeJS: 'threeJS',
       linkedIn: 'linkedIn',
-
-      
+      ogilvy: 'ogilvy',
       tacu: 'tacu'
     };
 
@@ -43,7 +42,6 @@ var HASH = HASH || (function () {
 
     function getAgency (hash) {
       var agency;
-     
       if (hash && agencies[hash]) {
         agency = agencies[hash];
       } else {

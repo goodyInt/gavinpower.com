@@ -33,7 +33,7 @@ var sectionLines0 = new BackgroundLines({
 });
 zeroSection.add(sectionLines0.el);
 
-var sprites = {
+var sprites = { 
   jam3: './img/heightMap/heightMap-helloJam3.jpg',
   poundandgrain: './img/heightMap/heightMap-helloP&G.jpg',
   ubisoft: './img/heightMap/heightMap-helloUbisoft.jpg',
@@ -52,8 +52,7 @@ var sprites = {
   fcb: './img/heightMap/heightMap-helloFCB.jpg',
   threeJS: './img/heightMap/heightMap-helloThreeJSFriend.jpg',
   linkedIn: './img/heightMap/heightMap-helloLinkedInFriend.jpg',
-  
-
+  ogilvy: './img/heightMap/heightMap-helloOgilvy.jpg',
   tacu: './img/heightMap/heightMap-tacu.jpg'
 };
 
