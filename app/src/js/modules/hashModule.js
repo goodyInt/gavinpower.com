@@ -33,6 +33,9 @@ var HASH = HASH || (function () {
       threeJS: 'threeJS',
       linkedIn: 'linkedIn',
       ogilvy: 'ogilvy',
+      shopify: 'shopify',
+      facebook: 'facebook',
+      twitter: 'twitter',
       tacu: 'tacu'
     };
 

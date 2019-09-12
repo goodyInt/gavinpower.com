@@ -52,7 +52,11 @@ var sprites = {
   fcb: './img/heightMap/heightMap-helloFCB.jpg',
   threeJS: './img/heightMap/heightMap-helloThreeJSFriend.jpg',
   linkedIn: './img/heightMap/heightMap-helloLinkedInFriend.jpg',
+  facebook: './img/heightMap/heightMap-helloFacebookFriend.jpg',
+  twitter: './img/heightMap/heightMap-helloTwitterFriend.jpg',
   ogilvy: './img/heightMap/heightMap-helloOgilvy.jpg',
+  shopify: './img/heightMap/heightMap-helloShopify.jpg',
+  
   tacu: './img/heightMap/heightMap-tacu.jpg'
 };
 
