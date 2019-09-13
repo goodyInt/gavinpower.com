@@ -36,6 +36,10 @@ var HASH = HASH || (function () {
       shopify: 'shopify',
       facebook: 'facebook',
       twitter: 'twitter',
+      oneLocal: 'oneLocal',
+      goodyInt: 'goodyInt',
+      mrdoob: 'mrdoob',
+      alteredQualia: 'alteredQualia',
       tacu: 'tacu'
     };
 

@@ -56,6 +56,10 @@ var sprites = {
   twitter: './img/heightMap/heightMap-helloTwitterFriend.jpg',
   ogilvy: './img/heightMap/heightMap-helloOgilvy.jpg',
   shopify: './img/heightMap/heightMap-helloShopify.jpg',
+  oneLocal: './img/heightMap/heightMap-helloOneLocal.jpg',
+  goodyInt: './img/heightMap/heightMap-helloGoodyInt.jpg',
+  mrdoob: './img/heightMap/heightMap-helloMrDoob.jpg',
+  alteredQualia: './img/heightMap/heightMap-helloAlteredQualia.jpg',
   
   tacu: './img/heightMap/heightMap-tacu.jpg'
 };
