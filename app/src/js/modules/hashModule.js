@@ -40,6 +40,9 @@ var HASH = HASH || (function () {
       goodyInt: 'goodyInt',
       mrdoob: 'mrdoob',
       alteredQualia: 'alteredQualia',
+      PathFactory: 'PathFactory',
+      
+      V: 'V',
       tacu: 'tacu'
     };
 

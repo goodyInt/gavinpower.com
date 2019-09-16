@@ -60,6 +60,8 @@ var sprites = {
   goodyInt: './img/heightMap/heightMap-helloGoodyInt.jpg',
   mrdoob: './img/heightMap/heightMap-helloMrDoob.jpg',
   alteredQualia: './img/heightMap/heightMap-helloAlteredQualia.jpg',
+  PathFactory: './img/heightMap/heightMap-helloPathFactory.jpg',
+  V: './img/heightMap/heightMap-helloV.jpg',
   
   tacu: './img/heightMap/heightMap-tacu.jpg'
 };
