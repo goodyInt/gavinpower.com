@@ -61,6 +61,8 @@ var sprites = {
   mrdoob: './img/heightMap/heightMap-helloMrDoob.jpg',
   alteredQualia: './img/heightMap/heightMap-helloAlteredQualia.jpg',
   PathFactory: './img/heightMap/heightMap-helloPathFactory.jpg',
+  NeilTaylor: './img/heightMap/heightMap-helloNeilTaylor.jpg',
+  Myplanet: './img/heightMap/heightMap-helloMyplanet.jpg',
   V: './img/heightMap/heightMap-helloV.jpg',
   
   tacu: './img/heightMap/heightMap-tacu.jpg'

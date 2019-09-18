@@ -41,7 +41,8 @@ var HASH = HASH || (function () {
       mrdoob: 'mrdoob',
       alteredQualia: 'alteredQualia',
       PathFactory: 'PathFactory',
-      
+      NeilTaylor: 'NeilTaylor',
+      Myplanet: 'Myplanet',
       V: 'V',
       tacu: 'tacu'
     };
