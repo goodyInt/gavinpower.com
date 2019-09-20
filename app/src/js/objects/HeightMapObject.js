@@ -234,7 +234,7 @@ HeightMap.prototype.getIdleTween = function () {
           //console.log('Hello hold: ' + tweenPauseTime);
           break;
         case 0:
-          tweenPauseTime = 4;
+          tweenPauseTime = 5;
           //console.log('Friend hold: ' + tweenPauseTime);
           break;
         case 1:

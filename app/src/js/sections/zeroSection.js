@@ -63,6 +63,8 @@ var sprites = {
   PathFactory: './img/heightMap/heightMap-helloPathFactory.jpg',
   NeilTaylor: './img/heightMap/heightMap-helloNeilTaylor.jpg',
   Myplanet: './img/heightMap/heightMap-helloMyplanet.jpg',
+  SBDF: './img/heightMap/heightMap-helloSBDF.jpg',
+  cbc: './img/heightMap/heightMap-helloCBC.jpg',
   V: './img/heightMap/heightMap-helloV.jpg',
   
   tacu: './img/heightMap/heightMap-tacu.jpg'

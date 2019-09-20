@@ -43,6 +43,8 @@ var HASH = HASH || (function () {
       PathFactory: 'PathFactory',
       NeilTaylor: 'NeilTaylor',
       Myplanet: 'Myplanet',
+      SBDF: 'SBDF',
+      cbc: 'cbc',
       V: 'V',
       tacu: 'tacu'
     };
