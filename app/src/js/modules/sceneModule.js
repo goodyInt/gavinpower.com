@@ -21,7 +21,7 @@ var SCENE = (function () {
       visitor = "friend";
     };
 
-  //visitor += "_dev";
+  visitor += "_dev";
 
     var parameters = {
       fogColor: '#000000',
