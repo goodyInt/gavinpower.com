@@ -45,7 +45,7 @@ var HASH = HASH || (function () {
       Myplanet: 'Myplanet',
       SBDF: 'SBDF',
       cbc: 'cbc',
-      TorStar: 'TorStar',
+      Torstar: 'Torstar',
       V: 'V',
       tacu: 'tacu'
     };
