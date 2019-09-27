@@ -47,6 +47,8 @@ var HASH = HASH || (function () {
       cbc: 'cbc',
       Torstar: 'Torstar',
       V: 'V',
+      aa: 'aa',
+      Hussain: 'Hussain',
       tacu: 'tacu'
     };
 

@@ -67,6 +67,9 @@ var sprites = {
   cbc: './img/heightMap/heightMap-helloCBC.jpg',
   Torstar: './img/heightMap/heightMap-helloTorstar.jpg',
   V: './img/heightMap/heightMap-helloV.jpg',
+  aa: './img/heightMap/heightMap-helloAlexAitken.jpg',
+  Hussain: './img/heightMap/heightMap-helloHussain.jpg',
+  
   tacu: './img/heightMap/heightMap-tacu.jpg'
 };
 
