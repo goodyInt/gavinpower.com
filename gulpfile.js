@@ -92,6 +92,16 @@ gulp.task("moveStats", function () {
   .pipe(gulp.dest('app/dist/js/libs/'))
 });
 
+// moveShop
+gulp.task("moveShop", function () {
+  return gulp.src('app/src/shopify/**/*')
+  .pipe(gulp.dest('app/dist/shopify'))
+});
+
+
+
+
+
 // uglifyBundle
 gulp.task("uglifyJs", function () {
   return gulp.src('app/dist/js/bundle.js')
@@ -113,7 +123,7 @@ gulp.task('preProJs', function(done) {
 gulp.task("buildDev", gulp.series('preProCss','copyHtml','moveStats','postProCss','preProJs'));
 
 // build for production
-gulp.task("buildProd", gulp.series('preProJs','preProCss','copyHtml', 'postProCss', 'minImg','moveFonts','moveEmail','moveSounds','moveDownloads','bableJs','uglifyCss','uglifyJs'));
+gulp.task("buildProd", gulp.series('preProJs','preProCss','copyHtml', 'postProCss', 'minImg','moveFonts','moveEmail','moveSounds','moveDownloads','moveShop','bableJs','uglifyCss','uglifyJs'));
 
 // build for production
 gulp.task("buildPreProd", gulp.series('preProJs','preProCss','copyHtml', 'postProCss', 'minImg','moveFonts','moveStats','moveSounds', 'moveDownloads', 'bableJs','uglifyCss','uglifyJs'));

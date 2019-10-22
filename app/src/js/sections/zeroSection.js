@@ -40,7 +40,7 @@ var sprites = {
   tbwa: './img/heightMap/heightMap-helloTBWA.jpg',
   churchandstate: './img/heightMap/heightMap-helloC+S.jpg',
   publicis: './img/heightMap/heightMap-helloPublicis.jpg',
-  criticalMass: './img/heightMap/heightMap-helloCriticalMass.jpg',
+  CM: './img/heightMap/heightMap-helloCriticalMass.jpg',
   wundermanThompson: './img/heightMap/heightMap-helloWundermanThompson.jpg',
   havas: './img/heightMap/heightMap-helloHavas.jpg',
   grey: './img/heightMap/heightMap-helloGrey.jpg',

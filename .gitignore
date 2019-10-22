@@ -3,3 +3,5 @@ node_modules
 app/dist
 app/src/vendor
 app/src/email
+app/src/shopify
+

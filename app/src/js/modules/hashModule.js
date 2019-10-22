@@ -20,7 +20,7 @@ var HASH = HASH || (function () {
       tbwa: 'tbwa',
       churchandstate: 'Church & State',
       publicis: 'publicis',
-      criticalMass: 'criticalMass',
+      CM: 'criticalMass',
       wundermanThompson: 'wundermanThompson',
       havas: 'havas',
       grey: 'grey',
