@@ -58,14 +58,15 @@
   </div>
   <div class="mapApp"></div>
 
-  <!--
-  <script src="js/libs/stats.min.js"></script>
-  -->
+  
+  <!--<script src="js/libs/stats.min.js"></script>-->
+  
   <script type="text/javascript">
     console.log('%c%s', 'color: #00ff00; font-face: Futura; font-weight: Bold; font-size: 65px;', 'Go!');
     console.log('%c%s', 'font-size: 14px; font-face: Futura;', 'Source Code: https://github.com/goodyInt');
 
     // /* disable console
+
     if (!window.console) {
       window.console = {};
     }
@@ -74,14 +75,11 @@
       console[methods[i]] = function () {};
     }
 
-    /*
+    
      //For deployment - comment out or remove stats here and ' stats.update();' in sceneModule.js 
+ //    */
      
-     var stats;
-     stats = new Stats();
-     var container = document.getElementById('container');
-     container.appendChild(stats.dom);
-     */
+     
   </script>
   <script type="text/javascript" src="js/bundle.js"></script>
 

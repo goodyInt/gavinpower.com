@@ -46,15 +46,12 @@ var SCENE = (function () {
     var mouseDown = false;
     var raycaster = new THREE.Raycaster();
     var isLocked = false;
-    var isActive = false;
     var isStarted = false;
     var navFrozen = false;
     var theAtmosphereParticles;
     var theAtmosphereParticlesCity;
     var cityDevMode = false;
-    var rotatePolarAngleObject = {
-      rotateToPolarAngle: 1.5
-    }
+   
     var sections = [];
     var sectionData = [{
         //scene0 hello friend
@@ -690,8 +687,10 @@ var SCENE = (function () {
         case 0:
           if (previousIndex !== 1) {
             setTimeout(function () {
+             
+          
+              SOUNDS.playSong(SOUNDS.background0);
               SOUNDS.fadeIn(SOUNDS.background0, 0.7);
-              SOUNDS.background0.play();
             }, 1200);
           }
 
@@ -699,8 +698,9 @@ var SCENE = (function () {
         case 1:
           if (previousIndex !== 0) {
             setTimeout(function () {
+             
+              SOUNDS.playSong(SOUNDS.background0);
               SOUNDS.fadeIn(SOUNDS.background0, 0.7);
-              SOUNDS.background0.play();
 
             }, 1200);
           }
@@ -708,40 +708,47 @@ var SCENE = (function () {
         case 2:
           if (previousIndex !== 3) {
             setTimeout(function () {
+              
+              SOUNDS.playSong(SOUNDS.background2);
               SOUNDS.fadeIn(SOUNDS.background2, 0.5);
-              SOUNDS.background2.play();
+            
             }, 1200);
           }
           break;
         case 3:
           if (previousIndex !== 2) {
             setTimeout(function () {
+            
+              SOUNDS.playSong(SOUNDS.background2);
               SOUNDS.fadeIn(SOUNDS.background2, 0.5);
-              SOUNDS.background2.play();
             }, 1200);
           }
 
           break;
         case 4:
           setTimeout(function () {
+            
+           
+            SOUNDS.playSong(SOUNDS.background4);
             SOUNDS.fadeIn(SOUNDS.background4, 0.25);
-            SOUNDS.background4.play();
           }, 2500);
 
           break;
         case 5:
           if (previousIndex !== 6) {
             setTimeout(function () {
+             
+              SOUNDS.playSong(SOUNDS.background5);
               SOUNDS.fadeIn(SOUNDS.background5, 0.5);
-              SOUNDS.background5.play();
             }, 1200);
           }
           break;
         case 6:
           if (previousIndex !== 5) {
             setTimeout(function () {
+           
+              SOUNDS.playSong(SOUNDS.background5);
               SOUNDS.fadeIn(SOUNDS.background5, 0.5);
-              SOUNDS.background5.play();
             }, 1200);
           }
           break;
@@ -811,9 +818,6 @@ var SCENE = (function () {
         z: nextPosition.z + nextPosition.zCameraOffset,
         ease: Power2.easeInOut,
         onStart: function () {
-          // SOUNDS.wind.play();
-          // SOUNDS.background.play();
-
           controls.enabled = false;
         },
         onComplete: function () {
@@ -993,7 +997,7 @@ var SCENE = (function () {
         return map;
       },
       start: function () {
-        isActive = true;
+     
         if (!isStarted) {
           var data = {
             from: {
@@ -1007,6 +1011,7 @@ var SCENE = (function () {
             callback: {
               func: function () {
                 // placeholder function 
+               
               }
             }
           };
@@ -1021,7 +1026,7 @@ var SCENE = (function () {
         if (frameId) {
           window.cancelAnimationFrame(frameId);
           frameId = undefined;
-          isActive = false;
+      
         }
       },
       quality: function (value) {
@@ -1038,6 +1043,7 @@ var SCENE = (function () {
         SOUNDS.in();
       },
       in: function () {
+        console.log('sceneModule in: ');
         tweenMax.to({
           fov: 190,
           speed: 0
@@ -1059,9 +1065,12 @@ var SCENE = (function () {
           },
           onStart: function () {
               setTimeout(function () {
+              
+              SOUNDS.playSong(SOUNDS.background0);
               SOUNDS.fadeIn(SOUNDS.background0, 0.7);
-              SOUNDS.background0.play();
+              SOUNDS.finishLoadingFirstAudio();
             }, 1200);
+          
           }
         });
       }

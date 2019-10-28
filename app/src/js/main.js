@@ -33,22 +33,38 @@ soundScreen.setCallBack(removeBack);
 
 var loader = new Loader();
 var toFromCallbackData;
+var startTime = new Date().getTime();
+var elapsedTimeTime;
 
 function removeBack() {
   menu.removeTheActive();
   ourScreenBackground.removeFromStage();
   SCENE.menuIsClicked('close');
 }
+
 var imagesLoader = new ImagesLoader([
   './img/heightMap/heightMap-white.jpg'
 ]);
 
-imagesLoader.start();
+function startImageLoader(){
+  console.log('startImageLoader');
+  imagesLoader.start();
+}
+
+startImageLoader();
+
+
 imagesLoader.onProgress(function (percent) {
+  console.log('percent: ' + percent);
   loader.update(percent);
 });
 
 imagesLoader.onComplete(function () {
+  console.log('onComplete: ');
+  console.log('new Date().getTime(): ' + new Date().getTime());
+  elapsedTimeTime = new Date().getTime() - startTime;
+  console.log('elapsedTimeTime: ' + elapsedTimeTime/1000);
+
   loader.out();
   tweenMax.delayedCall(0.8, SCENE.in);
   tweenMax.delayedCall(1.5, function () {
@@ -62,6 +78,8 @@ imagesLoader.onComplete(function () {
     });
   });
 });
+
+
 
 menu.onClick(function () {
   menu.removeTheActive();
@@ -164,6 +182,7 @@ SCENE.addSections([
 ]);
 
 SCENE.on('sectionFullyLoaded', function () {
+  console.log('sectionFullyLoaded');
   console.table(this);
 });
 
