@@ -24,7 +24,7 @@ function Experience() {
   var introDiv = document.createElement('div');
   introDiv.id = "introDiv";
   introDiv.className = "introDiv ";
-  introDiv.innerHTML = "<span class = 'introTitle'>EXPERIENCE</span><span class ='introBody'>Creative Developer</span> ";
+  introDiv.innerHTML = "<span class = 'introTitle'>EXPERIENCE</span><span class ='introBody'>Front End Developer</span> ";
   experienceScreenHolderDiv.appendChild(introDiv);
   experienceScreenDivs.push(introDiv);
 
@@ -32,7 +32,7 @@ function Experience() {
   experienceScreenDiv.id = "experienceScreenDiv";
   experienceScreenDiv.className = "infoDiv";
   experienceScreenDiv.innerHTML =
-    "<span class='songTitle'> 2007 - Current </span>" +
+    "<span class='songTitle'> 2008 - Current </span>" +
     "<span class='resumeTitle'>Owner/ Lead Developer</span>" +
     "<br><span class='infoBody'><a href= 'http://www.goodyint.com' onclick='gtag(&quot;event&quot;, visitor+&quot;_goodyIntClick&quot;)' target='blank'> <span class='artistLink'>@goodyInt</span></a></span>" +
     "<span class='infoBody'>, developing client projects onsite and offsite - often subcontracting ; recently designed and developed the cross-platform mobile game, "+ 
@@ -45,7 +45,7 @@ function Experience() {
   experienceScreenDiv1.id = "experienceScreenDiv1";
   experienceScreenDiv1.className = "infoDiv";
   experienceScreenDiv1.innerHTML =
-    "<span class='songTitle'> 2003 - 2007 </span>" +
+    "<span class='songTitle'> 2003 - 2008 </span>" +
     "<span class='resumeTitle'>Contract Flash Developer </span>" +
     "<span class='infoBody'><br>Working onsite. Clients included (among others): McCann, Grip Ltd., InstaClick, Canada Post Borderfree. Brands (among others): Acura, Chevrolet, GMC, Nestle, OLG, LG, Canada Post, Nintendo, Honda.</span>";
     experienceScreenHolderDiv.appendChild(experienceScreenDiv1);

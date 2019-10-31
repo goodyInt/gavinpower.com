@@ -21,6 +21,7 @@ var HASH = HASH || (function () {
       churchandstate: 'Church & State',
       publicis: 'publicis',
       CM: 'criticalMass',
+      cg: 'creativeGroup',
       wundermanThompson: 'wundermanThompson',
       havas: 'havas',
       grey: 'grey',

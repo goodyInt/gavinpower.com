@@ -41,6 +41,7 @@ var sprites = {
   churchandstate: './img/heightMap/heightMap-helloC+S.jpg',
   publicis: './img/heightMap/heightMap-helloPublicis.jpg',
   CM: './img/heightMap/heightMap-helloCriticalMass.jpg',
+  cg: './img/heightMap/heightMap-helloCreativeGroup.jpg',
   wundermanThompson: './img/heightMap/heightMap-helloWundermanThompson.jpg',
   havas: './img/heightMap/heightMap-helloHavas.jpg',
   grey: './img/heightMap/heightMap-helloGrey.jpg',

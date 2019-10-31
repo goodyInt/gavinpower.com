@@ -103,6 +103,12 @@ gulp.task("moveCM", function () {
   .pipe(gulp.dest('app/dist/cm'))
 });
 
+// moveCM
+gulp.task("moveHello", function () {
+  return gulp.src('app/src/hello/**/*')
+  .pipe(gulp.dest('app/dist/hello'))
+});
+
 // uglifyBundle
 gulp.task("uglifyJs", function () {
   return gulp.src('app/dist/js/bundle.js')
@@ -124,7 +130,7 @@ gulp.task('preProJs', function(done) {
 gulp.task("buildDev", gulp.series('preProCss','copyHtml','moveStats','postProCss','preProJs'));
 
 // build for production
-gulp.task("buildProd", gulp.series('preProJs','preProCss','copyHtml', 'postProCss', 'minImg','moveFonts','moveEmail','moveSounds','moveDownloads','moveShop','moveCM','bableJs','uglifyCss','uglifyJs'));
+gulp.task("buildProd", gulp.series('preProJs','preProCss','copyHtml', 'postProCss', 'minImg','moveFonts','moveEmail','moveHello','moveSounds','moveDownloads','moveShop','moveCM','bableJs','uglifyCss','uglifyJs'));
 
 // build for production
 gulp.task("buildPreProd", gulp.series('preProJs','preProCss','copyHtml', 'postProCss', 'minImg','moveFonts','moveStats','moveSounds', 'moveDownloads', 'bableJs','uglifyCss','uglifyJs'));
