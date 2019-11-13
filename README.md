@@ -2,7 +2,7 @@
 
 ###  Hi, thanks for checking out the source code. This project is built with vs code, with gulp and browserify. To set up the project type the following into terminal (assuming you have npm and bower installed):
 
-#### Checkout my portfolio website: www.goodyint.com
+
 
 ```
 $ npm install
@@ -29,7 +29,10 @@ $ gulp go
 
 ##### To go live on the web:  post the dist folder to your server
 
-##### If you have any questions feel free to email me:
+#### Checkout my portfolio website: www.goodyint.com
 
+##### If you have any questions feel free to email me:
 gavin@goodyint.com
+
+
 
