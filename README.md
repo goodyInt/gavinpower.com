@@ -9,25 +9,25 @@ $ npm install
 $ bower install
 ```
 
-#### Then build a new dist folder and copy all the assets etc:
+#### Build a new dist folder and copy all the assets etc:
 
 ```
 $ gulp buildProd
 ```
 
-#### To build a dev build and use your own live server:
+#### Build a dev version and use your own live server:
 
 ```
 $ gulp buildDev
 ```
 
-#### To build a dev build and use watchify live server (this seems a little buggy at the moment and requires a browser refresh from time to time):
+#### Build a dev version and use watchify live server (this seems a little buggy at the moment and requires a browser refresh from time to time):
 
 ```
 $ gulp go
 ```
 
-#### Post on the web by coping the dist folder to your server. Please credit me and email me so that I can see your iteration. Have fun!
+#### Post on the web by copying the dist folder to your server. Please credit me and email me so that I can see your iteration. Have fun!
 
 #### this site: www.gavinpower.com
 
