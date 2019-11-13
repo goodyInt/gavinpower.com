@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.js": "/react_video/static/js/main.c4ae6a13.chunk.js",
+    "main.js.map": "/react_video/static/js/main.c4ae6a13.chunk.js.map",
+    "runtime~main.js": "/react_video/static/js/runtime~main.ae74a5d7.js",
+    "runtime~main.js.map": "/react_video/static/js/runtime~main.ae74a5d7.js.map",
+    "static/js/2.a347a047.chunk.js": "/react_video/static/js/2.a347a047.chunk.js",
+    "static/js/2.a347a047.chunk.js.map": "/react_video/static/js/2.a347a047.chunk.js.map",
+    "index.html": "/react_video/index.html",
+    "precache-manifest.67ec457a598528638b94cd9d5612ddec.js": "/react_video/precache-manifest.67ec457a598528638b94cd9d5612ddec.js",
+    "service-worker.js": "/react_video/service-worker.js"
+  }
+}
