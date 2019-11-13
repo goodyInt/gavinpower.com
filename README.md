@@ -27,7 +27,7 @@ $ gulp buildDev
 $ gulp go
 ```
 
-#### Post on the web by coping the dist folder to your server. Please credit me and email me so that I could see your iterations. Have fun!
+#### Post on the web by coping the dist folder to your server. Please credit me and email me so that I can see your iteration. Have fun!
 
 #### this site: www.gavinpower.com
 
