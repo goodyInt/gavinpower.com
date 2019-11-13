@@ -1,6 +1,6 @@
-#### gavinpower.com
+## gavinpower.com
 
-###  Hi, thanks for checking out the source code. This project is built with vs code, with gulp and browserify.
+###  Hi, thanks for checking out the source code. This project is built with vs code, gulp and browserify.
 
 ### To set up the project type the following into terminal (assuming you have npm and bower installed):
 
@@ -9,7 +9,7 @@ $ npm install
 $ bower install
 ```
 
-#### Then build a new dist folder and copy all the assets etc - type:
+#### Then build a new dist folder and copy all the assets etc:
 
 ```
 $ gulp buildProd
@@ -27,12 +27,13 @@ $ gulp buildDev
 $ gulp go
 ```
 
-#### To go live on the web, post the dist folder to your server
+#### Post the dist folder to your server
 
-#### Checkout my portfolio website: www.goodyint.com
+#### this site: www.gavinpower.com
 
-#### If you have any questions feel free to email me:
-gavin@goodyint.com
+#### portfolio: www.goodyint.com
+
+#### email me: gavin@goodyint.com
 
 
 
