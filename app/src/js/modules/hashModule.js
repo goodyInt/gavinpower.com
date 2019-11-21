@@ -50,6 +50,7 @@ var HASH = HASH || (function () {
       V: 'V',
       aa: 'aa',
       Hussain: 'Hussain',
+      wefail: 'wefail',
       tacu: 'tacu'
     };
 

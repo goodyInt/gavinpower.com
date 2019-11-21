@@ -66,6 +66,7 @@ var sprites = {
   Myplanet: './img/heightMap/heightMap-helloMyplanet.jpg',
   SBDF: './img/heightMap/heightMap-helloSBDF.jpg',
   cbc: './img/heightMap/heightMap-helloCBC.jpg',
+  wefail: './img/heightMap/heightMap-helloWeFail.jpg',
   Torstar: './img/heightMap/heightMap-helloTorstar.jpg',
   V: './img/heightMap/heightMap-helloV.jpg',
   aa: './img/heightMap/heightMap-helloAlexAitken.jpg',

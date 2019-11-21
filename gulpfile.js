@@ -41,8 +41,9 @@ gulp.task('bableJs', function() {
 //postProCss
 gulp.task('postProCss', function () {
   var plugins = [
-      autoprefixer({browsers: ['last 1 version']}),
+      autoprefixer(),
   ];
+  //{browsers: ['last 1 version']}
   return gulp.src('app/dist/css/gavinpowerStyle.css')
       .pipe(postcss(plugins))
       .pipe(gulp.dest('app/dist/css'));
@@ -97,6 +98,11 @@ gulp.task("moveShop", function () {
   return gulp.src('app/src/shopify/**/*')
   .pipe(gulp.dest('app/dist/shopify'))
 });
+// moveHavas
+gulp.task("moveHavas", function () {
+  return gulp.src('app/src/havas/**/*')
+  .pipe(gulp.dest('app/dist/havas'))
+});
 // moveCM
 gulp.task("moveCM", function () {
   return gulp.src('app/src/cm/**/*')
@@ -130,7 +136,7 @@ gulp.task('preProJs', function(done) {
 gulp.task("buildDev", gulp.series('preProCss','copyHtml','moveStats','postProCss','preProJs'));
 
 // build for production
-gulp.task("buildProd", gulp.series('preProJs','preProCss','copyHtml', 'postProCss', 'minImg','moveFonts','moveEmail','moveHello','moveSounds','moveDownloads','moveShop','moveCM','bableJs','uglifyCss','uglifyJs'));
+gulp.task("buildProd", gulp.series('preProJs','preProCss','copyHtml', 'postProCss', 'minImg','moveFonts','moveEmail','moveHello','moveSounds','moveDownloads','moveShop','moveHavas','moveCM','bableJs','uglifyCss','uglifyJs'));
 
 // build for production
 gulp.task("buildPreProd", gulp.series('preProJs','preProCss','copyHtml', 'postProCss', 'minImg','moveFonts','moveStats','moveSounds', 'moveDownloads', 'bableJs','uglifyCss','uglifyJs'));

@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/havas/static/css/main.07c4e79f.chunk.css",
+    "main.js": "/havas/static/js/main.d7aab2c2.chunk.js",
+    "main.js.map": "/havas/static/js/main.d7aab2c2.chunk.js.map",
+    "runtime-main.js": "/havas/static/js/runtime-main.94ce735c.js",
+    "runtime-main.js.map": "/havas/static/js/runtime-main.94ce735c.js.map",
+    "static/js/2.29f3e77c.chunk.js": "/havas/static/js/2.29f3e77c.chunk.js",
+    "static/js/2.29f3e77c.chunk.js.map": "/havas/static/js/2.29f3e77c.chunk.js.map",
+    "index.html": "/havas/index.html",
+    "precache-manifest.91a97b6cd758f8df0fa44f1e63c517a7.js": "/havas/precache-manifest.91a97b6cd758f8df0fa44f1e63c517a7.js",
+    "service-worker.js": "/havas/service-worker.js",
+    "static/css/main.07c4e79f.chunk.css.map": "/havas/static/css/main.07c4e79f.chunk.css.map",
+    "static/media/App.css": "/havas/static/media/plantin-light-webfont.a4a25b94.woff2"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.94ce735c.js",
+    "static/js/2.29f3e77c.chunk.js",
+    "static/css/main.07c4e79f.chunk.css",
+    "static/js/main.d7aab2c2.chunk.js"
+  ]
+}
