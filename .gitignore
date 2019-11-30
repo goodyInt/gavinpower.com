@@ -4,6 +4,7 @@ app/dist
 app/src/vendor
 app/src/email
 app/src/shopify
+app/src/havas
 app/src/cm
 app/src/hello
 app/src/downloads

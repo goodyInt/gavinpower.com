@@ -46,11 +46,13 @@ var HASH = HASH || (function () {
       Myplanet: 'Myplanet',
       SBDF: 'SBDF',
       cbc: 'cbc',
+      john: 'john',
       Torstar: 'Torstar',
       V: 'V',
       aa: 'aa',
       Hussain: 'Hussain',
       wefail: 'wefail',
+      ps: 'ps',
       tacu: 'tacu'
     };
 
