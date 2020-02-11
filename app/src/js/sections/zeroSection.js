@@ -73,6 +73,7 @@ var sprites = {
   V: './img/heightMap/heightMap-helloV.jpg',
   aa: './img/heightMap/heightMap-helloAlexAitken.jpg',
   Hussain: './img/heightMap/heightMap-helloHussain.jpg',
+  apply: './img/heightMap/heightMap-helloApply.jpg',
   
   tacu: './img/heightMap/heightMap-tacu.jpg'
 };
