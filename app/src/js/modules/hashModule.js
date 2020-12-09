@@ -56,8 +56,9 @@ var HASH =
         wefail: "wefail",
         ps: "ps",
         apply: "apply",
-
-        tacu: "tacu"
+        tacu: "tacu",
+        amazon: "amazon",
+        thinkingBox: "thinkingBox"
       };
 
       function getHash() {
